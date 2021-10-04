@@ -1,0 +1,16 @@
+N=5000
+filling_density=0.25
+output_dir=/mnt/c/Users/Axel/Documents/DEM/results/cube_die_compaction/3/
+radius_file=/mnt/c/Users/Axel/Documents/DEM/DEMsim/simulations/cube_die_compaction/size_distribution.dat
+sY=200E6
+E=200E9
+nu=0.3
+mu=0
+mu_wall=0
+kT=1e9
+density=0.8
+density_levels=0.8
+compaction_time=0.3s
+unloading_velocity=0.01
+unloading_time=0.15s
+

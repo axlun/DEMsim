@@ -1,8 +1,8 @@
 N=1000
 gas_density=0.3
 aspect_ratio_at_dense=1.
-output_dir=../results/closed_die_compaction/6/
-radius_file=../simulations/closed_die_compaction/size_distribution.dat
+output_dir=/mnt/c/Users/Axel/Documents/DEM/results/closed_die_compaction/6/
+radius_file=/mnt/c/Users/Axel/Documents/DEM/DEMsim/simulations/closed_die_compaction/size_distribution.dat
 sY=200E6
 E=200E9
 nu=0.3

@@ -11,6 +11,8 @@ std::map<std::string, DEM::SimulationFunctionPtr> DEM::valid_simulations() {
     return std::map<std::string, SimulationFunctionPtr>{
             {"gyratory_compaction",            DEM::gyratory_compaction},
             {"closed_die_compaction",          DEM::closed_die_compaction},
+            {"cube_die_compaction",            DEM::cube_die_compaction},
+            {"cathode_compaction",             DEM::cathode_compaction},
             {"contact_tester",                 DEM::contact_tester},
             {"cyclic_triaxial",                DEM::cyclic_triaxial},
             {"proctor_test",                   DEM::proctor_test},
