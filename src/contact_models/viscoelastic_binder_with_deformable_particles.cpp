@@ -63,8 +63,12 @@ double DEM::Viscoelastic_binder_with_deformable_particles::update_normal_force(d
             {
                 ddi_[i] = Ai[i] + Bi[i]*dh_b;
                 di_[i] += ddi_[i];
-                Ai.push_back((1-exp(-dt_/tau_i))*(Khbn_-di_)); // update [i] not pushback
-                Bi.push_back((tau_i/dt_) * dK_dhnb * ((dt_/tau_i)+exp(-dti_/tau_i)-1));
+                Ai[i] = (1-exp(-dt_/tau_i[i]))*(Khbn_-di_[i])
+                Bi[i] = (tau_i[i]/dt_) * dK_dhnb * ((dt_/tau_i[i])+exp(-dti_[i]/tau_i[i])-1)
+
+
+                //Ai.push_back((1-exp(-dt_/tau_i[i]))*(Khbn_-di_[i])); // update [i] not pushback
+                //Bi.push_back((tau_i/dt_) * dK_dhnb * ((dt_/tau_i)+exp(-dti_/tau_i)-1));
             }
             dK_dhbn_ = bt_/((bt_-hb_)*(bt_-hb_));
 
