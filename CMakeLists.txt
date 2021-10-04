@@ -87,6 +87,7 @@ add_executable(DEMsim
                src/contact_models/porous_electrode_contact.h
                src/simulations/porous_electrode/porous_electrode_rve.cpp
         src/simulations/electrode_mechanical_test.cpp
-        )
+        src/simulations/cube_die_compaction.cpp
+        src/simulations/cathode_compaction.cpp src/contact_models/viscoelastic_binder_with_deformable_particles.h src/contact_models/viscoelastic_binder_with_deformable_particles.cpp)
 
 target_link_libraries (DEMsim stdc++fs "${OpenMP_CXX_FLAGS}" Eigen3::Eigen)
