@@ -3,6 +3,7 @@
 //
 
 #include "electrode_material.h"
+#include <iostream>
 
 #include "../utilities/file_reading_functions.h"
 #include "../utilities/printing_functions.h"
@@ -11,6 +12,8 @@ DEM::ElectrodeMaterial::ElectrodeMaterial(const ParameterMap& parameters) :
     DEM::MaterialBase(parameters),
     E(parameters.get_parameter<double>("E")),
     nu(parameters.get_parameter<double>("nu")),
+    Syb(parameters.get_parameter<double>("Syb")),//Binder yield strength
+    //Syb(40e6),//Binder yield strength
     Ep(parameters.get_parameter<double>("Ep")),
     nup(parameters.get_parameter<double>("nup")),
     bt(parameters.get_parameter<double>("bt")),
@@ -19,6 +22,8 @@ DEM::ElectrodeMaterial::ElectrodeMaterial(const ParameterMap& parameters) :
     alpha_i(),
     fraction_binder_contacts(parameters.get_parameter<double>("fraction_binder_contacts")),
     binder_radius_fraction(parameters.get_parameter<double>("binder_radius_fraction")),
+    binder_thickness_fraction(parameters.get_parameter<double>("binder_thickness_fraction")),
+
     kT(parameters.get_parameter<double>("kT")),
     mu(parameters.get_parameter<double>("mu")),
     mu_wall(parameters.get_parameter<double>("mu_wall")),
@@ -37,6 +42,7 @@ std::string DEM::ElectrodeMaterial::restart_data() const {
        << MaterialBase::restart_data() << ", "
        << named_print(E, "E") << ", "
        << named_print(nu, "nu") << ", "
+       << named_print(Syb, "Syb") << ", "
        << named_print(nup, "nup") << ", "
        << named_print(Ep, "Ep") << ", "
        << named_print(fraction_binder_contacts,"fraction_binder_contacts")<< ", "

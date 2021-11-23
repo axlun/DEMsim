@@ -14,6 +14,8 @@ std::map<std::string, DEM::SimulationFunctionPtr> DEM::valid_simulations() {
             {"cube_die_compaction",            DEM::cube_die_compaction},
             {"cathode_compaction",             DEM::cathode_compaction},
             {"contact_tester",                 DEM::contact_tester},
+            {"contact_tester_elastic_perfect_plastic_material", DEM::contact_tester_elastic_perfect_plastic_material},
+            {"contact_tester_viscoelastic_binder_El_Pl_particles", DEM::contact_tester_viscoelastic_binder_El_Pl_particles},
             {"cyclic_triaxial",                DEM::cyclic_triaxial},
             {"proctor_test",                   DEM::proctor_test},
             {"stone_compaction",               DEM::stone_compaction},

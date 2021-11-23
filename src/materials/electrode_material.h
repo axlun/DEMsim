@@ -19,6 +19,7 @@ namespace DEM {
 
         double E{ 0. };    // E0 for the binder material
         double nu{ 0. };   // nu for the binder material
+        double Syb{ 0. };  //Yield strength for the binder material
 
         double Ep{ 0. };   // Young's modulus for the particles
         double nup{ 0. };  // Poisson's ratio for the binder material
@@ -37,6 +38,7 @@ namespace DEM {
         std::vector<double> alpha_i {};
         double fraction_binder_contacts{ 0. };
         double binder_radius_fraction{ 0. };
+        double binder_thickness_fraction{ 0. };
         double kT;
         double mu{ 0. };
         double mu_wall{ 0. };

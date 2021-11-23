@@ -4,19 +4,19 @@
 
 #include <chrono>
 
-#include "simulations.h"
+#include "../simulations.h"
 
-#include "../engine/engine.h"
-#include "../particles/spherical_particle.h"
-#include "../engine/contact.h"
-#include "../contact_models/stone_material_contact.h"
-#include "../materials/stone_material.h"
-#include "../utilities/file_reading_functions.h"
-#include "../contact_models/viscoelastic.h"
-#include "../contact_models/porous_electrode_contact.h"
-#include "../contact_models/viscoelastic_binder_with_deformable_particles.h"
-#include "../materials/electrode_material.h"
-#include "../materials/porous_electrode_material.h"
+#include "../../engine/engine.h"
+#include "../../particles/spherical_particle.h"
+#include "../../engine/contact.h"
+#include "../../contact_models/stone_material_contact.h"
+#include "../../materials/stone_material.h"
+#include "../../utilities/file_reading_functions.h"
+#include "../../contact_models/viscoelastic.h"
+#include "../../contact_models/porous_electrode_contact.h"
+#include "../../contact_models/viscoelastic_binder_with_deformable_particles.h"
+#include "../../materials/electrode_material.h"
+#include "../../materials/porous_electrode_material.h"
 
 
 

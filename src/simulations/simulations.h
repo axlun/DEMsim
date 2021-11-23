@@ -16,6 +16,8 @@ namespace DEM {
     void cathode_compaction(const std::string& settings_file_name);
     void cube_die_compaction(const std::string& settings_file_name);
     void contact_tester(const std::string& settings_file_name);
+    void contact_tester_elastic_perfect_plastic_material(const std::string& settings_file_name);
+    void contact_tester_viscoelastic_binder_El_Pl_particles(const std::string& settings_file_name);
     void cyclic_triaxial(const std::string& settings_file_name);
     void proctor_test(const std::string& settings_file_name);
     void stone_compaction(const std::string& settings_file_name);

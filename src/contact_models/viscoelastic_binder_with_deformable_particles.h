@@ -37,9 +37,9 @@ namespace DEM {
     private:
         const static ElectrodeMaterial* material;
 
-        double kp_ = 0; //inte noll men något bra
+        double kp_ = 0; //particle stiffness, inte noll men något bra
         //double kB_  =0;
-        double psi0_ = 0; //också nått bra här
+        double psi0_ = 0; //initial stiffness,också nått bra här
         double dK_dhbn_ = 0;
         double Khbn_  = 0;
         double hb_ = 0;

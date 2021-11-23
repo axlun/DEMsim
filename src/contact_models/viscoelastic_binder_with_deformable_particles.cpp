@@ -14,14 +14,14 @@
 
 
 DEM::Viscoelastic_binder_with_deformable_particles::Viscoelastic_binder_with_deformable_particles(DEM::Viscoelastic_binder_with_deformable_particles::ParticleType *particle1,
-                                                        DEM::Viscoelastic_binder_with_deformable_particles::ParticleType* particle2,std::chrono::duration<double> dt)
+                                                        DEM::Viscoelastic_binder_with_deformable_particles::ParticleType *particle2,std::chrono::duration<double> dt)
 {
     //extracting from material
     auto mat1 = dynamic_cast<const ElectrodeMaterial *>(particle1->get_material());
     auto mat2 = dynamic_cast<const ElectrodeMaterial *>(particle2->get_material());
     material = mat1;
 
-    R0_ = 1. / (1. / particle1->get_radius() + 1. / particle2->get_radius());
+    R0_= 1. / (1. / particle1->get_radius() + 1. / particle2->get_radius());
 
     double E1 = mat1->E;
     double v1 = mat1->nu;
@@ -73,7 +73,8 @@ double DEM::Viscoelastic_binder_with_deformable_particles::update_normal_force(d
     std::cout << "dh:" << dh << std::endl;
 
 
-    if (binder_contact_) {
+    if (binder_contact_)
+    {
         if ((h > -bt_) || bonded_)
         {
 
