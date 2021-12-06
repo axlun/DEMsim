@@ -39,6 +39,8 @@ namespace DEM {
         double fraction_binder_contacts{ 0. };
         double binder_radius_fraction{ 0. };
         double binder_thickness_fraction{ 0. };
+        double binder_stiffness_coefficient{ 1. };
+
         double kT;
         double mu{ 0. };
         double mu_wall{ 0. };

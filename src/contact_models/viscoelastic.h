@@ -35,8 +35,9 @@ namespace DEM {
         [[nodiscard]] const Vec3& get_tangential_force() const { return FT_; }
         [[nodiscard]] Vec3 get_rolling_resistance_torque() const;
         [[nodiscard]] bool active() const {return F_ != 0; }
-        [[nodiscard]] std::string get_output_string() const;
         [[nodiscard]] std::string restart_data() const;
+        [[nodiscard]] std::string get_output_string() const;
+
         void set_increment(std::chrono::duration<double>);
 
     private:

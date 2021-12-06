@@ -23,6 +23,7 @@ DEM::ElectrodeMaterial::ElectrodeMaterial(const ParameterMap& parameters) :
     fraction_binder_contacts(parameters.get_parameter<double>("fraction_binder_contacts")),
     binder_radius_fraction(parameters.get_parameter<double>("binder_radius_fraction")),
     binder_thickness_fraction(parameters.get_parameter<double>("binder_thickness_fraction")),
+    binder_stiffness_coefficient(parameters.get_parameter<double>("binder_stiffness_coefficient")),
 
     kT(parameters.get_parameter<double>("kT")),
     mu(parameters.get_parameter<double>("mu")),
