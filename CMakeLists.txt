@@ -62,6 +62,7 @@ add_executable(DEMsim
 				src/simulations/Contact_tests/contact_tester.cpp
 				src/simulations/Contact_tests/contact_tester_linear_elastic_perfect_plastic_material.cpp
 				src/simulations/Contact_tests/contact_tester_viscoelastic_binder_El_Pl_particles.cpp
+				src/simulations/Force_model_impact_on_electrode/electrode_calendaring.cpp
 				src/simulations/cyclic_triaxial.cpp
 				src/particles/spherical_particle_base.tpp
 				src/particles/spherical_particle_base.h

@@ -65,7 +65,7 @@ void DEM::contact_tester_viscoelastic_binder_El_Pl_particles(const std::string &
 //                                            Vec3{}, &mat, 1);
 //    auto c = Contact<ForceModel, ParticleType>(&p2, &p1, timestep);
 
-//    p1.move(Vec3{tick, 0, 0});
+//      p1.move(Vec3{tick, 0, 0});
 //    p2.move(Vec3{-tick, 0, 0});
 
     fs::path path_to_output_file {filename};

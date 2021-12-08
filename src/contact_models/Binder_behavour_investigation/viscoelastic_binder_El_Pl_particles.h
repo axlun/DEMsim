@@ -29,9 +29,14 @@ namespace DEM{
 
         [[nodiscard]] double get_overlap() const {return h_;};
         [[nodiscard]] double get_normal_force() const {return F_;};
+        [[nodiscard]] const Vec3& get_tangential_force() const { return FT_; }
+        [[nodiscard]] Vec3 get_rolling_resistance_torque() const;
         [[nodiscard]] double active() const {return F_ !=0; };
         [[nodiscard]] std::string restart_data() const;
+        [[nodiscard]] std::string get_output_string() const;
+
         void update(double h, const Vec3& dt, const Vec3& drot, const Vec3& normal);
+        void set_increment(std::chrono::duration<double>);
 
     private:
         const static ElectrodeMaterial* material;
@@ -48,7 +53,7 @@ namespace DEM{
         double br_ = 0;
         double R0_ = 0;
         bool bonded_ = false;
-        bool adhesive_ = true;
+        bool adhesive_ = false;
         bool binder_contact_ = false;
         bool fractured_ = true;
 
