@@ -28,7 +28,8 @@ std::map<std::string, DEM::SimulationFunctionPtr> DEM::valid_simulations() {
             {"Cathode_mechanical_simulations", DEM::Cathode_mechanical_simulations},
             {"battery_rve_compaction",         DEM::battery_rve_compaction},
             {"restart_electrode",              DEM::restart_electrode},
-            {"porous_electrode_rve",           DEM::porous_electrode_rve}
+            {"porous_electrode_rve",           DEM::porous_electrode_rve},
+            {"electrode_calendaring",          DEM::electrode_calendaring}
     };
 }
 

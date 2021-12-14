@@ -22,15 +22,18 @@ void DEM::electrode_calendaring(const std::string& settings_file_name) {
     SimulationParameters parameters(settings_file_name);
     auto output_directory = parameters.get_parameter<std::string>("output_dir");
 
-    EngineType simulator(1us);
+    EngineType simulator(.1us);
 
     auto N = parameters.get_parameter<double>("N");
     auto particle_file = parameters.get_parameter<std::string>("radius_file");
-    auto mat = simulator.create_material<ElectrodeMaterial>(4800);
+    auto mat = simulator.create_material<ElectrodeMaterial>(4800E-9);
     mat->E = parameters.get_parameter<double>("E");
     mat->Ep = parameters.get_parameter<double>("Ep");
     mat->nup = parameters.get_parameter<double>("nup");
+    mat->rhop = parameters.get_parameter<double>("rhop");
     mat->yield_displacement_coeff = parameters.get_parameter<double>("yield_displacement_coeff");
+    auto rho_al = parameters.get_parameter<double>("rho_al"); //density of active layer
+    auto mass_ratio_particles = parameters.get_parameter<double>("mass_ratio_particles"); //ratio between particle mass and total mass
 //    mat->mu = parameters.get_parameter<double>("mu");
 //    mat->mu_wall = parameters.get_parameter<double>("mu_wall");
     mat->tau_i = parameters.get_vector<double>("tau_i");
@@ -45,19 +48,27 @@ void DEM::electrode_calendaring(const std::string& settings_file_name) {
     mat->active_particle_height = parameters.get_parameter<double>("active_particle_height");
 
     auto particle_radii = read_vector_from_file<double>(particle_file);
-    particle_radii.assign(N, *particle_radii.begin());
+    if (particle_radii.size() ==1) {
+        particle_radii.assign(N, *particle_radii.begin());
+    } else{
+        particle_radii.assign(particle_radii.begin(), particle_radii.begin()+N);
+        std::sort(particle_radii.rbegin(), particle_radii.rend());
+    }
 
     double particle_volume = 0.;
     for (const auto &r: particle_radii) {
         particle_volume += 4. / 3. * pi * r * r * r;
+        std::cout << "Particle radii " << r << "\n";
     }
     std::cout << "Volume of particles is " << particle_volume << "\n";
 
 
-    auto box_side = pow(particle_volume / particle_density_at_cube, 1. / 3.);
+    auto box_side = pow(particle_volume*mat->rhop/mat->active_particle_height/rho_al/mass_ratio_particles, 1./2.);
+    //auto box_side = pow(particle_volume / particle_density_at_cube, 1. / 3.);
     std::cout << "box_side " << box_side << "\n";
-    auto box_height = particle_density_at_cube * box_side / particle_density_at_filling;
-    box_height = 1; //testing box height
+    auto box_height = particle_volume/particle_density_at_filling/pow(box_side,2);
+    //auto box_height = particle_density_at_cube * box_side / particle_density_at_filling;
+//    box_height = 1; //testing box height
     std::cout << "box_height " << box_height << "\n";
 
     auto p1 = Vec3(-box_side / 2, -box_side / 2, 0);
@@ -71,11 +82,11 @@ void DEM::electrode_calendaring(const std::string& settings_file_name) {
     std::vector <Vec3> bottom_points{p1, p2, p3, p4};
     std::vector <Vec3> top_points{p8, p7, p6, p5};
 
-    //auto particle_positions = random_fill_box(-box_side / 2, box_side / 2, -box_side / 2, box_side / 2,
-    //                                         0, box_height, particle_radii, mat->bt);
-    DEM::Vec3 position = {0,0,.01};
-    std::vector<Vec3> particle_positions = {};
-    particle_positions.push_back(position);
+    auto particle_positions = random_fill_box(-box_side / 2, box_side / 2, -box_side / 2, box_side / 2,
+                                             0, box_height, particle_radii, mat->bt);
+//    DEM::Vec3 position = {0,0,.01};
+//    std::vector<Vec3> particle_positions = {};
+//    particle_positions.push_back(position);
     std::cout << "Particle positions: \n";
     for (const auto &i: particle_positions) {
         std::cout << i << "\n";
@@ -105,38 +116,47 @@ void DEM::electrode_calendaring(const std::string& settings_file_name) {
 
 
     //Initial packing of particles, let particles fall with gravity
-    mat->adhesive = true; //No adhesion of particles when initial packing
+    mat->adhesive = false; //No adhesion of particles when initial packing
+
     simulator.set_gravity(Vec3(0, 0, -9.82)); //Use gravity for inital packing of particles
-    simulator.set_mass_scale_factor(10.0);
-    double max_radii = *max_element(particle_radii.begin(), particle_radii.end()); //find the biggest binder thickness to use when defineing a bounding box
+    simulator.set_mass_scale_factor(10.0E3);
+    double max_radii = *max_element(particle_radii.begin(), particle_radii.end()); //find the biggest binder thickness to use when defining a bounding box
     double max_binder_thickness = mat->binder_thickness_fraction*max_radii;
     //std::cout << "max_binder_thickness: "<< max_binder_thickness <<"\n";
     simulator.setup(1.01*max_binder_thickness); //Size of box for detecting contacts between particles
 
     simulator.set_rotation(false);
     std::cout << "Initialize natural particle packing \n";
-
-
     //Run for 0.1s and then run untill max_velocity of the paricles is 0.1 m/s and check it every 0.02s
     EngineType::RunForTime run_for_time(simulator, 0.1s);
     simulator.run(run_for_time);
-    EngineType::ParticleVelocityLess max_velocity (simulator, 0.1, 0.02s); //Why this update time?
+    EngineType::ParticleVelocityLess max_velocity (simulator, 0.1, 0.02s);
     simulator.run(max_velocity);
+
+//    //Prints output string for all particles
+//    auto particles_(simulator.get_particles());
+//    for (const auto& p: particles_) {
+//        std::cout << p->get_output_string() << "\n";
+//    }
 
     //Calendaring process
     std::cout << "Initialize calendaring process \n";
     auto bbox = simulator.get_bounding_box(); //get the XYZ max/min that contain all particles
     double h = bbox[5]; //height of uppermost particle (Z-max)
-    std::cout<<"h"<< h<< std::endl;
-    top_surface->move(-Vec3(0, 0, box_height - h-1.01*max_binder_thickness), Vec3(0, 0, 0)); //Move topsurface to uppermost partile+binder thickness
+    std::cout<<"Heigh of uppermoast particle: "<< h<< std::endl;
+    top_surface->move(-Vec3(0, 0, box_height - h-1.01*max_binder_thickness), Vec3(0, 0, 0)); //Move top surface to uppermost partile+binder thickness
     auto surface_velocity =parameters.get_parameter<double>("calendaring_surface_velocity"); //How was this chosen?
     mat->adhesive = true;
     top_surface->set_velocity(Vec3(0,0,0.-surface_velocity));
-    std::chrono::duration<double> compaction_time {((h - mat->active_particle_height) / surface_velocity)};
+//    std::chrono::duration<double> compaction_time {((h - mat->active_particle_height) / surface_velocity)};
+    std::chrono::duration<double> compaction_time {((0.1*h) / surface_velocity)}; //value used for testing calendaring
+
+    std::cout<<"Compaction time: "<< compaction_time.count()<< std::endl;
     run_for_time.reset(compaction_time);
     simulator.run(run_for_time);
-    simulator.write_restart_file(output_directory + "/compact_restart_file.res");
-
+    //std::cout<<"Writing restart file ";
+    //simulator.write_restart_file(output_directory + "/compact_restart_file.res");
+    //comment
     std::cout<<"beginning of unloading"<< std::endl;
     top_surface->set_velocity(Vec3(0, 0, surface_velocity));
     EngineType::SurfaceNormalForceLess zero_force(top_surface, 0.);

@@ -30,6 +30,7 @@ DEM::viscoelastic_binder_El_Pl_particles::viscoelastic_binder_El_Pl_particles(DE
     double vp2 = mat2->nup;
     double Ep2 = mat2->Ep;
     double Ep1 = mat1->Ep;
+    double rhop = mat1->rhop;
     double Ep_eff = 1./(((1-vp1*vp1)/Ep1)+((1-vp2*vp2)/Ep2));
     double br_ = mat1-> binder_radius_fraction * particle1->get_radius();
     bt_ = mat1-> binder_thickness_fraction * particle1->get_radius(); //Binder thickness determined by fraction of
@@ -72,6 +73,7 @@ DEM::viscoelastic_binder_El_Pl_particles::viscoelastic_binder_El_Pl_particles(
         double v1 = mat1->nu;
         double vp1=mat1->nup;
         double Ep1 = mat1->Ep;
+        double rhop = mat1->rhop;
         double Ep_eff = 1./(((1-vp1*vp1)/Ep1)); //Effective Young's modulus for one particle and one rigid surface
         double br_ = mat1-> binder_radius_fraction * particle1->get_radius();
         bt_ = mat1-> binder_thickness_fraction * particle1->get_radius();

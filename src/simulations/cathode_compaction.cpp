@@ -100,7 +100,7 @@ void DEM::cathode_compaction(const std::string& settings_file_name) {
 
     mat->adhesive = false;
 
-    simulator.set_gravity(Vec3(0, 0, -9.82));
+    simulator.set_gravity(Vec3(0, 0, -9.82)); //comment
     simulator.set_mass_scale_factor(10.0);
     simulator.setup(1.01*mat->bt); //vad är materialparametern bt?
     simulator.set_rotation(false);

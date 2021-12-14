@@ -23,6 +23,7 @@ namespace DEM {
 
         double Ep{ 0. };   // Young's modulus for the particles
         double nup{ 0. };  // Poisson's ratio for the binder material
+        double rhop{ 0. }; //density of particles
 
         double bt { 0. };   // Binder thickness
 

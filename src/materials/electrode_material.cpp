@@ -16,6 +16,7 @@ DEM::ElectrodeMaterial::ElectrodeMaterial(const ParameterMap& parameters) :
     //Syb(40e6),//Binder yield strength
     Ep(parameters.get_parameter<double>("Ep")),
     nup(parameters.get_parameter<double>("nup")),
+    rhop(parameters.get_parameter<double>("rhop")),
     bt(parameters.get_parameter<double>("bt")),
     yield_displacement_coeff(parameters.get_parameter<double>("yield_coeff")),
     tau_i(),
@@ -46,6 +47,7 @@ std::string DEM::ElectrodeMaterial::restart_data() const {
        << named_print(Syb, "Syb") << ", "
        << named_print(nup, "nup") << ", "
        << named_print(Ep, "Ep") << ", "
+        << named_print(rhop, "rhop") << ", "
        << named_print(fraction_binder_contacts,"fraction_binder_contacts")<< ", "
        << named_print(yield_displacement_coeff, "yield_coeff") << ", "
        << named_print(binder_radius_fraction, "binder_radius_fraction") << ", "
