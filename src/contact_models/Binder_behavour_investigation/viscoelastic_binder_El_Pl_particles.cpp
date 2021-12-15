@@ -45,8 +45,6 @@ DEM::viscoelastic_binder_El_Pl_particles::viscoelastic_binder_El_Pl_particles(DE
     binder_contact_ = create_binder_contact(mat1);
     adhesive_ = true;
 
-
-
     tau_i = mat1->tau_i;
     alpha_i = mat1->alpha_i;
 
@@ -78,7 +76,7 @@ DEM::viscoelastic_binder_El_Pl_particles::viscoelastic_binder_El_Pl_particles(
         double br_ = mat1-> binder_radius_fraction * particle1->get_radius();
         bt_ = mat1-> binder_thickness_fraction * particle1->get_radius();
         double A = DEM::pi*br_*br_;
-        psi0_ = (1 - v1)/(1 + v1)/(1 - 2*v1)*E1*A/bt_; //The instantaneous value of the relaxation function for the binder
+        psi0_ = kb_coeff*(1 - v1)/(1 + v1)/(1 - 2*v1)*E1*A/bt_; //The instantaneous value of the relaxation function for the binder
         kp_ = (4./3)*Ep_eff* sqrt(R0_); //Particle stiffness following Hertz contact for two particles
         yield_h_ = mat1->yield_displacement_coeff*R0_;
         adhesive_ = surface->adhesive();
@@ -216,7 +214,7 @@ double  DEM::viscoelastic_binder_El_Pl_particles::update_normal_force(double h)
 
     if(binder_contact_)
     {
-        if((h>-bt_)||bonded_)
+        if((h_>-bt_)||bonded_)
         {
 
         double viscoelastic_summation = 0.;
