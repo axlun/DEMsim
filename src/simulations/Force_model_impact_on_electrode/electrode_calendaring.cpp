@@ -22,7 +22,7 @@ void DEM::electrode_calendaring(const std::string& settings_file_name) {
     SimulationParameters parameters(settings_file_name);
     auto output_directory = parameters.get_parameter<std::string>("output_dir");
 
-    EngineType simulator(1us);
+    EngineType simulator(1E-2us);
 
     auto N = parameters.get_parameter<double>("N");
     auto particle_file = parameters.get_parameter<std::string>("radius_file");
@@ -85,7 +85,7 @@ void DEM::electrode_calendaring(const std::string& settings_file_name) {
 
 //    auto particle_positions = random_fill_box(-box_side / 2, box_side / 2, -box_side / 2, box_side / 2,
 //                                             0, box_height, particle_radii, max_binder_thickness);
-    DEM::Vec3 position1 = {0,0,6.7E-6};
+    DEM::Vec3 position1 = {0,0,6.6E-6};
     DEM::Vec3 position2 = {0,0,19E-6};
     std::vector<Vec3> particle_positions = {};
     particle_positions.push_back(position1);
@@ -122,7 +122,7 @@ void DEM::electrode_calendaring(const std::string& settings_file_name) {
     mat->adhesive = false; //No adhesion of particles when initial packing
 
     simulator.set_gravity(Vec3(0, 0, -9.82E0)); //Use gravity for inital packing of particles
-    simulator.set_mass_scale_factor(1E6);
+    simulator.set_mass_scale_factor(1E7);
     //std::cout << "max_binder_thickness: "<< max_binder_thickness <<"\n";
     simulator.setup(1.01*max_binder_thickness); //Size of box for detecting contacts between particles
 
