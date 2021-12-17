@@ -9,10 +9,10 @@ def main():
     animation = Animation(simulation_directory)
     animation.save_directory = simulation_directory+'/animation/imgs/'
     animation.save_frames = True
-    animation.delay = 1e-4
+    animation.delay = 1e-6
     animation.plot_periodic_bc = True
     animation.mirror_particles = False
-    animation.start_time = 0
+    animation.start_time = .6
     animation.run()
     mlab.show()
 
