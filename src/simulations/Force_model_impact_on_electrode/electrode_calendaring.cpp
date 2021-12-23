@@ -90,10 +90,10 @@ void DEM::electrode_calendaring(const std::string& settings_file_name) {
 //    std::vector<Vec3> particle_positions = {};
 //    particle_positions.push_back(position1);
 //    particle_positions.push_back(position2);
-    std::cout << "Particle positions: \n";
-    for (const auto &i: particle_positions) {
-        std::cout << i << "\n";
-    }
+//    std::cout << "Particle positions: \n";
+//    for (const auto &i: particle_positions) {
+//        std::cout << i << "\n";
+//    }
     auto deformable_surface = simulator.create_deformable_point_surface(bottom_points,"bottom_plate", true);
     auto top_surface = simulator.create_point_surface(top_points, true, "top_plate", false);
 
@@ -134,25 +134,33 @@ void DEM::electrode_calendaring(const std::string& settings_file_name) {
     double h_1 = bbox[5]; //height of uppermost particle (Z-max)
     std::cout<<"Heigh of uppermoast particle: "<< h_1<< std::endl;
     top_surface->move(-Vec3(0, 0, box_height - h_1-1.01*max_binder_thickness), Vec3(0, 0, 0)); //Move top surface to uppermost partile+binder thickness
+
+    run_for_time.reset(.4s);
     simulator.run(run_for_time);
     //PreCalendaring process
-    std::cout << "Initialize calendaring process \n";
+    std::cout << "Initialize pre-calendaring process \n";
     bbox = simulator.get_bounding_box(); //get the XYZ max/min that contain all particles
     double h_2 = bbox[5]; //height of uppermost particle (Z-max)
     std::cout<<"Heigh of uppermoast particle: "<< h_2<< std::endl;
-    top_surface->move(-Vec3(0, 0,  h_1 - h_2-1.01*max_binder_thickness), Vec3(0, 0, 0)); //Move top surface to uppermost partile+binder thickness
+    if (h_2<2*mat->active_particle_height){
+        h_2=2*mat->active_particle_height;
+    }
+    top_surface->move(-Vec3(0, 0,  h_1 - h_2), Vec3(0, 0, 0)); //Move top surface to uppermost partile+binder thickness
     auto surface_velocity =parameters.get_parameter<double>("calendaring_surface_velocity"); //How was this chosen?
     mat->adhesive = false;
-    top_surface->set_velocity(Vec3(0,0,0.-surface_velocity));
-    std::chrono::duration<double> compaction_time {((h_2-mat->active_particle_height*2) / surface_velocity)};
+    top_surface->set_velocity(Vec3(0,0,0.-2*surface_velocity));
+    std::chrono::duration<double> compaction_time {((h_2-mat->active_particle_height*2) / (2*surface_velocity))};
 
     std::cout<<"Compaction time: "<< compaction_time.count()<< std::endl;
     run_for_time.reset(compaction_time);
     simulator.run(run_for_time);
 
     //run untill all particles are slower then max_vel
-    EngineType::ParticleVelocityLess max_velocity (simulator, 2E-0, 2E-2s);
-    simulator.run(max_velocity);
+    top_surface->set_velocity(Vec3(0,0,0.0));
+    run_for_time.reset(.4s);
+    simulator.run(run_for_time);
+//    EngineType::ParticleVelocityLess max_velocity (simulator, 2E-0, 2E-2s);
+//    simulator.run(max_velocity);
 
 //    //Prints output string for all particles
 //    auto particles_(simulator.get_particles());
@@ -166,11 +174,11 @@ void DEM::electrode_calendaring(const std::string& settings_file_name) {
     bbox = simulator.get_bounding_box(); //get the XYZ max/min that contain all particles
     double h_3 = bbox[5]; //height of uppermost particle (Z-max)
     std::cout<<"Heigh of uppermoast particle: "<< h_3<< std::endl;
-    top_surface->move(-Vec3(0, 0,  h_1 - h_3-1.01*max_binder_thickness), Vec3(0, 0, 0)); //Move top surface to uppermost partile+binder thickness
+    top_surface->move(-Vec3(0, 0,  mat->active_particle_height*2 - h_3), Vec3(0, 0, 0)); //Move top surface to uppermost partile+binder thickness
     surface_velocity =parameters.get_parameter<double>("calendaring_surface_velocity"); //How was this chosen?
-    mat->adhesive = true;
+    mat->adhesive = false;
     top_surface->set_velocity(Vec3(0,0,0.-surface_velocity));
-    std::chrono::duration<double> compaction_time_2 {((h_3-mat->active_particle_height) / surface_velocity)};
+    std::chrono::duration<double> compaction_time_2 {((h_3+1.01*max_binder_thickness-mat->active_particle_height) / surface_velocity)};
 
     std::cout<<"Compaction time: "<< compaction_time_2.count()<< std::endl;
     run_for_time.reset(compaction_time_2);
@@ -179,13 +187,20 @@ void DEM::electrode_calendaring(const std::string& settings_file_name) {
     //simulator.write_restart_file(output_directory + "/compact_restart_file.res");
     std::cout<<"beginning of unloading"<< std::endl;
     top_surface->set_velocity(Vec3(0, 0, surface_velocity));
+    mat->adhesive = true; //Enable adhesive when particles are compacted and before unloaded
     EngineType::SurfaceNormalForceLess zero_force(top_surface, 0.);
     // simulator.set_rotation(false);
     simulator.run(zero_force);
 
-    run_for_time.reset(1s);
-    simulator.run(run_for_time);
 
+    top_surface->set_velocity(Vec3(0, 0, 0));
+    run_for_time.reset(.5s);
+    simulator.run(run_for_time);
+    bbox = simulator.get_bounding_box(); //get the XYZ max/min that contain all particles
+    double Active_layer_height = bbox[5];
+    std::cout<<"Height of active layer "<< Active_layer_height<< std::endl;
+    double NMC_porosity = 1-particle_volume/(box_side*box_side*Active_layer_height) ;
+    std::cout<<"NMC Porosity: "<< NMC_porosity<< std::endl;
 }
 
 
