@@ -194,7 +194,7 @@ void DEM::electrode_calendaring(const std::string& settings_file_name) {
 
 
     top_surface->set_velocity(Vec3(0, 0, 0));
-    run_for_time.reset(.5s); //comment
+    run_for_time.reset(.5s);
     simulator.run(run_for_time);
     bbox = simulator.get_bounding_box(); //get the XYZ max/min that contain all particles
     double Active_layer_height = bbox[5];
