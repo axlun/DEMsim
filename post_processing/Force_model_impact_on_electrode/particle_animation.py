@@ -12,7 +12,7 @@ def main():
     animation.delay = 1e-6
     animation.plot_periodic_bc = False
     animation.mirror_particles = False
-    animation.start_time = 0.6
+    animation.start_time = 3.4
     animation.run()
     mlab.show()
 

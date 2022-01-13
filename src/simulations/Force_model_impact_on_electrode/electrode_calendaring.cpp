@@ -202,7 +202,7 @@ void DEM::electrode_calendaring(const std::string& settings_file_name) {
     double NMC_porosity = 1-particle_volume/(box_side*box_side*Active_layer_height) ;
     std::cout<<"NMC Porosity: "<< NMC_porosity<< std::endl;
     std::cout<<"Writing restart file ";
-    simulator.write_restart_file(output_directory + "/calendered_electrode_restart_file.res")
+    simulator.write_restart_file(output_directory + "/calendered_electrode_restart_file.res");
 }
 
 
