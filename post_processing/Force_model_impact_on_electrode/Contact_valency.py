@@ -19,7 +19,7 @@ def data_grabber(data_directory):
 
 
 def main():
-    simulation_directory = 'c:/Users/Axel/Documents/DEM/results/electrode_calendaring/bt065N1500/contacts'
+    simulation_directory = 'c:/Users/Axel/Documents/DEM/results/electrode_calendaring/bt065N3000/contacts'
     #simulation_directory = 'c:/Users/Axel/Desktop/contact_test'
     file_type = "/*.dou"
     files = glob.glob(simulation_directory + file_type)
@@ -27,7 +27,8 @@ def main():
     contact_data = np.genfromtxt(latest_file, delimiter=',')
     #print(contact_data)
     particle_array = [0] * int(contact_data[-1, 0] - contact_data[0, 0] + 1)
-    #print(len(particle_array))
+    legend = "N = "+str(int(contact_data[-1, 0] - contact_data[0, 0] + 1)) + " particles"
+    print(legend)
     for contact in contact_data:
         if contact[5] >= 0:
             particle_array[int(contact[0] - contact_data[0, 0])] += 1
@@ -47,6 +48,7 @@ def main():
     # Labels
     plt.xlabel("Number of particle-particle contacts")
     plt.ylabel("Number of particles")
+    plt.legend([legend])
     plt.title('Histogram of particle-particle contacts')
     # Show plot
     plt.show()
