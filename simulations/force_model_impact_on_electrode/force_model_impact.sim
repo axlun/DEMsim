@@ -1,10 +1,10 @@
-N=500
+N=3000
 filling_density=0.075		
 particle_density_at_cube=0.5
-//output_dir=/scratch/users/axlun/DEMsim/results/electrode_calendaring/bt065N500/
-//radius_file=/scratch/users/axlun/DEMsim/simulations/force_model_impact_on_electrode/size_distribution_2_particle.dat
-output_dir=/mnt/c/Users/Axel/Documents/DEM/results/electrode_calendaring/bt065N500_test/
-radius_file=/mnt/c/Users/Axel/Documents/DEM/DEMsim/simulations/force_model_impact_on_electrode/size_distribution_2_particle.dat
+output_dir=/scratch/users/axlun/DEMsim/results/electrode_calendaring/bt065N3000bt_coeff71/
+radius_file=/scratch/users/axlun/DEMsim/simulations/force_model_impact_on_electrode/size_distribution_2_particle.dat
+//output_dir=/mnt/c/Users/Axel/Documents/DEM/results/electrode_calendaring/bt065N500_test/
+//radius_file=/mnt/c/Users/Axel/Documents/DEM/DEMsim/simulations/force_model_impact_on_electrode/size_distribution_2_particle.dat
 E=3e9
 nu=0.3
 nup=0.3
