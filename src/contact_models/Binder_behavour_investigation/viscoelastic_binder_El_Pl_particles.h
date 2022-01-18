@@ -74,13 +74,12 @@ namespace DEM{
         double F_ = 0;
         double F_binder = 0;
         double F_particle = 0;
-        double mu_particle_;
+        double mu_particle_ = 0.;
         Vec3 dFT_{Vec3(0., 0., 0.)};
         Vec3 FT_{Vec3(0., 0., 0.)};
         Vec3 FT_binder_ {Vec3(0., 0., 0.)};
         Vec3 FT_part_ {Vec3(0., 0., 0.)};
         Vec3 uT_{ Vec3(0., 0., 0.) };
-
         Vec3 rot_ {Vec3(0., 0., 0.)};
 
 

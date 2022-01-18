@@ -55,6 +55,8 @@ DEM::viscoelastic_binder_El_Pl_particles::viscoelastic_binder_El_Pl_particles(DE
     {
     di_.push_back(0);
     ddi_.push_back(0);
+    ddti_.emplace_back(0., 0., 0.);
+    dti_.emplace_back(0., 0., 0.);
     Ai.push_back(1-exp((-dt_/tau_i[i])));
     Bi.push_back((1-(tau_i[i]/dt_) *Ai[i]));
     }
@@ -95,6 +97,8 @@ DEM::viscoelastic_binder_El_Pl_particles::viscoelastic_binder_El_Pl_particles(
         {
             di_.push_back(0);
             ddi_.push_back(0);
+            ddti_.emplace_back(0., 0., 0.);
+            dti_.emplace_back(0., 0., 0.);
             Ai.push_back(1-exp((-dt_/tau_i[i])));
             Bi.push_back((1-(tau_i[i]/dt_) *Ai[i]));
         }
