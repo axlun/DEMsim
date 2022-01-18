@@ -183,8 +183,8 @@ void DEM::electrode_calendaring(const std::string& settings_file_name) {
     std::cout<<"Compaction time: "<< compaction_time_2.count()<< std::endl;
     run_for_time.reset(compaction_time_2);
     simulator.run(run_for_time);
-    std::cout<<"Writing restart file ";
-    simulator.write_restart_file(output_directory + "/compact_restart_file.res");
+//    std::cout<<"Writing restart file ";
+//    simulator.write_restart_file(output_directory + "/compact_restart_file.res");
     std::cout<<"beginning of unloading"<< std::endl;
     top_surface->set_velocity(Vec3(0, 0, surface_velocity));
     mat->adhesive = true; //Enable adhesive when particles are compacted and before unloaded
@@ -201,8 +201,8 @@ void DEM::electrode_calendaring(const std::string& settings_file_name) {
     std::cout<<"Height of active layer "<< Active_layer_height<< std::endl;
     double NMC_porosity = 1-particle_volume/(box_side*box_side*Active_layer_height) ;
     std::cout<<"NMC Porosity: "<< NMC_porosity<< std::endl;
-    std::cout<<"Writing restart file ";
-    simulator.write_restart_file(output_directory + "/calendered_electrode_restart_file.res");
+//    std::cout<<"Writing restart file ";
+//    simulator.write_restart_file(output_directory + "/calendered_electrode_restart_file.res");
 }
 
 
