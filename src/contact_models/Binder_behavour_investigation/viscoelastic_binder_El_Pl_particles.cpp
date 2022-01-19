@@ -30,17 +30,21 @@ DEM::viscoelastic_binder_El_Pl_particles::viscoelastic_binder_El_Pl_particles(DE
     double vp2 = mat2->nup;
     double Ep2 = mat2->Ep;
     double Ep1 = mat1->Ep;
+    mu_particle_ = (mat1->mu + mat2->mu)/2;
+    double Gp1 = Ep1/(2*(1+vp1));
+    double Gp2 = Ep2/(2*(1+vp2));
     double rhop = mat1->rhop;
     double Ep_eff = 1./(((1-vp1*vp1)/Ep1)+((1-vp2*vp2)/Ep2));
-    double br_ = mat1-> binder_radius_fraction * particle1->get_radius();
+    br_ = mat1-> binder_radius_fraction * particle1->get_radius();
     bt_ = mat1-> binder_thickness_fraction * particle1->get_radius(); //Binder thickness determined by fraction of
 //  std::cout << "Binder thickness:" << bt_ << std::endl;                      //particle radius
     double A = DEM::pi*br_*br_;
     kb_coeff = mat1->binder_stiffness_coefficient;
     psi0_ = kb_coeff*(1 - v1)/(1 + v1)/(1 - 2*v1)*E1*A/bt_; //The instantaneous value of the relaxation function for the binder
+    psi0T_B_ = E1/bt_*A/2/(1+v1);
     kp_ = (4./3)*Ep_eff* sqrt(R0_); //Particle stiffness following Hertz contact for two particles
-    yield_h_ = mat1->yield_displacement_coeff*R0_;
-
+    kTp_ = 8/((2-vp1)/Gp1 + (2-vp2)/Gp2)*0.001*R0_; //Tangential particle stiffness following Hertz contact for two particles, 0.001R0 represents
+    yield_h_ = mat1->yield_displacement_coeff*R0_; //the contact radius
 
     binder_contact_ = create_binder_contact(mat1);
     adhesive_ = true;
@@ -73,15 +77,19 @@ DEM::viscoelastic_binder_El_Pl_particles::viscoelastic_binder_El_Pl_particles(
         double v1 = mat1->nu;
         double vp1=mat1->nup;
         double Ep1 = mat1->Ep;
+        double Gp1 = Ep1/(2*(1+vp1));
+        mu_particle_ = mat1->mu_wall;
         double rhop = mat1->rhop;
         double Ep_eff = 1./(((1-vp1*vp1)/Ep1)); //Effective Young's modulus for one particle and one rigid surface
-        double br_ = mat1-> binder_radius_fraction * particle1->get_radius();
+        br_ = mat1-> binder_radius_fraction * particle1->get_radius();
         bt_ = mat1-> binder_thickness_fraction * particle1->get_radius();
         double A = DEM::pi*br_*br_;
         kb_coeff = mat1->binder_stiffness_coefficient;
         psi0_ = kb_coeff*(1 - v1)/(1 + v1)/(1 - 2*v1)*E1*A/bt_; //The instantaneous value of the relaxation function for the binder
+        psi0T_B_ = E1/bt_*A/2/(1+v1); //The instantaneous  value of the shear relaxation function for the binder
         kp_ = (4./3)*Ep_eff* sqrt(R0_); //Particle stiffness following Hertz contact for two particles
-        yield_h_ = mat1->yield_displacement_coeff*R0_;
+        kTp_ = 8/((2-vp1)/Gp1)*0.001*R0_;                 //Tangential particle stiffness following Hertz contact for two particles, 0.001R0 represents
+        yield_h_ = mat1->yield_displacement_coeff*R0_; //(approximantes) the contact radius, should it be changed?
         adhesive_ = surface->adhesive();
         binder_contact_ = create_binder_contact(mat1);
 
@@ -110,10 +118,13 @@ DEM::viscoelastic_binder_El_Pl_particles::viscoelastic_binder_El_Pl_particles(
         DEM::viscoelastic_binder_El_Pl_particles::ParticleType* particle2,
         std::chrono::duration<double>, const DEM::ParameterMap& parameters):
         psi0_(parameters.get_parameter<double>("psi0_")),
+        psi0T_B_(parameters.get_parameter<double>("psi0T_B_")),
         kp_(parameters.get_parameter<double>("kp_")),
+        kTp_(parameters.get_parameter<double>("kTp_")),
         R0_(parameters.get_parameter<double>("R0")),
         //Rb_(parameters.get_parameter<double>("Rb")),
         bt_(parameters.get_parameter<double>("bt")),
+        br_(parameters.get_parameter<double>("br")),
         kb_coeff(parameters.get_parameter<double>("kb_coeff")),
         h_(parameters.get_parameter<double>("h")),
         yield_h_(parameters.get_parameter<double>("yield_h")),
@@ -154,11 +165,14 @@ DEM::viscoelastic_binder_El_Pl_particles::viscoelastic_binder_El_Pl_particles(
         DEM::viscoelastic_binder_El_Pl_particles::SurfaceType * surface1,
         std::chrono::duration<double>, const DEM::ParameterMap& parameters):
         psi0_(parameters.get_parameter<double>("psi0_")),
+        psi0T_B_(parameters.get_parameter<double>("psi0T_B_")),
         kp_(parameters.get_parameter<double>("kp_")),
+        kTp_(parameters.get_parameter<double>("kTp_")),
         R0_(parameters.get_parameter<double>("R0")),
         //Rb_(parameters.get_parameter<double>("Rb")),
         kb_coeff(parameters.get_parameter<double>("kb_coeff")),
         bt_(parameters.get_parameter<double>("bt")),
+        br_(parameters.get_parameter<double>("br")),
         h_(parameters.get_parameter<double>("h")),
         yield_h_(parameters.get_parameter<double>("yield_h")),
         hmax_(parameters.get_parameter<double>("hmax")),
@@ -196,7 +210,9 @@ DEM::viscoelastic_binder_El_Pl_particles::viscoelastic_binder_El_Pl_particles(
 void DEM::viscoelastic_binder_El_Pl_particles::update(double h, const DEM::Vec3& dt, const Vec3& drot, const DEM::Vec3& normal)
 {
 //    std::cout << "New iteration" << std::endl;
+    rot_ += drot;
     F_ = update_normal_force(h);
+    update_tangential_force(dt, normal);
 //    std::cout << "F_:"<< F_ << std::endl;
 //    std::cout << "F_binder:"<< F_binder << std::endl;
 //    std::cout << "F_particle:"<< F_particle << std::endl;
@@ -230,18 +246,10 @@ double  DEM::viscoelastic_binder_El_Pl_particles::update_normal_force(double h)
         for(unsigned i = 0; i != M; i++)
         {
             ddi_[i] = Ai[i] * ((bt_+h_) - di_[i]) + Bi[i] * dh;
-//            std::cout << "Ai:" << Ai[i] << std::endl;
-//            std::cout << "Bi:" << Bi[i] << std::endl;
-//            std::cout << "di_:" << di_[i] << std::endl;
-//            std::cout << "ddi_:" << ddi_[i] << std::endl;
             viscoelastic_summation += alpha_i[i]*ddi_[i];
             di_[i] += ddi_[i];
         }
-//        std::cout << "Viscoelastic_summation:" << -viscoelastic_summation << std::endl;
-//        std::cout << "Elastic force increment:" << psi0_*dh << std::endl;
-
         F_binder += psi0_*(dh-viscoelastic_summation);
-//        std::cout << "F_binder:" << F_binder << std::endl;
         }
         else
         {
@@ -278,15 +286,62 @@ double  DEM::viscoelastic_binder_El_Pl_particles::update_normal_force(double h)
     }
 }
 
+void  DEM::viscoelastic_binder_El_Pl_particles::update_tangential_force(const DEM::Vec3& dt, const DEM::Vec3& normal)
+{
+    if (F_binder != 0. && adhesive())
+    {
+      FT_binder_ -= dot_product(FT_binder_,normal)*normal;
+      uT_ -= dot_product(uT_,normal)*normal;
+      uT_ += dt;
+      dFT_ = dt;
+      for (unsigned i = 0; i !=M; i++)
+      {
+          dti_[i] -= dot_product(dti_[i],normal)*normal;
+          ddti_[i] = Bi[i]*dt + Ai[i]*(uT_ - dti_[i]);
+          dFT_ -= alpha_i[i]*ddti_[i];
+          dti_[i] += ddti_[i];
+      }
+      FT_binder_ += psi0T_B_ * dFT_;
+    }
+    else
+    {
+        uT_.set_zero();
+        FT_binder_.set_zero();
+        for (unsigned i = 0; i != M; ++i)
+        {
+            dti_[i].set_zero();
+        }
+    }
+    FT_ = -FT_binder_;
+
+    if (F_particle > 0.)
+    {
+        FT_part_ -= dot_product(FT_part_,normal)*normal;
+        FT_part_ += kTp_*dt;
+        if (FT_part_.length() > mu_particle_*F_particle)
+        {
+            FT_part_ = mu_particle_ * F_particle * FT_part_.normal();
+        }
+        else
+        {
+            FT_part_.set_zero();
+        }
+        FT_ -= FT_part_;
+    }
+}
+
+
 std::string DEM::viscoelastic_binder_El_Pl_particles::restart_data() const {
         std::ostringstream ss;
         ss << named_print(dt_, "dt") << ", "
            << named_print(bt_, "bt") << ", "
+           << named_print(br_, "br") << ", "
            << named_print(h_, "h") << ", "
            << named_print(hmax_, "hmax") << ", "
            << named_print(yield_h_, "yield_h") << ", "
            //<< named_print(k_, "k") << ", "
            << named_print(kp_, "kp_") << ", "
+           << named_print(kTp_, "kTp_") << ", "
            << named_print(kb_coeff, "kb_coeff") << ", "
            << named_print(R0_, "R0") << ", "
            //<< named_print(Rb_, "Rb") << ", "
@@ -307,7 +362,7 @@ std::string DEM::viscoelastic_binder_El_Pl_particles::restart_data() const {
            << named_print(binder_contact_, "binder_contact") << ", "
            << named_print(fractured_, "fractured") << ", "
            << named_print(psi0_, "psi0_") << ", "
-           << named_print(kT_B_, "kT_B_") << ", "
+           << named_print(psi0T_B_, "psi0T_B_") << ", "
            << named_print(M, "M");
 
         for (unsigned i=0; i != M; ++i) {

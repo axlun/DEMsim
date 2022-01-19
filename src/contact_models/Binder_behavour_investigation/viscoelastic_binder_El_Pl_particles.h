@@ -41,10 +41,11 @@ namespace DEM{
     private:
         const static ElectrodeMaterial* material;
 
-        double kp_ = 0;
+        double kp_ = 0.;
+        double kTp_ = 0.;
         double psi0_ = 0;
         double kb_coeff = 1;
-        double kT_B_;
+        double psi0T_B_ = 0.;
         double h_ = 0;
         double hmax_ = -1e99 ;
         double yield_h_ = 1e99;
@@ -84,6 +85,7 @@ namespace DEM{
 
 
         double update_normal_force(double h);
+        void update_tangential_force(const Vec3& dt, const Vec3& normal);
         static bool create_binder_contact(const ElectrodeMaterial* mat);
         bool adhesive() const;
     };

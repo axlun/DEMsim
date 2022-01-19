@@ -32,6 +32,8 @@ void DEM::electrode_calendaring(const std::string& settings_file_name) {
     mat->nup = parameters.get_parameter<double>("nup");
     mat->rhop = parameters.get_parameter<double>("rhop");
     mat->yield_displacement_coeff = parameters.get_parameter<double>("yield_displacement_coeff");
+    mat->mu = parameters.get_parameter<double>("mu");
+    mat->mu_wall = parameters.get_parameter<double>("mu_wall");
     auto rho_al = parameters.get_parameter<double>("rho_al"); //density of active layer
     auto mass_ratio_particles = parameters.get_parameter<double>("mass_ratio_particles"); //ratio between particle mass and total mass
 //    mat->mu = parameters.get_parameter<double>("mu");
