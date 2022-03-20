@@ -17,14 +17,15 @@ def main():
     plt.rc('font', serif='Computer Modern Roman')
     plt.rcParams.update({'font.size': 15})
     plt.rcParams['lines.linewidth'] = 2
-    force_data = np.genfromtxt('C:/Users/Axel/Documents/DEM/results/Viscoelastic_binder_El_Pl_particles_contact_test/contact_testing.dou',
+    force_data = np.genfromtxt('C:/Users/Axel/Documents/DEM/results/contact_testing/plasticity_in_binder/contact_testing.dou',
                                 delimiter=',')
-    simulation_dir = 'C:/Users/Axel/Documents/DEM/DEMsim/simulations/contact_testing/viscoelastic_binder_El_Pl_particles.sim'
+    simulation_dir = 'C:/Users/Axel/Documents/DEM/DEMsim/simulations/force_model_impact_on_electrode/contact_test.sim'
 
 
     time_parameter = get_parameter(simulation_dir,'t')
     time = force_data[:,4]
-
+    ticks = time/time_parameter
+    print(time)
     plt.figure(1)
     Ep = get_parameter(simulation_dir,'Ep')
     nup = get_parameter(simulation_dir,'nup')
@@ -37,13 +38,21 @@ def main():
     plt.xlabel("Overlap [m]")
     plt.tight_layout()
 
+    print(ticks)
     plt.figure(2)
+    plt.plot(ticks,F)
+    plt.ylabel("Force [N]")
+    plt.xlabel("Ticks [-]")
+    plt.tight_layout()
+
+
+    plt.figure(3)
     plt.plot(time,F)
     plt.ylabel("Force [N]")
     plt.xlabel("Time [s]")
     plt.tight_layout()
 
-    plt.figure(3)
+    plt.figure(4)
     plt.plot(time,h)
     plt.ylabel("Overlap [m]")
     plt.xlabel("Time [s]")

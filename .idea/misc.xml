@@ -10,5 +10,5 @@
       <file path="$PROJECT_DIR$/results" />
     </excludeRoots>
   </component>
-  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.8 (DEM)" project-jdk-type="Python SDK" />
+  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.8 (Particle-Binder-compaction)" project-jdk-type="Python SDK" />
 </project>

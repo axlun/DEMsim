@@ -47,9 +47,11 @@ namespace DEM{
         double kb_coeff = 1;
         double psi0T_B_ = 0.;
         double h_ = 0;
-        double hmax_ = -1e99 ;
+        double hmax_ = -1e99;
         double yield_h_ = 1e99;
-
+        double binder_yield_stress = 1e99; //high stress if yield is not used
+        double A = 0.0;
+        double v1 = 0.0;
         double bt_ = 0;
         double br_ = 0;
         double R0_ = 0;
