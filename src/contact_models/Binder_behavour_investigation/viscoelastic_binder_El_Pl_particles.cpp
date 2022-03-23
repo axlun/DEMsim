@@ -246,8 +246,10 @@ double  DEM::viscoelastic_binder_El_Pl_particles::update_normal_force(double h)
 
     if(binder_contact_)
     {
-        if ((h_ > -bt_) || bonded_)
+        std::cout << "particle contact:"<< particle_contact_ << std::endl;
+        if ((h_ > -bt_) && !particle_contact_ || bonded_ && !particle_contact_)
         {
+            std::cout << "in IF:"<< !particle_contact_ << std::endl;
             double viscoelastic_summation = 0.;
             for (unsigned i = 0; i != M; i++)
             {
@@ -261,28 +263,44 @@ double  DEM::viscoelastic_binder_El_Pl_particles::update_normal_force(double h)
 //            std::cout << "viscoelastic_summation:"<< viscoelastic_summation << std::endl;
 //            std::cout << "F_binder:"<< F_binder << std::endl;
             // Check yield criterion and remove the stress added if the material has yielded
+            // Effective stress is set to uniaxial stress
             double sigma_Mises_effective_binder = F_binder/(A*(1-v1));
             double sigma_binder = F_binder/A;
 
 //            std::cout << "A:"<< A << std::endl;
-            std::cout << "sig_vMe_Effective_binder:"<< sigma_Mises_effective_binder << std::endl;
-            std::cout << "sig_binder:"<< sigma_binder << std::endl;
-            std::cout << "sig_yield_binder:"<< binder_yield_stress   << std::endl;
+//            std::cout << "sig_vMe_Effective_binder:"<< sigma_Mises_effective_binder << std::endl;
+//            std::cout << "sig_binder:"<< sigma_binder << std::endl;
+//            std::cout << "sig_yield_binder:"<< binder_yield_stress   << std::endl;
 
-            if (sigma_Mises_effective_binder > binder_yield_stress)
+            if (sigma_binder > binder_yield_stress)
             {
-                F_binder = binder_yield_stress*A*(1-v1);
+                F_binder = binder_yield_stress*A;
 //                std::cout << "Plasticity in binder compression:"<< F_binder << std::endl;
             }
-            else if (sigma_Mises_effective_binder < -binder_yield_stress)
+            else if (sigma_binder < -binder_yield_stress)
             {
-                F_binder = -binder_yield_stress*A*(1-v1);
+                F_binder = -binder_yield_stress*A;
 //                std::cout << "binder_yield_stress:"<< binder_yield_stress << std::endl;
 //                std::cout << "A:"<< A << std::endl;
 //                std::cout << "Plasticity in binder tension:"<< F_binder << std::endl;
             }
             sigma_binder = F_binder/A;
-            std::cout << "sig_binder after plast corr:"<< sigma_binder << std::endl;
+//            std::cout << "sig_binder after plast corr:"<< sigma_binder << std::endl;
+
+
+
+        }
+        else if(particle_contact_)
+        {
+            if (F_binder > 0 )
+            {
+                F_binder -= ((psi0_ * dh)**2)**(0.5);
+            }
+            if (F_binder <= 0)
+            {
+                F_binder = 0;
+            }
+            std::cout << "F_binder:"<< F_binder << std::endl;
         }
     }
     else
@@ -300,6 +318,8 @@ double  DEM::viscoelastic_binder_El_Pl_particles::update_normal_force(double h)
 
     if (h_ > 0)
     {
+        particle_contact_ = true;
+        bonded_ = false;
         if (h > yield_h_ && h >= hmax_)
         {
             F_particle += 1.5 * kp_ * sqrt(yield_h_) * dh; //Tangent of Hertz at yield displacement?

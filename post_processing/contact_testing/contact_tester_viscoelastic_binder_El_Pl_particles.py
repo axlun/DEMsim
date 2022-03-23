@@ -17,7 +17,7 @@ def main():
     plt.rc('font', serif='Computer Modern Roman')
     plt.rcParams.update({'font.size': 15})
     plt.rcParams['lines.linewidth'] = 2
-    force_data = np.genfromtxt('C:/Users/Axel/Documents/DEM/results/contact_testing/plasticity_in_binder/contact_testing.dou',
+    force_data = np.genfromtxt('C:/Users/Axel/Documents/DEM/results/contact_testing/plasticity_in_binder/contact_testing/breaking_of_binder/contact_testing.dou',
                                 delimiter=',')
     simulation_dir = 'C:/Users/Axel/Documents/DEM/DEMsim/simulations/force_model_impact_on_electrode/contact_test.sim'
 

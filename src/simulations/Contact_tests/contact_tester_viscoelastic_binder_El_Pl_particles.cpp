@@ -71,6 +71,7 @@ void DEM::contact_tester_viscoelastic_binder_El_Pl_particles(const std::string &
     std::ofstream output_file;
     output_file.open(filename);
     auto simulation_time = 0.;
+    //Loading of binder
     for(unsigned i = 0; i != increments; ++i) {
         p1.move(Vec3{tick,0 , 0});
         p2.move(Vec3{-tick,0 , 0});
@@ -85,37 +86,63 @@ void DEM::contact_tester_viscoelastic_binder_El_Pl_particles(const std::string &
                     //  << c.get_tangential_force().y() << ", "  //not any tangential force yet
                     << p1.get_position().y() - p2.get_position().y() << "," << simulation_time << ", " << i << ", " << c.get_normal() << std::endl;
     }
-//    for(unsigned i = 0; i != 2*increments; ++i) {
-//        p1.move(Vec3{-tick,0 , 0});
-//        p2.move(Vec3{tick,0 , 0});
-//        c.update();
-//        simulation_time += simulation_time_step;
-//        output_file << c.get_overlap() << ", " << c.get_normal_force().x() << ", "
-//                    << p2.get_position().x() - p1.get_position().x() << ", "
-//                    //  << c.get_tangential_force().y() << ", "  //not any tangential force yet
-//                    << p1.get_position().y() - p2.get_position().y() << "," << simulation_time << ", " << i << ", " << c.get_normal() << std::endl;
-//    }
-//    for(unsigned i = 0; i != 10*increments; ++i) {
-//        p1.move(Vec3{-tick,0 , 0});
-//        p2.move(Vec3{tick,0 , 0});
-//        c.update();
-//        simulation_time += simulation_time_step;
-//    output_file << c.get_overlap() << ", " << c.get_normal_force().x() << ", "
-//                << p2.get_position().x() - p1.get_position().x() << ", "
-//                //  << c.get_tangential_force().y() << ", "  //not any tangential force yet
-//                << p1.get_position().y() - p2.get_position().y() << "," << simulation_time << ", " << i << ", " << c.get_normal() << std::endl;
-//    }
-//    for(unsigned i = 0; i != 20*increments; ++i) {
-////        p1.move(Vec3{-tick,0 , 0});
-////        p2.move(Vec3{tick,0 , 0});
-//        c.update();
-//        simulation_time += simulation_time_step;
-//        output_file << c.get_overlap() << ", " << c.get_normal_force().x() << ", "
-//                    << p2.get_position().x() - p1.get_position().x() << ", "
-//                    //  << c.get_tangential_force().y() << ", "  //not any tangential force yet
-//                    << p1.get_position().y() - p2.get_position().y() << "," << simulation_time << "," << i << std::endl;
-//    }
-//    for(unsigned i = 0; i != 1*increments; ++i) {
+    //Unloading of binder
+    for(unsigned i = 0; i != 1.5*increments; ++i) {
+        p1.move(Vec3{-tick,0 , 0});
+        p2.move(Vec3{tick,0 , 0});
+        c.update();
+        simulation_time += simulation_time_step;
+        output_file << c.get_overlap() << ", " << c.get_normal_force().x() << ", "
+                    << p2.get_position().x() - p1.get_position().x() << ", "
+                    //  << c.get_tangential_force().y() << ", "  //not any tangential force yet
+                    << p1.get_position().y() - p2.get_position().y() << "," << simulation_time << ", " << i << ", " << c.get_normal() << std::endl;
+    }
+    //Loading to particle contact
+    for(unsigned i = 0; i != 2*increments; ++i) {
+        p1.move(Vec3{tick,0 , 0});
+        p2.move(Vec3{-tick,0 , 0});
+        c.update();
+        simulation_time += simulation_time_step;
+        output_file << c.get_overlap() << ", " << c.get_normal_force().x() << ", "
+                    << p2.get_position().x() - p1.get_position().x() << ", "
+                    //  << c.get_tangential_force().y() << ", "  //not any tangential force yet
+                    << p1.get_position().y() - p2.get_position().y() << "," << simulation_time << ", " << i << ", " << c.get_normal() << std::endl;
+    }
+    //Unloading of particle contact
+    for(unsigned i = 0; i != .5*increments; ++i) {
+        p1.move(Vec3{-tick,0 , 0});
+        p2.move(Vec3{tick,0 , 0});
+        c.update();
+        simulation_time += simulation_time_step;
+        output_file << c.get_overlap() << ", " << c.get_normal_force().x() << ", "
+                    << p2.get_position().x() - p1.get_position().x() << ", "
+                    //  << c.get_tangential_force().y() << ", "  //not any tangential force yet
+                    << p1.get_position().y() - p2.get_position().y() << "," << simulation_time << ", " << i << ", " << c.get_normal() << std::endl;
+    }
+    //Reloading of particle contact
+    for(unsigned i = 0; i != 1*increments; ++i) {
+        p1.move(Vec3{tick,0 , 0});
+        p2.move(Vec3{-tick,0 , 0});
+        c.update();
+        simulation_time += simulation_time_step;
+        output_file << c.get_overlap() << ", " << c.get_normal_force().x() << ", "
+                    << p2.get_position().x() - p1.get_position().x() << ", "
+                    //  << c.get_tangential_force().y() << ", "  //not any tangential force yet
+                    << p1.get_position().y() - p2.get_position().y() << "," << simulation_time << ", " << i << ", " << c.get_normal() << std::endl;
+    }
+    //Unloading of particle contact
+    for(unsigned i = 0; i != 1*increments; ++i) {
+        p1.move(Vec3{-tick,0 , 0});
+        p2.move(Vec3{tick,0 , 0});
+        c.update();
+        simulation_time += simulation_time_step;
+        output_file << c.get_overlap() << ", " << c.get_normal_force().x() << ", "
+                    << p2.get_position().x() - p1.get_position().x() << ", "
+                    //  << c.get_tangential_force().y() << ", "  //not any tangential force yet
+                    << p1.get_position().y() - p2.get_position().y() << "," << simulation_time << ", " << i << ", " << c.get_normal() << std::endl;
+    }
+
+    //    for(unsigned i = 0; i != 1*increments; ++i) {
 //        p1.move(Vec3{tick,0 , 0});
 //        p2.move(Vec3{-tick,0 , 0});
 //        c.update();
