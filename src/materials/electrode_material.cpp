@@ -18,6 +18,7 @@ DEM::ElectrodeMaterial::ElectrodeMaterial(const ParameterMap& parameters) :
     nup(parameters.get_parameter<double>("nup")),
     rhop(parameters.get_parameter<double>("rhop")),
     bt(parameters.get_parameter<double>("bt")),
+    particle_yield_stress_(parameters.get_parameter<double>("particle_yield_stress_")),
     yield_displacement_coeff(parameters.get_parameter<double>("yield_coeff")),
     tau_i(),
     alpha_i(),
@@ -51,6 +52,7 @@ std::string DEM::ElectrodeMaterial::restart_data() const {
        << named_print(fraction_binder_contacts,"fraction_binder_contacts")<< ", "
        << named_print(yield_displacement_coeff, "yield_coeff") << ", "
        << named_print(binder_radius_fraction, "binder_radius_fraction") << ", "
+       << named_print(particle_yield_stress_, "particle_yield_stress") << ", "
        << named_print(bt, "bt") << ", "
        << named_print(kT, "kT") << ", "
        << named_print(mu, "mu") << ", "
