@@ -19,7 +19,7 @@
 #include "../../materials/electrode_material.h"
 #include "../../materials/porous_electrode_material.h"
 
-void DEM::contact_tester_viscoelastic_binder_El_Pl_particles(const std::string &settings_file_name)
+void DEM::particle_contact_tester_viscoelastic_binder_El_Pl_particles(const std::string &settings_file_name)
 {
     using namespace DEM;
     using ForceModel = viscoelastic_binder_El_Pl_particles;

@@ -19,7 +19,7 @@
 #include "../../materials/electrode_material.h"
 #include "../../materials/porous_electrode_material.h"
 
-void DEM::contact_tester_viscoelastic_binder_El_Pl_particles(const std::string &settings_file_name)
+void DEM::binder_contact_tester_viscoelastic_binder_El_Pl_particles(const std::string &settings_file_name)
 {
     using namespace DEM;
     using ForceModel = viscoelastic_binder_El_Pl_particles;
@@ -59,17 +59,13 @@ void DEM::contact_tester_viscoelastic_binder_El_Pl_particles(const std::string &
     mat.fraction_binder_contacts =parameters.get_parameter<double>("fraction_binder_contacts");
     mat.alpha_i = parameters.get_vector<double>("alpha_i");
     mat.tau_i =parameters.get_vector<double>("tau_i");
-   // For binder contact
-//    auto p1 = SphericalParticle<ForceModel>(radius, Vec3{-radius-(mat.binder_thickness_fraction*radius)/2-4*tick ,0 , 0},
-//                                            Vec3{}, &mat, 1);
-//    auto p2 = SphericalParticle<ForceModel>(radius,Vec3{radius+(mat.binder_thickness_fraction*radius)/2+4*tick ,0, 0},
-//                                            Vec3{}, &mat, 1);
-//  For particle contact
-    auto p1 = SphericalParticle<ForceModel>(radius, Vec3{-radius-1*tick ,0 , 0},
+    //For binder contact
+    auto p1 = SphericalParticle<ForceModel>(radius, Vec3{-radius-(mat.binder_thickness_fraction*radius)/2-4*tick ,0 , 0},
                                             Vec3{}, &mat, 1);
-    auto p2 = SphericalParticle<ForceModel>(radius,Vec3{radius+1*tick ,0, 0},
+    auto p2 = SphericalParticle<ForceModel>(radius,Vec3{radius+(mat.binder_thickness_fraction*radius)/2+4*tick ,0, 0},
                                             Vec3{}, &mat, 1);
     auto c = Contact<ForceModel, ParticleType>(&p2, &p1, timestep);
+
 
     p1.move(Vec3{tick, 0, 0});
     p2.move(Vec3{-tick, 0, 0});
@@ -79,8 +75,8 @@ void DEM::contact_tester_viscoelastic_binder_El_Pl_particles(const std::string &
     std::ofstream output_file;
     output_file.open(filename);
     auto simulation_time = 0.;
-    //Loading of particle
-    for(unsigned i = 0; i != increments; ++i) {
+    //Loading of Binder
+    for(unsigned i = 0; i != .2*increments; ++i) {
         p1.move(Vec3{tick,0 , 0});
         p2.move(Vec3{-tick,0 , 0});
         c.update();
@@ -94,8 +90,8 @@ void DEM::contact_tester_viscoelastic_binder_El_Pl_particles(const std::string &
                     //  << c.get_tangential_force().y() << ", "  //not any tangential force yet
                     << p1.get_position().y() - p2.get_position().y() << "," << simulation_time << ", " << i << ", " << c.get_normal() << std::endl;
     }
-    //Unloading of particle
-    for(unsigned i = 0; i != .2*increments; ++i) {
+    //Unloading of Binder to tension
+    for(unsigned i = 0; i != 0.4*increments; ++i) {
         p1.move(Vec3{-tick,0 , 0});
         p2.move(Vec3{tick,0 , 0});
         c.update();
@@ -105,8 +101,8 @@ void DEM::contact_tester_viscoelastic_binder_El_Pl_particles(const std::string &
                     //  << c.get_tangential_force().y() << ", "  //not any tangential force yet
                     << p1.get_position().y() - p2.get_position().y() << "," << simulation_time << ", " << i << ", " << c.get_normal() << std::endl;
     }
-    //Reload of particle contact
-    for(unsigned i = 0; i != .4*increments; ++i) {
+    //Reload of binder to particle contact
+    for(unsigned i = 0; i != 1.5*increments; ++i) {
         p1.move(Vec3{tick,0 , 0});
         p2.move(Vec3{-tick,0 , 0});
         c.update();
@@ -117,7 +113,7 @@ void DEM::contact_tester_viscoelastic_binder_El_Pl_particles(const std::string &
                     << p1.get_position().y() - p2.get_position().y() << "," << simulation_time << ", " << i << ", " << c.get_normal() << std::endl;
     }
     //Unloading of particle contact
-    for(unsigned i = 0; i != .5*increments; ++i) {
+    for(unsigned i = 0; i != .1*increments; ++i) {
         p1.move(Vec3{-tick,0 , 0});
         p2.move(Vec3{tick,0 , 0});
         c.update();
@@ -127,28 +123,28 @@ void DEM::contact_tester_viscoelastic_binder_El_Pl_particles(const std::string &
                     //  << c.get_tangential_force().y() << ", "  //not any tangential force yet
                     << p1.get_position().y() - p2.get_position().y() << "," << simulation_time << ", " << i << ", " << c.get_normal() << std::endl;
     }
-//    //Reloading of particle contact
-//    for(unsigned i = 0; i != 1*increments; ++i) {
-//        p1.move(Vec3{tick,0 , 0});
-//        p2.move(Vec3{-tick,0 , 0});
-//        c.update();
-//        simulation_time += simulation_time_step;
-//        output_file << c.get_overlap() << ", " << c.get_normal_force().x() << ", "
-//                    << p2.get_position().x() - p1.get_position().x() << ", "
-//                    //  << c.get_tangential_force().y() << ", "  //not any tangential force yet
-//                    << p1.get_position().y() - p2.get_position().y() << "," << simulation_time << ", " << i << ", " << c.get_normal() << std::endl;
-//    }
-//    //Unloading of particle contact
-//    for(unsigned i = 0; i != 1*increments; ++i) {
-//        p1.move(Vec3{-tick,0 , 0});
-//        p2.move(Vec3{tick,0 , 0});
-//        c.update();
-//        simulation_time += simulation_time_step;
-//        output_file << c.get_overlap() << ", " << c.get_normal_force().x() << ", "
-//                    << p2.get_position().x() - p1.get_position().x() << ", "
-//                    //  << c.get_tangential_force().y() << ", "  //not any tangential force yet
-//                    << p1.get_position().y() - p2.get_position().y() << "," << simulation_time << ", " << i << ", " << c.get_normal() << std::endl;
-//    }
+    //Reloading of particle contact
+    for(unsigned i = 0; i != .3*increments; ++i) {
+        p1.move(Vec3{tick,0 , 0});
+        p2.move(Vec3{-tick,0 , 0});
+        c.update();
+        simulation_time += simulation_time_step;
+        output_file << c.get_overlap() << ", " << c.get_normal_force().x() << ", "
+                    << p2.get_position().x() - p1.get_position().x() << ", "
+                    //  << c.get_tangential_force().y() << ", "  //not any tangential force yet
+                    << p1.get_position().y() - p2.get_position().y() << "," << simulation_time << ", " << i << ", " << c.get_normal() << std::endl;
+    }
+    //Unloading of particle contact
+    for(unsigned i = 0; i != .1*increments; ++i) {
+        p1.move(Vec3{-tick,0 , 0});
+        p2.move(Vec3{tick,0 , 0});
+        c.update();
+        simulation_time += simulation_time_step;
+        output_file << c.get_overlap() << ", " << c.get_normal_force().x() << ", "
+                    << p2.get_position().x() - p1.get_position().x() << ", "
+                    //  << c.get_tangential_force().y() << ", "  //not any tangential force yet
+                    << p1.get_position().y() - p2.get_position().y() << "," << simulation_time << ", " << i << ", " << c.get_normal() << std::endl;
+    }
 
     //    for(unsigned i = 0; i != 1*increments; ++i) {
 //        p1.move(Vec3{tick,0 , 0});

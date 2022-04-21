@@ -18,6 +18,9 @@ namespace DEM {
     void contact_tester(const std::string& settings_file_name);
     void contact_tester_elastic_perfect_plastic_material(const std::string& settings_file_name);
     void contact_tester_viscoelastic_binder_El_Pl_particles(const std::string& settings_file_name);
+    void binder_contact_tester_viscoelastic_binder_El_Pl_particles(const std::string& settings_file_name);
+    void particle_contact_tester_viscoelastic_binder_El_Pl_particles(const std::string& settings_file_name);
+    void wall_contact_tester_viscoelastic_binder_El_Pl_particles(const std::string& settings_file_name);
     void cyclic_triaxial(const std::string& settings_file_name);
     void proctor_test(const std::string& settings_file_name);
     void stone_compaction(const std::string& settings_file_name);
