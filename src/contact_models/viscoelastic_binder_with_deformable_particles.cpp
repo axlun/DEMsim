@@ -21,7 +21,7 @@ DEM::Viscoelastic_binder_with_deformable_particles::Viscoelastic_binder_with_def
     auto mat2 = dynamic_cast<const ElectrodeMaterial *>(particle2->get_material());
     material = mat1;
 
-    R0_= 1. / (1. / particle1->get_radius() + 1. / particle2->get_radius());
+    R0_= 1. / (1. / particle1->get_radius() + 1. / particle2->get_radius()); //Effecetive particle radius
 
     double E1 = mat1->E;
     double v1 = mat1->nu;

@@ -51,7 +51,7 @@ void DEM::binder_contact_tester_viscoelastic_binder_El_Pl_particles(const std::s
     mat.binder_thickness_fraction=parameters.get_parameter<double>("binder_thickness_fraction");
     mat.binder_stiffness_coefficient=parameters.get_parameter<double>("binder_stiffness_coefficient");
     mat.yield_displacement_coeff=parameters.get_parameter<double>("yield_displacement_coeff");
-    mat.Syb=parameters.get_parameter<double>("Syb");
+    mat.binder_yield_stress_=parameters.get_parameter<double>("binder_yield_stress_");
     mat.particle_yield_stress_=parameters.get_parameter<double>("particle_yield_stress_");
 
     //std::cout << "Binder thickness, bt:" << mat.bt << std::endl;
@@ -146,80 +146,4 @@ void DEM::binder_contact_tester_viscoelastic_binder_El_Pl_particles(const std::s
                     << p1.get_position().y() - p2.get_position().y() << "," << simulation_time << ", " << i << ", " << c.get_normal() << std::endl;
     }
 
-    //    for(unsigned i = 0; i != 1*increments; ++i) {
-//        p1.move(Vec3{tick,0 , 0});
-//        p2.move(Vec3{-tick,0 , 0});
-//        c.update();
-//        simulation_time += simulation_time_step;
-//    output_file << c.get_overlap() << ", " << c.get_normal_force().x() << ", "
-//                << p2.get_position().x() - p1.get_position().x() << ", "
-//                //  << c.get_tangential_force().y() << ", "  //not any tangential force yet
-//                << p1.get_position().y() - p2.get_position().y() << "," << simulation_time << ", " << i << ", " << c.get_normal() << std::endl;
-//    }
-//    for(unsigned i = 0; i != 1*increments; ++i) {
-//        p1.move(Vec3{-tick,0 , 0});
-//        p2.move(Vec3{tick,0 , 0});
-//        c.update();
-//        simulation_time += simulation_time_step;
-//    output_file << c.get_overlap() << ", " << c.get_normal_force().x() << ", "
-//                << p2.get_position().x() - p1.get_position().x() << ", "
-//                //  << c.get_tangential_force().y() << ", "  //not any tangential force yet
-//                << p1.get_position().y() - p2.get_position().y() << "," << simulation_time << ", " << i << ", " << c.get_normal() << std::endl;
-//    }
-
-
-//==================================================//
-//                Surface contact                   //
-//==================================================//
-//    auto surf_point_1 = Vec3(0, 1, 1);
-//    auto surf_point_2 = Vec3( 0, -1, 1);
-//    auto surf_point_3 = Vec3( 0,  -1, -1);
-//    auto surf_point_4 = Vec3(0,  1, -1);
-//    std::vector<Vec3> surface_points{surf_point_1, surf_point_4, surf_point_2, surf_point_3};
-//    auto deformable_surface = DeformablePointSurface<ForceModel, ParticleType>( 1, surface_points, true, "Def_Surface",
-//                                                                true, 0);
-//
-////  auto deformable_surface = simulator.create_deformable_point_surface(surface_points, true);
-//
-//    auto p3 = SphericalParticle<ForceModel>(radius, Vec3{+radius+(mat.binder_thickness_fraction*radius)+4*tick ,0 , 0},
-//                                            Vec3{}, &mat, 1);
-//
-//    auto surf_contact = Contact<ForceModel, ParticleType>(&p3, &deformable_surface, timestep);
-//
-//    for(unsigned i = 0; i != 6*increments; ++i) {
-//        p3.move(Vec3{-tick,0 , 0});
-//        surf_contact.update(); //comment
-//        simulation_time += simulation_time_step;
-//        output_file << surf_contact.get_overlap() << ", " << surf_contact.get_normal_force().x() << ", "
-//                    << p3.get_position().x() << ", "
-//                    //  << c.get_tangential_force().y() << ", "  //not any tangential force yet
-//                    << p3.get_position().y() << "," << simulation_time << "," << i << "," << surf_contact.get_normal() << std::endl;
-//    }
-//    for(unsigned i = 0; i != 10*increments; ++i) {
-//        //p3.move(Vec3{-tick,0 , 0});
-//        surf_contact.update(); //comment
-//        simulation_time += simulation_time_step;
-//        output_file << surf_contact.get_overlap() << ", " << surf_contact.get_normal_force().x() << ", "
-//                    << p3.get_position().x() << ", "
-//                    //  << c.get_tangential_force().y() << ", "  //not any tangential force yet
-//                    << p3.get_position().y() << "," << simulation_time << "," << i << "," << surf_contact.get_normal() << std::endl;
-//    }
-//    for(unsigned i = 0; i != 8*increments; ++i) {
-//        p3.move(Vec3{+tick,0 , 0});
-//        surf_contact.update(); //comment
-//        simulation_time += simulation_time_step;
-//        output_file << surf_contact.get_overlap() << ", " << surf_contact.get_normal_force().x() << ", "
-//                    << p3.get_position().x() << ", "
-//                    //  << c.get_tangential_force().y() << ", "  //not any tangential force yet
-//                    << p3.get_position().y() << "," << simulation_time << "," << i << "," << surf_contact.get_normal() << std::endl;
-//    }
-//    for(unsigned i = 0; i != 10*increments; ++i) {
-//        //p3.move(Vec3{-tick,0 , 0});
-//        surf_contact.update(); //comment
-//        simulation_time += simulation_time_step;
-//        output_file << surf_contact.get_overlap() << ", " << surf_contact.get_normal_force().x() << ", "
-//                    << p3.get_position().x() << ", "
-//                    //  << c.get_tangential_force().y() << ", "  //not any tangential force yet
-//                    << p3.get_position().y() << "," << simulation_time << "," << i << "," << surf_contact.get_normal() << std::endl;
-//    }
 }

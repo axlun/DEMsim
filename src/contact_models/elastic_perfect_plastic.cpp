@@ -29,7 +29,7 @@ DEM::Elastic_perfectly_plastic_binder::Elastic_perfectly_plastic_binder(DEM::Ela
   double Ep2 = mat2->Ep;
   double vp1 = mat1->nup;
   double vp2 = mat2->nup;
-  double sigma_b_yield = mat1->Syb;
+  double sigma_b_yield = mat1->binder_yield_stress_;
   double Ep_eff = 1./(((1-vp1*vp1)/Ep1)+((1-vp2*vp2)/Ep2));
   bt_ = mat1 -> bt; //total thickness of binder link
   double br_ = mat1 -> binder_radius_fraction*particle1->get_radius(); //Binder radius following the particle radius

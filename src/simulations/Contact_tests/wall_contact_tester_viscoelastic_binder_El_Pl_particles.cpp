@@ -53,20 +53,13 @@ void DEM::wall_contact_tester_viscoelastic_binder_El_Pl_particles(const std::str
     mat.binder_thickness_fraction=parameters.get_parameter<double>("binder_thickness_fraction");
     mat.binder_stiffness_coefficient=parameters.get_parameter<double>("binder_stiffness_coefficient");
     mat.yield_displacement_coeff=parameters.get_parameter<double>("yield_displacement_coeff");
-    mat.Syb=parameters.get_parameter<double>("Syb");
+    mat.binder_yield_stress_=parameters.get_parameter<double>("binder_yield_stress_");
     mat.particle_yield_stress_=parameters.get_parameter<double>("particle_yield_stress_");
-
-    //std::cout << "Binder thickness, bt:" << mat.bt << std::endl;
-    //mat.unloading_exponent = parameters.get_parameter<double>("unloading_exponent");
     mat.fraction_binder_contacts =parameters.get_parameter<double>("fraction_binder_contacts");
     mat.alpha_i = parameters.get_vector<double>("alpha_i");
     mat.tau_i =parameters.get_vector<double>("tau_i");
-   // For binder contact
-//    auto p1 = SphericalParticle<ForceModel>(radius, Vec3{-radius-(mat.binder_thickness_fraction*radius)/2-4*tick ,0 , 0},
-//                                            Vec3{}, &mat, 1);
-//    auto p2 = SphericalParticle<ForceModel>(radius,Vec3{radius+(mat.binder_thickness_fraction*radius)/2+4*tick ,0, 0},
-//                                            Vec3{}, &mat, 1);
-//  For particle contact
+
+//  For binder-wall contact
     auto p1 = SphericalParticle<ForceModel>(radius, Vec3{+radius+(mat.binder_thickness_fraction*radius)+5*tick,0 , 0},
                                             Vec3{}, &mat, 1);
     // Points for wall
@@ -80,7 +73,6 @@ void DEM::wall_contact_tester_viscoelastic_binder_El_Pl_particles(const std::str
     auto contact_surface = PointSurface<ForceModel,ParticleType>(2,wall_points, true, "contact_surface", true);
     std::cout << "Normal of contact surface: " << contact_surface.get_normal() << "\n";
 
-
     auto c = Contact<ForceModel, ParticleType>(&p1, &contact_surface, timestep);
 
     p1.move(Vec3{-tick, 0, 0});
@@ -93,13 +85,10 @@ void DEM::wall_contact_tester_viscoelastic_binder_El_Pl_particles(const std::str
     //Loading of binder
     for(unsigned i = 0; i != .2*increments; ++i) {
         p1.move(Vec3{-tick,0 , 0});
-        std::cout << "Overlap of contact surface: " << c.get_overlap() << "\n";
+//        std::cout << "Overlap of contact surface: " << c.get_overlap() << "\n";
 
         c.update();
         simulation_time += simulation_time_step;
-//        std::cout << "Force:" << c.get_normal_force().x()<<"N"<< std::endl;
-//        std::cout << "P1 pos:" << p1.get_position().x()<<""<< std::endl;
-//        std::cout << "P2 pos:" << p2.get_position().x()<<""<< std::endl;
 
         output_file << c.get_overlap() << ", " << c.get_normal_force().x() << ", "
                     << p1.get_position().x() << ", "

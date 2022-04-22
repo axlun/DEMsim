@@ -54,7 +54,7 @@ namespace DEM{
         double F_0_ = 0.; //Maximum particle contact force
         double yield_h_ = 1e99;
         double particle_yield_stress_ = 1e99; //high stress if yield is not used
-        double binder_yield_stress = 1e99; //high stress if yield is not used
+        double binder_yield_stress_ = 1e99; //high stress if yield is not used
         double A = 0.0;
         double v1 = 0.0;
         double bt_ = 0;

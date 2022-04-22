@@ -51,7 +51,7 @@ void DEM::contact_tester_viscoelastic_binder_El_Pl_particles(const std::string &
     mat.binder_thickness_fraction=parameters.get_parameter<double>("binder_thickness_fraction");
     mat.binder_stiffness_coefficient=parameters.get_parameter<double>("binder_stiffness_coefficient");
     mat.yield_displacement_coeff=parameters.get_parameter<double>("yield_displacement_coeff");
-    mat.Syb=parameters.get_parameter<double>("Syb");
+    mat.binder_yield_stress_=parameters.get_parameter<double>("binder_yield_stress_");
     mat.particle_yield_stress_=parameters.get_parameter<double>("particle_yield_stress_");
 
     //std::cout << "Binder thickness, bt:" << mat.bt << std::endl;

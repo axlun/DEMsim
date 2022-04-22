@@ -48,7 +48,7 @@ void DEM::contact_tester_elastic_perfect_plastic_material(const std::string& set
     mat.nup=parameters.get_parameter<double>("nup");
     mat.bt =parameters.get_parameter<double>("bt");
     mat.binder_radius_fraction=parameters.get_parameter<double>("binder_radius_fraction");
-    mat.Syb=parameters.get_parameter<double>("Syb");
+    mat.binder_yield_stress_=parameters.get_parameter<double>("binder_yield_stress_");
     std::cout << "Binder thickness, bt:" << mat.bt << std::endl;
     //mat.unloading_exponent = parameters.get_parameter<double>("unloading_exponent");
     mat.fraction_binder_contacts =parameters.get_parameter<double>("fraction_binder_contacts");

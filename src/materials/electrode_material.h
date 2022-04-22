@@ -19,7 +19,7 @@ namespace DEM {
 
         double E{ 0. };    // E0 for the binder material
         double nu{ 0. };   // nu for the binder material
-        double Syb{ 1.0e99 };  //Yield strength for the binder material
+        double binder_yield_stress_{ 1.0e99 };  //Yield strength for the binder material
         double particle_yield_stress_{1.0e99}; //Yield strength for the particle
         double Ep{ 0. };   // Young's modulus for the particles
         double nup{ 0. };  // Poisson's ratio for the binder material

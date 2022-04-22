@@ -24,7 +24,7 @@ void DEM::electrode_calendaring(const std::string& settings_file_name) {
 
     EngineType simulator(1E0us);
 
-    auto N = parameters.get_parameter<double>("N");
+    auto N = parameters.get_parameter<double>("N"); //Number of particles
     auto particle_file = parameters.get_parameter<std::string>("radius_file");
     auto mat = simulator.create_material<ElectrodeMaterial>(4800);
     mat->E = parameters.get_parameter<double>("E");
