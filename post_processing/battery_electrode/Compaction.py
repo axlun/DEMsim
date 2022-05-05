@@ -66,7 +66,7 @@ def pressures_box(data_directory):
 
 
 if __name__ == '__main__':
-    simulation_directory = '../results/tension-E34bt01Rbr0'
+    simulation_directory = 'c:/Users/Axel/Documents/DEM/results/electrode_calendaring/bt065N1500'
 
     volume_box = (0.448928*2)**2 * dimensions_box(simulation_directory)[:]
     porosity = (1-(particle_volume()*(1+0.07/(0.33+0.07)))/volume_box)

@@ -31,6 +31,7 @@ DEM::viscoelastic_binder_El_Pl_particles::viscoelastic_binder_El_Pl_particles(DE
     double Ep2 = mat2->Ep;
     double Ep1 = mat1->Ep;
     particle_yield_stress_ = mat1->particle_yield_stress_;
+//    std::cout << "P-P particle yield stress:"<< particle_yield_stress_ << std::endl;
     mu_particle_ = (mat1->mu + mat2->mu)/2;
     double Gp1 = Ep1/(2*(1+vp1));
     double Gp2 = Ep2/(2*(1+vp2));
@@ -40,10 +41,11 @@ DEM::viscoelastic_binder_El_Pl_particles::viscoelastic_binder_El_Pl_particles(DE
     bt_ = mat1-> binder_thickness_fraction * particle1->get_radius(); //Binder thickness determined by fraction of
 //  std::cout << "Binder thickness:" << bt_ << std::endl;                      //particle radius
     A = DEM::pi*br_*br_;
-    std::cout << "br:"<< br_ << std::endl;
-    std::cout << "A:"<< A << std::endl;
+//   std::cout << "br:"<< br_ << std::endl;
+//   std::cout << "A:"<< A << std::endl;
     kb_coeff = mat1->binder_stiffness_coefficient; //reduction of binder stiffness due to geometry
     binder_yield_stress_ = mat1->binder_yield_stress_;
+//    std::cout << "P-P binder yield stress:"<< binder_yield_stress_ << std::endl;
     psi0_ = kb_coeff*(1 - v1)/(1 + v1)/(1 - 2*v1)*E1*A/bt_; //The instantaneous value of the relaxation function for the binder
     psi0T_B_ = E1/bt_*A/2/(1+v1);
     kTp_ = 8/((2-vp1)/Gp1 + (2-vp2)/Gp2)*0.001*R0_; //Tangential particle stiffness following Hertz contact for two particles, 0.001R0 represents
@@ -81,6 +83,7 @@ DEM::viscoelastic_binder_El_Pl_particles::viscoelastic_binder_El_Pl_particles(
         double Ep1 = mat1->Ep;
         double Gp1 = Ep1/(2*(1+vp1));
         particle_yield_stress_ = mat1->particle_yield_stress_;
+//        std::cout << "P-W particle yield stress:"<< particle_yield_stress_ << std::endl;
         mu_particle_ = mat1->mu_wall;
         double rhop = mat1->rhop;
         Ep_eff_ = 1./(((1-vp1*vp1)/Ep1)); //Effective Young's modulus for one particle and one rigid surface
@@ -89,6 +92,7 @@ DEM::viscoelastic_binder_El_Pl_particles::viscoelastic_binder_El_Pl_particles(
         A = DEM::pi*br_*br_;
         kb_coeff = mat1->binder_stiffness_coefficient; //reduction of binder stiffness due to geometry
         binder_yield_stress_ = mat1->binder_yield_stress_;
+//        std::cout << "P-P binder yield stress:"<< binder_yield_stress_ << std::endl;
         psi0_ = kb_coeff*(1 - v1)/(1 + v1)/(1 - 2*v1)*E1*A/bt_; //The instantaneous value of the relaxation function for the binder
         psi0T_B_ = E1/bt_*A/2/(1+v1); //The instantaneous  value of the shear relaxation function for the binder
         kTp_ = 8/((2-vp1)/Gp1)*0.001*R0_;                 //Tangential particle stiffness following Hertz contact for two particles, 0.001R0 represents
@@ -127,7 +131,7 @@ DEM::viscoelastic_binder_El_Pl_particles::viscoelastic_binder_El_Pl_particles(
         h_(parameters.get_parameter<double>("h")),
         hmax_(parameters.get_parameter<double>("hmax")),
         mu_particle_(parameters.get_parameter<double>("mu_particle")),
-        particle_yield_stress_(parameters.get_parameter<double>("particle_yield_stress_")),
+        particle_yield_stress_(parameters.get_parameter<double>("particle_yield_stress_")), //comment here
         bonded_(parameters.get_parameter<bool>("bonded_")),
         adhesive_(parameters.get_parameter<bool>("adhesive_")),
         binder_contact_(parameters.get_parameter<bool>("binder_contact")),
@@ -284,6 +288,8 @@ double  DEM::viscoelastic_binder_El_Pl_particles::update_normal_force(double h)
         bonded_ = false;
         if (h >= hmax_) // Perfectly plastic deformation of particles, new maximum overlap and contact radius
         {
+//            std::cout << "particle yield stress:"<< particle_yield_stress_ << std::endl;
+//            std::cout << "dh:"<< dh << std::endl;
 //            std::cout << "Change in force:"<< pi * c_max_2_ * 2 * dh * R0_ * H_max_bar_ * particle_yield_stress_ << std::endl;
             F_particle +=  pi * c_max_2_ * 2 * dh * R0_ * H_max_bar_ * particle_yield_stress_;
             if (F_particle <= F_0_)
