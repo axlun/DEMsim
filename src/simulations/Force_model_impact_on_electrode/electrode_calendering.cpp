@@ -22,7 +22,7 @@ void DEM::electrode_calendering(const std::string& settings_file_name) {
     SimulationParameters parameters(settings_file_name);
     auto output_directory = parameters.get_parameter<std::string>("output_dir");
 
-    EngineType simulator(1E0us);
+    EngineType simulator(1E-0us); //orig  1E0
 
     auto N = parameters.get_parameter<double>("N"); //Number of particles
     auto particle_file = parameters.get_parameter<std::string>("radius_file");
@@ -77,11 +77,31 @@ void DEM::electrode_calendering(const std::string& settings_file_name) {
     auto p6 = Vec3(box_side / 2, -box_side / 2, box_height);
     auto p7 = Vec3(box_side / 2, box_side / 2, box_height);
     auto p8 = Vec3(-box_side / 2, box_side / 2, box_height);
+
+
+    auto p1_stiff = Vec3(-.75*box_side / 2, -.75*box_side / 2, 0);
+    auto p2_stiff = Vec3(.75*box_side / 2, -.75*box_side / 2, 0);
+    auto p3_stiff = Vec3(.75*box_side / 2, .75*box_side / 2, 0);
+    auto p4_stiff = Vec3(-.75*box_side / 2, .75*box_side / 2, 0);
+    auto p5_stiff = Vec3(-.75*box_side / 2, -.75*box_side / 2, box_height);
+    auto p6_stiff = Vec3(.75*box_side / 2, -.75*box_side / 2, box_height);
+    auto p7_stiff = Vec3(.75*box_side / 2, .75*box_side / 2, box_height);
+    auto p8_stiff = Vec3(-.75*box_side / 2, .75*box_side / 2, box_height);
+
+
     std::vector <Vec3> bottom_points{p1, p2, p3, p4};
     std::vector <Vec3> top_points{p8, p7, p6, p5};
 
-    auto particle_positions = random_fill_box(-box_side / 2, box_side / 2, -box_side / 2, box_side / 2,
-                                             0, box_height, particle_radii, max_binder_thickness);
+    //side panels for non periodic BCs
+    std::vector <Vec3> side_1{p2_stiff, p3_stiff, p7_stiff, p6_stiff};
+    std::vector <Vec3> side_2{p3_stiff, p4_stiff, p8_stiff, p7_stiff};
+    std::vector <Vec3> side_3{p4_stiff, p1_stiff, p5_stiff, p8_stiff};
+    std::vector <Vec3> side_4{p1_stiff, p2_stiff, p6_stiff, p5_stiff};
+
+    auto particle_positions = random_fill_box(-.75*box_side / 2, .75*box_side / 2, -.75*box_side / 2, .75*box_side / 2,
+                                             0, 0+box_height, particle_radii, max_binder_thickness);
+
+// ******Specify position of two particles ******
 //    DEM::Vec3 position1 = {0,0,3.9E-2};
 //    DEM::Vec3 position2 = {0,0,40E-2};
 //    std::vector<Vec3> particle_positions = {};
@@ -91,11 +111,24 @@ void DEM::electrode_calendering(const std::string& settings_file_name) {
 //    for (const auto &i: particle_positions) {
 //        std::cout << i << "\n";
 //    }
+
     auto deformable_surface = simulator.create_deformable_point_surface(bottom_points,"bottom_plate", true);
     auto top_surface = simulator.create_point_surface(top_points, true, "top_plate", false);
 
+    //Side surface for non periodic BCs
+    auto side1_surface = simulator.create_point_surface(side_1, true, "side1_plate", false);
+    auto side2_surface = simulator.create_point_surface(side_2, true, "side2_plate", false);
+    auto side3_surface = simulator.create_point_surface(side_3, true, "side3_plate", false);
+    auto side4_surface = simulator.create_point_surface(side_4, true, "side4_plate", false);
+
     std::cout << "Normal of top surface: " << top_surface->get_normal() << "\n";
     std::cout << "Normal of bottom surface: " << deformable_surface->get_normal() << "\n";
+
+    std::cout << "Normal of side surface 1: " << side1_surface->get_normal() << "\n";
+    std::cout << "Normal of side surface 2: " << side2_surface->get_normal() << "\n";
+    std::cout << "Normal of side surface 3: " << side3_surface->get_normal() << "\n";
+    std::cout << "Normal of side surface 4: " << side4_surface->get_normal() << "\n";
+
 
     for (std::size_t i = 0; i != particle_positions.size(); ++i) {
         simulator.create_particle(particle_radii[i], particle_positions[i], Vec3(0,0,0), mat);
@@ -117,31 +150,78 @@ void DEM::electrode_calendering(const std::string& settings_file_name) {
     //Initial packing of particles, let particles fall with gravity
     mat->adhesive = false; //No adhesion of particles when initial packing
 
-    simulator.set_gravity(Vec3(0, 0, -1E1)); //Use gravity for initial packing of particles
-    simulator.set_mass_scale_factor(1E2);
-    //std::cout << "max_binder_thickness: "<< max_binder_thickness <<"\n";
+    simulator.set_gravity(Vec3(0, 0, -1E0)); //Use gravity for initial packing of particles
+    simulator.set_mass_scale_factor(1E1); //Orig 1E2
+    std::cout << "max_binder_thickness: "<< max_binder_thickness <<"\n";
     simulator.setup(1.01*max_binder_thickness); //Size of box for detecting contacts between particles
-
     simulator.set_rotation(false);
+    double surface_velocity =parameters.get_parameter<double>("calendaring_surface_velocity"); //How was this chosen?
+
+// New packing method
     std::cout << "****************Initialize natural particle packing**************** \n";
     //Run for 0.1s and then run untill max_velocity of the paricles is 0.1 m/s and check it every 0.02s
-    EngineType::RunForTime run_for_time(simulator, .8E-0s);
+    EngineType::RunForTime run_for_time(simulator, .1E-0s);//Gives particles velocity of .1m/s
     simulator.run(run_for_time);
-    EngineType::ParticleVelocityLess max_velocity (simulator, 5, 0.04s);
-    simulator.run(max_velocity);
+    simulator.set_gravity(Vec3(0, 0, -1E-1)); //Use gravity for initial packing of particles
+    EngineType::RunForTime run_for_time_2(simulator, 3E0s);
+    simulator.run(run_for_time_2);
+
+////***************************************************Testing Restartfile ***********************************************
+//    std::cout<<"Writing restart file ";
+//    simulator.write_restart_file(output_directory + "/test_restart_file.res");
+////**********************************************************************************************************************
+
+//    EngineType::ParticleVelocityLess max_velocity_2 (simulator, 2.5, 0.04s); // max_vel = 0.5
+//    simulator.run(max_velocity_2);
+//// ***********************************Move stiff surfaces and inintiate periodic BCs***********************************
+//    std::cout << "****************Wall removal**************** \n";
+//
+//    side1_surface->move(Vec3(2,0,0), Vec3(0, 0, 0));
+//    side2_surface->move(Vec3(0,2,0), Vec3(0,0,0));
+//    side3_surface->move(-Vec3(2.0,0,0), Vec3(0,0,0));
+//    side4_surface->move(-Vec3(0,2.0,0), Vec3(0,0,0));
+//
+////    top_surface->move(-Vec3(0, 0, box_height - h_1-1.01*max_binder_thickness), Vec3(0, 0, 0)); //Move top surface to uppermost partile+binder thickness
+//
+//
+//    std::chrono::duration<double> Stiff_surface_removal_time {.5};
+//
+////    std::chrono::duration<double> Stiff_surface_removal_time {(box_side/2/surface_velocity)};
+//    run_for_time.reset(Stiff_surface_removal_time);
+////    run_for_time.reset(.5s);
+//    simulator.run(run_for_time);
+
+//************************************************************************************************************************
+
+
+//*********************Original calendering method***********************************************************************
+//    std::cout << "****************Initialize natural particle packing**************** \n";
+//    //Run for 0.1s and then run untill max_velocity of the paricles is 0.1 m/s and check it every 0.02s
+//    EngineType::RunForTime run_for_time(simulator, .8E-0s);
+//    simulator.run(run_for_time);
+//    EngineType::ParticleVelocityLess max_velocity (simulator, 5, 0.04s);
+//    simulator.run(max_velocity);
     std::cout << "****************Initialize pre-calendering process**************** \n";
 //  Move surface to uppermost particle
-
     auto bbox = simulator.get_bounding_box(); //get the XYZ max/min that contain all particles
     double h_1 = bbox[5]; //height of uppermost particle (Z-max)
-    if (h_1<1.4*mat->active_particle_height){
-        h_1=1.4*mat->active_particle_height;
-        std::cout<<"Heigh of uppermoast particle lower then 1.4 h_al: "<< h_1<< std::endl;
+    if (h_1<2.2*mat->active_particle_height){
+        h_1=2.2*mat->active_particle_height;
+        std::cout<<"Heigh of uppermoast particle lower then 2.2 h_al: "<< h_1<< std::endl;
     }
     else{
         std::cout<<"Heigh of uppermoast particle: "<< h_1<< std::endl;
     }
     top_surface->move(-Vec3(0, 0, box_height - h_1-1.01*max_binder_thickness), Vec3(0, 0, 0)); //Move top surface to uppermost partile+binder thickness
+
+    top_surface->set_velocity(Vec3(0,0,0.-2*surface_velocity));
+    std::chrono::duration<double> compaction_time_pre_cal {((h_1+1.01*max_binder_thickness - mat->active_particle_height*2) / (2*surface_velocity))};
+
+    std::cout<<"Compaction time: "<< compaction_time_pre_cal.count()<< std::endl;
+    run_for_time.reset(compaction_time_pre_cal);
+    simulator.run(run_for_time);
+
+
 //////Other Process for letting the particles come to rest /////
 //    run_for_time.reset(.4s);
 //    simulator.run(run_for_time);
@@ -175,12 +255,34 @@ void DEM::electrode_calendering(const std::string& settings_file_name) {
 //    for (const auto& p: particles_) {
 //        std::cout << p->get_output_string() << "\n";
 //    }
+    top_surface->set_velocity(Vec3(0,0,0));
+    simulator.set_gravity(Vec3(0, 0, -1E1)); //Use gravity for initial packing of particles
+
+    EngineType::ParticleVelocityLess max_velocity_2 (simulator, 1.5, 0.04s); // max_vel = 0.5
+    simulator.run(max_velocity_2);
+// ***********************************Move stiff surfaces and initiate periodic BCs***********************************
+    std::cout << "****************Wall removal**************** \n";
+    side1_surface->move(Vec3(2,0,0), Vec3(0, 0, 0));
+    side2_surface->move(Vec3(0,2,0), Vec3(0,0,0));
+    side3_surface->move(-Vec3(2.0,0,0), Vec3(0,0,0));
+    side4_surface->move(-Vec3(0,2.0,0), Vec3(0,0,0));
+
+    run_for_time.reset(2s);
+    simulator.run(run_for_time);
+    std::cout << "****************Adhesive on**************** \n";
 
     mat->adhesive = true; // Activate adhesion before calendering starts
 
-    EngineType::ParticleVelocityLess max_velocity_2 (simulator, .5, 0.04s);
-    simulator.run(max_velocity_2);
 
+    max_velocity_2.set_new_value(1.5);
+    simulator.run(max_velocity_2);
+//*********************************************************************************************************************
+// Restart file here??
+
+    std::cout<<"Writing restart file ";
+    simulator.write_restart_file(output_directory + "/pre_calendered_electrode_restart_file.res");
+
+//*********************************************************************************************************************
     //Calendaring process
     std::cout << "****************Initialize calendaring process ****************\n";
     bbox = simulator.get_bounding_box(); //get the XYZ max/min that contain all particles
@@ -190,24 +292,21 @@ void DEM::electrode_calendering(const std::string& settings_file_name) {
         h_3=1.2*mat->active_particle_height;
         std::cout<<"Heigh of uppermoast particle lower then 1.2 h_al: "<< h_3<< std::endl;
     }
-    top_surface->move(-Vec3(0, 0,  h_1 - h_3-1.01*max_binder_thickness), Vec3(0, 0, 0)); //Move top surface to uppermost particle+binder thickness
-    double surface_velocity =parameters.get_parameter<double>("calendaring_surface_velocity"); //How was this chosen?
-    mat->adhesive = true; // Activate adhesion before calendering starts
+    top_surface->move(-Vec3(0, 0,  mat->active_particle_height*2 - h_3-1.01*max_binder_thickness), Vec3(0, 0, 0)); //Move top surface to uppermost particle+binder thickness
     top_surface->set_velocity(Vec3(0,0,0.-surface_velocity));
     std::chrono::duration<double> compaction_time_2 {((h_3+1.01*max_binder_thickness-mat->active_particle_height) / surface_velocity)};
 
     std::cout<<"Compaction time: "<< compaction_time_2.count()<< std::endl;
     run_for_time.reset(compaction_time_2);
     simulator.run(run_for_time);
-//    std::cout<<"Writing restart file ";
-//    simulator.write_restart_file(output_directory + "/compact_restart_file.res");
+    std::cout<<"Writing restart file ";
+    simulator.write_restart_file(output_directory + "/compact_restart_file.res");
     std::cout << "****************Initialize unloading ****************\n";
     top_surface->set_velocity(Vec3(0, 0, surface_velocity));
 //    mat->adhesive = true; //Enable adhesive when particles are compacted and before unloaded
     EngineType::SurfaceNormalForceLess zero_force(top_surface, 0.);
     // simulator.set_rotation(false);
     simulator.run(zero_force);
-
 
     top_surface->set_velocity(Vec3(0, 0, 0));
     run_for_time.reset(.5s);
@@ -217,8 +316,8 @@ void DEM::electrode_calendering(const std::string& settings_file_name) {
     std::cout<<"Height of active layer "<< Active_layer_height<< std::endl;
     double NMC_porosity = 1-particle_volume/(box_side*box_side*Active_layer_height) ;
     std::cout<<"NMC Porosity: "<< NMC_porosity<< std::endl;
-//    std::cout<<"Writing restart file ";
-//    simulator.write_restart_file(output_directory + "/calendered_electrode_restart_file.res");
+    std::cout<<"Writing restart file ";
+    simulator.write_restart_file(output_directory + "/calendered_electrode_restart_file.res");
     std::ofstream results_file;
     results_file.open(output_directory + "/calendered_electrode_results_file.dou");
     results_file << "Volume of particles=" << particle_volume << "\n";

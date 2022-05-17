@@ -17,7 +17,7 @@ matplotlib.style.use('classic')
 
 
 if __name__ == '__main__':
-    simulation_directory = 'c:/Users/Axel/Documents/DEM/results/electrode_calendaring/bt065N500'
+    simulation_directory = 'c:/Users/Axel/Documents/DEM/results/electrode_calendaring/SN00'
 
 
     force_data = np.genfromtxt(simulation_directory + '/surface_forces.dou', delimiter=', ')
@@ -40,9 +40,14 @@ if __name__ == '__main__':
     x_side_leght = periodic_BC_x_max - periodic_BC_x_min
     y_side_leght = periodic_BC_y_max - periodic_BC_y_min
     calendering_pressure = surface1_force/(x_side_leght*y_side_leght)
-    calendering_time = periodic_BC_data[:,-1]
+    calendering_time = periodic_BC_data[:,0]
+    print(calendering_time)
     calendering_surface_position = surface_position_data[:,-2]
-    print(calendering_pressure)
+
+    plt.plot(calendering_time, calendering_pressure)
+    plt.ylabel("Pressure [Pa]")
+    plt.xlabel("time")
+    plt.show()
 
 
     plt.plot(calendering_surface_position, calendering_pressure)
