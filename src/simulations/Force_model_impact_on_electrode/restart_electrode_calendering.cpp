@@ -24,7 +24,7 @@ void DEM::restart_electrode_calendering(const std::string &settings_file_name)
     auto restart_file_name =parameters.get_parameter<std::string>("restart_file_name");
     auto output_directory = parameters.get_parameter<std::string>("output_dir");
     auto simulator = EngineType(restart_file_name);
-    auto mat = simulator.create_material<ElectrodeMaterial>(4800);
+    auto mat = simulator.create_material<ElectrodeMaterial>(4800);//**************OLD MATERIAL SHOULD BE READ FROM RESTART******
     auto Calendering_output = simulator.get_output("output_0");
     simulator.remove_output(Calendering_output);
     auto restart_output = simulator.create_output(output_directory+"restart_file", 0.05s);
@@ -41,16 +41,18 @@ void DEM::restart_electrode_calendering(const std::string &settings_file_name)
     auto deformable_surface = simulator.get_surface<EngineType::DeformablePointSurfacePointer>("bottom_plate");
     std::cout << "****************Time to start the simulation**************** \n";
 
-//    for (auto& p: particles_)
-//    {
-//    p->radii //get the larges particle radii
-//    }
-//    simulator.get_particles()
-
-//    for (const auto& p: particles_) {
-//        std::cout << p->get_output_string() << "\n";
-//    }
-    double surface_velocity =parameters.get_parameter<double>("calendaring_surface_velocity"); //How was this chosen?
+    auto max_binder_thickness = 0.;
+    for (auto& p: simulator.get_particles())
+    {
+        std::cout << "particle radius: " << p->get_radius() << "\n";
+        std::cout << "binder thickness fraction: " << mat->binder_thickness_fraction << "\n";
+        if (mat->binder_thickness_fraction*p->get_radius() > max_binder_thickness)
+        {
+            max_binder_thickness = mat->binder_thickness_fraction*p->get_radius();
+        }//get the larges particle radii
+    }
+//    double surface_velocity =parameters.get_parameter<double>("calendaring_surface_velocity"); //How was this chosen?
+    std::cout << "max_binder_thickness: " << max_binder_thickness << "\n";
 
 //=====================================================WRTIE RESTART PROGRAM HERE=======================================
     //Calendaring process
