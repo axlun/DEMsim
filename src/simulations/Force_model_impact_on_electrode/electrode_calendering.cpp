@@ -166,11 +166,6 @@ void DEM::electrode_calendering(const std::string& settings_file_name) {
     EngineType::RunForTime run_for_time_2(simulator, 3E0s);
     simulator.run(run_for_time_2);
 
-////***************************************************Testing Restartfile ***********************************************
-//    std::cout<<"Writing restart file ";
-//    simulator.write_restart_file(output_directory + "/test_restart_file.res");
-////**********************************************************************************************************************
-
 //    EngineType::ParticleVelocityLess max_velocity_2 (simulator, 2.5, 0.04s); // max_vel = 0.5
 //    simulator.run(max_velocity_2);
 //// ***********************************Move stiff surfaces and inintiate periodic BCs***********************************
@@ -258,7 +253,7 @@ void DEM::electrode_calendering(const std::string& settings_file_name) {
     top_surface->set_velocity(Vec3(0,0,0));
     simulator.set_gravity(Vec3(0, 0, -1E1)); //Use gravity for initial packing of particles
 
-    EngineType::ParticleVelocityLess max_velocity_2 (simulator, 1.5, 0.04s); // max_vel = 0.5
+    EngineType::ParticleVelocityLess max_velocity_2 (simulator, 2.2, 0.04s); // max_vel = 0.5
     simulator.run(max_velocity_2);
 // ***********************************Move stiff surfaces and initiate periodic BCs***********************************
     std::cout << "****************Wall removal**************** \n";

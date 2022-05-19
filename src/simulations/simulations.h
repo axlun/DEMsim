@@ -34,7 +34,8 @@ namespace DEM {
     void restart_electrode(const std::string& settings_file_name);
     void porous_electrode_rve(const std::string& settings_file_name);
     void electrode_calendering(const std::string& settings_file_name);
-
+    void restart_test(const std::string& settings_file_name);
+    void restart_electrode_calendering(const std::string& settings_file_name);
     std::map<std::string, SimulationFunctionPtr> valid_simulations();
 
 
