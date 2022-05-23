@@ -1,0 +1,5 @@
+//output_dir=/scratch/users/axlun/DEMsim/results/electrode_calendaring/SN000/
+//radius_file=/scratch/users/axlun/DEMsim/simulations/force_model_impact_on_electrode/size_distribution_2_particle.dat
+//restart_file_name=/mnt/c/Users/Axel/Documents/DEM/results/electrode_calendaring/SNoneparticle_restart_test/test_restart_file.res
+restart_file_name=/mnt/c/Users/Axel/Desktop/SN00_1000p_plastic_binder/calendered_electrode_restart_file.res
+output_dir=/mnt/c/Users/Axel/Documents/DEM/results/electrode_mechanical_loading/SN00_test
