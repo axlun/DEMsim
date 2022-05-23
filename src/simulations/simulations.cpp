@@ -34,6 +34,7 @@ std::map<std::string, DEM::SimulationFunctionPtr> DEM::valid_simulations() {
             {"porous_electrode_rve",           DEM::porous_electrode_rve},
             {"electrode_calendering",          DEM::electrode_calendering},
             {"restart_test",                   DEM::restart_test},
+            {"electrode_mechanical_loading",   DEM::electrode_mechanical_loading},
             {"restart_electrode_calendering",  DEM::restart_electrode_calendering}
     };
 }
