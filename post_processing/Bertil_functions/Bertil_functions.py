@@ -20,19 +20,24 @@ def one_file_reader(dir):
 
 
 def commad_input(command0):
-    client = paramiko.SSHClient()
-    client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    client.connect("bertil.hallf.kth.se", username="axlun", password=pw)
+    temp = input('Enter y to send input')
+    if temp.startswith('y') or temp.startswith('Y'):
+        print('Sending input to Bertil')
+        client = paramiko.SSHClient()
+        client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+        client.connect("bertil.hallf.kth.se", username="axlun", password=pw)
 
-    stdin0, stdout0, stderr0 = client.exec_command(command0)
-    print(command0)
-    print(stderr0.readlines())
-    print(stdout0.readlines())
-    # stdin, stdout, stderr = client.exec_command(command)
-    # print(stderr.readlines())
-    # lines = stdout.readlines()
-    # print(lines)
-    client.close()
+        stdin0, stdout0, stderr0 = client.exec_command(command0)
+        print(command0)
+        print(stderr0.readlines())
+        print(stdout0.readlines())
+        # stdin, stdout, stderr = client.exec_command(command)
+        # print(stderr.readlines())
+        # lines = stdout.readlines()
+        # print(lines)
+        client.close()
+    else:
+        print('Input not sent')
     return
 
 if __name__ == '__main__':

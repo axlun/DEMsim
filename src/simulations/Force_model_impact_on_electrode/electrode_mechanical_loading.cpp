@@ -56,12 +56,15 @@ void DEM::electrode_mechanical_loading(const std::string &settings_file_name)
 
     std::cout << "**************** resting for 2s ****************\n";
     EngineType::RunForTime run_for_time(simulator, 2E0s);//Let particles relax for 2s
-    simulator.run(run_for_time);
+    run_for_time_BC_stretch.reset(2s);
+    simulator.run(run_for_time_BC_stretch);
 
     std::cout << "****************Unloading periodic BCs ****************\n";
     simulator.set_periodic_boundary_condition_strain_rate('x',0.005);
     deformable_surface->set_in_plane_strain_rates(0.005,0);
+    run_for_time_BC_stretch.reset(2s);
     simulator.run(run_for_time_BC_stretch);
     std::cout << "**************** resting for 2s ****************\n";
-    simulator.run(run_for_time);
+    run_for_time_BC_stretch.reset(2s);
+    simulator.run(run_for_time_BC_stretch);
     }

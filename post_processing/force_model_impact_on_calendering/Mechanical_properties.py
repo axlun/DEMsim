@@ -12,7 +12,8 @@ matplotlib.style.use('classic')
 
 def main():
 
-    simulation_directory = 'c:/Users/Axel/Documents/DEM/results/electrode_mechanical_loading/SN00_test'
+#    simulation_directory = 'c:/Users/Axel/Documents/DEM/results/electrode_mechanical_loading/SN00_test'
+    simulation_directory = '/scratch/users/axlun/DEMsim/results/electrode_mechanical_loading/SN00_1500p_plastic_binder'
     if simulation_directory.startswith("/scratch"):force_data, surface_force_index, surface_position_index, surface_position_data, periodic_BC_data, force_fabric_tensor_data = bertil_data_gatherer(simulation_directory)
     elif simulation_directory.startswith("c:"):force_data, surface_force_index, surface_position_index, surface_position_data, periodic_BC_data, force_fabric_tensor_data = local_data_gatherer(simulation_directory)
     else: print("Error with simulation directory")
