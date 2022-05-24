@@ -214,12 +214,20 @@ void DEM::electrode_calendering(const std::string& settings_file_name) {
     mat->adhesive = true; // Activate adhesion before calendering starts
     max_velocity_2.set_new_value(1.5);
     simulator.run(max_velocity_2);
+    std::cout << "****************Turn off gravity**************** \n";
+
+    //turn off gravity
+    simulator.set_gravity(Vec3(0, 0, 0));
+    run_for_time.reset(1s);
+    simulator.run(run_for_time);
+
     // Stop all the particles
     for (auto& p: simulator.get_particles())
     {
         p->set_velocity(Vec3(0,0,0));
     }
-
+    run_for_time.reset(1s);
+    simulator.run(run_for_time);
 //******************************************RESTART BEFORE CALENDERING*************************************************
     std::cout<<"Writing restart file ";
     simulator.write_restart_file(output_directory + "/pre_calendered_electrode_restart_file.res");
@@ -234,8 +242,8 @@ void DEM::electrode_calendering(const std::string& settings_file_name) {
         std::cout<<"Heigh of uppermoast particle lower then 1.2 h_al: "<< h_3<< std::endl;
     }
     top_surface->move(-Vec3(0, 0,  mat->active_particle_height*2 - h_3-1.01*max_binder_thickness), Vec3(0, 0, 0)); //Move top surface to uppermost particle+binder thickness
-    top_surface->set_velocity(Vec3(0,0,0.-surface_velocity));
-    std::chrono::duration<double> compaction_time_2 {((h_3+1.01*max_binder_thickness-mat->active_particle_height) / surface_velocity)};
+    top_surface->set_velocity(Vec3(0,0,0.-surface_velocity/2));
+    std::chrono::duration<double> compaction_time_2 {((h_3+1.01*max_binder_thickness-mat->active_particle_height) / (surface_velocity/2))};
 
     std::cout<<"Compaction time: "<< compaction_time_2.count()<< std::endl;
     run_for_time.reset(compaction_time_2);
@@ -243,14 +251,14 @@ void DEM::electrode_calendering(const std::string& settings_file_name) {
     std::cout<<"Writing restart file ";
     simulator.write_restart_file(output_directory + "/compact_restart_file.res");
     std::cout << "****************Initialize unloading ****************\n";
-    top_surface->set_velocity(Vec3(0, 0, surface_velocity));
+    top_surface->set_velocity(Vec3(0, 0, surface_velocity/2));
 //    mat->adhesive = true; //Enable adhesive when particles are compacted and before unloaded
     EngineType::SurfaceNormalForceLess zero_force(top_surface, 0.);
     // simulator.set_rotation(false);
     simulator.run(zero_force);
-
     top_surface->set_velocity(Vec3(0, 0, 0));
-    run_for_time.reset(1s);
+    std::cout << "****************Let rest for 2s ****************\n";
+    run_for_time.reset(2s);
     simulator.run(run_for_time);
     bbox = simulator.get_bounding_box(); //get the XYZ max/min that contain all particles
     double Active_layer_height = bbox[5];

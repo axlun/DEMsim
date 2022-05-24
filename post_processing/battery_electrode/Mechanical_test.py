@@ -80,7 +80,7 @@ def time_box(data_directory):
 
 
 if __name__ == '__main__':
-    simulation_directory = 'C:/DEMsim/results/E34bt005rb05/Tension/'
+    simulation_directory = 'c:/Users/Axel/Documents/DEM/results/electrode_mechanical_loading/SN00_test'#'C:/DEMsim/results/E34bt005rb05/Tension/'
 
 
     sigma_x_tot = pressures_xx(simulation_directory)[:]/(dimensions_xx(simulation_directory)[1] *2* dimensions_zz(simulation_directory)[:] *

@@ -41,47 +41,27 @@ void DEM::electrode_mechanical_loading(const std::string &settings_file_name)
 
     auto deformable_surface = simulator.get_surface<EngineType::DeformablePointSurfacePointer>("bottom_plate");
 
-
     auto mat = simulator.get_material(0);
     std::cout << "material density" << mat->density << "\n";
 
 //=====================================================STRETCH THE PERIODIC BCs=======================================
     simulator.set_mass_scale_factor(1E2);
-    EngineType::RunForTime run_for_time_BC_stretch(simulator,1s);
 
-    simulator.set_periodic_boundary_condition_strain_rate('x',-0.01);
-    deformable_surface->set_in_plane_strain_rates(-0.01,0);
+
+    std::cout << "****************Stretching periodic BCs ****************\n";
+    EngineType::RunForTime run_for_time_BC_stretch(simulator,2s);
+    simulator.set_periodic_boundary_condition_strain_rate('x',-0.005);
+    deformable_surface->set_in_plane_strain_rates(-0.005,0);
     simulator.run(run_for_time_BC_stretch);
 
+    std::cout << "**************** resting for 2s ****************\n";
+    EngineType::RunForTime run_for_time(simulator, 2E0s);//Let particles relax for 2s
+    simulator.run(run_for_time);
 
-
-//    mat->binder_thickness_fraction = parameters.get_parameter<double>("binder_thickness_fraction");
-//    std::cout << "material id0 " << mat->binder_thickness_fraction << "\n";
-
-
-    //Get the largest binder thickness
-//    auto max_binder_thickness = 0.;
-//    for (auto& p: simulator.get_particles())
-//    {
-//        std::cout << "particle radius: " << p->get_radius() << "\n";
-//        std::cout << "binder thickness fraction: " << mat->binder_thickness_fraction << "\n";
-//        if (mat->binder_thickness_fraction*p->get_radius() > max_binder_thickness)
-//        {
-//            max_binder_thickness = mat->binder_thickness_fraction*p->get_radius();
-//        }//get the larges particle radii
-//    }
-//    auto deformable_surface = simulator.get_surface<EngineType::DeformablePointSurfacePointer>("bottom_plate");
-//
-//
-//
-//
-//    std::cout << "****************Time to start the simulation**************** \n";
-//
-//
-////    double surface_velocity =parameters.get_parameter<double>("calendaring_surface_velocity"); //How was this chosen?
-//    std::cout << "max_binder_thickness: " << max_binder_thickness << "\n";
-//
-//
-
-
+    std::cout << "****************Unloading periodic BCs ****************\n";
+    simulator.set_periodic_boundary_condition_strain_rate('x',0.005);
+    deformable_surface->set_in_plane_strain_rates(0.005,0);
+    simulator.run(run_for_time_BC_stretch);
+    std::cout << "**************** resting for 2s ****************\n";
+    simulator.run(run_for_time);
     }

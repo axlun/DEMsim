@@ -2,7 +2,8 @@
 import paramiko
 import sys
 sys.path.insert(0, 'c:/Users/Axel/Documents/Secrets')
-from secrets import *
+from secrets import pw
+
 import numpy
 
 

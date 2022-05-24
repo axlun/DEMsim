@@ -12,6 +12,7 @@ matplotlib.style.use('classic')
 def local_data_gatherer(simulation_directory):
     periodic_BC_data = np.genfromtxt(simulation_directory + '/periodic_bc.dou', delimiter=', ')
     force_data = np.genfromtxt(simulation_directory + '/surface_forces.dou', delimiter=', ')
+    force_fabric_tensor_data = np.genfromtxt(simulation_directory + '/force_fabric_tensor.dou', delimiter=',')
     with open(simulation_directory + '/surface_forces.dou', 'r') as force_data_file:
         first_line = force_data_file.readlines()[0]
         first_line = first_line.split(', ')
@@ -29,7 +30,9 @@ def local_data_gatherer(simulation_directory):
 
     surface_indices = [i for i, surface_type in enumerate(surface_types) if surface_type == 'PointSurface']
 
-    return force_data, surface_force_index, surface_position_index,surface_position_data, periodic_BC_data
+
+
+    return force_data, surface_force_index, surface_position_index,surface_position_data, periodic_BC_data, force_fabric_tensor_data
 def bertil_data_gatherer(simulation_directory):
     ##================SURFACE FORCE DATA===================================================================================
     force_data_list = one_file_reader(simulation_directory + '/surface_forces.dou')
@@ -74,22 +77,34 @@ def bertil_data_gatherer(simulation_directory):
             surface_position_data = np.asarray(i)
     for i in enumerate(surface_position_data):
         surface_position_data[i[0], -1] = surface_position_data[i[0], -1][:-1]
+    ##================FORCE FABRIC TENSOR DATA==================================================================================
+    force_fabric_tensor_data_list = one_file_reader(simulation_directory + '/force_fabric_tensor.dou')
+    force_fabric_tensor_data_list = np.asarray(force_fabric_tensor_data_list)
+    force_fabric_tensor_data_list = np.char.split(force_fabric_tensor_data_list, ', ')
+    for i in force_fabric_tensor_data_list[:]:
+        if 'force_fabric_tensor_data' in locals():
+            force_fabric_tensor_data = np.vstack((force_fabric_tensor_data, np.asarray(i)))
+        else:
+            force_fabric_tensor_data = np.asarray(i)
+    for i in enumerate(force_fabric_tensor_data): force_fabric_tensor_data[i[0], -1] = force_fabric_tensor_data[i[0], -1][:-1]
+    force_fabric_tensor_data = force_fabric_tensor_data.astype(float)
 
 
-    return force_data, surface_force_index, surface_position_index,surface_position_data, periodic_BC_data
+
+    return force_data, surface_force_index, surface_position_index,surface_position_data, periodic_BC_data, force_fabric_tensor_data
 
 
 if __name__ == '__main__':
     #simulation_directory = 'c:/Users/Axel/Documents/DEM/results/electrode_calendaring/SN00'
 #    simulation_directory = '/scratch/users/axlun/DEMsim/results/electrode_calendaring/bt065N3000bt_coeff_1_mu_0_mu_wall_0_fraction_binder_contacts_06'
-    simulation_directory = '/scratch/users/axlun/DEMsim/results/electrode_calendaring/SN00_1000p_plastic_binder'
+    simulation_directory = '/scratch/users/axlun/DEMsim/results/electrode_calendaring/SN00_400p_plastic_binder'
 #    simulation_directory = 'c:/Users/Axel/Documents/DEM/results/electrode_calendaring/SN0_1000particlesWithBinder_new_packingmethod_2'
 
     if simulation_directory.startswith("/scratch"):force_data, surface_force_index, surface_position_index, surface_position_data, periodic_BC_data = bertil_data_gatherer(simulation_directory)
     elif simulation_directory.startswith("c:"):force_data, surface_force_index, surface_position_index, surface_position_data, periodic_BC_data = local_data_gatherer(simulation_directory)
     else: print("Error with simulation directory")
 
-    print(surface_force_index[1])
+#    print(surface_force_index[1])
     calendering_surface_force = force_data[:, surface_force_index[1]+1].astype(float)
     periodic_BC_x_min = periodic_BC_data[:,1].astype(float)
     periodic_BC_x_max = periodic_BC_data[:,2].astype(float)
