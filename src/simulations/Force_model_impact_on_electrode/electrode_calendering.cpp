@@ -7,14 +7,14 @@
 
 #include "../../engine/engine.h"
 #include "../../contact_models/viscoelastic.h"
-#include "../../contact_models/Binder_behavour_investigation/viscoelastic_binder_El_Pl_particles.h"
+#include "../../contact_models/Binder_behavour_investigation/elastic_plastic_binder_rigid_perfect_plastic_particle.h"
 #include "../../materials/electrode_material.h"
 #include "../../utilities/file_reading_functions.h"
 #include "../../utilities/filling_functions.h"
 
 void DEM::electrode_calendering(const std::string& settings_file_name) {
     using namespace DEM;
-    using ForceModel = viscoelastic_binder_El_Pl_particles;
+    using ForceModel = elastic_plastic_binder_rigid_perfect_plastic_particle;
     using ParticleType = SphericalParticle<ForceModel>;
     using EngineType = Engine<ForceModel, ParticleType>;
     using namespace std::chrono_literals;

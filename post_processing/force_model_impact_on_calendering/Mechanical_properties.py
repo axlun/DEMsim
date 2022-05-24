@@ -22,7 +22,7 @@ def main():
     print(x_side_leght)
     x_side_leght_0 =  x_side_leght[0]
     y_side_length = periodic_BC_data[:, 4]-periodic_BC_data[:, 3]
-    t0 = 1.11 # Chould be chaned later, defined in another way?=========================================================
+    t0 = 1.11 # Chould be chaged later, defined in another way?=========================================================
     vol = x_side_leght*y_side_length*t0
     print(vol)
 

@@ -15,16 +15,16 @@
 namespace DEM{
     class ElectrodeMaterial;
     class ParameterMap;
-    class viscoelastic_binder_El_Pl_particles{
-        using ParticleType = SphericalParticle<viscoelastic_binder_El_Pl_particles>;
-        using SurfaceType = Surface<viscoelastic_binder_El_Pl_particles, ParticleType>;
+    class elastic_plastic_binder_rigid_perfect_plastic_particle{
+        using ParticleType = SphericalParticle<elastic_plastic_binder_rigid_perfect_plastic_particle>;
+        using SurfaceType = Surface<elastic_plastic_binder_rigid_perfect_plastic_particle, ParticleType>;
 
     public:
-        viscoelastic_binder_El_Pl_particles(ParticleType* particle1, ParticleType* particle2, std::chrono::duration<double>dt);
-        viscoelastic_binder_El_Pl_particles(ParticleType* particle1, SurfaceType* surface, std::chrono::duration<double>dt );
+        elastic_plastic_binder_rigid_perfect_plastic_particle(ParticleType* particle1, ParticleType* particle2, std::chrono::duration<double>dt);
+        elastic_plastic_binder_rigid_perfect_plastic_particle(ParticleType* particle1, SurfaceType* surface, std::chrono::duration<double>dt );
 
-        viscoelastic_binder_El_Pl_particles(ParticleType*, ParticleType*, std::chrono::duration<double>, const ParameterMap& parameters);
-        viscoelastic_binder_El_Pl_particles(ParticleType*, SurfaceType*, std::chrono::duration<double>, const ParameterMap& parameters);
+        elastic_plastic_binder_rigid_perfect_plastic_particle(ParticleType*, ParticleType*, std::chrono::duration<double>, const ParameterMap& parameters);
+        elastic_plastic_binder_rigid_perfect_plastic_particle(ParticleType*, SurfaceType*, std::chrono::duration<double>, const ParameterMap& parameters);
 
 
         [[nodiscard]] double get_overlap() const {return h_;};

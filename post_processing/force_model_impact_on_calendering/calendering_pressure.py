@@ -95,13 +95,13 @@ def bertil_data_gatherer(simulation_directory):
 
 
 if __name__ == '__main__':
-    #simulation_directory = 'c:/Users/Axel/Documents/DEM/results/electrode_calendaring/SN00'
+#    simulation_directory = 'c:/Users/Axel/Documents/DEM/results/electrode_calendaring/SN00'
 #    simulation_directory = '/scratch/users/axlun/DEMsim/results/electrode_calendaring/bt065N3000bt_coeff_1_mu_0_mu_wall_0_fraction_binder_contacts_06'
-    simulation_directory = '/scratch/users/axlun/DEMsim/results/electrode_calendaring/SN00_400p_plastic_binder'
+    simulation_directory = '/scratch/users/axlun/DEMsim/results/electrode_calendaring/SN00_1500p_plastic_binder'
 #    simulation_directory = 'c:/Users/Axel/Documents/DEM/results/electrode_calendaring/SN0_1000particlesWithBinder_new_packingmethod_2'
 
-    if simulation_directory.startswith("/scratch"):force_data, surface_force_index, surface_position_index, surface_position_data, periodic_BC_data = bertil_data_gatherer(simulation_directory)
-    elif simulation_directory.startswith("c:"):force_data, surface_force_index, surface_position_index, surface_position_data, periodic_BC_data = local_data_gatherer(simulation_directory)
+    if simulation_directory.startswith("/scratch"):force_data, surface_force_index, surface_position_index, surface_position_data, periodic_BC_data,force_fabric_tensor_data = bertil_data_gatherer(simulation_directory)
+    elif simulation_directory.startswith("c:"):force_data, surface_force_index, surface_position_index, surface_position_data, periodic_BC_data,force_fabric_tensor_data = local_data_gatherer(simulation_directory)
     else: print("Error with simulation directory")
 
 #    print(surface_force_index[1])
@@ -116,21 +116,54 @@ if __name__ == '__main__':
     calendering_time = periodic_BC_data[:,0]
     calendering_surface_position = surface_position_data[:,surface_position_index[1]+14].astype(float)
 
+    # plt.ion
     fig, ax1 = plt.subplots()
     ax1.set_ylabel("Calendering surface pressure [MPa]")
     ax1.set_xlabel("time [s]")
-    ax1.plot(calendering_time, calendering_surface_pressure*1e-6)
+    lns1 = ax1.plot(calendering_time, calendering_surface_pressure*1e-6,'r',label='Pressure')
     ax2 = ax1.twinx()
 #    ax2.set_xlabel("Calendering surface position [m]")
     ax2.set_ylabel("Calendering surface position [m]")
-    ax2.plot(calendering_time, calendering_surface_position)
+    lns2 = ax2.plot(calendering_time, calendering_surface_position,'b',label='Position')
+    ax1.set_title('calendering surface pressure')
+
+    lns = lns1 + lns2
+    labs = [l.get_label() for l in lns]
+    ax1.legend(lns, labs, loc=0)
+
     # ax1.title('calendering surface pressure')
     fig.tight_layout()
-    plt.show()
 
 
-    plt.plot(calendering_surface_position, calendering_surface_pressure*1e-6)
-    plt.ylabel("Calendering surface pressure [MPa]")
-    plt.xlabel("Calendering surface position [m]")
-    plt.title("calendering surface pressure")
+#=================Find start and stop of calendering and plot it==================================================
+    h_al = 1.11 # Active layer height
+    flag1 = True
+    flag2 = True
+    val_hist = -1
+    val_hist2 = -1
+    for count,val in enumerate(calendering_surface_position):
+       # print(count,val)
+        if val< h_al*1.1 and flag1:
+            calendering_initiate_index = count
+            flag1 = False
+        if (val == val_hist2) and (flag1 == False) and flag2:
+            flag2 = False
+            calendering_break_index = count
+        val_hist2= val_hist
+        val_hist = val
+
+    fig2,ax3 = plt.subplots()
+    ax3.plot(calendering_surface_position[calendering_initiate_index:(calendering_break_index-1)], calendering_surface_pressure[calendering_initiate_index:(calendering_break_index-1)]*1e-6)
+    ax3.set_ylabel("Calendering surface pressure [MPa]")
+    ax3.set_xlabel("Calendering surface position [m]")
+    ax3.set_title('calendering surface pressure')
+    fig2.tight_layout
+
+
+    fig3,ax4 = plt.subplots()
+    ax4.plot(calendering_surface_position[:],
+             calendering_surface_pressure[:] * 1e-6)
+    ax4.set_ylabel("Calendering surface pressure [MPa]")
+    ax4.set_xlabel("Calendering surface position [m]")
+    ax4.set_title('calendering surface pressure')
     plt.show()
