@@ -12,10 +12,10 @@ def simulation_runner(program, sim_file):
     return
 if __name__ == '__main__':
 
-    simulation_name = "electrode_calendering"
-    simulation_file = "/DEMsim/simulations/force_model_impact_on_electrode/Electrode_calendering_bertil"#dont add .sim
-    #simulation_name = "electrode_mechanical_loading"
-    #simulation_file = "/DEMsim/simulations/force_model_impact_on_electrode/Electrode_mechanical_loadingYes_bertil"  # dont add .sim
+#    simulation_name = "electrode_calendering"
+#    simulation_file = "/DEMsim/simulations/force_model_impact_on_electrode/Electrode_calendering_bertil"#dont add .sim
+    simulation_name = "electrode_mechanical_loading"
+    simulation_file = "/DEMsim/simulations/force_model_impact_on_electrode/Electrode_mechanical_loading_bertil"  # dont add .sim
 
     simulation_file = "/scratch/users/axlun/"+simulation_file
     simulation_runner(simulation_name,simulation_file)

@@ -76,8 +76,10 @@ add_executable(DEMsim
 				src/simulations/stone_compaction.cpp
 				src/contact_models/viscoelastic.cpp
 				src/contact_models/viscoelastic.h
-		src/contact_models/Binder_behavour_investigation/elastic_plastic_binder_rigid_perfect_plastic_particle.cpp
-		src/contact_models/Binder_behavour_investigation/elastic_plastic_binder_rigid_perfect_plastic_particle.h
+				src/contact_models/Binder_behavour_investigation/elastic_plastic_binder_rigid_perfect_plastic_particle.cpp
+				src/contact_models/Binder_behavour_investigation/elastic_plastic_binder_rigid_perfect_plastic_particle.h
+				src/contact_models/Binder_behavour_investigation/elastic_plastic_binder_hertz_plastic_particle.cpp
+				src/contact_models/Binder_behavour_investigation/elastic_plastic_binder_hertz_plastic_particle.h
 				src/materials/electrode_material.h
 				src/materials/electrode_material.cpp
 				src/utilities/printing_functions.h
