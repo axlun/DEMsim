@@ -40,9 +40,12 @@ void DEM::electrode_mechanical_loading(const std::string &settings_file_name)
 
 
     auto deformable_surface = simulator.get_surface<EngineType::DeformablePointSurfacePointer>("bottom_plate");
+    auto calendering_surface = simulator.get_surface<EngineType::PointSurfacePointer>("top_plate");
+    //Remove calendering surface from RVE
+    calendering_surface->move(Vec3(0, 0,  1), Vec3(0, 0, 0));
 
     auto mat = simulator.get_material(0);
-    std::cout << "material density" << mat->density << "\n";
+//    std::cout << "material density" << mat->density << "\n";
 
 //=====================================================STRETCH THE PERIODIC BCs=======================================
     simulator.set_mass_scale_factor(1E2);

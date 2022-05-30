@@ -45,6 +45,7 @@ void DEM::electrode_calendering(const std::string& settings_file_name) {
     mat->fraction_binder_contacts = parameters.get_parameter<double>("fraction_binder_contacts");
     auto particle_density_at_filling = parameters.get_parameter<double>("filling_density");
     mat->active_particle_height = parameters.get_parameter<double>("active_particle_height");
+    auto calendering_height = parameters.get_parameter<double>("calendering_height");
 
     auto particle_radii = read_vector_from_file<double>(particle_file);
     if (particle_radii.size() ==1) {
@@ -171,8 +172,8 @@ void DEM::electrode_calendering(const std::string& settings_file_name) {
 //  Move surface to uppermost particle
     auto bbox = simulator.get_bounding_box(); //get the XYZ max/min that contain all particles
     double h_1 = bbox[5]; //height of uppermost particle (Z-max)
-    if (h_1<2.2*mat->active_particle_height){
-        h_1=2.2*mat->active_particle_height;
+    if (h_1<2.2*calendering_height){
+        h_1=2.2*calendering_height;
         std::cout<<"Heigh of uppermoast particle lower then 2.2 h_al: "<< h_1<< std::endl;
     }
     else{
@@ -181,7 +182,7 @@ void DEM::electrode_calendering(const std::string& settings_file_name) {
     top_surface->move(-Vec3(0, 0, box_height - h_1-1.01*max_binder_thickness), Vec3(0, 0, 0)); //Move top surface to uppermost partile+binder thickness
 
     top_surface->set_velocity(Vec3(0,0,0.-2*surface_velocity));
-    std::chrono::duration<double> compaction_time_pre_cal {((h_1+1.01*max_binder_thickness - mat->active_particle_height*2) / (2*surface_velocity))};
+    std::chrono::duration<double> compaction_time_pre_cal {((h_1+1.01*max_binder_thickness - calendering_height*2) / (2*surface_velocity))};
 
     std::cout<<"Compaction time: "<< compaction_time_pre_cal.count()<< std::endl;
     run_for_time.reset(compaction_time_pre_cal);
@@ -237,13 +238,13 @@ void DEM::electrode_calendering(const std::string& settings_file_name) {
     bbox = simulator.get_bounding_box(); //get the XYZ max/min that contain all particles
     double h_3 = bbox[5]; //height of uppermost particle (Z-max)
     std::cout<<"Heigh of uppermoast particle: "<< h_3<< std::endl;
-    if (h_3<1.2*mat->active_particle_height){
-        h_3=1.2*mat->active_particle_height;
+    if (h_3<1.2*calendering_height){
+        h_3=1.2*calendering_height;
         std::cout<<"Heigh of uppermoast particle lower then 1.2 h_al: "<< h_3<< std::endl;
     }
-    top_surface->move(-Vec3(0, 0,  mat->active_particle_height*2 - h_3-1.01*max_binder_thickness), Vec3(0, 0, 0)); //Move top surface to uppermost particle+binder thickness
+    top_surface->move(-Vec3(0, 0,  calendering_height*2 - h_3-1.01*max_binder_thickness), Vec3(0, 0, 0)); //Move top surface to uppermost particle+binder thickness
     top_surface->set_velocity(Vec3(0,0,0.-surface_velocity/2));
-    std::chrono::duration<double> compaction_time_2 {((h_3+1.01*max_binder_thickness-mat->active_particle_height) / (surface_velocity/2))};
+    std::chrono::duration<double> compaction_time_2 {((h_3+1.01*max_binder_thickness-calendering_height) / (surface_velocity/2))};
 
     std::cout<<"Compaction time: "<< compaction_time_2.count()<< std::endl;
     run_for_time.reset(compaction_time_2);
@@ -257,6 +258,8 @@ void DEM::electrode_calendering(const std::string& settings_file_name) {
     // simulator.set_rotation(false);
     simulator.run(zero_force);
     top_surface->set_velocity(Vec3(0, 0, 0));
+    auto top_surface_position_after_calendering = top_surface->get_points()[0].z();
+    std::cout<<"Top surface position after calendering: "<< top_surface_position_after_calendering<< std::endl;
     std::cout << "****************Let rest for 2s ****************\n";
     run_for_time.reset(2s);
     simulator.run(run_for_time);
@@ -273,6 +276,7 @@ void DEM::electrode_calendering(const std::string& settings_file_name) {
     results_file<< "RVE side length= " << box_side << "\n";
     results_file << "NMC Porosity=" << NMC_porosity << "\n";
     results_file << "Height of active layer=" << Active_layer_height << "\n";
+    results_file << "Top surface position=" << top_surface_position_after_calendering << "\n";
     results_file.close();
 }
 
