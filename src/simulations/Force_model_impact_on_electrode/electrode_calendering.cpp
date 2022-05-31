@@ -172,8 +172,8 @@ void DEM::electrode_calendering(const std::string& settings_file_name) {
 //  Move surface to uppermost particle
     auto bbox = simulator.get_bounding_box(); //get the XYZ max/min that contain all particles
     double h_1 = bbox[5]; //height of uppermost particle (Z-max)
-    if (h_1<2.2*calendering_height){
-        h_1=2.2*calendering_height;
+    if (h_1<3.1*calendering_height){
+        h_1=3.1*calendering_height;
         std::cout<<"Heigh of uppermoast particle lower then 2.2 h_al: "<< h_1<< std::endl;
     }
     else{
@@ -182,7 +182,7 @@ void DEM::electrode_calendering(const std::string& settings_file_name) {
     top_surface->move(-Vec3(0, 0, box_height - h_1-1.01*max_binder_thickness), Vec3(0, 0, 0)); //Move top surface to uppermost partile+binder thickness
 
     top_surface->set_velocity(Vec3(0,0,0.-2*surface_velocity));
-    std::chrono::duration<double> compaction_time_pre_cal {((h_1+1.01*max_binder_thickness - calendering_height*2) / (2*surface_velocity))};
+    std::chrono::duration<double> compaction_time_pre_cal {((h_1+1.01*max_binder_thickness - calendering_height*3) / (2*surface_velocity))};
 
     std::cout<<"Compaction time: "<< compaction_time_pre_cal.count()<< std::endl;
     run_for_time.reset(compaction_time_pre_cal);
@@ -242,7 +242,7 @@ void DEM::electrode_calendering(const std::string& settings_file_name) {
         h_3=1.2*calendering_height;
         std::cout<<"Heigh of uppermoast particle lower then 1.2 h_al: "<< h_3<< std::endl;
     }
-    top_surface->move(-Vec3(0, 0,  calendering_height*2 - h_3-1.01*max_binder_thickness), Vec3(0, 0, 0)); //Move top surface to uppermost particle+binder thickness
+    top_surface->move(-Vec3(0, 0,  calendering_height*3    - h_3-1.01*max_binder_thickness), Vec3(0, 0, 0)); //Move top surface to uppermost particle+binder thickness
     top_surface->set_velocity(Vec3(0,0,0.-surface_velocity/2));
     std::chrono::duration<double> compaction_time_2 {((h_3+1.01*max_binder_thickness-calendering_height) / (surface_velocity/2))};
 
@@ -266,7 +266,9 @@ void DEM::electrode_calendering(const std::string& settings_file_name) {
     bbox = simulator.get_bounding_box(); //get the XYZ max/min that contain all particles
     double Active_layer_height = bbox[5];
     std::cout<<"Height of active layer "<< Active_layer_height<< std::endl;
-    double NMC_porosity = 1-particle_volume/(box_side*box_side*Active_layer_height) ;
+    //Calculate this from the position when the force on calendering surface is 0
+    double NMC_porosity = 1-particle_volume/(box_side*box_side*top_surface_position_after_calendering);
+//    double NMC_porosity = 1-particle_volume/(box_side*box_side*Active_layer_height) ;
     std::cout<<"NMC Porosity: "<< NMC_porosity<< std::endl;
     std::cout<<"Writing restart file ";
     simulator.write_restart_file(output_directory + "/calendered_electrode_restart_file.res");
