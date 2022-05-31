@@ -97,8 +97,9 @@ def bertil_data_gatherer(simulation_directory):
 if __name__ == '__main__':
 #    simulation_directory = 'c:/Users/Axel/Documents/DEM/results/electrode_calendaring/SN00'
 #    simulation_directory = '/scratch/users/axlun/DEMsim/results/electrode_calendaring/bt065N3000bt_coeff_1_mu_0_mu_wall_0_fraction_binder_contacts_06'
-    simulation_directory = '/scratch/users/axlun/DEMsim/results/electrode_calendaring/SN00_1500p_plastic_binder'#_btr_1'
 #    simulation_directory = 'c:/Users/Axel/Documents/DEM/results/electrode_calendaring/SN0_1000particlesWithBinder_new_packingmethod_2'
+    simulation_directory = 'c:/Users/Axel/Desktop/SN00_1500p_plastic_binder_btr_1'#_hal_08_run_2'
+#    simulation_directory = '/scratch/users/axlun/DEMsim/results/electrode_calendaring/SN00_1500p_plastic_binder_btr_08'#_hal_08_run_2'
 
     if simulation_directory.startswith("/scratch"):force_data, surface_force_index, surface_position_index, surface_position_data, periodic_BC_data,force_fabric_tensor_data = bertil_data_gatherer(simulation_directory)
     elif simulation_directory.startswith("c:"):force_data, surface_force_index, surface_position_index, surface_position_data, periodic_BC_data,force_fabric_tensor_data = local_data_gatherer(simulation_directory)
