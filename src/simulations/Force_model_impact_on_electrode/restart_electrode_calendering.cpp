@@ -29,7 +29,7 @@ void DEM::restart_electrode_calendering(const std::string &settings_file_name)
     auto mat = dynamic_cast<const ElectrodeMaterial *>(simulator.get_material(0));
     auto Calendering_output = simulator.get_output("output_0");
     simulator.remove_output(Calendering_output);
-    auto restart_output = simulator.create_output(output_directory+"restart_file", 0.05s);
+    auto restart_output = simulator.create_output(output_directory, 0.05s);
     restart_output->print_particles = true;
     restart_output->print_surface_positions = true;
     restart_output->print_kinetic_energy = true;
