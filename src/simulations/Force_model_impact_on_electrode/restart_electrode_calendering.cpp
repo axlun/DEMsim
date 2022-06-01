@@ -44,7 +44,7 @@ void DEM::restart_electrode_calendering(const std::string &settings_file_name)
     std::cout << "****************Time to start the simulation**************** \n";
 
 
-    std::cout << "mat->restart_data: " << mat->binder_thickness_fraction << "\n";
+    std::cout << "Binder thickness fraction: " << mat->binder_thickness_fraction << "\n";
 
 
     auto max_binder_thickness = 0.;
@@ -95,8 +95,8 @@ void DEM::restart_electrode_calendering(const std::string &settings_file_name)
     top_surface->set_velocity(Vec3(0, 0, 0));
     auto top_surface_position_after_calendering = top_surface->get_points()[0].z();
     std::cout<<"Top surface position after calendering: "<< top_surface_position_after_calendering<< std::endl;
-    std::cout << "****************Let rest for 2s ****************\n";
-    run_for_time.reset(2s);
+    std::cout << "****************Let rest for 1s ****************\n";
+    run_for_time.reset(1s);
     simulator.run(run_for_time);
     bbox = simulator.get_bounding_box(); //get the XYZ max/min that contain all particles
     double Active_layer_height = bbox[5];
