@@ -1,0 +1,6 @@
+//output_dir=/scratch/users/axlun/DEMsim/results/electrode_calendaring/SN000/
+//radius_file=/scratch/users/axlun/DEMsim/simulations/force_model_impact_on_electrode/size_distribution_2_particle.dat
+restart_file_name=/mnt/c/Users/Axel/Desktop/SN00_400p_plastic_binder/pre_calendered_electrode_restart_file.res
+output_dir=/mnt/c/Users/Axel/Documents/DEM/results/electrode_calendaring/SN00_400p_plastic_binder_restart/
+calendaring_surface_velocity=1
+calendering_height=100e-2
