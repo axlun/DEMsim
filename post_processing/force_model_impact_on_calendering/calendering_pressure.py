@@ -96,9 +96,13 @@ def bertil_data_gatherer(simulation_directory):
 
 if __name__ == '__main__':
 #    simulation_directory = 'c:/Users/Axel/Documents/DEM/results/electrode_calendaring/SN00'
-#    simulation_directory = '/scratch/users/axlun/DEMsim/results/electrode_calendaring/bt065N3000bt_coeff_1_mu_0_mu_wall_0_fraction_binder_contacts_06'
+    simulation_directory = '/scratch/users/axlun/DEMsim/results/electrode_calendaring/SN00_1500p_elastic_binder_btr_065_hal_10'
 #    simulation_directory = 'c:/Users/Axel/Documents/DEM/results/electrode_calendaring/SN0_1000particlesWithBinder_new_packingmethod_2'
-    simulation_directory = 'c:/Users/Axel/Desktop/SN00_1500p_plastic_binder_btr_1'#_hal_08_run_2'
+#    simulation_directory = 'c:/Users/Axel/Desktop/SN00_1500p_plastic_binder_btr_1_hal_08_run_2'
+#    simulation_directory = '/scratch/users/axlun/DEMsim/results/electrode_calendaring_restart/SN00_1500p_plastic_binder_btr_065_hal_095'
+
+    #simulation_directory='c:/Users/Axel/Desktop/electrode_calendaring_restart/SN00_1500p_plastic_binder_btr_08_hal_10'
+
 #    simulation_directory = '/scratch/users/axlun/DEMsim/results/electrode_calendaring/SN00_1500p_plastic_binder_btr_08'#_hal_08_run_2'
 
     if simulation_directory.startswith("/scratch"):force_data, surface_force_index, surface_position_index, surface_position_data, periodic_BC_data,force_fabric_tensor_data = bertil_data_gatherer(simulation_directory)
@@ -144,7 +148,7 @@ if __name__ == '__main__':
     val_hist2 = -1
     for count,val in enumerate(calendering_surface_position):
        # print(count,val)
-        if val< h_al*1.4 and flag1:
+        if val< h_al*1.2 and flag1:
             calendering_initiate_index = count
             flag1 = False
         if (val == val_hist2) and (flag1 == False) and flag2:

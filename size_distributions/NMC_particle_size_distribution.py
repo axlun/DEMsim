@@ -27,4 +27,15 @@ if __name__ == '__main__':
    # plt.legend(loc='best')
     plt.text(20,.1,s=r'$k=4.42 $'+'\n'+r'$\theta=1.99$' , fontsize=16)
 
+
+
+    PDF_fig,ax = plt.subplots()
+    ax.plot(bins, y, linewidth=3, color='b')
+    ax.text(19,.09,s='Gamma\n'+r'$k=4.42 $'+'\n'+r'$\theta=1.99$' , fontsize=16)
+    #ax.xlim([4, 24])
+    ax.set_xlim(4, 24)
+    ax.set_xlabel('Particle diameter [µm]', fontsize=16, weight='bold')
+    #    plt.ylabel('Number of particles [-]')
+    ax.set_ylabel('Probability density function [-]', fontsize=16, weight='bold')
+    ax.tick_params(axis='both', which='major', labelsize=16)
     plt.show()

@@ -34,8 +34,8 @@ def main():
     linear_strain = (x_side_length[:]-x_side_length_0)/x_side_length_0
 
     plt.figure(0)
-    plt.plot(linear_strain, sxx / 1e6, 'r', lw=2, label=r'$\sigma_{xx}$')
-    plt.plot(linear_strain, syy / 1e6, 'g', lw=2, label=r'$\sigma_{yy}$')
+    plt.plot(linear_strain[:len(linear_strain)//2], sxx[:len(linear_strain)//2] / 1e6, 'r', lw=2, label=r'$\sigma_{xx}$')
+    plt.plot(linear_strain[:len(linear_strain)//2], syy[:len(linear_strain)//2] / 1e6, 'g', lw=2, label=r'$\sigma_{yy}$')
 #    plt.plot(linear_strain, szz / 1e6, 'b', lw=2, label=r'$\sigma_{zz}$')
     plt.xlabel('Strain [-]')
     plt.ylabel('Stress [MPa]')
