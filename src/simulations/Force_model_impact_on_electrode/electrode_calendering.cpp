@@ -191,9 +191,10 @@ void DEM::electrode_calendering(const std::string& settings_file_name) {
     top_surface->set_velocity(Vec3(0,0,0));
     simulator.set_gravity(Vec3(0, 0, -1E1)); //Use gravity for initial packing of particles
 
+    run_for_time.reset(2s);
+    simulator.run(run_for_time);
 
-
-    EngineType::ParticleVelocityLess max_velocity_2 (simulator, 2.5, 0.04s); // max_vel = 0.5
+    EngineType::ParticleVelocityLess max_velocity_2 (simulator, 4, 0.04s);//2.5, 0.04s); // max_vel = 0.5
     simulator.run(max_velocity_2);
 // ***********************************Move stiff surfaces and initiate periodic BCs***********************************
     std::cout << "****************Wall removal**************** \n";
@@ -213,7 +214,7 @@ void DEM::electrode_calendering(const std::string& settings_file_name) {
     std::cout << "****************Adhesive on**************** \n";
 
     mat->adhesive = true; // Activate adhesion before calendering starts
-    max_velocity_2.set_new_value(1.5);
+    max_velocity_2.set_new_value(3);//1.5);
     simulator.run(max_velocity_2);
     std::cout << "****************Turn off gravity**************** \n";
 
