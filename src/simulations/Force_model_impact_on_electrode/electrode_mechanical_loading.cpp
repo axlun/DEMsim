@@ -28,7 +28,7 @@ void DEM::electrode_mechanical_loading(const std::string &settings_file_name)
 //    auto mat = simulator.create_material<ElectrodeMaterial>(4800);//**************OLD MATERIAL SHOULD BE READ FROM RESTART******
     auto Calendering_output = simulator.get_output("output_0");
     simulator.remove_output(Calendering_output);
-    auto mechanical_loading_output = simulator.create_output(output_directory, 0.05s);
+    auto mechanical_loading_output = simulator.create_output(output_directory, 0.005s);
     mechanical_loading_output->print_particles = true;
     mechanical_loading_output->print_surface_positions = true;
     mechanical_loading_output->print_kinetic_energy = true;
