@@ -1,2 +1,2 @@
-output_dir=/scratch/users/axlun/DEMsim/results/electrode_mechanical_loading/SN00_3000p_plastic_binder_btr_065_hal_10_run_3 
-restart_file_name=/scratch/users/axlun/DEMsim/results/electrode_calendaring/SN00_3000p_plastic_binder_btr_065_hal_10_run_3/calendered_electrode_restart_file.res
+output_dir=/scratch/users/axlun/DEMsim/results/electrode_mechanical_loading/SN00_3000p_plastic_binder_btr_075_hal_10 
+restart_file_name=/scratch/users/axlun/DEMsim/results/electrode_calendaring/SN00_3000p_plastic_binder_btr_075_hal_10/calendered_electrode_restart_file.res
