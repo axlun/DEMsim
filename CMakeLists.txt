@@ -66,6 +66,7 @@ add_executable(DEMsim
 				src/simulations/Contact_tests/wall_contact_tester_viscoelastic_binder_El_Pl_particles.cpp
 				src/simulations/Contact_tests/contact_tester_viscoelastic_binder_El_Pl_particles.cpp
         		src/simulations/Force_model_impact_on_electrode/electrode_calendering.cpp
+				src/simulations/Force_model_impact_on_electrode/electrode_calendering_hertz.cpp
 				src/simulations/Force_model_impact_on_electrode/restart_test.cpp
 				src/simulations/Force_model_impact_on_electrode/restart_electrode_calendering.cpp
 				src/simulations/Force_model_impact_on_electrode/electrode_mechanical_loading.cpp
