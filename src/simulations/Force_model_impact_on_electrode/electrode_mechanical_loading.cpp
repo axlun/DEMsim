@@ -133,8 +133,8 @@ void DEM::electrode_mechanical_loading(const std::string &settings_file_name)
 
     std::cout << "**************** Final Unload ****************\n";
     run_for_time_BC_stretch.reset(2s);
-    simulator.set_periodic_boundary_condition_strain_rate('x',loading_direction*0.01);
-    deformable_surface->set_in_plane_strain_rates(0.01,0);
+    simulator.set_periodic_boundary_condition_strain_rate('x',-loading_direction*0.01);
+    deformable_surface->set_in_plane_strain_rates(-loading_direction*0.01,0);
     simulator.run(run_for_time_BC_stretch);
 
 
