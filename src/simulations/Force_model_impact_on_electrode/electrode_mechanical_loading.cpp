@@ -23,6 +23,7 @@ void DEM::electrode_mechanical_loading(const std::string &settings_file_name)
     SimulationParameters parameters(settings_file_name);
     auto restart_file_name =parameters.get_parameter<std::string>("restart_file_name");
     auto output_directory = parameters.get_parameter<std::string>("output_dir");
+    auto loading_direction = parameters.get_parameter<int>("loading_direction"); // compression -> -1, tension -> 1
     auto simulator = EngineType(restart_file_name);
 //    auto mat = simulator.make_material_from_restart_data()
 //    auto mat = simulator.create_material<ElectrodeMaterial>(4800);//**************OLD MATERIAL SHOULD BE READ FROM RESTART******
@@ -52,87 +53,87 @@ void DEM::electrode_mechanical_loading(const std::string &settings_file_name)
 
     std::cout << "**************** Load step 1 ****************\n";
     EngineType::RunForTime run_for_time_BC_stretch(simulator,.25s);
-    simulator.set_periodic_boundary_condition_strain_rate('x',-0.01);
-    deformable_surface->set_in_plane_strain_rates(-0.01,0);
+    simulator.set_periodic_boundary_condition_strain_rate('x',loading_direction*0.01);
+    deformable_surface->set_in_plane_strain_rates(loading_direction*0.01,0);
     simulator.run(run_for_time_BC_stretch);
 
     std::cout << "**************** Unload and reload 1 ****************\n";
-    simulator.set_periodic_boundary_condition_strain_rate('x',0.01);
-    deformable_surface->set_in_plane_strain_rates(0.01,0);
+    simulator.set_periodic_boundary_condition_strain_rate('x',-loading_direction*0.01);
+    deformable_surface->set_in_plane_strain_rates(-loading_direction*0.01,0);
     run_for_time_BC_stretch.reset(.1s);
     simulator.run(run_for_time_BC_stretch);
-    simulator.set_periodic_boundary_condition_strain_rate('x',-0.01);
-    deformable_surface->set_in_plane_strain_rates(-0.01,0);
+    simulator.set_periodic_boundary_condition_strain_rate('x',loading_direction*0.01);
+    deformable_surface->set_in_plane_strain_rates(loading_direction*0.01,0);
     run_for_time_BC_stretch.reset(.1s);
     simulator.run(run_for_time_BC_stretch);
 
     std::cout << "**************** Load step 2 ****************\n";
     run_for_time_BC_stretch.reset(.25s);
-    simulator.set_periodic_boundary_condition_strain_rate('x',-0.01);
-    deformable_surface->set_in_plane_strain_rates(-0.01,0);
+    simulator.set_periodic_boundary_condition_strain_rate('x',loading_direction*0.01);
+    deformable_surface->set_in_plane_strain_rates(loading_direction*0.01,0);
     simulator.run(run_for_time_BC_stretch);
 
     std::cout << "**************** Unload and reload 2 ****************\n";
-    simulator.set_periodic_boundary_condition_strain_rate('x',0.01);
-    deformable_surface->set_in_plane_strain_rates(0.01,0);
+    simulator.set_periodic_boundary_condition_strain_rate('x',-loading_direction*0.01);
+    deformable_surface->set_in_plane_strain_rates(-loading_direction*0.01,0);
     run_for_time_BC_stretch.reset(.1s);
     simulator.run(run_for_time_BC_stretch);
-    simulator.set_periodic_boundary_condition_strain_rate('x',-0.01);
-    deformable_surface->set_in_plane_strain_rates(-0.01,0);
+    simulator.set_periodic_boundary_condition_strain_rate('x',loading_direction*0.01);
+    deformable_surface->set_in_plane_strain_rates(loading_direction*0.01,0);
     run_for_time_BC_stretch.reset(.1s);
     simulator.run(run_for_time_BC_stretch);
 
     std::cout << "**************** Load step 3 ****************\n";
     run_for_time_BC_stretch.reset(.5s);
-    simulator.set_periodic_boundary_condition_strain_rate('x',-0.01);
-    deformable_surface->set_in_plane_strain_rates(-0.01,0);
+    simulator.set_periodic_boundary_condition_strain_rate('x',loading_direction*0.01);
+    deformable_surface->set_in_plane_strain_rates(loading_direction*0.01,0);
     simulator.run(run_for_time_BC_stretch);
 
     std::cout << "**************** Unload and reload 3 ****************\n";
-    simulator.set_periodic_boundary_condition_strain_rate('x',0.01);
-    deformable_surface->set_in_plane_strain_rates(0.01,0);
+    simulator.set_periodic_boundary_condition_strain_rate('x',-loading_direction*0.01);
+    deformable_surface->set_in_plane_strain_rates(-loading_direction*0.01,0);
     run_for_time_BC_stretch.reset(.1s);
     simulator.run(run_for_time_BC_stretch);
-    simulator.set_periodic_boundary_condition_strain_rate('x',-0.01);
-    deformable_surface->set_in_plane_strain_rates(-0.01,0);
+    simulator.set_periodic_boundary_condition_strain_rate('x',loading_direction*0.01);
+    deformable_surface->set_in_plane_strain_rates(loading_direction*0.01,0);
     run_for_time_BC_stretch.reset(.1s);
     simulator.run(run_for_time_BC_stretch);
 
     std::cout << "**************** Load step 4 ****************\n";
     run_for_time_BC_stretch.reset(.25s);
-    simulator.set_periodic_boundary_condition_strain_rate('x',-0.01);
-    deformable_surface->set_in_plane_strain_rates(-0.01,0);
+    simulator.set_periodic_boundary_condition_strain_rate('x',loading_direction*0.01);
+    deformable_surface->set_in_plane_strain_rates(loading_direction*0.01,0);
     simulator.run(run_for_time_BC_stretch);
 
     std::cout << "**************** Unload and reload 4 ****************\n";
-    simulator.set_periodic_boundary_condition_strain_rate('x',0.01);
-    deformable_surface->set_in_plane_strain_rates(0.01,0);
+    simulator.set_periodic_boundary_condition_strain_rate('x',-loading_direction*0.01);
+    deformable_surface->set_in_plane_strain_rates(-loading_direction*0.01,0);
     run_for_time_BC_stretch.reset(.1s);
     simulator.run(run_for_time_BC_stretch);
-    simulator.set_periodic_boundary_condition_strain_rate('x',-0.01);
-    deformable_surface->set_in_plane_strain_rates(-0.01,0);
+    simulator.set_periodic_boundary_condition_strain_rate('x',loading_direction*0.01);
+    deformable_surface->set_in_plane_strain_rates(loading_direction*0.01,0);
     run_for_time_BC_stretch.reset(.1s);
     simulator.run(run_for_time_BC_stretch);
 
     std::cout << "**************** Load step 5 ****************\n";
     run_for_time_BC_stretch.reset(.75s);
-    simulator.set_periodic_boundary_condition_strain_rate('x',-0.01);
-    deformable_surface->set_in_plane_strain_rates(-0.01,0);
+    simulator.set_periodic_boundary_condition_strain_rate('x',loading_direction*0.01);
+    deformable_surface->set_in_plane_strain_rates(loading_direction*0.01,0);
     simulator.run(run_for_time_BC_stretch);
 
     std::cout << "**************** Unload and reload 5 ****************\n";
-    simulator.set_periodic_boundary_condition_strain_rate('x',0.01);
-    deformable_surface->set_in_plane_strain_rates(0.01,0);
+    simulator.set_periodic_boundary_condition_strain_rate('x',-loading_direction*0.01);
+    deformable_surface->set_in_plane_strain_rates(-loading_direction*0.01,0);
     run_for_time_BC_stretch.reset(.1s);
     simulator.run(run_for_time_BC_stretch);
-    simulator.set_periodic_boundary_condition_strain_rate('x',-0.01);
-    deformable_surface->set_in_plane_strain_rates(-0.01,0);
+    simulator.set_periodic_boundary_condition_strain_rate('x',loading_direction*0.01);
+    deformable_surface->set_in_plane_strain_rates(loading_direction*0.01,0);
     run_for_time_BC_stretch.reset(.1s);
     simulator.run(run_for_time_BC_stretch);
 
     std::cout << "**************** Final Unload ****************\n";
     run_for_time_BC_stretch.reset(2s);
-    simulator.set_periodic_boundary_condition_strain_rate('x',0.01);
+    simulator.set_periodic_boundary_condition_strain_rate('x',loading_direction*0.01);
     deformable_surface->set_in_plane_strain_rates(0.01,0);
     simulator.run(run_for_time_BC_stretch);
 
