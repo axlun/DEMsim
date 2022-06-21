@@ -446,10 +446,6 @@ std::string DEM::elastic_plastic_binder_hertz_plastic_particle::restart_data() c
         return ss.str();
     }
 
-
-
-
-
 bool DEM::elastic_plastic_binder_hertz_plastic_particle::create_binder_contact(const ElectrodeMaterial* mat)
 {
     std::random_device random_device;
