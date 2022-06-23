@@ -407,7 +407,7 @@ std::string DEM::elastic_plastic_binder_hertz_plastic_particle::restart_data() c
            << named_print(Ep_eff_, "Ep_eff") << ", "
            << named_print(binder_yield_stress_, "binder_yield_stress_") << ", "
            << named_print(particle_yield_stress_, "particle_yield_stress_") << ", "
-           << named_print(yield_h_, "yield_h") << ", "
+           << named_print(yield_h_, "yield_h_") << ", "
            << named_print(R0_, "R0") << ", "
            << named_print(F_, "F") << ", "
            << named_print(a_0_, "a_0_") << ", "
