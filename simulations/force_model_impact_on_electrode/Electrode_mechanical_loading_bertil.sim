@@ -1,3 +1,3 @@
 output_dir=/scratch/users/axlun/DEMsim/results/electrode_mechanical_loading/SN_hertz_3000p_btr_075_tension
-restart_file_name=/scratch/users/axlun/DEMsim/results/electrode_calendaring_hertz/SN_hertz_3000p_btr_075/calendered_electrode_restart_file.res
+restart_file_name=/scratch/users/axlun/DEMsim/results/electrode_calendaring/SN_hertz_3000p_btr_075/calendered_electrode_restart_file.res
 loading_direction=-1
