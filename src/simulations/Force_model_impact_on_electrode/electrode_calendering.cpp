@@ -29,6 +29,7 @@ void DEM::electrode_calendering(const std::string& settings_file_name) {
     auto mat = simulator.create_material<ElectrodeMaterial>(4800);
     mat->E = parameters.get_parameter<double>("E");
     mat->Ep = parameters.get_parameter<double>("Ep");
+    mat->nu = parameters.get_parameter<double>("nu");
     mat->nup = parameters.get_parameter<double>("nup");
     mat->rhop = parameters.get_parameter<double>("rhop");
     mat->mu = parameters.get_parameter<double>("mu");
