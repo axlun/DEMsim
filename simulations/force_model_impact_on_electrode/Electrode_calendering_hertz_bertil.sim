@@ -1,6 +1,6 @@
-N=3000
+N=5000
 filling_density=0.025		
-output_dir=/scratch/users/axlun/DEMsim/results/electrode_calendaring/SN_hertz_3000p_btr_065/
+output_dir=/scratch/users/axlun/DEMsim/results/electrode_calendaring/SN_hertz_5000p_btr_065/
 radius_file=/scratch/users/axlun/DEMsim/simulations/force_model_impact_on_electrode/size_distribution_2_particle.dat
 E=2e9
 nu=0.3
