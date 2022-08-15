@@ -14,7 +14,7 @@
 
 void DEM::restart_electrode_calendering(const std::string &settings_file_name)
 {
-    using namespace DEM;restart_electrode_calendering.cpp
+    using namespace DEM;
     using ForceModel = elastic_plastic_binder_rigid_perfect_plastic_particle;
     using ParticleType = SphericalParticle<ForceModel>;
     using EngineType = Engine<ForceModel,ParticleType>;

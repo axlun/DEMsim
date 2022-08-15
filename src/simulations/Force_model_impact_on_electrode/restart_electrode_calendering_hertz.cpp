@@ -14,7 +14,7 @@
 
 void DEM::restart_electrode_calendering_hertz(const std::string &settings_file_name)
 {
-    using namespace DEM;restart_electrode_calendering.cpp
+    using namespace DEM;
     using ForceModel = elastic_plastic_binder_hertz_plastic_particle;
     using ParticleType = SphericalParticle<ForceModel>;
     using EngineType = Engine<ForceModel,ParticleType>;
