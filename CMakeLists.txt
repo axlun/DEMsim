@@ -69,6 +69,7 @@ add_executable(DEMsim
 				src/simulations/Force_model_impact_on_electrode/electrode_calendering_hertz.cpp
 				src/simulations/Force_model_impact_on_electrode/restart_test.cpp
 				src/simulations/Force_model_impact_on_electrode/restart_electrode_calendering.cpp
+				src/simulations/Force_model_impact_on_electrode/restart_electrode_calendering_hertz.cpp
 				src/simulations/Force_model_impact_on_electrode/electrode_mechanical_loading.cpp
 				src/simulations/Force_model_impact_on_electrode/electrode_mechanical_loading_hertz.cpp
 				src/simulations/cyclic_triaxial.cpp
