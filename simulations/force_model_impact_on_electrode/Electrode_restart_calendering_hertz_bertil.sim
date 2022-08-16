@@ -1,4 +1,4 @@
-output_dir=/scratch/users/axlun/DEMsim/results/electrode_calendaring_restart/SN_hertz_5000p_btr_065_hal_95/
+output_dir=/scratch/users/axlun/DEMsim/results/electrode_calendaring_restart/SN_hertz_5000p_btr_065_hal_85/
 restart_file_name=/scratch/users/axlun/DEMsim/results/electrode_calendaring/SN_hertz_5000p_btr_065/pre_calendered_electrode_restart_file.res
 calendaring_surface_velocity=1
-calendering_height=95e-2
+calendering_height=85e-2
