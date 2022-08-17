@@ -24,9 +24,9 @@ if __name__ == '__main__':
         time.append(float(time_stamp[0]))
         contact_time_and_file_name_dict[time_stamp[0]] = contact_file
 
-    print(contact_time_and_file_name_dict)
+    # print(contact_time_and_file_name_dict)
     time.sort()
-    print(time)
+    # print(time)
 
     for i in range(0,1):#len(time)):
         binder_contact = 0
@@ -40,26 +40,23 @@ if __name__ == '__main__':
         file_to_open = argument_string+'/'+contact_time_and_file_name_dict[key]
         with open(file_to_open) as opened_contact_file:
             lines = opened_contact_file.readlines()
-        print(lines)
+        # print(lines)
 
-        # contact_file_data = input_output_return(
-        #     'cd ' + simulation_directory + '/contacts/' + '\ncat ' + contact_time_and_file_name_dict[key])
-        # # File data read
-        # for j in range(0, len(contact_file_data)):
-        #     line_data = contact_file_data[j].split(', ')
-        #     if float(line_data[7]) != 0 and float(line_data[8]) == 0.0:
-        #         # print('Binder flag')
-        #         binder_contact += 1
-        #     if float(line_data[8]) != 0:
-        #         # print('Particle flag')
-        #         particle_contact += 1
-        #
-        #     # if float(line_data[6]) > 0:
-        #     #     print(line_data[6])
-        #
-        # print('Time: ' + key)
-        # print('Binder contacts: ' + str(binder_contact))
-        # print('Particle contacts: ' + str(particle_contact))
+        for j in range(0, len(lines)):
+             line_data = lines[j].split(', ')
+             if float(line_data[7]) != 0 and float(line_data[8]) == 0.0:
+                # print('Binder flag')
+                binder_contact += 1
+             if float(line_data[8]) != 0:
+                # print('Particle flag')
+                particle_contact += 1
+
+            # if float(line_data[6]) > 0:
+            #     print(line_data[6])
+
+        print('Time: ' + key)
+        print('Binder contacts: ' + str(binder_contact))
+        print('Particle contacts: ' + str(particle_contact))
 
 
 
