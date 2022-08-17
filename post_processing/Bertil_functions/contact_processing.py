@@ -17,7 +17,7 @@ if __name__ == '__main__':
         contact_file = contact_files[i]
         time_stamp = re.split(r'\Acontacts_',contact_file)
         print(time_stamp[1])
-        time_stamp = re.split(r'\.dou\n\Z', time_stamp[1])
+        time_stamp = re.split(r'.dou\n\Z', time_stamp[1])
         print(time_stamp)
         contact_file = re.split(r'\n\Z',contact_file)
         print(contact_file)
