@@ -28,7 +28,7 @@ if __name__ == '__main__':
     time.sort()
     # print(time)
 
-    for i in range(0,1):#len(time)):
+    for i in range(0,len(time)):
         binder_contact = 0
         particle_contact = 0
         key = str(time[i])
