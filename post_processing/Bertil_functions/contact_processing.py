@@ -16,6 +16,7 @@ if __name__ == '__main__':
     for i in range(0,len(contact_files)):
         contact_file = contact_files[i]
         time_stamp = re.split(r'\Acontacts_',contact_file)
+        print(time_stamp)
         time_stamp = re.split(r'.dou\n\Z', time_stamp[1])
         contact_file = re.split(r'\n\Z',contact_file)
         time.append(float(time_stamp[0]))
