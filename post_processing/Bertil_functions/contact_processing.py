@@ -24,3 +24,4 @@ if __name__ == '__main__':
     print(contact_time_and_file_name_dict)
     time.sort()
     print(time)
+    print('Script end')
