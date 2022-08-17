@@ -27,7 +27,9 @@ if __name__ == '__main__':
     # print(contact_time_and_file_name_dict)
     time.sort()
     # print(time)
-
+    time_vec = []
+    binder_contact_vec = []
+    particle_contact_vec = []
     for i in range(0,len(time)):
         binder_contact = 0
         particle_contact = 0
@@ -53,11 +55,13 @@ if __name__ == '__main__':
 
             # if float(line_data[6]) > 0:
             #     print(line_data[6])
+        binder_contact_vec.append(binder_contact)
+        particle_contact_vec.append(particle_contact)
+        time_vec.append(key)
+        # print('Time: ' + key)
+        # print('Binder contacts: ' + str(binder_contact))
+        # print('Particle contacts: ' + str(particle_contact))
 
-        print('Time: ' + key)
-        print('Binder contacts: ' + str(binder_contact))
-        print('Particle contacts: ' + str(particle_contact))
 
-
-
+    print(time_vec,binder_contact_vec,particle_contact_vec)
     print('Script end')
