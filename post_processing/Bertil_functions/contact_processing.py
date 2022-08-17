@@ -6,9 +6,9 @@ import re
 if __name__ == '__main__':
     argument_string = sys.argv[1]
 
-    print('Hello world')
+    # print('Hello world')
 
-    print(argument_string)
+    # print(argument_string)
     contact_files = os.listdir(argument_string)
 #    print(contact_files)
     time = []
@@ -64,4 +64,4 @@ if __name__ == '__main__':
 
 
     print(time_vec,binder_contact_vec,particle_contact_vec)
-    print('Script end')
+    # print('Script end')
