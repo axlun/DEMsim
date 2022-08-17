@@ -57,7 +57,7 @@ if __name__ == '__main__':
             #     print(line_data[6])
         binder_contact_vec.append(binder_contact)
         particle_contact_vec.append(particle_contact)
-        time_vec.append(key)
+        time_vec.append(float(key))
         # print('Time: ' + key)
         # print('Binder contacts: ' + str(binder_contact))
         # print('Particle contacts: ' + str(particle_contact))
