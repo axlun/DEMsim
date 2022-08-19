@@ -10,8 +10,8 @@ if __name__ == '__main__':
 
     particle_files = os.listdir(argument_string.replace("contacts","particles"))
 
-    with open(particle_files[-1]) as opened_contact_file:
-        lines = opened_contact_file.readlines()
+    with open(argument_string.replace("contacts","particles")+'/'+particle_files[-1]) as opened_particle_file:
+        lines = opened_particle_file.readlines()
     number_of_particles = int(lines[-1].split(', ')[0]) - int(lines[0].split(', ')[0])+1
 
     print(number_of_particles)
