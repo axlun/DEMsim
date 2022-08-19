@@ -12,7 +12,8 @@ if __name__ == '__main__':
     with open(argument_string.replace("contacts","particles")+'/'+particle_files[-1]) as opened_particle_file:
         lines = opened_particle_file.readlines()
     number_of_particles = int(lines[-1].split(', ')[0]) - int(lines[0].split(', ')[0])+1
-
+    max_wall_index = int(lines[0].split(', ')[0])
+    print(max_wall_index)
     contact_files = os.listdir(argument_string)
 #    print(contact_files)
     time = []
@@ -49,8 +50,8 @@ if __name__ == '__main__':
         file_to_open = argument_string+'/'+contact_time_and_file_name_dict[key]
         with open(file_to_open) as opened_contact_file:
             lines = opened_contact_file.readlines()
-        max_wall_index = int(lines[0].split(', ')[0])
-        print(max_wall_index)
+        # max_wall_index = int(lines[0].split(', ')[0])
+        # print(max_wall_index)
     #     for j in range(0, len(lines)):
     #         line_data = lines[j].split(', ')
     #
