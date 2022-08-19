@@ -13,7 +13,6 @@ if __name__ == '__main__':
         lines = opened_particle_file.readlines()
     number_of_particles = int(lines[-1].split(', ')[0]) - int(lines[0].split(', ')[0])+1
     max_wall_index = int(lines[0].split(', ')[0])
-    print(max_wall_index)
     contact_files = os.listdir(argument_string)
 #    print(contact_files)
     time = []
@@ -50,32 +49,37 @@ if __name__ == '__main__':
         file_to_open = argument_string+'/'+contact_time_and_file_name_dict[key]
         with open(file_to_open) as opened_contact_file:
             lines = opened_contact_file.readlines()
-        # max_wall_index = int(lines[0].split(', ')[0])
-        # print(max_wall_index)
-    #     for j in range(0, len(lines)):
-    #         line_data = lines[j].split(', ')
-    #
-    #         if line_data[5]>=0:
-    #             particle_array[int(line_data[0]) - max_wall_index] =+ 1
-    #             if line_data[1] >= max_wall_index:
-    #                 particle_array[int(line_data[1]) - max_wall_index] = + 1
-    #
-    #         # if float(line_data[7]) != 0 and float(line_data[8]) == 0.0:
-    #         #     # print('Binder flag')
-    #         #     binder_contact += 1
-    #         #  if float(line_data[8]) != 0:
-    #         #     # print('Particle flag')
-    #         #     particle_contact += 1
-    #
-    #         # if float(line_data[6]) > 0:
-    #         #     print(line_data[6])
-    #     binder_contact_vec.append(binder_contact)
-    #     particle_contact_vec.append(particle_contact)
-    #     time_vec.append(float(key))
-    #     # print('Time: ' + key)
-    #     # print('Binder contacts: ' + str(binder_contact))
-    #     # print('Particle contacts: ' + str(particle_contact))
-    #
-    #
-    # print(time_vec,binder_contact_vec,particle_contact_vec)
+        for j in range(0, len(lines)):
+            contact_number_vec = [0]*6
+            line_data = lines[j].split(', ')
+
+            if line_data[5]>=0:
+                particle_array[int(line_data[0]) - max_wall_index] += 1
+                if line_data[1] >= max_wall_index:
+                    particle_array[int(line_data[1]) - max_wall_index] +=  1
+
+            for i in particle_array:
+                if i > 6:
+                    i=6
+                contact_number_vec[i-1] += 1
+            print(contact_number_vec)
+
+            # if float(line_data[7]) != 0 and float(line_data[8]) == 0.0:
+            #     # print('Binder flag')
+            #     binder_contact += 1
+            #  if float(line_data[8]) != 0:
+            #     # print('Particle flag')
+            #     particle_contact += 1
+
+            # if float(line_data[6]) > 0:
+            #     print(line_data[6])
+        # binder_contact_vec.append(binder_contact)
+        # particle_contact_vec.append(particle_contact)
+        # time_vec.append(float(key))
+        # print('Time: ' + key)
+        # print('Binder contacts: ' + str(binder_contact))
+        # print('Particle contacts: ' + str(particle_contact))
+
+
+    print(time_vec,binder_contact_vec,particle_contact_vec)
     print('Script end')
