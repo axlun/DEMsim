@@ -53,9 +53,9 @@ if __name__ == '__main__':
             contact_number_vec = [0]*6
             line_data = lines[j].split(', ')
 
-            if line_data[5]>=0:
+            if float(line_data[5])>=0:
                 particle_array[int(line_data[0]) - max_wall_index] += 1
-                if line_data[1] >= max_wall_index:
+                if int(line_data[1]) >= max_wall_index:
                     particle_array[int(line_data[1]) - max_wall_index] +=  1
 
             for i in particle_array:
