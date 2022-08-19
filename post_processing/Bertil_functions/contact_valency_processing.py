@@ -52,16 +52,16 @@ if __name__ == '__main__':
         for j in range(0, len(lines)):
             contact_number_vec = [0]*6
             line_data = lines[j].split(', ')
-
-            if float(line_data[5])>=0:
+            print(float(line_data[5]))
+            if float(line_data[5]) >= 0:
                 particle_array[int(line_data[0]) - max_wall_index] += 1
                 if int(line_data[1]) >= max_wall_index:
-                    particle_array[int(line_data[1]) - max_wall_index] +=  1
+                    particle_array[int(line_data[1]) - max_wall_index] += 1
 
             for i in particle_array:
                 if i > 6:
                     i=6
-                contact_number_vec[i-1] += 1
+                contact_number_vec[i] += 1
             print(contact_number_vec)
 
             # if float(line_data[7]) != 0 and float(line_data[8]) == 0.0:
