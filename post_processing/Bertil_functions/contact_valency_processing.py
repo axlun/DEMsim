@@ -47,10 +47,10 @@ if __name__ == '__main__':
 
         ## Read file here
         file_to_open = argument_string+'/'+contact_time_and_file_name_dict[key]
+        contact_number_vec = [0] * 6
         with open(file_to_open) as opened_contact_file:
             lines = opened_contact_file.readlines()
         for j in range(0, len(lines)):
-            contact_number_vec = [0]*6
             line_data = lines[j].split(', ')
             print(float(line_data[5]))
             if float(line_data[5]) >= 0:
@@ -58,11 +58,11 @@ if __name__ == '__main__':
                 if int(line_data[1]) >= max_wall_index:
                     particle_array[int(line_data[1]) - max_wall_index] += 1
 
-            for i in particle_array:
-                if i > 6:
-                    i=6
-                contact_number_vec[i] += 1
-            print(contact_number_vec)
+        for i in particle_array:
+            if i > 6:
+                i=6
+            contact_number_vec[i] += 1
+        print(contact_number_vec)
 
             # if float(line_data[7]) != 0 and float(line_data[8]) == 0.0:
             #     # print('Binder flag')
