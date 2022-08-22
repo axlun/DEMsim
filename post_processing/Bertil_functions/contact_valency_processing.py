@@ -67,7 +67,8 @@ if __name__ == '__main__':
             contact_number_vec[k] += 1
 #        print(contact_number_vec)
         results_vec[i,:] = contact_number_vec
-    print(time,results_vec)
+    print(time)
+    print(results_vec)
 #    print(results_vec)
             # if float(line_data[7]) != 0 and float(line_data[8]) == 0.0:
             #     # print('Binder flag')
