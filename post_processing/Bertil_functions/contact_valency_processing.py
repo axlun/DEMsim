@@ -52,7 +52,7 @@ if __name__ == '__main__':
             lines = opened_contact_file.readlines()
         for j in range(0, len(lines)):
             line_data = lines[j].split(', ')
-            print(float(line_data[5]))
+#            print(float(line_data[5]))
             if float(line_data[5]) >= 0:
                 particle_array[int(line_data[0]) - max_wall_index] += 1
                 if int(line_data[1]) >= max_wall_index:
