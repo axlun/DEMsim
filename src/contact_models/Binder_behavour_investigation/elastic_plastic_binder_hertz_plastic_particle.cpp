@@ -351,7 +351,7 @@ double  DEM::elastic_plastic_binder_hertz_plastic_particle::update_normal_force(
 
 void  DEM::elastic_plastic_binder_hertz_plastic_particle::update_tangential_force(const DEM::Vec3& dt, const DEM::Vec3& normal)
 {
-    if (F_binder != 0. && adhesive())
+    if (F_binder != 0. && adhesive() && bonded_)
     {
       FT_binder_ -= dot_product(FT_binder_,normal)*normal;
       uT_ -= dot_product(uT_,normal)*normal;
