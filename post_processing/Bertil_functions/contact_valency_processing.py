@@ -33,7 +33,7 @@ if __name__ == '__main__':
     # print(contact_time_and_file_name_dict)
     time.sort()
     # print(time)
-    time_vec = []
+#    time_vec = []
     binder_contact_vec = []
     particle_contact_vec = []
     results_vec = np.zeros(shape=(len(time),6),dtype=int,order='C')
@@ -66,7 +66,7 @@ if __name__ == '__main__':
             contact_number_vec[k] += 1
 #        print(contact_number_vec)
         results_vec[i,:] = contact_number_vec
-    print(time_vec)
+    print(time)
     print(results_vec)
             # if float(line_data[7]) != 0 and float(line_data[8]) == 0.0:
             #     # print('Binder flag')
