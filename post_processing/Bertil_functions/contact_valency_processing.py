@@ -62,8 +62,8 @@ if __name__ == '__main__':
 
         for k in particle_array:
             if k > 5:
-                i=5
-            contact_number_vec[i] += 1
+                k=5
+            contact_number_vec[k] += 1
 #        print(contact_number_vec)
         results_vec[i,:] = contact_number_vec
     print(time_vec)
