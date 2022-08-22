@@ -51,7 +51,7 @@ if __name__ == '__main__':
                 if int(line_data[1]) >= max_wall_index:
                     particle_array[int(line_data[1]) - max_wall_index] += 1
 
-            if float(line_data[5]) < 0 and float(line_data[5]) != 0.:
+            if float(line_data[5]) < 0 and float(line_data[6]) != 0.:
                 particle_binder_array[int(line_data[0]) - max_wall_index] += 1
                 if int(line_data[1]) >= max_wall_index:
                     particle_binder_array[int(line_data[1]) - max_wall_index] += 1
