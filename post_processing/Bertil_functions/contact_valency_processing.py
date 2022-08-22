@@ -61,10 +61,10 @@ if __name__ == '__main__':
             particle_contact_number_vec[k] += 1
         for l in particle_binder_array:
             if l > 5:
-                l=5
-            binder_contact_number_vec[k] += 1
+                l = 5
+            binder_contact_number_vec[l] += 1
         particle_results_vec[i,:] = particle_contact_number_vec
-        binder_results_vec[i,:] = binder_contact_vec
+        binder_results_vec[i,:] = binder_contact_number_vec
     print(time)
     print(particle_results_vec)
     print(binder_results_vec)
