@@ -3,6 +3,7 @@ import os
 import re
 
 import numpy as np
+np.set_printoptions(threshold=np.inf)
 
 if __name__ == '__main__':
     argument_string = sys.argv[1]
@@ -86,4 +87,4 @@ if __name__ == '__main__':
 
 
 #    print(time_vec,binder_contact_vec,particle_contact_vec)
-    print('Script end')
+#     print('Script end')
