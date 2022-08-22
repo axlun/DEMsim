@@ -59,8 +59,8 @@ if __name__ == '__main__':
                     particle_array[int(line_data[1]) - max_wall_index] += 1
 
         for i in particle_array:
-            if i > 6:
-                i=6
+            if i > 5:
+                i=5
             contact_number_vec[i] += 1
         print(contact_number_vec)
 
