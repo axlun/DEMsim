@@ -30,7 +30,7 @@ if __name__ == '__main__':
     binder_contact_vec = []
     particle_contact_vec = []
     particle_results_vec = np.zeros(shape=(len(time),6),dtype=int,order='C')
-    binder_results_vec = particle_results_vec
+    binder_results_vec = np.zeros(shape=(len(time),6),dtype=int,order='C')
     for i in range(0,len(time)):
         particle_array = [0]* number_of_particles
         particle_binder_array = [0]* number_of_particles
