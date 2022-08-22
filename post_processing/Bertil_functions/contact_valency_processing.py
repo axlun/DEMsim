@@ -33,7 +33,7 @@ if __name__ == '__main__':
     binder_results_vec = particle_results_vec
     for i in range(0,len(time)):
         particle_array = [0]* number_of_particles
-        particle_binder_array = particle_array
+        particle_binder_array = [0]* number_of_particles
         key = str(time[i])
         if time[i].is_integer():
             key = str(int(time[i]))
@@ -41,7 +41,7 @@ if __name__ == '__main__':
         ## Read file here
         file_to_open = argument_string+'/'+contact_time_and_file_name_dict[key]
         particle_contact_number_vec = [0] * 6
-        binder_contact_number_vec = particle_contact_number_vec
+        binder_contact_number_vec = [0] * 6
         with open(file_to_open) as opened_contact_file:
             lines = opened_contact_file.readlines()
         for j in range(0, len(lines)):
