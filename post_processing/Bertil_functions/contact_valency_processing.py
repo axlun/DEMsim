@@ -2,6 +2,7 @@ import sys
 import os
 import re
 
+import numpy as np
 
 if __name__ == '__main__':
     argument_string = sys.argv[1]
@@ -35,6 +36,7 @@ if __name__ == '__main__':
     time_vec = []
     binder_contact_vec = []
     particle_contact_vec = []
+    results_vec = np.zeros(shape=(len(time),6),dtype=int,order='C')
     for i in range(0,len(time)):
         particle_array = [0]* number_of_particles
 
@@ -58,12 +60,14 @@ if __name__ == '__main__':
                 if int(line_data[1]) >= max_wall_index:
                     particle_array[int(line_data[1]) - max_wall_index] += 1
 
-        for i in particle_array:
-            if i > 5:
+        for k in particle_array:
+            if k > 5:
                 i=5
             contact_number_vec[i] += 1
-        print(contact_number_vec)
-
+#        print(contact_number_vec)
+        results_vec[i,:] = contact_number_vec
+    print(time_vec)
+    print(results_vec)
             # if float(line_data[7]) != 0 and float(line_data[8]) == 0.0:
             #     # print('Binder flag')
             #     binder_contact += 1
@@ -81,5 +85,5 @@ if __name__ == '__main__':
         # print('Particle contacts: ' + str(particle_contact))
 
 
-    print(time_vec,binder_contact_vec,particle_contact_vec)
+#    print(time_vec,binder_contact_vec,particle_contact_vec)
     print('Script end')
