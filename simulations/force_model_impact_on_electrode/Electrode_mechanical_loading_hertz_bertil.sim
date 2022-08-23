@@ -1,3 +1,3 @@
-output_dir=/scratch/users/axlun/DEMsim/results/electrode_mechanical_loading/SN_hertz_5000p_btr_065_hal_75_compression
-restart_file_name=/scratch/users/axlun/DEMsim/results/electrode_calendaring_restart/SN_hertz_5000p_btr_065_hal_75/calendered_electrode_restart_file.res
+output_dir=/scratch/users/axlun/DEMsim/results/electrode_mechanical_loading/SN_hertz_3000p_btr_065_new_Ft_b_compression
+restart_file_name=/scratch/users/axlun/DEMsim/results/electrode_calendaring/SN_hertz_3000p_btr_065_new_Ft_b/calendered_electrode_restart_file.res
 loading_direction=-1
