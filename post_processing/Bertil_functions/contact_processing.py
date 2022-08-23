@@ -6,13 +6,10 @@ import re
 if __name__ == '__main__':
     argument_string = sys.argv[1]
 
-    # print('Hello world')
-
-    # print(argument_string)
     contact_files = os.listdir(argument_string)
 #    print(contact_files)
     time = []
-    contact_time_and_file_name_dict  = {}
+    contact_time_and_file_name_dict = {}
     for i in range(0,len(contact_files)):
         contact_file = contact_files[i]
         time_stamp = re.split(r'\Acontacts_',contact_file)
