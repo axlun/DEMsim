@@ -25,17 +25,16 @@ def main():
     files = glob.glob(simulation_directory + file_type)
     latest_file = max(files, key=os.path.getctime)
     contact_data = np.genfromtxt(latest_file, delimiter=',')
-    #print(contact_data)
-    particle_array = [0] * int(contact_data[-1, 0] - contact_data[0, 0] + 1)
+    particle_array = [0] * int(contact_data[-1, 0] - contact_data[0, 0] + 1) #Array with one slot for each partcle
     legend = "N = "+str(int(contact_data[-1, 0] - contact_data[0, 0] + 1)) + " particles"
     print(legend)
     for contact in contact_data:
-        if contact[5] >= 0:
+        if contact[5] >= 0: #if h>0 -> particle contact
             particle_array[int(contact[0] - contact_data[0, 0])] += 1
             if contact[1] >= contact_data[0, 0]:
                 particle_array[int(contact[1] - contact_data[0, 0])] += 1
     #print(particle_array)
-    print(sum(particle_array))
+    # print(sum(particle_array))
 #        if contact[19] != 1 and contact[6] != 0:
 #            particle_array[int(contact[0]-contact_data[0, 0])] += 1
 #            if contact[1]+1 >= contact_data[0, 0]:
