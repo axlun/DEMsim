@@ -40,8 +40,9 @@ if __name__ == '__main__':
 
         ## Read file here
         file_to_open = argument_string+'/'+contact_time_and_file_name_dict[key]
-        particle_contact_number_vec = [0] * 6
-        binder_contact_number_vec = [0] * 6
+        number_of_contacts_observed = 6
+        particle_contact_number_vec = [0] * number_of_contacts_observed
+        binder_contact_number_vec = [0] * number_of_contacts_observed
         with open(file_to_open) as opened_contact_file:
             lines = opened_contact_file.readlines()
         for j in range(0, len(lines)):
@@ -56,12 +57,12 @@ if __name__ == '__main__':
                 if int(line_data[1]) >= max_wall_index:
                     particle_binder_array[int(line_data[1]) - max_wall_index] += 1
         for k in particle_array:
-            if k > 5:
-                k=5
+            if k > number_of_contacts_observed-1:
+                k=number_of_contacts_observed-1
             particle_contact_number_vec[k] += 1
         for l in particle_binder_array:
-            if l > 5:
-                l = 5
+            if l > number_of_contacts_observed-1:
+                l = number_of_contacts_observed-1
             binder_contact_number_vec[l] += 1
         particle_results_vec[i,:] = particle_contact_number_vec
         binder_results_vec[i,:] = binder_contact_number_vec
