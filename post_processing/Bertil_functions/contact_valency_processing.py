@@ -26,11 +26,12 @@ if __name__ == '__main__':
         time.append(float(time_stamp[0]))
         contact_time_and_file_name_dict[time_stamp[0]] = contact_file
 
+    number_of_contacts_observed = 8
     time.sort()
     binder_contact_vec = []
     particle_contact_vec = []
-    particle_results_vec = np.zeros(shape=(len(time),6),dtype=int,order='C')
-    binder_results_vec = np.zeros(shape=(len(time),6),dtype=int,order='C')
+    particle_results_vec = np.zeros(shape=(len(time),number_of_contacts_observed),dtype=int,order='C')
+    binder_results_vec = np.zeros(shape=(len(time),number_of_contacts_observed),dtype=int,order='C')
     for i in range(0,len(time)):
         particle_array = [0]* number_of_particles
         particle_binder_array = [0]* number_of_particles
@@ -40,7 +41,6 @@ if __name__ == '__main__':
 
         ## Read file here
         file_to_open = argument_string+'/'+contact_time_and_file_name_dict[key]
-        number_of_contacts_observed = 8
         particle_contact_number_vec = [0] * number_of_contacts_observed
         binder_contact_number_vec = [0] * number_of_contacts_observed
         with open(file_to_open) as opened_contact_file:
