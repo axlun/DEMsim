@@ -40,7 +40,7 @@ if __name__ == '__main__':
 
         ## Read file here
         file_to_open = argument_string+'/'+contact_time_and_file_name_dict[key]
-        number_of_contacts_observed = 6
+        number_of_contacts_observed = 8
         particle_contact_number_vec = [0] * number_of_contacts_observed
         binder_contact_number_vec = [0] * number_of_contacts_observed
         with open(file_to_open) as opened_contact_file:
