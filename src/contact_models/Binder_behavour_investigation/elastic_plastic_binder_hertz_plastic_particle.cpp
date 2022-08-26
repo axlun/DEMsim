@@ -290,14 +290,14 @@ double  DEM::elastic_plastic_binder_hertz_plastic_particle::update_normal_force(
                 F_binder = 0;
             }
         }
-        else //Removes any residual binder force if there is no binder contact
-        {
-            F_binder = 0;
-            for(unsigned i = 0; i != M; i++)
-            {
-                di_[i] = 0;
-            }
-        }
+//        else //Removes any residual binder force if there is no binder contact
+//        {
+//            F_binder = 0;
+//            for(unsigned i = 0; i != M; i++)
+//            {
+//                di_[i] = 0;
+//            }
+//        }
     }
     else
     {
