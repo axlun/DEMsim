@@ -215,7 +215,7 @@ void DEM::electrode_calendering_hertz(const std::string& settings_file_name) {
     simulator.run(run_for_time);
     std::cout << "****************Adhesive on**************** \n";
 
-//    mat->adhesive = true; // Activate adhesion before calendering starts
+    mat->adhesive = true; // Activate adhesion before calendering starts
     run_for_time.reset(2s);
     simulator.run(run_for_time);
 //    max_velocity_2.set_new_value(3);//1.5);
