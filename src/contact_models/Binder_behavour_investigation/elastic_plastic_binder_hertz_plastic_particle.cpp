@@ -290,6 +290,14 @@ double  DEM::elastic_plastic_binder_hertz_plastic_particle::update_normal_force(
                 F_binder = 0;
             }
         }
+        else //Removes any residual binder force if there is no binder contact
+        {
+            F_binder = 0;
+            for(unsigned i = 0; i != M; i++)
+            {
+                di_[i] = 0;
+            }
+        }
     }
     else
     {
@@ -299,7 +307,7 @@ double  DEM::elastic_plastic_binder_hertz_plastic_particle::update_normal_force(
             di_[i] = 0;
         }
     }
-    if (F_binder > 0  && adhesive())
+    if (F_binder > 0  && adhesive()) //Change to if ((h_ > -bt_) && adhesive())?? kollar då om partiklarna är inom binder avstånd istället för på binderkraften
     {
         bonded_ = true;
     }
@@ -351,7 +359,8 @@ double  DEM::elastic_plastic_binder_hertz_plastic_particle::update_normal_force(
 
 void  DEM::elastic_plastic_binder_hertz_plastic_particle::update_tangential_force(const DEM::Vec3& dt, const DEM::Vec3& normal)
 {
-    if (F_binder != 0. && adhesive() && bonded_)
+    int flag = 0;
+    if (F_binder != 0. && adhesive() && bonded_ && flag)
     {
       FT_binder_ -= dot_product(FT_binder_,normal)*normal;
       uT_ -= dot_product(uT_,normal)*normal;
