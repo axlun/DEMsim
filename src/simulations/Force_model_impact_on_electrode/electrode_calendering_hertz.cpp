@@ -148,8 +148,8 @@ void DEM::electrode_calendering_hertz(const std::string& settings_file_name) {
 
 
 //=======================================PERIODIC BC:S===============================================================
-    simulator.add_periodic_boundary_condition('x', -box_side/2, box_side/2);
-    simulator.add_periodic_boundary_condition('y', -box_side/2, box_side/2);
+//    simulator.add_periodic_boundary_condition('x', -box_side/2, box_side/2);
+//    simulator.add_periodic_boundary_condition('y', -box_side/2, box_side/2);
 //=====================================================================================================================
 
     //Initial packing of particles, let particles fall with gravity
@@ -210,10 +210,10 @@ void DEM::electrode_calendering_hertz(const std::string& settings_file_name) {
     }
 
 // =====================MOVE THE STIFF SURFACE TO INITIATE THE PERIODIC BC:S ==========================================
-    side1_surface->move(Vec3(2,0,0), Vec3(0, 0, 0));
-    side2_surface->move(Vec3(0,2,0), Vec3(0,0,0));
-    side3_surface->move(-Vec3(2.0,0,0), Vec3(0,0,0));
-    side4_surface->move(-Vec3(0,2.0,0), Vec3(0,0,0));
+//    side1_surface->move(Vec3(2,0,0), Vec3(0, 0, 0));
+//    side2_surface->move(Vec3(0,2,0), Vec3(0,0,0));
+//    side3_surface->move(-Vec3(2.0,0,0), Vec3(0,0,0));
+//    side4_surface->move(-Vec3(0,2.0,0), Vec3(0,0,0));
 //=====================================================================================================================
 
     run_for_time.reset(2s);
