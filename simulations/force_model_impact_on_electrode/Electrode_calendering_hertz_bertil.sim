@@ -1,6 +1,6 @@
 N=5000
 filling_density=0.025		
-output_dir=/scratch/users/axlun/DEMsim/results/electrode_calendaring/SN_hertz_5000p__btr_8_positive_in_force_fabric_tensor/
+output_dir=/scratch/users/axlun/DEMsim/results/electrode_calendaring/SN_hertz_5000p_positive_in_force_fabric_tensor_btr_8_brr_05/
 radius_file=/scratch/users/axlun/DEMsim/simulations/force_model_impact_on_electrode/size_distribution_2_particle.dat
 E=2e9
 nu=0.3
@@ -14,7 +14,7 @@ rho_al=2230
 mu=0
 mu_wall=0
 binder_thickness_fraction=0.8
-binder_radius_fraction=0.3
+binder_radius_fraction=0.5
 binder_stiffness_coefficient=1
 alpha_i=0.25
 tau_i=0.001
