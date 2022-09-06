@@ -22,7 +22,7 @@ void DEM::electrode_calendering_hertz(const std::string& settings_file_name) {
     SimulationParameters parameters(settings_file_name);
     auto output_directory = parameters.get_parameter<std::string>("output_dir");
 
-    EngineType simulator(1E-3us); //orig  1E0
+    EngineType simulator(1E-4us); //orig  1E0
 
     auto N = parameters.get_parameter<double>("N"); //Number of particles
     auto particle_file = parameters.get_parameter<std::string>("radius_file");
