@@ -174,8 +174,8 @@ template<typename Condition>
 void DEM::Engine<ForceModel, ParticleType>::run(Condition& condition)
 {
     using namespace std::chrono_literals;
-    std::chrono::duration<double> logging_interval = 0.01s;
-    std::chrono::duration<double> time_to_log = 0.01s;
+    std::chrono::duration<double> logging_interval = 1e-4s; //initally t=0.01s
+    std::chrono::duration<double> time_to_log = 1e-4s;
     // Run all outputs in the beginning of the simulation
     for (auto& o : outputs_) {
         o->run_output();
