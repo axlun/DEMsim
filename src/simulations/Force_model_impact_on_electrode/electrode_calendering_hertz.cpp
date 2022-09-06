@@ -198,8 +198,8 @@ void DEM::electrode_calendering_hertz(const std::string& settings_file_name) {
     run_for_time.reset(4ms);
     simulator.run(run_for_time);
 
-    EngineType::ParticleVelocityLess max_velocity_2 (simulator, 10, 0.04s);//2.5, 0.04s); // max_vel = 0.5
-    simulator.run(max_velocity_2);
+//    EngineType::ParticleVelocityLess max_velocity_2 (simulator, 10, 0.04s);//2.5, 0.04s); // max_vel = 0.5
+//    simulator.run(max_velocity_2);
 // ***********************************Move stiff surfaces and initiate periodic BCs***********************************
     std::cout << "****************Wall removal**************** \n";
 
