@@ -151,7 +151,7 @@ void DEM::electrode_calendering_hertz(const std::string& settings_file_name) {
     simulator.add_periodic_boundary_condition('x', -box_side/2, box_side/2);
     simulator.add_periodic_boundary_condition('y', -box_side/2, box_side/2);
 //=====================================================================================================================
-
+//new comment
     //Initial packing of particles, let particles fall with gravity
     mat->adhesive = false; //No adhesion of particles when initial packing
 
