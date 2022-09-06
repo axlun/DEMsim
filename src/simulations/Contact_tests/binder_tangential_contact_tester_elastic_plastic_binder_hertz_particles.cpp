@@ -30,7 +30,7 @@ void DEM::binder_tangential_contact_tester_elastic_plastic_binder_hertz_particle
     using namespace std::chrono_literals;
     namespace fs = std::filesystem;
 
-    EngineType simulator(1E-0us); //orig  1E0
+    EngineType simulator(1E-4us); //orig  1E0
     SimulationParameters parameters{settings_file_name};
 
     auto mat = simulator.create_material<ElectrodeMaterial>(4800);
@@ -57,7 +57,7 @@ void DEM::binder_tangential_contact_tester_elastic_plastic_binder_hertz_particle
     mat->fraction_binder_contacts =parameters.get_parameter<double>("fraction_binder_contacts");
     mat->alpha_i = parameters.get_vector<double>("alpha_i");
     mat->tau_i =parameters.get_vector<double>("tau_i");
-
+    mat->adhesive = false;
 //    auto p1 = simulator.create_particle(radius,Vec3{0,0 , 0},Vec3{0,0,0}, mat);
 //    auto p2 = simulator.create_particle(radius,Vec3{2*radius+(mat->binder_thickness_fraction*radius)*1.001 ,0 , 0},Vec3{0,0,0}, mat);
 
@@ -65,12 +65,13 @@ void DEM::binder_tangential_contact_tester_elastic_plastic_binder_hertz_particle
     auto p2 = simulator.create_particle(radius,Vec3{radius+(mat->binder_thickness_fraction*radius)*1.001/2,0 , 0},Vec3{0,0,0}, mat);
 
 
-    auto contact_output = simulator.create_output(output_directory,1E-2s);
+    auto contact_output = simulator.create_output(output_directory,1E-9s);
     contact_output->print_particles = true;
     contact_output->print_contacts = true;
     contact_output->print_fabric_force_tensor = true;
+    contact_output->print_kinetic_energy = true;
 
-    simulator.set_mass_scale_factor(1E10);
+    simulator.set_mass_scale_factor(1E0);
 
     simulator.setup(radius*(1+mat->binder_thickness_fraction));
 
@@ -80,12 +81,15 @@ void DEM::binder_tangential_contact_tester_elastic_plastic_binder_hertz_particle
     auto particle_normal_displacement = radius*mat->binder_thickness_fraction*0.01; //Move particles 1% of the binder distance
     std::chrono::duration<double> particle_normal_displacement_time(particle_normal_displacement/particle_velocity); //Divide by 2 as both particles are moving
     EngineType ::RunForTime run_for_time(simulator,particle_normal_displacement_time);
+    std::cout << "Normal movement of particles: sim time is:" << particle_normal_displacement_time.count() <<"\n";
     simulator.run(run_for_time);
 
-    p1->set_velocity(Vec3{0,particle_velocity,0});
+/*    p1->set_velocity(Vec3{0,particle_velocity,0});
     p2->set_velocity(Vec3{0,-particle_velocity,0});
     auto particle_tangential_displacement =  radius*mat->binder_thickness_fraction*0.01; //Move particles 1% of the binder distance
     std::chrono::duration<double>particle_tangential_displacement_time(particle_tangential_displacement/particle_velocity);
     run_for_time.reset(particle_tangential_displacement_time);
+    std::cout << "Tangential movement of particles"<< "\n";
     simulator.run(run_for_time);
+*/
 }
