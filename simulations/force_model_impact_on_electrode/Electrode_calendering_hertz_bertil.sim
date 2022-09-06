@@ -1,6 +1,6 @@
-N=500
+N=3000
 filling_density=0.025		
-output_dir=/scratch/users/axlun/DEMsim/results/electrode_calendaring/SN_hertz_500p_SI_units_v_calsurf_1_dt_1e-4us/
+output_dir=/scratch/users/axlun/DEMsim/results/electrode_calendaring/SN_hertz_3000p_SI_units_v_calsurf_1_dt_1e-4us/
 radius_file=/scratch/users/axlun/DEMsim/simulations/force_model_impact_on_electrode/size_distribution_in_meters.dat
 E=2e9
 nu=0.3
