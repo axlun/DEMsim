@@ -1,6 +1,6 @@
-N=1000
+N=500
 filling_density=0.025		
-output_dir=/scratch/users/axlun/DEMsim/results/electrode_calendaring/SN_hertz_1000p_SI_units/
+output_dir=/scratch/users/axlun/DEMsim/results/electrode_calendaring/SN_hertz_500p_SI_units/
 radius_file=/scratch/users/axlun/DEMsim/simulations/force_model_impact_on_electrode/size_distribution_in_meters.dat
 E=2e9
 nu=0.3
@@ -21,5 +21,5 @@ tau_i=0.001
 active_particle_height=111e-6
 calendering_height=100e-6
 fraction_binder_contacts=0.6
-calendaring_surface_velocity=1
+calendaring_surface_velocity=1e-3
 mass_ratio_particles=0.86
