@@ -1,4 +1,8 @@
 //
+// Created by Axel on 2022-09-15.
+//
+
+//
 // Created by Axel on 2022-08-30.
 //
 
@@ -20,7 +24,7 @@
 #include "../../materials/electrode_material.h"
 #include "../../materials/porous_electrode_material.h"
 
-void DEM::binder_tangential_contact_tester_elastic_plastic_binder_hertz_particles(const std::string &settings_file_name)
+void DEM::normal_contact_tester_elastic_plastic_binder_hertz_particles(const std::string &settings_file_name)
 {
     using namespace DEM;
     using ForceModel = elastic_plastic_binder_hertz_plastic_particle;
@@ -39,10 +43,11 @@ void DEM::binder_tangential_contact_tester_elastic_plastic_binder_hertz_particle
 
 
     auto radius = parameters.get_parameter<double>("R");
-    auto increments = parameters.get_parameter<unsigned>("N");
-    auto simulation_time_step = parameters.get_parameter<double>("t");
     auto particle_velocity = parameters.get_parameter<double>("particle_velocity");
     auto output_directory = parameters.get_parameter<std::string>("output_dir");
+    auto mass_scaling = parameters.get_parameter<double>("mass_scaling");
+    auto binder_displacement_fraction = parameters.get_parameter<double>("binder_disp_fraction");
+    auto result_points = parameters.get_parameter<double>("result_points");
     mat->E = parameters.get_parameter<double>("E");
     mat->nu = parameters.get_parameter<double>("nu");
     mat->Ep=parameters.get_parameter<double>("Ep");
@@ -65,24 +70,39 @@ void DEM::binder_tangential_contact_tester_elastic_plastic_binder_hertz_particle
     auto p2 = simulator.create_particle(radius,Vec3{radius+(mat->binder_thickness_fraction*radius)*1.0001/2,0 , 0},Vec3{0,0,0}, mat);
 
 
-    auto contact_output = simulator.create_output(output_directory,1E-0us);
-    contact_output->print_particles = true;
-    contact_output->print_contacts = true;
-    contact_output->print_fabric_force_tensor = true;
-    contact_output->print_kinetic_energy = true;
 
-    simulator.set_mass_scale_factor(1E0);
+
+    simulator.set_mass_scale_factor(mass_scaling);
 
     simulator.setup(radius*(1+mat->binder_thickness_fraction));
 
 
     p1->set_velocity(Vec3{particle_velocity,0,0});
     p2->set_velocity(Vec3{-particle_velocity,0,0});
-    auto particle_normal_displacement = radius*mat->binder_thickness_fraction*0.01; //Move particles 1% of the binder distance
-    std::chrono::duration<double> particle_normal_displacement_time(50*particle_normal_displacement/particle_velocity); //Divide by 2 as both particles are moving
+    auto particle_normal_displacement = binder_displacement_fraction*radius*mat->binder_thickness_fraction; //Move particles 1% of the binder distance
+    std::chrono::duration<double> particle_normal_displacement_time(particle_normal_displacement/particle_velocity/2); //Divide by 2 as both particles are moving
     EngineType ::RunForTime run_for_time(simulator,particle_normal_displacement_time);
     std::cout << "Normal movement of particles: sim time is:" << particle_normal_displacement_time.count() <<"\n";
+
+    std::chrono::duration<double> output_interval = particle_normal_displacement_time/result_points;
+    auto contact_output = simulator.create_output(output_directory,output_interval);
+    contact_output->print_particles = true;
+    contact_output->print_contacts = true;
+    contact_output->print_fabric_force_tensor = true;
+    contact_output->print_kinetic_energy = true;
+
+
     simulator.run(run_for_time);
+
+    p1->set_velocity(Vec3{-particle_velocity,0,0});
+    p2->set_velocity(Vec3{particle_velocity,0,0});
+    auto particle_removal_disp = particle_normal_displacement/10;
+    std::chrono::duration<double> particle_removal_displacement_time(particle_removal_disp/particle_velocity/2); //Divide by 2 as both particles are moving
+    run_for_time.reset(particle_removal_displacement_time);
+    std::cout << "Normal movement of particles: sim time is:" << particle_removal_displacement_time.count() <<"\n";
+    simulator.run(run_for_time);
+
+
 
 /*    p1->set_velocity(Vec3{0,particle_velocity,0});
     p2->set_velocity(Vec3{0,-particle_velocity,0});

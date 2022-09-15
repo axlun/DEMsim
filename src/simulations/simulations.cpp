@@ -20,6 +20,7 @@ std::map<std::string, DEM::SimulationFunctionPtr> DEM::valid_simulations() {
             {"wall_contact_tester_viscoelastic_binder_El_Pl_particles", DEM::wall_contact_tester_viscoelastic_binder_El_Pl_particles},
             {"contact_tester_viscoelastic_binder_El_Pl_particles", DEM::contact_tester_viscoelastic_binder_El_Pl_particles},
             {"binder_tangential_contact_tester_elastic_plastic_binder_hertz_particles", DEM::binder_tangential_contact_tester_elastic_plastic_binder_hertz_particles},
+            {"normal_contact_tester_elastic_plastic_binder_hertz_particles", DEM::normal_contact_tester_elastic_plastic_binder_hertz_particles},
             {"cyclic_triaxial",                         DEM::cyclic_triaxial},
             {"proctor_test",                            DEM::proctor_test},
             {"stone_compaction",                        DEM::stone_compaction},
