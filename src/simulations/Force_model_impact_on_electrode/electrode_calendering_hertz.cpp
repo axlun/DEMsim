@@ -156,7 +156,7 @@ void DEM::electrode_calendering_hertz(const std::string& settings_file_name) {
     mat->adhesive = false; //No adhesion of particles when initial packing
 
     simulator.set_gravity(Vec3(0, 0, -1E0)); //Use gravity for initial packing of particles
-    simulator.set_mass_scale_factor(1E1); //Orig 1E2
+    simulator.set_mass_scale_factor(1E0); //Orig 1E2
     std::cout << "max_binder_thickness: "<< max_binder_thickness <<"\n";
     simulator.setup(1.01*max_binder_thickness); //Size of box for detecting contacts between particles
     simulator.set_rotation(false);
