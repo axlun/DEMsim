@@ -216,10 +216,10 @@ void DEM::electrode_natural_packing_hertz(const std::string& settings_file_name)
     double h_1 = bbox[5]; //height of uppermost particle (Z-max)
     if (h_1<3.1*mat->active_particle_height){
         h_1=3.1*mat->active_particle_height;
-        std::cout<<"Heigh of uppermoast particle lower then 3.1 h_al: "<< h_1<< std::endl;
+        std::cout<<"Height of uppermost particle lower then 3.1 h_al: "<< h_1<< std::endl;
     }
     else{
-        std::cout<<"Heigh of uppermoast particle: "<< h_1<< std::endl;
+        std::cout<<"Height of uppermost particle: "<< h_1<< std::endl;
     }
 
     top_surface->move(-Vec3(0, 0,  top_surface->get_points()[0][2] - h_1-1.01*max_binder_thickness), Vec3(0, 0, 0)); //Move top surface to uppermost partile+binder thickness
