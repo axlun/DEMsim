@@ -28,6 +28,7 @@ void DEM::electrode_natural_packing_hertz(const std::string& settings_file_name)
 
     auto mass_scaling = parameters.get_parameter<double>("mass_scaling");
     simulator.set_mass_scale_factor(mass_scaling); //Orig 1E2
+    std::cout << "Mass scaling is:" << mass_scaling << "\n";
 
     auto output_directory = parameters.get_parameter<std::string>("output_dir");
     auto N = parameters.get_parameter<double>("N"); //Number of particles
