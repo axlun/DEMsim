@@ -1,4 +1,8 @@
-output_dir=/scratch/users/axlun/DEMsim/results/electrode_calendaring_restart/SN_hertz_5000p_btr_00_hal_295/
-restart_file_name=/scratch/users/axlun/DEMsim/results/electrode_calendaring/SN_hertz_5000p_btr_00/pre_calendered_electrode_restart_file.res
-calendaring_surface_velocity=1
-calendering_height=29.5e-2
+output_dir=/scratch/users/axlun/DEMsim/results/electrode_calendering_hertz/SN_hertz_5000p_btr_8_brr_08/
+restart_file_name=/scratch/users/axlun/DEMsim/results/electrode_natural_packing_hertz/SN_hertz_5000p_btr_8_brr_08/pre_calendered_electrode_restart_file.res
+time_step=1e2
+mass_scaling=1e4
+calendering_height=100e-2
+compaction_time=100
+output_number=5e2
+

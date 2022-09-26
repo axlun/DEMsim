@@ -1,6 +1,7 @@
-output_dir=/mnt/c/Users/Axel/Documents/DEM/results/electrode_calendering_hertz/Build_1/
-restart_file_name=/mnt/c/Users/Axel/Documents/DEM/results/electrode_natural_packing/Build_9/
-time_step=1e1
-mass_scaling=1e1
-calendaring_surface_velocity=1
-calendering_height=100e-2
+output_dir=/mnt/c/Users/Axel/Documents/DEM/results/electrode_calendering_hertz/Build_3/
+restart_file_name=/mnt/c/Users/Axel/Documents/DEM/results/electrode_natural_packing/Build_8/pre_calendered_electrode_restart_file.res
+time_step=1e2
+mass_scaling=1e4
+calendering_height=108e-2
+compaction_time=100
+output_number=5e2
