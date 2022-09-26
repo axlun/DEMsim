@@ -20,6 +20,7 @@ namespace DEM {
     void contact_tester_viscoelastic_binder_El_Pl_particles(const std::string& settings_file_name);
     void binder_tangential_contact_tester_elastic_plastic_binder_hertz_particles(const std::string& settings_file_name);
     void normal_contact_tester_elastic_plastic_binder_hertz_particles(const std::string& settings_file_name);
+    void particle_to_wall_contact_tester_elastic_plastic_binder_hertz_particles(const std::string& settings_file_name);
     void binder_contact_tester_viscoelastic_binder_El_Pl_particles(const std::string& settings_file_name);
     void particle_contact_tester_viscoelastic_binder_El_Pl_particles(const std::string& settings_file_name);
     void wall_contact_tester_viscoelastic_binder_El_Pl_particles(const std::string& settings_file_name);
@@ -35,7 +36,9 @@ namespace DEM {
     void Cathode_mechanical_simulations(const std::string& settings_file_name);
     void restart_electrode(const std::string& settings_file_name);
     void porous_electrode_rve(const std::string& settings_file_name);
+    void natural_packing_hertz(const std::string& settings_file_name);
     void electrode_calendering_hertz(const std::string& settings_file_name);
+    void electrode_natural_packing_hertz(const std::string& settings_file_name);
     void electrode_calendering(const std::string& settings_file_name);
     void restart_test(const std::string& settings_file_name);
     void restart_electrode_calendering(const std::string& settings_file_name);

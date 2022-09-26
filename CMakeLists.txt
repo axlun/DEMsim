@@ -62,13 +62,16 @@ add_executable(DEMsim
 				src/simulations/Contact_tests/contact_tester.cpp
 				src/simulations/Contact_tests/binder_tangential_contact_tester_elastic_plastic_binder_hertz_particles.cpp
 				src/simulations/Contact_tests/normal_contact_tester_elastic_plastic_binder_hertz_particles.cpp
+				src/simulations/Contact_tests/particle_to_wall_contact_tester_elastic_plastic_binder_hertz_particles.cpp
 				src/simulations/Contact_tests/contact_tester_linear_elastic_perfect_plastic_material.cpp
 				src/simulations/Contact_tests/binder_contact_tester_viscoelastic_binder_El_Pl_particles.cpp
 				src/simulations/Contact_tests/particle_contact_tester_viscoelastic_binder_El_Pl_particles.cpp
 				src/simulations/Contact_tests/wall_contact_tester_viscoelastic_binder_El_Pl_particles.cpp
 				src/simulations/Contact_tests/contact_tester_viscoelastic_binder_El_Pl_particles.cpp
-        		src/simulations/Force_model_impact_on_electrode/electrode_calendering.cpp
+				src/simulations/Force_model_impact_on_electrode/natural_packing_hertz.cpp
+				src/simulations/Force_model_impact_on_electrode/electrode_calendering.cpp
 				src/simulations/Force_model_impact_on_electrode/electrode_calendering_hertz.cpp
+				src/simulations/Force_model_impact_on_electrode/electrode_natural_packing_hertz.cpp
 				src/simulations/Force_model_impact_on_electrode/restart_test.cpp
 				src/simulations/Force_model_impact_on_electrode/restart_electrode_calendering.cpp
 				src/simulations/Force_model_impact_on_electrode/restart_electrode_calendering_hertz.cpp

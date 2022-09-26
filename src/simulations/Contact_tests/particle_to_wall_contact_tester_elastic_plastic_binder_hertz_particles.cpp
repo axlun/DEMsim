@@ -1,8 +1,4 @@
 //
-// Created by Axel on 2022-09-15.
-//
-
-//
 // Created by Axel on 2022-08-30.
 //
 
@@ -24,13 +20,13 @@
 #include "../../materials/electrode_material.h"
 #include "../../materials/porous_electrode_material.h"
 
-void DEM::normal_contact_tester_elastic_plastic_binder_hertz_particles(const std::string &settings_file_name)
+void DEM::particle_to_wall_contact_tester_elastic_plastic_binder_hertz_particles(const std::string &settings_file_name)
 {
     using namespace DEM;
     using ForceModel = elastic_plastic_binder_hertz_plastic_particle;
     using ParticleType = SphericalParticle<ForceModel>;
     using EngineType = Engine<ForceModel, ParticleType>;
-//    using SurfaceType = DeformablePointSurface<ForceModel,ParticleType>;
+    using SurfaceType = DeformablePointSurface<ForceModel,ParticleType>;
     using namespace std::chrono_literals;
     namespace fs = std::filesystem;
 
@@ -43,11 +39,10 @@ void DEM::normal_contact_tester_elastic_plastic_binder_hertz_particles(const std
 
 
     auto radius = parameters.get_parameter<double>("R");
-    auto particle_velocity = parameters.get_parameter<double>("particle_velocity");
-    auto output_directory = parameters.get_parameter<std::string>("output_dir");
-    auto mass_scaling = parameters.get_parameter<double>("mass_scaling");
-    auto binder_displacement_fraction = parameters.get_parameter<double>("binder_disp_fraction");
+    auto height_factor = parameters.get_parameter<double>("height_factor");
+    auto gravity = parameters.get_parameter<double>("gravity");
     auto result_points = parameters.get_parameter<double>("result_points");
+    auto output_directory = parameters.get_parameter<std::string>("output_dir");
     mat->E = parameters.get_parameter<double>("E");
     mat->nu = parameters.get_parameter<double>("nu");
     mat->Ep=parameters.get_parameter<double>("Ep");
@@ -65,44 +60,43 @@ void DEM::normal_contact_tester_elastic_plastic_binder_hertz_particles(const std
     mat->adhesive = false;
 //    auto p1 = simulator.create_particle(radius,Vec3{0,0 , 0},Vec3{0,0,0}, mat);
 //    auto p2 = simulator.create_particle(radius,Vec3{2*radius+(mat->binder_thickness_fraction*radius)*1.001 ,0 , 0},Vec3{0,0,0}, mat);
+    auto fall_height = height_factor*(radius+(mat->binder_thickness_fraction*radius)*1.0001);
+    auto p1 = simulator.create_particle(radius,Vec3{0,0 , fall_height},Vec3{0,0,0}, mat);
 
-    auto p1 = simulator.create_particle(radius,Vec3{-radius-(mat->binder_thickness_fraction*radius)*1.0001/2,0 , 0},Vec3{0,0,0}, mat);
-    auto p2 = simulator.create_particle(radius,Vec3{radius+(mat->binder_thickness_fraction*radius)*1.0001/2,0 , 0},Vec3{0,0,0}, mat);
+    // Points for wall
+    auto Wp1 = Vec3(2*radius, 2*radius, 0);
+    auto Wp2 = Vec3(2*radius, -2*radius, 0);
+    auto Wp3 = Vec3(-2*radius,  -2*radius, 0);
+    auto Wp4 = Vec3(-2*radius,  2*radius, 0);
+    std::vector<Vec3> wall_points{Wp1, Wp2, Wp3, Wp4};
+
+
+    auto contact_surface = simulator.create_point_surface(wall_points, true,"contact_surface",true);
+    std::cout << "Normal of contact surface: " << contact_surface->get_normal() << "\n";
 
 
 
+    simulator.set_mass_scale_factor(1E0);
+    double bounding_box_stretch = radius*mat->binder_thickness_fraction;
+    simulator.setup(bounding_box_stretch);
+    simulator.set_gravity(Vec3(0, 0, -gravity));
 
-    simulator.set_mass_scale_factor(mass_scaling);
+    std::chrono::duration<double> fall_time(pow(2*fall_height/gravity,.5)); //Divide by 2 as both particles are moving
+    EngineType ::RunForTime run_for_time(simulator,fall_time);
+    std::cout << "Fall time is: " << fall_time.count() <<"\n";
 
-    simulator.setup(radius*(1+mat->binder_thickness_fraction));
 
-
-    p1->set_velocity(Vec3{particle_velocity,0,0});
-    p2->set_velocity(Vec3{-particle_velocity,0,0});
-    auto particle_normal_displacement = binder_displacement_fraction*radius*mat->binder_thickness_fraction; //Move particles 1% of the binder distance
-    std::chrono::duration<double> particle_normal_displacement_time(particle_normal_displacement/particle_velocity/2); //Divide by 2 as both particles are moving
-    EngineType ::RunForTime run_for_time(simulator,particle_normal_displacement_time);
-    std::cout << "Normal movement of particles: sim time is:" << particle_normal_displacement_time.count() <<"\n";
-
-    std::chrono::duration<double> output_interval = particle_normal_displacement_time/result_points;
+    std::chrono::duration<double> output_interval = fall_time/result_points;
     auto contact_output = simulator.create_output(output_directory,output_interval);
     contact_output->print_particles = true;
     contact_output->print_contacts = true;
     contact_output->print_fabric_force_tensor = true;
     contact_output->print_kinetic_energy = true;
+    contact_output->print_surface_forces = true;
+    contact_output->print_surface_positions = true;
 
 
     simulator.run(run_for_time);
-
-//    p1->set_velocity(Vec3{-particle_velocity,0,0});
-//    p2->set_velocity(Vec3{particle_velocity,0,0});
-//    auto particle_removal_disp = particle_normal_displacement/10;
-//    std::chrono::duration<double> particle_removal_displacement_time(particle_removal_disp/particle_velocity/2); //Divide by 2 as both particles are moving
-//    run_for_time.reset(particle_removal_displacement_time);
-//    std::cout << "Normal movement of particles: sim time is:" << particle_removal_displacement_time.count() <<"\n";
-//    simulator.run(run_for_time);
-
-
 
 /*    p1->set_velocity(Vec3{0,particle_velocity,0});
     p2->set_velocity(Vec3{0,-particle_velocity,0});
