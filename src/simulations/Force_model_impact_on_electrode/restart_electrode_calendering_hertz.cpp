@@ -31,7 +31,7 @@ void DEM::restart_electrode_calendering_hertz(const std::string &settings_file_n
 //====================TIME STEP AND MASS SCALING========================================================================
     double time_step = parameters.get_parameter<double>("time_step")*1e-6;
     std::chrono::duration<double> time_step_us {time_step};
-    std::cout << "Time step is:" << time_step_us.count()*1E6 << "µs\n";
+    std::cout << "Time step is:" << time_step_us.count()*1E6 << " µs\n";
     simulator.set_time_increment(time_step_us);
     float mass_scaling_factor = parameters.get_parameter<float>("mass_scaling");
     std::cout << "Mass scaling is:" << mass_scaling_factor << "\n";
