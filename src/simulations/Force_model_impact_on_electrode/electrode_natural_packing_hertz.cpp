@@ -74,7 +74,6 @@ void DEM::electrode_natural_packing_hertz(const std::string& settings_file_name)
     auto box_side = pow(particle_volume*mat->rhop/mat->active_particle_height/rho_al/mass_ratio_particles, 1./2.);
     std::cout << "box_side " << box_side << "\n";
     auto box_height = particle_volume/particle_density_at_filling/pow(box_side,2);
-//    box_height = 1; //testing box height
     std::cout << "box_height " << box_height << "\n";
 
     auto p1 = Vec3(-box_side / 2, -box_side / 2, 0);
@@ -86,7 +85,6 @@ void DEM::electrode_natural_packing_hertz(const std::string& settings_file_name)
     auto p7 = Vec3(box_side / 2, box_side / 2, box_height);
     auto p8 = Vec3(-box_side / 2, box_side / 2, box_height);
 
-
     auto stiff_wall_fraction = 0.9;
 
     auto p1_stiff = Vec3(-stiff_wall_fraction*box_side / 2, -stiff_wall_fraction*box_side / 2, 0);
@@ -97,7 +95,6 @@ void DEM::electrode_natural_packing_hertz(const std::string& settings_file_name)
     auto p6_stiff = Vec3(stiff_wall_fraction*box_side / 2, -stiff_wall_fraction*box_side / 2, box_height);
     auto p7_stiff = Vec3(stiff_wall_fraction*box_side / 2, stiff_wall_fraction*box_side / 2, box_height);
     auto p8_stiff = Vec3(-stiff_wall_fraction*box_side / 2, stiff_wall_fraction*box_side / 2, box_height);
-
 
     std::vector <Vec3> bottom_points{p1, p2, p3, p4};
     std::vector <Vec3> top_points{p8, p7, p6, p5};
@@ -123,18 +120,15 @@ void DEM::electrode_natural_packing_hertz(const std::string& settings_file_name)
 
     std::cout << "Normal of top surface: " << top_surface->get_normal() << "\n";
     std::cout << "Normal of bottom surface: " << deformable_surface->get_normal() << "\n";
-
     std::cout << "Normal of side surface 1: " << side1_surface->get_normal() << "\n";
     std::cout << "Normal of side surface 2: " << side2_surface->get_normal() << "\n";
     std::cout << "Normal of side surface 3: " << side3_surface->get_normal() << "\n";
     std::cout << "Normal of side surface 4: " << side4_surface->get_normal() << "\n";
 
-
     for (std::size_t i = 0; i != particle_positions.size(); ++i) {
         simulator.create_particle(particle_radii[i], particle_positions[i], Vec3(0,0,0), mat);
     }
 
-    //Initial packing of particles, let particles fall with gravity
     mat->adhesive = false; //No adhesion of particles when initial packing
     double gravity = 1E1;
     simulator.set_gravity(Vec3(0, 0, -gravity)); //Use gravity for initial packing of particles
@@ -148,10 +142,7 @@ void DEM::electrode_natural_packing_hertz(const std::string& settings_file_name)
 //    double  fall_time = pow(2*fall_distance/gravity ,0.5);
     std::chrono::duration<double> fall_time {pow(2*fall_distance/gravity ,0.5)};
     std::cout << "Fall time: "<< fall_time.count() <<" \n";
-
-
 //============================Calculate output frequency================================================================
-//comment
     int output_exp;
     if(std::log10(fall_time.count())>=0.0)
     {
@@ -189,17 +180,13 @@ void DEM::electrode_natural_packing_hertz(const std::string& settings_file_name)
 
     std::chrono::duration<double> fall_time_constant_vel {(fall_distance-gravity*pow(fall_time.count()/10.0,2)/1.0)/1.0/(gravity*fall_time.count()/10.0)};
 
-
-
     double pre_calendering_surface_velocity = 1 * gravity * fall_time.count()/10.0;
     std::cout << "Surface velocity: "<< pre_calendering_surface_velocity <<" \n";
 
     if (pre_calendering_surface_velocity*fall_time_constant_vel.count() >= box_height-3.2*mat->active_particle_height)
     {
-
     pre_calendering_surface_velocity = (box_height-3.2*mat->active_particle_height)/fall_time_constant_vel.count();
     std::cout << "Reducing surface velocity to: "<< pre_calendering_surface_velocity <<" \n";
-
     }
 
     top_surface->set_velocity(Vec3(0,0,-pre_calendering_surface_velocity));
@@ -224,10 +211,7 @@ void DEM::electrode_natural_packing_hertz(const std::string& settings_file_name)
 
     top_surface->move(-Vec3(0, 0,  top_surface->get_points()[0][2] - h_1-1.01*max_binder_thickness), Vec3(0, 0, 0)); //Move top surface to uppermost partile+binder thickness
 
-
-
     top_surface->set_velocity(Vec3(0,0,-2 * pre_calendering_surface_velocity));
-
 
     std::chrono::duration<double> compaction_time_pre_cal {((h_1+1.01*max_binder_thickness - mat->active_particle_height*3) / (2 * pre_calendering_surface_velocity))};
 
@@ -241,22 +225,13 @@ void DEM::electrode_natural_packing_hertz(const std::string& settings_file_name)
     EngineType::RunForTime Run_for_rest_time(simulator, fall_time);
     std::cout<<"Resting for: "<< fall_time.count()<< std::endl;
     simulator.run(Run_for_rest_time);
-//    simulator.set_gravity(Vec3(0, 0, -1E1)); //Use gravity for initial packing of particles
-////
-//    Run_for_Pre_calendering_time.reset(1e0s);/=============================================================================================
-//    simulator.run(Run_for_Pre_calendering_time);
-//
-////    EngineType::ParticleVelocityLess max_velocity_2 (simulator, 10, 0.04s);//2.5, 0.04s); // max_vel = 0.5
-////    simulator.run(max_velocity_2);
-// ***********************************Move stiff surfaces and initiate periodic BCs***********************************
-    std::cout << "****************Wall removal**************** \n";
 
+    std::cout << "****************Wall removal**************** \n";
     // Stop all the particles
     for (auto& p: simulator.get_particles())
     {
         p->set_velocity(Vec3(0,0,0));
     }
-
 //=======================================PERIODIC BC:S===============================================================
     simulator.add_periodic_boundary_condition('x', -box_side/2, box_side/2);
     simulator.add_periodic_boundary_condition('y', -box_side/2, box_side/2);
@@ -284,7 +259,6 @@ void DEM::electrode_natural_packing_hertz(const std::string& settings_file_name)
     simulator.run(Run_for_initiation_of_periodic_BCs);
 
     std::cout << "****************Adhesive on and stopping particles**************** \n";
-
     // Stop all the particles
     for (auto& p: simulator.get_particles())
     {
@@ -303,8 +277,8 @@ void DEM::electrode_natural_packing_hertz(const std::string& settings_file_name)
     EngineType::RunForTime Run_for_gravity_removal_resting_time(simulator,fall_time);
     std::cout << "Running for: "<< (fall_time).count() <<" \n";
     simulator.run(Run_for_gravity_removal_resting_time);
-//******************************************RESTART BEFORE CALENDERING*************************************************
+//========================================== WRITE RESTART BEFORE CALENDERING===========================================
     std::cout<<"Writing restart file ";
     simulator.write_restart_file(output_directory + "/pre_calendered_electrode_restart_file.res");
-//*********************************************************************************************************************
+//======================================================================================================================
 }
