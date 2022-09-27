@@ -195,6 +195,7 @@ void DEM::electrode_mechanical_loading_hertz(const std::string &settings_file_na
     simulator.set_periodic_boundary_condition_strain_rate('x',-loading_direction*strain_rate);
     deformable_surface->set_in_plane_strain_rates(-loading_direction*strain_rate,0);
     simulator.run(run_for_time_BC_stretch);
+    std::cout << "**************** Simulation finished ****************\n";
 
 //=====================================================STRETCH THE PERIODIC BCs=======================================
 //    std::cout << "**************** Load step 1 ****************\n";
