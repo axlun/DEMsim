@@ -68,7 +68,7 @@ void DEM::electrode_mechanical_loading_hertz(const std::string &settings_file_na
 //======================================================================================================================
 
 //====================MAKE OUTPUT DYNAMIC==============================================================================
-    std::chrono::duration<double> output_interval {strain_rate};
+    std::chrono::duration<double> output_interval {unload_time.count()/500};
     std::cout << "Output interval is: "<<  output_interval.count() <<"s\n";
     auto mechanical_loading_output = simulator.create_output(output_directory, output_interval);
     mechanical_loading_output->print_particles = true;
