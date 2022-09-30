@@ -25,8 +25,6 @@ void DEM::electrode_mechanical_loading_hertz(const std::string &settings_file_na
     auto output_directory = parameters.get_parameter<std::string>("output_dir");
     auto loading_direction = parameters.get_parameter<int>("loading_direction"); // compression -> -1, tension -> 1
     auto simulator = EngineType(restart_file_name);
-//    auto mat = simulator.make_material_from_restart_data()
-//    auto mat = simulator.create_material<ElectrodeMaterial>(4800);//**************OLD MATERIAL SHOULD BE READ FROM RESTART******
     auto Calendering_output = simulator.get_output("output_0");
     simulator.remove_output(Calendering_output);
 
@@ -35,8 +33,6 @@ void DEM::electrode_mechanical_loading_hertz(const std::string &settings_file_na
     calendering_surface->move(Vec3(0, 0,  1), Vec3(0, 0, 0));
 
     auto mat = simulator.get_material(0);
-//    std::cout << "material density" << mat->density << "\n";
-
 
 //==================SET TIMESTEP AND MASS SCALING=======================================================================
     double time_step = parameters.get_parameter<double>("time_step")*1e-6;
@@ -48,8 +44,7 @@ void DEM::electrode_mechanical_loading_hertz(const std::string &settings_file_na
     simulator.set_mass_scale_factor(mass_scaling_factor);
 //======================================================================================================================
 
-//========================SIMULATION TIME AND STRAIN RATES==============================================================
-
+//========================STRAIN RATES==================================================================================
     double strain_rate = parameters.get_parameter<double>("strain_rate");
     std::cout << "Strain rate: " << strain_rate << "\n";
 //    double loading_time_input = parameters.get_parameter<double>("loading_time");
@@ -63,12 +58,10 @@ void DEM::electrode_mechanical_loading_hertz(const std::string &settings_file_na
     double strain_point_5  = 2e-2;
     double unload_strain   = 0.1e-2;
     std::chrono::duration<double> unload_time {unload_strain/strain_rate};
-
-
 //======================================================================================================================
 
 //====================MAKE OUTPUT DYNAMIC==============================================================================
-    std::chrono::duration<double> output_interval {unload_time.count()/500};
+    std::chrono::duration<double> output_interval {unload_time.count()/50};
     std::cout << "Output interval is: "<<  output_interval.count() <<"s\n";
     auto mechanical_loading_output = simulator.create_output(output_directory, output_interval);
     mechanical_loading_output->print_particles = true;
