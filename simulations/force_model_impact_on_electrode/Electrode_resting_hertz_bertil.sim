@@ -1,0 +1,5 @@
+output_dir=/scratch/users/axlun/DEMsim/results/electrode_resting_hertz/SN_hertz_5000p_btr_8_brr_08_dt_5e1_MS_1e4_RT_10
+restart_file_name=/scratch/users/axlun/DEMsim/results/electrode_calendering_hertz/SN_hertz_5000p_btr_8_brr_08_comp_time_20_hal_105/calendered_electrode_restart_file.res
+time_step=5e1
+mass_scaling=1e4
+resting_time=10

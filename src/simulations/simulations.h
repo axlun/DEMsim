@@ -38,6 +38,7 @@ namespace DEM {
     void porous_electrode_rve(const std::string& settings_file_name);
     void natural_packing_hertz(const std::string& settings_file_name);
     void electrode_calendering_hertz(const std::string& settings_file_name);
+    void electrode_resting_hertz(const std::string& settings_file_name);
     void electrode_natural_packing_hertz(const std::string& settings_file_name);
     void electrode_calendering(const std::string& settings_file_name);
     void restart_test(const std::string& settings_file_name);
