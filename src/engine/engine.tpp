@@ -411,7 +411,7 @@ double DEM::Engine<ForceModel, ParticleType>::get_kinetic_energy() const
 {
     double energy = 0.;
     for(const auto& p: particles_){
-        energy += p->kinetic_energy();
+        energy += p->kinetic_energy() * mass_scale_factor_;
     }
     return energy;
 }
