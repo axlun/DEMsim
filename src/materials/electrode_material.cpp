@@ -29,6 +29,7 @@ DEM::ElectrodeMaterial::ElectrodeMaterial(const ParameterMap& parameters) :
     kT(parameters.get_parameter<double>("kT")),
     mu(parameters.get_parameter<double>("mu")),
     mu_wall(parameters.get_parameter<double>("mu_wall")),
+//    bond_breaking(parameters.get_parameter<double>("bond_breaking")),
     adhesive(parameters.get_parameter<bool>("adhesive"))
 {
     auto M = parameters.get_parameter<std::size_t>("M");
@@ -59,6 +60,7 @@ std::string DEM::ElectrodeMaterial::restart_data() const {
        << named_print(mu, "mu") << ", "
        << named_print(mu_wall, "mu_wall") << ", "
        << named_print(M(), "M")<< ", "
+        << named_print(bond_breaking, "bond_breaking")<< ", "
        << named_print(adhesive, "adhesive") << ", ";
 
     for (std::size_t i = 0; i != M(); ++i) {
