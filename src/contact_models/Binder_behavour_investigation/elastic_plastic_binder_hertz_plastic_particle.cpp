@@ -25,8 +25,8 @@ DEM::elastic_plastic_binder_hertz_plastic_particle::elastic_plastic_binder_hertz
 
     double E1 = mat1->E;
     v1 = mat1->nu;
-    double E2 = mat1->E;
-    double v2 = mat1->nu;
+//    double E2 = mat1->E;
+//    double v2 = mat1->nu;
     double vp1 = mat1->nup;
     double vp2 = mat2->nup;
     double Ep2 = mat2->Ep;
@@ -36,7 +36,7 @@ DEM::elastic_plastic_binder_hertz_plastic_particle::elastic_plastic_binder_hertz
     mu_particle_ = (mat1->mu + mat2->mu)/2;
     double Gp1 = Ep1/(2*(1+vp1));
     double Gp2 = Ep2/(2*(1+vp2));
-    double rhop = mat1->rhop;
+//    double rhop = mat1->rhop;
     Ep_eff_ = 1./(((1-vp1*vp1)/Ep1)+((1-vp2*vp2)/Ep2));             //Effective particle youngs modulus
     br_ = mat1-> binder_radius_fraction * particle1->get_radius();
     bt_ = mat1-> binder_thickness_fraction * particle1->get_radius(); //Binder thickness determined by fraction of
@@ -88,7 +88,7 @@ DEM::elastic_plastic_binder_hertz_plastic_particle::elastic_plastic_binder_hertz
         particle_yield_stress_ = mat1->particle_yield_stress_;
 //        std::cout << "P-W particle yield stress:"<< particle_yield_stress_ << std::endl;
         mu_particle_ = mat1->mu_wall;
-        double rhop = mat1->rhop;
+//        double rhop = mat1->rhop;
         Ep_eff_ = 1./(((1-vp1*vp1)/Ep1)); //Effective Young's modulus for one particle and one rigid surface
         br_ = mat1-> binder_radius_fraction * particle1->get_radius();
         bt_ = mat1-> binder_thickness_fraction * particle1->get_radius();
@@ -256,7 +256,7 @@ double  DEM::elastic_plastic_binder_hertz_plastic_particle::update_normal_force(
     }
     if(binder_contact_)
     {
-        if ((h_ > -bt_) && !particle_contact_ || bonded_ && !particle_contact_)
+        if (((h_ > -bt_) && !particle_contact_) || (bonded_ && !particle_contact_))
         {
             double viscoelastic_summation = 0.;
             for (unsigned i = 0; i != M; i++)
@@ -268,7 +268,7 @@ double  DEM::elastic_plastic_binder_hertz_plastic_particle::update_normal_force(
             F_binder += psi0_ * (dh - viscoelastic_summation);
             // Check yield criterion and remove the stress added if the material has yielded
             // Effective stress is set to uniaxial stress
-            double sigma_Mises_effective_binder = F_binder/(A*(1-v1));
+//            double sigma_Mises_effective_binder = F_binder/(A*(1-v1));
             double sigma_binder = F_binder/A;
             if (sigma_binder > binder_yield_stress_)
             {
@@ -314,8 +314,10 @@ double  DEM::elastic_plastic_binder_hertz_plastic_particle::update_normal_force(
 //  Particle contact model
     if (h_ > 0)
     {
-        particle_contact_ = true;
-        bonded_ = false;
+//        if (material->bond_breaking){
+//            particle_contact_ = true;
+//            bonded_ = false;
+//        }
         if (h>=yield_h_ && h >= hmax_) // Perfectly plastic deformation of particles, new maximum overlap and contact radius
         {
             F_particle += 1.5 * kp_ * sqrt(yield_h_) * dh;
@@ -359,7 +361,6 @@ double  DEM::elastic_plastic_binder_hertz_plastic_particle::update_normal_force(
 
 void  DEM::elastic_plastic_binder_hertz_plastic_particle::update_tangential_force(const DEM::Vec3& dt, const DEM::Vec3& normal)
 {
-    int flag = 0;
     if (F_binder != 0. && adhesive() && bonded_)
     {
       FT_binder_ -= dot_product(FT_binder_,normal)*normal;
