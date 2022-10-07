@@ -60,7 +60,7 @@ std::string DEM::ElectrodeMaterial::restart_data() const {
        << named_print(mu, "mu") << ", "
        << named_print(mu_wall, "mu_wall") << ", "
        << named_print(M(), "M")<< ", "
-        << named_print(bond_breaking, "bond_breaking")<< ", "
+//       << named_print(bond_breaking, "bond_breaking")<< ", "
        << named_print(adhesive, "adhesive") << ", ";
 
     for (std::size_t i = 0; i != M(); ++i) {
