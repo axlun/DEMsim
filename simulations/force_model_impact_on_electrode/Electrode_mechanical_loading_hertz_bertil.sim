@@ -1,6 +1,6 @@
-output_dir=/scratch/users/axlun/DEMsim/results/electrode_mechanical_loading_hertz/SN_hertz_5000p_btr_8_brr_08_large_part_dt_5e1_MS_1e4_SR_1e-3_compression
+output_dir=/scratch/users/axlun/DEMsim/results/electrode_mechanical_loading_hertz/SN_hertz_5000p_btr_8_brr_08_large_part_dt_5e1_MS_1e2_SR_1e-3_compression
 restart_file_name=/scratch/users/axlun/DEMsim/results/electrode_calendering_hertz/SN_hertz_5000p_btr_8_brr_08_comp_time_40_hal_105_dt_1e2_MS_1e4_from_larger_particles/calendered_electrode_restart_file.res
 loading_direction=-1
 time_step=5e1
-mass_scaling=1e4
+mass_scaling=1e2
 strain_rate=1e-3
