@@ -1,8 +1,8 @@
-output_dir=/scratch/users/axlun/DEMsim/results/electrode_calendering_hertz/SN_hertz_5000p_btr_8_brr_08_comp_time_40_hal_105_dt_1e2_MS_1e4_elast_binder/
+output_dir=/scratch/users/axlun/DEMsim/results/electrode_calendering_hertz/SN_hertz_5000p_btr_8_brr_08_comp_time_40_hal_110_dt_1e2_MS_1e4_elast_binder/
 restart_file_name=/scratch/users/axlun/DEMsim/results/electrode_natural_packing_hertz/SN_hertz_5000p_btr_8_brr_08_dt_1e0_MS_1e0_elast_binder/pre_calendered_electrode_restart_file.res
 time_step=1e2
 mass_scaling=1e4
-calendering_height=105e-2
+calendering_height=110e-2
 compaction_time=40
 output_number=2e2
 
