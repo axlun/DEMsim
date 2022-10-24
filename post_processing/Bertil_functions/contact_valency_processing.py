@@ -3,6 +3,7 @@ import os
 import re
 
 import numpy as np
+import pandas as pd
 np.set_printoptions(threshold=np.inf)
 
 if __name__ == '__main__':
@@ -43,29 +44,46 @@ if __name__ == '__main__':
         file_to_open = argument_string+'/'+contact_time_and_file_name_dict[key]
         particle_contact_number_vec = [0] * number_of_contacts_observed
         binder_contact_number_vec = [0] * number_of_contacts_observed
-        with open(file_to_open) as opened_contact_file:
-            lines = opened_contact_file.readlines()
-        for j in range(0, len(lines)):
-            line_data = lines[j].split(', ')
-            if float(line_data[5]) >= 0:
-                particle_array[int(line_data[0]) - max_wall_index] += 1
-                if int(line_data[1]) >= max_wall_index:
-                    particle_array[int(line_data[1]) - max_wall_index] += 1
 
-            if float(line_data[5]) < 0 and float(line_data[6]) != 0.:
+        line_data = pd.read_csv(file_to_open).to_numpy()
+        for j in range(0, len(line_data[:,0])):
+            # PARTICLE CONTACT
+            if float(line_data[j,5]) >= 0:
+                particle_array[int(line_data[j,0]) - max_wall_index] += 1
+                if int(line_data[j,1]) >= max_wall_index:
+                    particle_array[int(line_data[j,1]) - max_wall_index] += 1
+            #BINDER CONTACT
+            if float(line_data[j,5]) < 0 and float(line_data[j,6]) != 0.:
                 particle_binder_array[int(line_data[0]) - max_wall_index] += 1
                 if int(line_data[1]) >= max_wall_index:
                     particle_binder_array[int(line_data[1]) - max_wall_index] += 1
+
+        #=OLD READING METHOD===========================================================================================
+        # with open(file_to_open) as opened_contact_file:
+        #     lines = opened_contact_file.readlines()
+        # for j in range(0, len(lines)):
+        #     line_data = lines[j].split(', ')
+        #     if float(line_data[5]) >= 0:
+        #         particle_array[int(line_data[0]) - max_wall_index] += 1
+        #         if int(line_data[1]) >= max_wall_index:
+        #             particle_array[int(line_data[1]) - max_wall_index] += 1
+        #
+        #     if float(line_data[5]) < 0 and float(line_data[6]) != 0.:
+        #         particle_binder_array[int(line_data[0]) - max_wall_index] += 1
+        #         if int(line_data[1]) >= max_wall_index:
+        #             particle_binder_array[int(line_data[1]) - max_wall_index] += 1
+        #==============================================================================================================
+
         for k in particle_array:
-            if k > number_of_contacts_observed-1:
-                k=number_of_contacts_observed-1
+            if k > number_of_contacts_observed - 1:
+                k = number_of_contacts_observed - 1
             particle_contact_number_vec[k] += 1
         for l in particle_binder_array:
-            if l > number_of_contacts_observed-1:
-                l = number_of_contacts_observed-1
+            if l > number_of_contacts_observed - 1:
+                l = number_of_contacts_observed - 1
             binder_contact_number_vec[l] += 1
-        particle_results_vec[i,:] = particle_contact_number_vec
-        binder_results_vec[i,:] = binder_contact_number_vec
+        particle_results_vec[i, :] = particle_contact_number_vec
+        binder_results_vec[i, :] = binder_contact_number_vec
     print(time)
     print(particle_results_vec)
     print(binder_results_vec)
