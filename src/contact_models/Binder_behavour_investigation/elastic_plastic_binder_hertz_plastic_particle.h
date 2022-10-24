@@ -78,12 +78,15 @@ namespace DEM{
         std::vector<double> Bi{};
         std::vector<double> di_{};
         std::vector<double> ddi_{};
+        std::vector<double> dti_Scalar{};
+        std::vector<double> ddti_Scalar{};
         std::vector <DEM::Vec3> ddti_{};
         std::vector <DEM::Vec3> dti_{};
 
         double dF_ = 0.;
         double F_ = 0;
         double F_binder = 0;
+        double FT_binder_Scalar_ = 0;
         double F_particle = 0;
         double mu_particle_ = 0.;
         Vec3 dFT_{Vec3(0., 0., 0.)};

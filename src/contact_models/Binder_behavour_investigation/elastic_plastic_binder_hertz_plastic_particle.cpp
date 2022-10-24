@@ -19,20 +19,14 @@ DEM::elastic_plastic_binder_hertz_plastic_particle::elastic_plastic_binder_hertz
     auto mat1 = dynamic_cast<const ElectrodeMaterial *>(particle1->get_material());
     auto mat2 = dynamic_cast<const ElectrodeMaterial *>(particle2->get_material());
     material = mat1;
-
     R0_ = 1. / (1. / particle1->get_radius() + 1. / particle2->get_radius());
-//    std::cout << "R0_:"<< R0_ << std::endl;
-
     double E1 = mat1->E;
     v1 = mat1->nu;
-//    double E2 = mat1->E;
-//    double v2 = mat1->nu;
     double vp1 = mat1->nup;
     double vp2 = mat2->nup;
     double Ep2 = mat2->Ep;
     double Ep1 = mat1->Ep;
     particle_yield_stress_ = mat1->particle_yield_stress_;
-//    std::cout << "P-P particle yield stress:"<< particle_yield_stress_ << std::endl;
     mu_particle_ = (mat1->mu + mat2->mu)/2;
     double Gp1 = Ep1/(2*(1+vp1));
     double Gp2 = Ep2/(2*(1+vp2));
@@ -40,15 +34,11 @@ DEM::elastic_plastic_binder_hertz_plastic_particle::elastic_plastic_binder_hertz
     Ep_eff_ = 1./(((1-vp1*vp1)/Ep1)+((1-vp2*vp2)/Ep2));             //Effective particle youngs modulus
     br_ = mat1-> binder_radius_fraction * particle1->get_radius();
     bt_ = mat1-> binder_thickness_fraction * particle1->get_radius(); //Binder thickness determined by fraction of
-//  std::cout << "Binder thickness:" << bt_ << std::endl;                      //particle radius
     A = DEM::pi*br_*br_;
-//   std::cout << "br:"<< br_ << std::endl;
-//   std::cout << "A:"<< A << std::endl;
     kb_coeff = mat1->binder_stiffness_coefficient; //reduction of binder stiffness due to geometry
     binder_yield_stress_ = mat1->binder_yield_stress_;
     yield_h_ = mat1->yield_displacement_coeff*R0_; //Yield of particles
 
-//    std::cout << "P-P binder yield stress:"<< binder_yield_stress_ << std::endl;
     psi0_ = kb_coeff*(1 - v1)/(1 + v1)/(1 - 2*v1)*E1*A/bt_; //The instantaneous value of the relaxation function for the binder
     psi0T_B_ = E1/bt_*A/2/(1+v1);
     kTp_ = 8/((2-vp1)/Gp1 + (2-vp2)/Gp2)*0.001*R0_; //Tangential particle stiffness following Hertz contact for two particles, 0.001R0 represents
@@ -61,11 +51,12 @@ DEM::elastic_plastic_binder_hertz_plastic_particle::elastic_plastic_binder_hertz
 
     dt_ = dt.count(); //time increment
     M = mat1->M(); // size of Tau_i
-//  std::cout << "M:" << M << std::endl;
     for (unsigned i=0; i!=M; ++i)
     {
     di_.push_back(0);
     ddi_.push_back(0);
+    dti_Scalar.push_back(0);
+    ddti_Scalar.push_back(0);
     ddti_.emplace_back(0., 0., 0.);
     dti_.emplace_back(0., 0., 0.);
     Ai.push_back(1-exp((-dt_/tau_i[i])));
@@ -86,7 +77,6 @@ DEM::elastic_plastic_binder_hertz_plastic_particle::elastic_plastic_binder_hertz
         double Ep1 = mat1->Ep;
         double Gp1 = Ep1/(2*(1+vp1));
         particle_yield_stress_ = mat1->particle_yield_stress_;
-//        std::cout << "P-W particle yield stress:"<< particle_yield_stress_ << std::endl;
         mu_particle_ = mat1->mu_wall;
 //        double rhop = mat1->rhop;
         Ep_eff_ = 1./(((1-vp1*vp1)/Ep1)); //Effective Young's modulus for one particle and one rigid surface
@@ -96,8 +86,6 @@ DEM::elastic_plastic_binder_hertz_plastic_particle::elastic_plastic_binder_hertz
         kb_coeff = mat1->binder_stiffness_coefficient; //reduction of binder stiffness due to geometry
         binder_yield_stress_ = mat1->binder_yield_stress_;
         yield_h_ = mat1->yield_displacement_coeff*R0_; //Yield of particles
-
-//        std::cout << "P-P binder yield stress:"<< binder_yield_stress_ << std::endl;
         psi0_ = kb_coeff*(1 - v1)/(1 + v1)/(1 - 2*v1)*E1*A/bt_; //The instantaneous value of the relaxation function for the binder
         psi0T_B_ = E1/bt_*A/2/(1+v1); //The instantaneous  value of the shear relaxation function for the binder
         kTp_ = 8/((2-vp1)/Gp1)*0.001*R0_;                 //Tangential particle stiffness following Hertz contact for two particles, 0.001R0 represents
@@ -114,6 +102,8 @@ DEM::elastic_plastic_binder_hertz_plastic_particle::elastic_plastic_binder_hertz
         {
             di_.push_back(0);
             ddi_.push_back(0);
+            dti_Scalar.push_back(0);
+            ddti_Scalar.push_back(0);
             ddti_.emplace_back(0., 0., 0.);
             dti_.emplace_back(0., 0., 0.);
             Ai.push_back(1-exp((-dt_/tau_i[i])));
@@ -158,6 +148,7 @@ DEM::elastic_plastic_binder_hertz_plastic_particle::elastic_plastic_binder_hertz
         dFT_(parameters.get_vec3("dFT")),
         FT_(parameters.get_vec3("FT")),
         FT_binder_(parameters.get_vec3("FT_binder")),
+        FT_binder_Scalar_(parameters.get_parameter<double>("FT_binder")),
         FT_part_(parameters.get_vec3("FT_part")),
         uT_(parameters.get_vec3("uT")),
         rot_(parameters.get_vec3("rot"))
@@ -171,6 +162,8 @@ DEM::elastic_plastic_binder_hertz_plastic_particle::elastic_plastic_binder_hertz
                 Bi.push_back(parameters.get_parameter<double>("A_" + std::to_string(i)));
                 di_.push_back(parameters.get_parameter<double>("d_" + std::to_string(i)));
                 ddi_.push_back(parameters.get_parameter<double>("dd_" + std::to_string(i)));
+                dti_Scalar.push_back(parameters.get_parameter<double>("dti_Scalar"+ std::to_string(i)));
+                ddti_Scalar.push_back(parameters.get_parameter<double>("ddti_Scalar"+ std::to_string(i)));
                 dti_.push_back(parameters.get_vec3("dt_" + std::to_string(i)));
                 ddti_.push_back(parameters.get_vec3("ddt_" + std::to_string(i)));
             }
@@ -213,6 +206,7 @@ DEM::elastic_plastic_binder_hertz_plastic_particle::elastic_plastic_binder_hertz
         dFT_(parameters.get_vec3("dFT")),
         FT_(parameters.get_vec3("FT")),
         FT_binder_(parameters.get_vec3("FT_binder")),
+        FT_binder_Scalar_(parameters.get_parameter<double>("FT_binder")),
         FT_part_(parameters.get_vec3("FT_part")),
         uT_(parameters.get_vec3("uT")),
         rot_(parameters.get_vec3("rot"))
@@ -226,6 +220,8 @@ DEM::elastic_plastic_binder_hertz_plastic_particle::elastic_plastic_binder_hertz
         Bi.push_back(parameters.get_parameter<double>("A_" + std::to_string(i)));
         di_.push_back(parameters.get_parameter<double>("d_" + std::to_string(i)));
         ddi_.push_back(parameters.get_parameter<double>("dd_" + std::to_string(i)));
+        dti_Scalar.push_back(parameters.get_parameter<double>("dti_Scalar"+ std::to_string(i)));
+        ddti_Scalar.push_back(parameters.get_parameter<double>("ddti_Scalar"+ std::to_string(i)));
         dti_.push_back(parameters.get_vec3("dt_" + std::to_string(i)));
         ddti_.push_back(parameters.get_vec3("ddt_" + std::to_string(i)));
     }
@@ -298,6 +294,7 @@ double  DEM::elastic_plastic_binder_hertz_plastic_particle::update_normal_force(
                 di_[i] = 0;
             }
         }
+
     }
     else
     {
@@ -321,15 +318,10 @@ double  DEM::elastic_plastic_binder_hertz_plastic_particle::update_normal_force(
         if (h>=yield_h_ && h >= hmax_) // Perfectly plastic deformation of particles, new maximum overlap and contact radius
         {
             F_particle += 1.5 * kp_ * sqrt(yield_h_) * dh;
-//            std::cout << "In plast h_:"<< h_ << std::endl;
-//            std::cout << "In plast F_particle: "<< F_particle << std::endl;
         }
         else if (h > h_plast_) //if overlap larger than elastic recover region
         {
             F_particle += 1.5*kp_*sqrt(h_)*dh;
-//
-//            std::cout << "In Hertz h_: "<< h_ << std::endl;
-//            std::cout << "In Hertz F_particle: "<< F_particle << std::endl;
             if(F_particle<0)
             {
                 F_particle = 0;
@@ -340,14 +332,11 @@ double  DEM::elastic_plastic_binder_hertz_plastic_particle::update_normal_force(
         {
             F_particle = 0;
         }
-//        std::cout << "F_particle:"<< F_particle << std::endl;
-
     }
     else
     {
         F_particle = 0;
     }
-//           std::cout << "F_particle:"<< F_particle << std::endl;
 
     if (adhesive() && bonded_)
     {
@@ -361,28 +350,66 @@ double  DEM::elastic_plastic_binder_hertz_plastic_particle::update_normal_force(
 
 void  DEM::elastic_plastic_binder_hertz_plastic_particle::update_tangential_force(const DEM::Vec3& dt, const DEM::Vec3& normal)
 {
-    if (F_binder != 0. && adhesive() && bonded_)
+    if (adhesive() && bonded_)
     {
-      FT_binder_ -= dot_product(FT_binder_,normal)*normal;
-      uT_ -= dot_product(uT_,normal)*normal;
-      uT_ += dt;
-      dFT_ = dt;
-      for (unsigned i = 0; i !=M; i++)
-      {
-          dti_[i] -= dot_product(dti_[i],normal)*normal;
-          ddti_[i] = Bi[i]*dt + Ai[i]*(uT_ - dti_[i]);
-          dFT_ -= alpha_i[i]*ddti_[i];
-          dti_[i] += ddti_[i];
-      }
-      FT_binder_ += psi0T_B_ * dFT_;
+//======NEW VISCOELASTIC MODEL IN TANGENITIAL DIRECTION, WORKING WITH SCALAR VALUES OF TANGENTIAL DISPLACEMENT==========
+        FT_binder_ -= dot_product(FT_binder_,normal)*normal;
+        double uT_hist_mag = uT_.length();
+        uT_ -= dot_product(uT_,normal)*normal;
+        uT_ += dt;
+        double uT_new_mag = uT_.length();
+        double duT_mag = uT_new_mag-uT_hist_mag;
+        double viscoelastic_sum = 0.0;
+        for (unsigned i = 0; i !=M; i++)
+        {
+            ddti_Scalar[i] = Ai[i] * (uT_new_mag -dti_Scalar[i]) + Bi[i]*(duT_mag);
+
+            viscoelastic_sum += alpha_i[i] * ddti_Scalar[i];
+
+            dti_Scalar[i] += ddti_Scalar[i];
+
+        }
+        FT_binder_Scalar_ += psi0T_B_ * (duT_mag - viscoelastic_sum);
+
+        if (uT_.length()==0 && FT_binder_.length()==0){
+            FT_binder_.set_zero(); //=Vec3(0,0,0);
+        }
+        else if (uT_.length()==0)
+        {
+            FT_binder_ = FT_binder_Scalar_*-FT_.normal();
+        }
+        else
+        {
+              FT_binder_ = FT_binder_Scalar_*uT_.normal();
+        }
     }
+//======================================================================================================================
+
+//======OLD TANGENTIAL FORCE UPDATE USING TANGENTIAL VECTOR==============================================================
+//      FT_binder_ -= dot_product(FT_binder_,normal)*normal;
+//      uT_ -= dot_product(uT_,normal)*normal;
+//      uT_ += dt;
+//      dFT_ = dt;
+//      for (unsigned i = 0; i !=M; i++)
+//      {
+//          dti_[i] -= dot_product(dti_[i],normal)*normal;
+//          ddti_[i] = Bi[i]*dt + Ai[i]*(uT_ - dti_[i]);
+//          dFT_ -= alpha_i[i]*ddti_[i];
+//          dti_[i] += ddti_[i];
+//      }
+//      FT_binder_ += psi0T_B_ * dFT_;
+//    }
+//======================================================================================================================
+
     else
     {
+        FT_binder_Scalar_ = 0;
         uT_.set_zero();
         FT_binder_.set_zero();
         for (unsigned i = 0; i != M; ++i)
         {
             dti_[i].set_zero();
+            dti_Scalar[i] = 0.0;
         }
     }
     FT_ = -FT_binder_;
@@ -430,6 +457,7 @@ std::string DEM::elastic_plastic_binder_hertz_plastic_particle::restart_data() c
            << named_print(dFT_, "dFT") << ", "
            << named_print(FT_, "FT") << ", "
            << named_print(FT_binder_, "FT_binder") << ", "
+           << named_print(FT_binder_Scalar_, "FT_binder_Scalar_") << ", "
            << named_print(FT_part_, "FT_part") << ", "
            << named_print(uT_, "uT") << ", "
            << named_print(rot_, "rot") << ", "
@@ -444,14 +472,16 @@ std::string DEM::elastic_plastic_binder_hertz_plastic_particle::restart_data() c
 
         for (unsigned i=0; i != M; ++i) {
             ss <<  ", "
-               << named_print(tau_i[i], "tau_" + std::to_string(i)) << ", "
-               << named_print(alpha_i[i], "alpha_" + std::to_string(i)) << ", "
-               << named_print(Ai[i], "A_" + std::to_string(i)) << ", "
-               << named_print(Bi[i], "B_" + std::to_string(i)) << ", "
-               << named_print(di_[i], "d_" + std::to_string(i)) << ", "
-               << named_print(ddi_[i], "dd_" + std::to_string(i)) << ", "
-               << named_print(dti_[i], "dt_" + std::to_string(i)) << ", "
-               << named_print(ddti_[i], "ddt_" + std::to_string(i));
+           << named_print(tau_i[i], "tau_" + std::to_string(i)) << ", "
+           << named_print(alpha_i[i], "alpha_" + std::to_string(i)) << ", "
+           << named_print(Ai[i], "A_" + std::to_string(i)) << ", "
+           << named_print(Bi[i], "B_" + std::to_string(i)) << ", "
+           << named_print(di_[i], "d_" + std::to_string(i)) << ", "
+           << named_print(ddi_[i], "dd_" + std::to_string(i)) << ", "
+           << named_print(dti_Scalar[i], "dti_Scalar" + std::to_string(i)) << ", "
+           << named_print(ddti_Scalar[i], "ddti_Scalar" + std::to_string(i)) << ", "
+           << named_print(dti_[i], "dt_" + std::to_string(i)) << ", "
+           << named_print(ddti_[i], "ddt_" + std::to_string(i));
         }
         return ss.str();
     }
