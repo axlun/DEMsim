@@ -1,6 +1,7 @@
 import sys
 import os
 import re
+import pandas as pd
 
 
 if __name__ == '__main__':
@@ -29,17 +30,25 @@ if __name__ == '__main__':
             key = str(int(time[i]))
         ## Read file here
         file_to_open = argument_string+'/'+contact_time_and_file_name_dict[key]
-        with open(file_to_open) as opened_contact_file:
-            lines = opened_contact_file.readlines()
-        # print(lines)
-
-        for j in range(0, len(lines)):
-             line_data = lines[j].split(', ')
-             if float(line_data[6]) != 0 and float(line_data[8]) == 0.0:
+        data = pd.read_csv(file_to_open).to_numpy()
+        binder_contact = 0
+        particle_contact = 0
+        for j in range(0, len(data[:, 0])):
+            if (data[j, 6]) != 0 and (data[j, 8]) == 0.0:
                 binder_contact += 1
-             if float(line_data[6]) != 0 and float(line_data[8]) != 0:
+            if (data[j, 6]) != 0 and (data[j, 8]) != 0:
                 particle_contact += 1
 
+        # with open(file_to_open) as opened_contact_file:
+        #     lines = opened_contact_file.readlines()
+        # # print(lines)
+        #
+        # for j in range(0, len(lines)):
+        #      line_data = lines[j].split(', ')
+        #      if float(line_data[6]) != 0 and float(line_data[8]) == 0.0:
+        #         binder_contact += 1
+        #      if float(line_data[6]) != 0 and float(line_data[8]) != 0:
+        #         particle_contact += 1
 
         binder_contact_vec.append(binder_contact)
         particle_contact_vec.append(particle_contact)
