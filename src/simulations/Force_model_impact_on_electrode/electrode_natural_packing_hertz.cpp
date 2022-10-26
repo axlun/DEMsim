@@ -227,37 +227,37 @@ void DEM::electrode_natural_packing_hertz(const std::string& settings_file_name)
     std::cout<<"Resting for: "<< fall_time.count()<< std::endl;
     simulator.run(Run_for_rest_time);
 
-//    std::cout << "****************Wall removal**************** \n";
-//    // Stop all the particles
-//    for (auto& p: simulator.get_particles())
-//    {
-//        p->set_velocity(Vec3(0,0,0));
-//    }
-////=======================================PERIODIC BC:S===============================================================
-//    simulator.add_periodic_boundary_condition('x', -box_side/2, box_side/2);
-//    simulator.add_periodic_boundary_condition('y', -box_side/2, box_side/2);
-////=====================================================================================================================
-//
-//// =====================MOVE THE STIFF SURFACE TO INITIATE THE PERIODIC BC:S ==========================================
-//    side1_surface->move(Vec3(5*box_side,0,0), Vec3(0, 0, 0));
-//    side2_surface->move(Vec3(0,5*box_side,0), Vec3(0,0,0));
-//    side3_surface->move(-Vec3(5*box_side,0,0), Vec3(0,0,0));
-//    side4_surface->move(-Vec3(0,5*box_side,0), Vec3(0,0,0));
-////=====================================================================================================================
-//
-//    EngineType::RunForTime Run_for_initiation_of_periodic_BCs(simulator,fall_time);
-//    std::cout << "Running for: "<< (fall_time).count() <<" \n";
-//    simulator.run(Run_for_initiation_of_periodic_BCs);
-//
-//    // Stop all the particles
-//    for (auto& p: simulator.get_particles())
-//    {
-//        p->set_velocity(Vec3(0,0,0));
-//    }
-//
-//    Run_for_initiation_of_periodic_BCs.reset(fall_time);
-//    std::cout << "Stopping particles and running for: "<< (fall_time).count() <<" \n";
-//    simulator.run(Run_for_initiation_of_periodic_BCs);
+    std::cout << "****************Wall removal**************** \n";
+    // Stop all the particles
+    for (auto& p: simulator.get_particles())
+    {
+        p->set_velocity(Vec3(0,0,0));
+    }
+//=======================================PERIODIC BC:S===============================================================
+    simulator.add_periodic_boundary_condition('x', -box_side/2, box_side/2);
+    simulator.add_periodic_boundary_condition('y', -box_side/2, box_side/2);
+//=====================================================================================================================
+
+// =====================MOVE THE STIFF SURFACE TO INITIATE THE PERIODIC BC:S ==========================================
+    side1_surface->move(Vec3(5*box_side,0,0), Vec3(0, 0, 0));
+    side2_surface->move(Vec3(0,5*box_side,0), Vec3(0,0,0));
+    side3_surface->move(-Vec3(5*box_side,0,0), Vec3(0,0,0));
+    side4_surface->move(-Vec3(0,5*box_side,0), Vec3(0,0,0));
+//=====================================================================================================================
+
+    EngineType::RunForTime Run_for_initiation_of_periodic_BCs(simulator,fall_time);
+    std::cout << "Running for: "<< (fall_time).count() <<" \n";
+    simulator.run(Run_for_initiation_of_periodic_BCs);
+
+    // Stop all the particles
+    for (auto& p: simulator.get_particles())
+    {
+        p->set_velocity(Vec3(0,0,0));
+    }
+
+    Run_for_initiation_of_periodic_BCs.reset(fall_time);
+    std::cout << "Stopping particles and running for: "<< (fall_time).count() <<" \n";
+    simulator.run(Run_for_initiation_of_periodic_BCs);
 
     std::cout << "****************Adhesive on and stopping particles**************** \n";
     // Stop all the particles
