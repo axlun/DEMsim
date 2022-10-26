@@ -148,7 +148,7 @@ DEM::elastic_plastic_binder_hertz_plastic_particle::elastic_plastic_binder_hertz
         dFT_(parameters.get_vec3("dFT")),
         FT_(parameters.get_vec3("FT")),
         FT_binder_(parameters.get_vec3("FT_binder")),
-        FT_binder_Scalar_(parameters.get_parameter<double>("FT_binder")),
+        FT_binder_Scalar_(parameters.get_parameter<double>("FT_binder_Scalar_")),
         FT_part_(parameters.get_vec3("FT_part")),
         uT_(parameters.get_vec3("uT")),
         rot_(parameters.get_vec3("rot"))
@@ -206,7 +206,7 @@ DEM::elastic_plastic_binder_hertz_plastic_particle::elastic_plastic_binder_hertz
         dFT_(parameters.get_vec3("dFT")),
         FT_(parameters.get_vec3("FT")),
         FT_binder_(parameters.get_vec3("FT_binder")),
-        FT_binder_Scalar_(parameters.get_parameter<double>("FT_binder")),
+        FT_binder_Scalar_(parameters.get_parameter<double>("FT_binder_Scalar_")),
         FT_part_(parameters.get_vec3("FT_part")),
         uT_(parameters.get_vec3("uT")),
         rot_(parameters.get_vec3("rot"))
@@ -232,6 +232,7 @@ void DEM::elastic_plastic_binder_hertz_plastic_particle::update(double h, const 
 //    std::cout << "=======New iteration=======" << std::endl;
     rot_ += drot;
     F_ = update_normal_force(h);
+//    std::cout <<uT_<<"," << dt<<","<< normal << std::endl;
     update_tangential_force(dt, normal);
 //    std::cout << "h:"<< h << std::endl;
 //      std::cout << "F_:"<< F_ << std::endl;
@@ -355,6 +356,7 @@ void  DEM::elastic_plastic_binder_hertz_plastic_particle::update_tangential_forc
 //======NEW VISCOELASTIC MODEL IN TANGENITIAL DIRECTION, WORKING WITH SCALAR VALUES OF TANGENTIAL DISPLACEMENT==========
         FT_binder_ -= dot_product(FT_binder_,normal)*normal;
         double uT_hist_mag = uT_.length();
+//        std::cout << "uT_: "<< uT_ <<"," << dt << std::endl;
         uT_ -= dot_product(uT_,normal)*normal;
         uT_ += dt;
         double uT_new_mag = uT_.length();
@@ -370,18 +372,26 @@ void  DEM::elastic_plastic_binder_hertz_plastic_particle::update_tangential_forc
 
         }
         FT_binder_Scalar_ += psi0T_B_ * (duT_mag - viscoelastic_sum);
-
+//        std::cout << "FT_binder_Scalar_:"<< FT_binder_Scalar_ << std::endl;
         if (uT_.length()==0 && FT_binder_.length()==0){
             FT_binder_.set_zero(); //=Vec3(0,0,0);
         }
         else if (uT_.length()==0)
         {
             FT_binder_ = FT_binder_Scalar_*-FT_.normal();
+//            std::cout << "FT_.normal(): "<< FT_.normal() << std::endl;
+
         }
         else
         {
               FT_binder_ = FT_binder_Scalar_*uT_.normal();
+//             std::cout << "uT_: "<< uT_ << std::endl;
+
         }
+//        std::cout << "uT_: "<< uT_ << std::endl;
+
+//        std::cout << "FT_binder_:"<< FT_binder_ << std::endl;
+
     }
 //======================================================================================================================
 
