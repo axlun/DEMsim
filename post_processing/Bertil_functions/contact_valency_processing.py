@@ -1,7 +1,6 @@
 import sys
 import os
 import re
-
 import numpy as np
 import pandas as pd
 np.set_printoptions(threshold=np.inf)
@@ -54,9 +53,9 @@ if __name__ == '__main__':
                     particle_array[int(line_data[j,1]) - max_wall_index] += 1
             #BINDER CONTACT
             if float(line_data[j,5]) < 0 and float(line_data[j,6]) != 0.:
-                particle_binder_array[int(line_data[0]) - max_wall_index] += 1
-                if int(line_data[1]) >= max_wall_index:
-                    particle_binder_array[int(line_data[1]) - max_wall_index] += 1
+                particle_binder_array[int(line_data[j,0]) - max_wall_index] += 1
+                if int(line_data[j,1]) >= max_wall_index:
+                    particle_binder_array[int(line_data[j,1]) - max_wall_index] += 1
 
         #=OLD READING METHOD===========================================================================================
         # with open(file_to_open) as opened_contact_file:
