@@ -226,7 +226,7 @@ void DEM::electrode_natural_packing_hertz(const std::string& settings_file_name)
     EngineType::RunForTime Run_for_rest_time(simulator, fall_time);
     std::cout<<"Resting for: "<< fall_time.count()<< std::endl;
     simulator.run(Run_for_rest_time);
-
+/*
     std::cout << "****************Wall removal**************** \n";
     // Stop all the particles
     for (auto& p: simulator.get_particles())
@@ -258,7 +258,7 @@ void DEM::electrode_natural_packing_hertz(const std::string& settings_file_name)
     Run_for_initiation_of_periodic_BCs.reset(fall_time);
     std::cout << "Stopping particles and running for: "<< (fall_time).count() <<" \n";
     simulator.run(Run_for_initiation_of_periodic_BCs);
-
+*/
     std::cout << "****************Adhesive on and stopping particles**************** \n";
     // Stop all the particles
     for (auto& p: simulator.get_particles())
