@@ -295,7 +295,10 @@ double  DEM::elastic_plastic_binder_hertz_plastic_particle::update_normal_force(
                 di_[i] = 0;
             }
         }
-
+        if ((h_ > -bt_)  && adhesive()) //Change to if ((h_ > -bt_) && adhesive())?? kollar då om partiklarna är inom binder avstånd istället för på binderkraften
+        {
+            bonded_ = true;
+        }
     }
     else
     {
@@ -305,10 +308,7 @@ double  DEM::elastic_plastic_binder_hertz_plastic_particle::update_normal_force(
             di_[i] = 0;
         }
     }
-    if ((h_ > -bt_)  && adhesive()) //Change to if ((h_ > -bt_) && adhesive())?? kollar då om partiklarna är inom binder avstånd istället för på binderkraften
-    {
-        bonded_ = true;
-    }
+
 //  Particle contact model
     if (h_ > 0)
     {
