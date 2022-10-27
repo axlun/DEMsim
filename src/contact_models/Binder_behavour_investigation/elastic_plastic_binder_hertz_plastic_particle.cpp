@@ -263,6 +263,10 @@ double  DEM::elastic_plastic_binder_hertz_plastic_particle::update_normal_force(
                 di_[i] += ddi_[i];
             }
             F_binder += psi0_ * (dh - viscoelastic_summation);
+            if (F_binder <= 0 && !bonded_)
+            {
+                F_binder = 0;
+            }
             // Check yield criterion and remove the stress added if the material has yielded
             // Effective stress is set to uniaxial stress
 //            double sigma_Mises_effective_binder = F_binder/(A*(1-v1));
@@ -341,7 +345,7 @@ double  DEM::elastic_plastic_binder_hertz_plastic_particle::update_normal_force(
 
     if (adhesive() && bonded_)
     {
-        return std::max(F_particle,0.)+F_binder;
+        return std::max(F_particle,0.)+F_binder; //Can lead to large jump in F_binder if F_binder<0 and adhesion turns on
     }
     else
     {
