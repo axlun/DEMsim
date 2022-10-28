@@ -251,6 +251,8 @@ double  DEM::elastic_plastic_binder_hertz_plastic_particle::update_normal_force(
     {
         hmax_ = h;
     }
+
+// ==BINDER CONTACT MODEL===============================================================================================
     if(binder_contact_)
     {
         if (((h_ > -bt_) && !particle_contact_) || (bonded_ && !particle_contact_))
@@ -263,13 +265,13 @@ double  DEM::elastic_plastic_binder_hertz_plastic_particle::update_normal_force(
                 di_[i] += ddi_[i];
             }
             F_binder += psi0_ * (dh - viscoelastic_summation);
-            if (F_binder <= 0 && !bonded_)
-            {
-                F_binder = 0;
-            }
+//            if (F_binder <= 0 && !bonded_)
+//            {
+//                F_binder = 0;
+//            }
             // Check yield criterion and remove the stress added if the material has yielded
             // Effective stress is set to uniaxial stress
-//            double sigma_Mises_effective_binder = F_binder/(A*(1-v1));
+            //double sigma_Mises_effective_binder = F_binder/(A*(1-v1));
             double sigma_binder = F_binder/A;
             if (sigma_binder > binder_yield_stress_)
             {
@@ -299,7 +301,11 @@ double  DEM::elastic_plastic_binder_hertz_plastic_particle::update_normal_force(
                 di_[i] = 0;
             }
         }
-        if ((h_ > -bt_)  && adhesive()) //Change to if ((h_ > -bt_) && adhesive())?? kollar då om partiklarna är inom binder avstånd istället för på binderkraften
+//        if ((h_ > -bt_)  && adhesive() && !bonded_) //Change to if ((h_ > -bt_) && adhesive())?? kollar då om partiklarna är inom binder avstånd istället för på binderkraften
+//        {
+//            bonded_ = true;
+//        }
+        if ((F_binder > 0)  && adhesive() && !bonded_) //Change to if ((h_ > -bt_) && adhesive())?? kollar då om partiklarna är inom binder avstånd istället för på binderkraften
         {
             bonded_ = true;
         }
@@ -313,7 +319,7 @@ double  DEM::elastic_plastic_binder_hertz_plastic_particle::update_normal_force(
         }
     }
 
-//  Particle contact model
+// ===PARTICLE CONTACT MODEL============================================================================================
     if (h_ > 0)
     {
 //        if (material->bond_breaking){
@@ -345,7 +351,7 @@ double  DEM::elastic_plastic_binder_hertz_plastic_particle::update_normal_force(
 
     if (adhesive() && bonded_)
     {
-        return std::max(F_particle,0.)+F_binder; //Can lead to large jump in F_binder if F_binder<0 and adhesion turns on
+        return std::max(F_particle,0.)+F_binder;
     }
     else
     {
@@ -360,7 +366,6 @@ void  DEM::elastic_plastic_binder_hertz_plastic_particle::update_tangential_forc
 //======NEW VISCOELASTIC MODEL IN TANGENITIAL DIRECTION, WORKING WITH SCALAR VALUES OF TANGENTIAL DISPLACEMENT==========
         FT_binder_ -= dot_product(FT_binder_,normal)*normal;
         double uT_hist_mag = uT_.length();
-//        std::cout << "uT_: "<< uT_ <<"," << dt << std::endl;
         uT_ -= dot_product(uT_,normal)*normal;
         uT_ += dt;
         double uT_new_mag = uT_.length();
@@ -376,26 +381,18 @@ void  DEM::elastic_plastic_binder_hertz_plastic_particle::update_tangential_forc
 
         }
         FT_binder_Scalar_ += psi0T_B_ * (duT_mag - viscoelastic_sum);
-//        std::cout << "FT_binder_Scalar_:"<< FT_binder_Scalar_ << std::endl;
         if (uT_.length()==0 && FT_binder_.length()==0){
-            FT_binder_.set_zero(); //=Vec3(0,0,0);
+            FT_binder_.set_zero();
         }
         else if (uT_.length()==0)
         {
             FT_binder_ = FT_binder_Scalar_*-FT_.normal();
-//            std::cout << "FT_.normal(): "<< FT_.normal() << std::endl;
-
         }
         else
         {
               FT_binder_ = FT_binder_Scalar_*uT_.normal();
-//             std::cout << "uT_: "<< uT_ << std::endl;
 
         }
-//        std::cout << "uT_: "<< uT_ << std::endl;
-
-//        std::cout << "FT_binder_:"<< FT_binder_ << std::endl;
-
     }
 //======================================================================================================================
 
