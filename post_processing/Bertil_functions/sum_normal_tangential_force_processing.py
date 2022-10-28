@@ -22,7 +22,15 @@ if __name__ == '__main__':
 
     time_vec = []
     normal_force_vec = []
+    compressive_normal_force_vec = []
+    tensile_normal_force_vec = []
     tangential_force_vec = []
+    compressive_binder_force_vec = []
+
+    binder_force_vec = []
+    tensile_binder_force_vec = []
+    particle_force_vec = []
+
 
     for i in range(0,len(time)):
         key = str(time[i])
@@ -31,8 +39,13 @@ if __name__ == '__main__':
         ## Read file here
         file_to_open = argument_string+'/'+contact_time_and_file_name_dict[key]
         data = pd.read_csv(file_to_open).to_numpy()
-
-        normal_force_vec.append(np.sum((data[:,6]**2)**.5))
-        tangential_force_vec.append(np.sum((data[:,10]**2+data[:,11]**2+data[:,12]**2)**.5))
+        normal_force_vec.append(np.sum((data[:, 6] ** 2) ** .5))
+        compressive_normal_force_vec.append(np.sum((data[:,6][data[:,6] < 0] ** 2) ** .5))
+        tensile_normal_force_vec.append(np.sum((data[:,6][data[:,6] >= 0] ** 2) ** .5))
+        binder_force_vec.append(np.sum((data[:, 7] ** 2) ** .5))
+        compressive_binder_force_vec.append(np.sum((data[:,7][data[:,7] < 0] ** 2) ** .5))
+        tensile_binder_force_vec.append(np.sum((data[:,7][data[:,7] < 0] ** 2) ** .5))
+        particle_force_vec.append(np.sum((data[:, 8] ** 2) ** .5))
+        tangential_force_vec.append(np.sum((data[:, 10]**2+data[:,11]**2+data[:, 12]**2)**.5))
         time_vec.append(float(key))
-    print(time_vec,normal_force_vec,tangential_force_vec)
+    print(time_vec,normal_force_vec,compressive_normal_force_vec,tensile_normal_force_vec,binder_force_vec,compressive_binder_force_vec,tensile_binder_force_vec,particle_force_vec,tangential_force_vec)
