@@ -93,6 +93,11 @@ DEM::elastic_plastic_binder_hertz_plastic_particle::elastic_plastic_binder_hertz
         adhesive_ = surface->adhesive();
         binder_contact_ = create_binder_contact(mat1);
 
+//        if binder_contact_
+//        {
+//            h_ = -bt
+//        }
+
         M = mat1->M(); // size of Tau_i
         tau_i = mat1->tau_i;
         alpha_i = mat1->alpha_i;
@@ -505,6 +510,7 @@ bool DEM::elastic_plastic_binder_hertz_plastic_particle::create_binder_contact(c
     double random_value = distribution(rand_engine);
     if (random_value < mat->fraction_binder_contacts)
     {
+        h_ = -bt_
         return true;
     }
     return false;
