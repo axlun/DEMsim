@@ -46,10 +46,10 @@ DEM::elastic_plastic_binder_hertz_plastic_particle::elastic_plastic_binder_hertz
     adhesive_ = true;
     binder_contact_ = create_binder_contact(mat1);
 
-//    if (binder_contact_)
-//    {
-//        h_ = -bt_;
-//    }
+    if (binder_contact_)
+    {
+        h_ = -bt_;
+    }
 
     tau_i = mat1->tau_i;
     alpha_i = mat1->alpha_i;
@@ -97,11 +97,11 @@ DEM::elastic_plastic_binder_hertz_plastic_particle::elastic_plastic_binder_hertz
         kp_ = (4./3)*Ep_eff_* sqrt(R0_); //Particle stiffness following Hertz contact for two particles
         adhesive_ = surface->adhesive();
         binder_contact_ = create_binder_contact(mat1);
-//
-//        if (binder_contact_)
-//        {
-//            h_ = -bt_;
-//        }
+
+        if (binder_contact_)
+        {
+            h_ = -bt_;
+        }
 
         M = mat1->M(); // size of Tau_i
         tau_i = mat1->tau_i;
