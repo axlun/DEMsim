@@ -43,8 +43,13 @@ DEM::elastic_plastic_binder_hertz_plastic_particle::elastic_plastic_binder_hertz
     psi0T_B_ = E1/bt_*A/2/(1+v1);
     kTp_ = 8/((2-vp1)/Gp1 + (2-vp2)/Gp2)*0.001*R0_; //Tangential particle stiffness following Hertz contact for two particles, 0.001R0 represents
     kp_ = (4./3)*Ep_eff_* sqrt(R0_); //Particle stiffness following Hertz contact for two particles
-    binder_contact_ = create_binder_contact(mat1);
     adhesive_ = true;
+    binder_contact_ = create_binder_contact(mat1);
+
+//    if (binder_contact_)
+//    {
+//        h_ = -bt_;
+//    }
 
     tau_i = mat1->tau_i;
     alpha_i = mat1->alpha_i;
@@ -92,10 +97,10 @@ DEM::elastic_plastic_binder_hertz_plastic_particle::elastic_plastic_binder_hertz
         kp_ = (4./3)*Ep_eff_* sqrt(R0_); //Particle stiffness following Hertz contact for two particles
         adhesive_ = surface->adhesive();
         binder_contact_ = create_binder_contact(mat1);
-
-//        if binder_contact_
+//
+//        if (binder_contact_)
 //        {
-//            h_ = -bt
+//            h_ = -bt_;
 //        }
 
         M = mat1->M(); // size of Tau_i
@@ -510,7 +515,6 @@ bool DEM::elastic_plastic_binder_hertz_plastic_particle::create_binder_contact(c
     double random_value = distribution(rand_engine);
     if (random_value < mat->fraction_binder_contacts)
     {
-        h_ = -bt_
         return true;
     }
     return false;

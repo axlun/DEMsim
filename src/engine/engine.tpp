@@ -387,6 +387,7 @@ template<typename ForceModel, typename ParticleType>
                                                                        contacts_);
     }
     periodic_bc_handler_->add_periodic_bc(axis, boundary_min, boundary_max);
+    periodic_bc_handler_->set_boundary_stretch(bounding_box_stretch_);
 }
 
 template<typename ForceModel, typename ParticleType>
