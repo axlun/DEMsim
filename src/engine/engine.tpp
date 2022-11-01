@@ -568,7 +568,7 @@ void DEM::Engine<ForceModel, ParticleType>::do_step()
     move_particles();
     move_surfaces();
     collision_detector_.do_check();
-//    destroy_contacts();
+    destroy_contacts();
     create_contacts();
     update_contacts();
     sum_contact_forces();
