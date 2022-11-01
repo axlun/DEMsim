@@ -211,6 +211,11 @@ template<typename ForceModel, typename ParticleType>
 void DEM::CollisionDetector<ForceModel, ParticleType>::destroy_contact_pair(const BoundingBoxProjectionType* b1,
         const BoundingBoxProjectionType* b2)
 {
+// =CHECHKS IF CONTACT IS ABOUT TO BE CREASTED, IF SO IT IS DELETED FROM CREATE LIST AND REMOVED FROM DELETE LIST=======
+    if (contacts_to_create_.erase(b1->get_collision_id(), b2->get_collision_id())) {
+        return;
+    }
+// =====================================================================================================================
     if (current_contacts_.erase(b1->get_collision_id(), b2->get_collision_id())) {
         // There is actually a contact to destroy
         if (b1->get_particle() != nullptr && b2->get_particle() != nullptr)
