@@ -28,7 +28,7 @@ if __name__ == '__main__':
         if time[i].is_integer():
             key = str(int(time[i]))
         ## Read file here
-        file_to_open = argument_string+contact_time_and_file_name_dict[key]
+        file_to_open = argument_string+'contacts/'+contact_time_and_file_name_dict[key]
 
         data = pd.read_csv(file_to_open).to_numpy()
         if i == 0:
