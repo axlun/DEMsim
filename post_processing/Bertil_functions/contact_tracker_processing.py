@@ -3,6 +3,7 @@ import os
 import re
 import pandas as pd
 import numpy as np
+np.set_printoptions(threshold=np.inf)
 
 if __name__ == '__main__':
     argument_string = sys.argv[1]
