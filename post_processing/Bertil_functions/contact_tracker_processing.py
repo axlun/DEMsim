@@ -42,4 +42,5 @@ if __name__ == '__main__':
         else:
             contact_data_vec = np.vstack([contact_data_vec,np.zeros(len(data[0,:]))])
         time_vec.append(float(key))
-    print(time_vec,contact_data_vec)
+    print(time_vec)
+    print(contact_data_vec)
