@@ -11,7 +11,7 @@
 
 template<typename ForceModel>
 DEM::ParticleBase<ForceModel>::ParticleBase(double mass, const Vec3& pos, const Vec3& velocity, const MaterialBase* m,
-                                       unsigned id) :
+                                            unsigned id) :
         id_(id),
         mass_(mass),
         material_(m),
@@ -23,15 +23,15 @@ DEM::ParticleBase<ForceModel>::ParticleBase(double mass, const Vec3& pos, const 
 
 template<typename ForceModel>
 DEM::ParticleBase<ForceModel>::ParticleBase(const DEM::ParameterMap& parameters, DEM::MaterialBase *material) :
-    id_(parameters.get_parameter<std::size_t>("id")),
-    mass_(parameters.get_parameter<double>("mass")),
-    material_(material),
-    position_(parameters.get_vec3("pos")),
-    velocity_(parameters.get_vec3("vel")),
-    rot_(parameters.get_vec3("rot")),
-    ang_vel_(parameters.get_vec3("ang_vel")),
-    displacement_this_inc_(parameters.get_vec3("disp_this_inc")),
-    rot_this_inc_(parameters.get_vec3("rot_this_inc"))
+        id_(parameters.get_parameter<std::size_t>("id")),
+        mass_(parameters.get_parameter<double>("mass")),
+        material_(material),
+        position_(parameters.get_vec3("pos")),
+        velocity_(parameters.get_vec3("vel")),
+        rot_(parameters.get_vec3("rot")),
+        ang_vel_(parameters.get_vec3("ang_vel")),
+        displacement_this_inc_(parameters.get_vec3("disp_this_inc")),
+        rot_this_inc_(parameters.get_vec3("rot_this_inc"))
 {
 
 }

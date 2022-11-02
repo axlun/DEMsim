@@ -173,10 +173,11 @@ PeriodicBCHandler<ForceModel, ParticleType>::PeriodicBCHandler(PeriodicBCHandler
 template<typename ForceModel, typename ParticleType>
 void DEM::PeriodicBCHandler<ForceModel, ParticleType>::fulfill_periodic_bc()
 {
+    jump_particles_.clear();
     move_periodic_boundaries();
     for (auto& p: simulation_particles_) {
-        respect_boundaries(p);
         move_mirror_particles(p);
+        respect_boundaries(p);
         create_mirror_particles(p);
         create_corner_particles(p);
         // remove_mirror_particles(p);
@@ -246,6 +247,7 @@ void PeriodicBCHandler<ForceModel, ParticleType>::move_mirror_particles(Particle
                         Vec3 new_pos = mp->get_position();
                         new_pos[j] -= 4*boundaries_[j].max*mp->get_position()[j]/abs(mp->get_position()[j]);
                         mp->set_position(new_pos);
+                        jump_particles_.insert(mp->get_id());
                     }
                 }
             }
@@ -257,7 +259,7 @@ template<typename ForceModel, typename ParticleType>
 void PeriodicBCHandler<ForceModel, ParticleType>::create_mirror_particles(ParticleType* simulation_particle) {
     for (unsigned direction = 0; direction != active_directions_.size(); ++direction) {
         if (active_directions_[direction] && (mirror_particles_.count(simulation_particle->get_id()) == 0
-             || mirror_particles_[simulation_particle->get_id()][direction] == nullptr)) {
+                                              || mirror_particles_[simulation_particle->get_id()][direction] == nullptr)) {
             const auto d1 = simulation_particle->get_position()[direction] - simulation_particle->get_radius()
                             - stretch_ - boundaries_[direction].min;
             const auto d2 = boundaries_[direction].max - simulation_particle->get_radius() - stretch_
@@ -334,7 +336,7 @@ void DEM::PeriodicBCHandler<ForceModel, ParticleType>::respect_boundaries(Partic
         if (overlapping_directions == 1) {
             mirror_idx = std::find(directions.begin(), directions.end(), true) - directions.begin();
         }
-        else if (directions[0] == true && directions[1] == true) {
+        else if (directions[0] && directions[1]) {
             mirror_idx = 3;
         }
         else if (directions[0] == true && directions[2] == true) {
@@ -405,7 +407,7 @@ void DEM::PeriodicBCHandler<ForceModel, ParticleType>::respect_boundaries(Partic
 template<typename ForceModel, typename ParticleType>
 void PeriodicBCHandler<ForceModel, ParticleType>::add_periodic_bc(char axis, double boundary_min, double boundary_max) {
     auto axis_idx = direction_idx(axis);
-    if (active_directions_[axis_idx] == false) {
+    if (!active_directions_[axis_idx]) {
         active_directions_[axis_idx] = true;
         ++no_active_directions_;
     }
@@ -537,7 +539,7 @@ void PeriodicBCHandler<ForceModel, ParticleType>::destroy_periodic_bc_contacts()
         auto p2 = c_data.particle2;
         auto s = c_data.surface;
         // if (!is_mirror_particle(p1) || !is_mirror_particle(p2)) {
-        if ( true ) {
+        if ( jump_particles_.find(id1) == jump_particles_.end() && jump_particles_.find(id2) == jump_particles_.end()) {
             if (contacts_.erase(id1, id2)) {
                 p1->remove_contact(id2);
                 if (s == nullptr) {

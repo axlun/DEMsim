@@ -148,7 +148,7 @@ void DEM::proctor_test(const std::string& settings_file_name) {
             hammer->move(new_hammer_position, Vec3(0, 0, 0));
 
             hammer->set_mass(4.54);
-            simulator.set_force_control_on_surface(hammer, 'z');
+//            simulator.set_force_control_on_surface(hammer, 'z');
             std::chrono::duration<double> falling_time(1.1*sqrt(2*0.457/9.82));
             std::cout << "Hammer falling time is: " << falling_time.count() << std::endl;
 
