@@ -6,18 +6,9 @@ import numpy as np
 np.set_printoptions(threshold=np.inf)
 
 if __name__ == '__main__':
-    # argument_string = sys.argv[1]
-    # p1 = int(sys.argv[2])
-    # p2 = int(sys.argv[3])
-
-    argument_string = 'c:/Users/Axel/Documents/DEM/Bertil_results/electrode_natural_packing_hertz/SN_hertz_500p_btr_8_brr_08_dt_1e0_MS_1e0_el_b_new_tang_fix_gate4_fullosnign4/contacts'
-    p1 = 294  # 215#58#417
-    p2 = 174
-
-
-    # argument_string = sys.argv[1]
-    # p1 = int(sys.argv[2])
-    # p2 = int(sys.argv[3])
+    argument_string = sys.argv[1]
+    p1 = int(sys.argv[2])
+    p2 = int(sys.argv[3])
     contact_files = os.listdir(argument_string)
     time = []
     contact_time_and_file_name_dict = {}
