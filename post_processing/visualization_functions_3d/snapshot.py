@@ -1,7 +1,6 @@
 from collections import defaultdict
 import os
 
-
 from mayavi import mlab
 import numpy as np
 
@@ -13,7 +12,7 @@ from visualization_functions_3d import colors
 
 class Snapshot:
     def __init__(self, directory, contact_plotter_class=None):
-        self.plot_periodic_bc = True
+        self.plot_periodic_bc = False
         self.periodic_bc_plotter = None
         self.mirror_particles = False
         self.bounding_boxes = defaultdict(BoundingBox)
@@ -63,13 +62,15 @@ class Snapshot:
 
 def main():
     mlab.figure(size=(1024, 768), bgcolor=(1., 1., 1.), fgcolor=(0, 0., 0.))
-    snapshot = Snapshot('C:/DEMsim/results/E34bt005rb05/Compression/',
-                        BatteryContactPlotter)
-    snapshot.mirror_particles = False
-    snapshot.contact_plotter.color = colors.red
-    snapshot.contact_plotter.binder_radius = 0.5*0.03
-    snapshot.plot(5.99194)
+    snapshot = Snapshot('C:/Users/Axel/Documents/DEM/Bertil_results/electrode_mechanical_loading_hertz/SN_hertz_5000p_bt'
+                        'r_8_brr_08_SR_5e-4_compression', BatteryContactPlotter)
 
+    snapshot.mirror_particles = False
+    snapshot.surfaces_plotter.surfaces_colors[1] = colors.red
+    snapshot.surfaces_plotter.surfaces_opacities[1] = 0
+    snapshot.contact_plotter.color = colors.white
+    snapshot.contact_plotter.binder_radius = .02
+    snapshot.plot(47.4198)
     mlab.show()
 
 
