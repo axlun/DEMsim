@@ -7,9 +7,7 @@ import time
 import numpy as np
 from mayavi import mlab
 
-from visualization_functions_3d.plotting_functions import SpheresPlotter
-from visualization_functions_3d.plotting_functions import SurfacesPlotter
-from visualization_functions_3d.plotting_functions import BoundingBox
+from visualization_functions_3d.plotting_functions import SpheresPlotter, BoundingBox, SurfacesPlotter, ForceArrowPlotter
 from visualization_functions_3d.periodic_bc import PeriodicBC
 from visualization_functions_3d import colors
 
@@ -18,8 +16,10 @@ class Animation:
     def __init__(self, directory):
         self.directory = directory
         self.delay = 0.0
+        self.nth_timeframe = 1
         self.start_time = 0
         self.end_time = None
+        self.max_decimal_points = 0
         self.save_frames = False
         self.frame_times = None
         self.save_directory = ''
@@ -36,7 +36,8 @@ class Animation:
         self.plot_periodic_bc = False
         self.periodic_bc_plotter = None
         self.mirror_particles = False
-
+        self.plot_force_arrow = False
+        self.n_force = -1
         self.spheres_plotter = SpheresPlotter()
         self.mirror_particles_plotter = SpheresPlotter(color=colors.silver)
 
@@ -63,12 +64,24 @@ class Animation:
         if self.plot_periodic_bc:
             self.periodic_bc_plotter = PeriodicBC(self.directory + '/periodic_bc.dou')
 
+        if self.plot_force_arrow:
+            self.force_arrow_plotter = ForceArrowPlotter(colors.green, 1. ,self.n_force)
+
+
         particle_files = glob.glob(self.directory + '/particles/particles_*.dou')
         particle_files = [os.path.basename(particle_file) for particle_file in particle_files]
+        print(self.nth_timeframe)
+        particle_files = particle_files[::self.nth_timeframe]
 
+        # Getting frametimes
         self.frame_times = []
         for p_file in particle_files:
-            self.frame_times.append(re.findall(r"[-+]?\d*\.\d+|\d+", p_file)[0])
+            #           self.frame_times.append(re.findall(r"[-+]?\d*\.\d+|\d+", p_file)[0])
+            time_frame_split = re.split(r"particles_|.dou", p_file)[1]
+            self.frame_times.append(time_frame_split)
+            if time_frame_split[::-1].find('.') > self.max_decimal_points:
+                self.max_decimal_points = time_frame_split[::-1].find('.')
+
         self.frame_times = np.array(sorted(self.frame_times, key=lambda x: float(x)), dtype=str)
         frame_times_np = np.array([float(t) for t in self.frame_times])
         self.frame_times = self.frame_times[frame_times_np >= self.start_time]
@@ -85,8 +98,18 @@ class Animation:
         if not self.initialized:
             self.initialize()
         n = len(self.frame_times)
+
+        file_name_str = []
+        for i, t in enumerate(self.frame_times):
+            string = str(t)
+            if string[::-1].find('.') <= 0:
+                string += ".0"
+            if string[::-1].find('.') < self.max_decimal_points:
+                string += "0"*(self.max_decimal_points-int(string[::-1].find('.')))
+            file_name_str.append(string)
         for i, t in enumerate(self.frame_times):
             print(i)
+            print(self.frame_times[i])
             particle_data = np.genfromtxt(self.directory + '/particles/particles_' + t + '.dou', delimiter=',')
             self.spheres_plotter.plot(particle_data)
             if self.mirror_particles:
@@ -98,6 +121,9 @@ class Animation:
             if self.plot_periodic_bc:
                 self.periodic_bc_plotter.plot(float(t))
 
+            if self.plot_force_arrow:
+                self.force_arrow_plotter.plot(particle_data)
+
             f = mlab.gcf()
             f.scene.render()
 
@@ -107,9 +133,12 @@ class Animation:
                 if not os.path.isdir(self.figure_directory):
                     os.makedirs(self.figure_directory)
 
+                #each file name is for the frame time in the simulation
+                # name = '/' + self.image_file_prefix + str(self.frame_times[i]).replace(".","-") + '.' + self.image_file_extension
+                name = '/' + self.image_file_prefix + file_name_str[i] + '.' + self.image_file_extension
                 # each file has name frame_00x, _0xx, xxx etc
-                name = '/' + self.image_file_prefix + '0'*(len(str(n))-len(str(i))) + str(i) + '.' \
-                       + self.image_file_extension
+                # name = '/' + self.image_file_prefix + '0'*(len(str(n))-len(str(i))) + str(i) + '.' \
+                #        + self.image_file_extension
                 mlab.savefig(filename=self.save_directory + name)
 
             time.sleep(self.delay)
