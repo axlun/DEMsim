@@ -5,7 +5,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib
 
-from post_processing.pressure_density import relative_density_cylinder
+from pressure_density import relative_density_cylinder
 
 matplotlib.style.use('classic')
 plt.rc('text', usetex=True)
@@ -38,7 +38,7 @@ def heading(increment):
 def create_frame(increment):
     fig = plt.figure(0, figsize=(11, 8))
     inc_str = '0'*(len(str(total_timesteps))-len(str(increment+1))) + str(increment+1)
-    print "Generating figure", inc_str
+    print( "Generating figure", inc_str)
     particle_image = plt.imread('animation/particle_figures/frame' + inc_str + '.png')
     image = np.ones((particle_image.shape[0], 1100, 4))
     image[:, :particle_image.shape[1], 0:3] = particle_image
