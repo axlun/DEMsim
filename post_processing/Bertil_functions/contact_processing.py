@@ -22,6 +22,8 @@ if __name__ == '__main__':
     time_vec = []
     binder_contact_vec = []
     particle_contact_vec = []
+    binder_particle_contact_vec = []
+
     for i in range(0,len(time)):
         binder_contact = 0
         particle_contact = 0
@@ -33,11 +35,19 @@ if __name__ == '__main__':
         data = pd.read_csv(file_to_open).to_numpy()
         binder_contact = 0
         particle_contact = 0
+        binder_particle_contact = 0
         for j in range(0, len(data[:, 0])):
-            if (data[j, 6]) != 0 and (data[j, 8]) == 0.0:
+            if (data[j, 6]) == (data[j, 7]):
                 binder_contact += 1
-            if (data[j, 6]) != 0 and (data[j, 8]) != 0:
+            if (data[j, 6]) == (data[j, 8]):
                 particle_contact += 1
+            if data[j,6] == data[j,7] + data[j,8]:
+                binder_particle_contact += 1
+
+            # if (data[j, 6]) != 0 and (data[j, 8]) == 0.0:
+            #     binder_contact += 1
+            # if (data[j, 6]) != 0 and (data[j, 8]) != 0:
+            #     particle_contact += 1
 
         # with open(file_to_open) as opened_contact_file:
         #     lines = opened_contact_file.readlines()
@@ -52,8 +62,7 @@ if __name__ == '__main__':
 
         binder_contact_vec.append(binder_contact)
         particle_contact_vec.append(particle_contact)
+        binder_particle_contact_vec.append(particle_contact)
         time_vec.append(float(key))
 
-
-
-    print(time_vec,binder_contact_vec,particle_contact_vec)
+    print(time_vec,binder_contact_vec,particle_contact_vec,binder_particle_contact_vec)
