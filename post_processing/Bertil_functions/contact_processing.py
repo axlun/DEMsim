@@ -62,7 +62,7 @@ if __name__ == '__main__':
 
         binder_contact_vec.append(binder_contact)
         particle_contact_vec.append(particle_contact)
-        binder_particle_contact_vec.append(particle_contact)
+        binder_particle_contact_vec.append(binder_particle_contact)
         time_vec.append(float(key))
 
     print(time_vec,binder_contact_vec,particle_contact_vec,binder_particle_contact_vec)
