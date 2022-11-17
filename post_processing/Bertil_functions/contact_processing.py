@@ -37,11 +37,11 @@ if __name__ == '__main__':
         particle_contact = 0
         binder_particle_contact = 0
         for j in range(0, len(data[:, 0])):
-            if data[j, 6] !=0 and (data[j, 6]) == (data[j, 7]):
+            if data[j, 6] != 0 and (data[j, 6]) == (data[j, 7]):
                 binder_contact += 1
-            if data[j, 6] !=0 and  (data[j, 6]) == (data[j, 8]):
+            if data[j, 6] != 0 and (data[j, 6]) == (data[j, 8]):
                 particle_contact += 1
-            if data[j, 6] !=0 and data[j,6] == data[j,7] + data[j,8]:
+            if data[j, 6] != 0 and data[j, 7] != 0 and data[j, 8] != 0 and data[j, 6] == data[j, 7] + data[j, 8]:
                 binder_particle_contact += 1
 
             # if (data[j, 6]) != 0 and (data[j, 8]) == 0.0:
