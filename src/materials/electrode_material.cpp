@@ -29,7 +29,7 @@ DEM::ElectrodeMaterial::ElectrodeMaterial(const ParameterMap& parameters) :
     kT(parameters.get_parameter<double>("kT")),
     mu(parameters.get_parameter<double>("mu")),
     mu_wall(parameters.get_parameter<double>("mu_wall")),
-    new_binder_contacts(parameters.get_parameter<bool>("new_binder_contacts"))
+    new_binder_contacts(parameters.get_parameter<bool>("new_binder_contacts")),
 //    bond_breaking(parameters.get_parameter<double>("bond_breaking")),
     adhesive(parameters.get_parameter<bool>("adhesive"))
 {
