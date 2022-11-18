@@ -46,11 +46,6 @@ DEM::elastic_plastic_binder_hertz_plastic_particle::elastic_plastic_binder_hertz
     adhesive_ = true;
     binder_contact_ = create_binder_contact(mat1);
 
-//    if (binder_contact_)
-//    {
-//        h_ = -bt_;
-//    }
-
     tau_i = mat1->tau_i;
     alpha_i = mat1->alpha_i;
 
@@ -97,11 +92,6 @@ DEM::elastic_plastic_binder_hertz_plastic_particle::elastic_plastic_binder_hertz
         kp_ = (4./3)*Ep_eff_* sqrt(R0_); //Particle stiffness following Hertz contact for two particles
         adhesive_ = surface->adhesive();
         binder_contact_ = create_binder_contact(mat1);
-
-//        if (binder_contact_)
-//        {
-//            h_ = -bt_;
-//        }
 
         M = mat1->M(); // size of Tau_i
         tau_i = mat1->tau_i;
@@ -513,11 +503,7 @@ bool DEM::elastic_plastic_binder_hertz_plastic_particle::create_binder_contact(c
     std::default_random_engine rand_engine { random_device() };
     std::uniform_real_distribution<double> distribution{0., 1.};
     double random_value = distribution(rand_engine);
-    if (random_value < mat->fraction_binder_contacts)
-    {
-        return true;
-    }
-    return false;
+    return random_value < mat->fraction_binder_contacts && mat->new_binder_contacts;
 }
 
 DEM::Vec3 DEM::elastic_plastic_binder_hertz_plastic_particle::get_rolling_resistance_torque() const {
