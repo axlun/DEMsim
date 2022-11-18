@@ -1,6 +1,6 @@
-N=5000
+N=10000
 filling_density=0.052
-output_dir=/scratch/users/axlun/DEMsim/results/electrode_natural_packing_hertz/SN_ref_run_2_5000p_btr_5_brr_15_dt_1e0_MS_1e0_run_2/
+output_dir=/scratch/users/axlun/DEMsim/results/electrode_natural_packing_hertz/SN_ref_run_2_10000p_btr_5_brr_15_dt_1e0_MS_1e0_run_2/
 radius_file=/scratch/users/axlun/DEMsim/simulations/force_model_impact_on_electrode/particle_radius_distr_gamma_k_492_theta_263_r_min_4_r_max_12_cm_size.dat
 time_step=1e0
 mass_scaling=1e0
