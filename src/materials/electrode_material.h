@@ -52,6 +52,7 @@ namespace DEM {
         double active_particle_height=0.;
 //        bool bond_breaking = true;
         bool adhesive = true;
+        bool new_binder_contacts = true;
     };
 }
 #endif
