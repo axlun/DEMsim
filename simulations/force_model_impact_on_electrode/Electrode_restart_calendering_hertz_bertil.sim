@@ -3,5 +3,5 @@ restart_file_name=/scratch/users/axlun/DEMsim/results/electrode_natural_packing_
 time_step=1e2
 mass_scaling=1e4
 calendering_height=105e-2
-compaction_time=20
+compaction_time=20.0
 output_number=2e2
