@@ -253,6 +253,13 @@ double  DEM::elastic_plastic_binder_hertz_plastic_particle::update_normal_force(
     }
 
 // ==BINDER CONTACT MODEL===============================================================================================
+
+////      Gate to remove unactivated contacts
+//    if (adhesive() && !bonded_ && !material->new_binder_contacts)
+//    {
+//        binder_contact_ = false;
+//    }
+
     if(binder_contact_)
     {
         if (((h_ > -bt_) && !particle_contact_) || (bonded_ && !particle_contact_))
@@ -308,6 +315,10 @@ double  DEM::elastic_plastic_binder_hertz_plastic_particle::update_normal_force(
         if ((F_binder > 0)  && adhesive() && !bonded_) //Change to if ((h_ > -bt_) && adhesive())?? kollar då om partiklarna är inom binder avstånd istället för på binderkraften
         {
             bonded_ = true;
+        }
+        else if (F_binder <= 0 && adhesive() && !bonded_ && !material->new_binder_contacts)
+        {
+            binder_contact_ = false;
         }
     }
     else
