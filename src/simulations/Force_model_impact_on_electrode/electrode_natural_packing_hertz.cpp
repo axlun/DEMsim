@@ -135,7 +135,7 @@ void DEM::electrode_natural_packing_hertz(const std::string& settings_file_name)
     simulator.set_gravity(Vec3(0, 0, -gravity)); //Use gravity for initial packing of particles
     std::cout << "max_binder_thickness: "<< max_binder_thickness <<"\n";
     simulator.setup(1.01*max_binder_thickness); //Size of box for detecting contacts between particles
-    simulator.set_rotation(false);
+//    simulator.set_rotation(false);
 
 //============================CALCULATE FALL TIMES ==============================================================
     double fall_distance = box_height-mat->active_particle_height;
