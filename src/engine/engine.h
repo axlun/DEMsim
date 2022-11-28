@@ -102,7 +102,7 @@ namespace DEM {
         [[nodiscard]] std::pair<size_t, double> max_surface_velocity() const;
         [[nodiscard]] std::array<double, 6> get_bounding_box() const;
 
-        [[maybe_unused]] [[nodiscard]] MaterialBase* get_material(std::size_t id) const;
+        [[maybe_unused]] [[nodiscard]] MaterialBase* get_material(std::size_t id) ;
         [[maybe_unused]] [[nodiscard]] SurfaceType* get_surface(std::size_t id) const;
         template<typename SurfaceT>
         [[maybe_unused]] [[nodiscard]] SurfaceT get_surface(const std::string& surface_name) const;

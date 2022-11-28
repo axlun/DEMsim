@@ -478,7 +478,7 @@ std::array<double, 6> DEM::Engine<ForceModel, ParticleType>::get_bounding_box() 
 }
 
 template<typename ForceModel, typename ParticleType>
-DEM::MaterialBase* DEM::Engine<ForceModel, ParticleType>::get_material(std::size_t id) const {
+DEM::MaterialBase* DEM::Engine<ForceModel, ParticleType>::get_material(std::size_t id) {
     auto it = std::lower_bound(materials_.begin(), materials_.end(), id,
                                [](const auto& m1, const auto& rhs) {return m1->id < rhs; } );
     if ((*it)->id == id) {
