@@ -32,7 +32,8 @@ void DEM::electrode_mechanical_loading_hertz(const std::string &settings_file_na
     //Remove calendering surface from RVE
     calendering_surface->move(Vec3(0, 0,  1), Vec3(0, 0, 0));
 
-    auto mat = simulator.get_material(0);
+    auto mat = dynamic_cast<ElectrodeMaterial *>(simulator.get_material(0));
+    mat->new_binder_contacts = false;
 
 //==================SET TIMESTEP AND MASS SCALING=======================================================================
     double time_step = parameters.get_parameter<double>("time_step")*1e-6;
