@@ -1,5 +1,5 @@
-output_dir=/scratch/users/axlun/DEMsim/results/electrode_calendering_hertz/SN_run_1_El_Pl/
-restart_file_name=/scratch/users/axlun/DEMsim/results/electrode_natural_packing_hertz/SN_run_1_El_Pl/pre_calendered_electrode_restart_file.res
+output_dir=/scratch/users/axlun/DEMsim/results/electrode_calendering_hertz/SN_run_1_br_05/
+restart_file_name=/scratch/users/axlun/DEMsim/results/electrode_natural_packing_hertz/SN_run_1_br_05/pre_calendered_electrode_restart_file.res
 time_step=1e2
 mass_scaling=1e4
 calendering_height=105e-2
