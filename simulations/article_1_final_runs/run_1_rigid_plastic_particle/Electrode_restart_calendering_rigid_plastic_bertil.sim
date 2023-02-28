@@ -1,0 +1,7 @@
+output_dir=/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1_rigid_plastic_particle/electrode_calendering_rigid_plastic/
+restart_file_name=/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1_rigid_plastic_particle/electrode_natural_packing_rigid_plastic/pre_calendered_electrode_restart_file.res
+time_step=1e2
+mass_scaling=1e4
+calendering_height=105e-2
+compaction_time=20.0
+output_number=2e2
