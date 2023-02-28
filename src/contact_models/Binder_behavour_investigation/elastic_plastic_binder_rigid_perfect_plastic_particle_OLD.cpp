@@ -2,7 +2,7 @@
 // Created by Axel on 2021-11-17.
 //
 
-#include "elastic_plastic_binder_rigid_perfect_plastic_particle.h"
+#include "elastic_plastic_binder_rigid_perfect_plastic_particle_OLD.h"
 
 #include <cmath>
 #include <iostream>
@@ -11,9 +11,9 @@
 
 #include "../../materials/electrode_material.h"
 
-DEM::elastic_plastic_binder_rigid_perfect_plastic_particle::elastic_plastic_binder_rigid_perfect_plastic_particle(DEM::elastic_plastic_binder_rigid_perfect_plastic_particle::ParticleType* particle1,
-                                                                                                                  DEM::elastic_plastic_binder_rigid_perfect_plastic_particle::ParticleType* particle2,
-                                                                                                                  std::chrono::duration<double> dt)
+DEM::elastic_plastic_binder_rigid_perfect_plastic_particle_OLD::elastic_plastic_binder_rigid_perfect_plastic_particle_OLD(DEM::elastic_plastic_binder_rigid_perfect_plastic_particle_OLD::ParticleType* particle1,
+                                                                                                                          DEM::elastic_plastic_binder_rigid_perfect_plastic_particle_OLD::ParticleType* particle2,
+                                                                                                                          std::chrono::duration<double> dt)
  {
     //extracting material data
     auto mat1 = dynamic_cast<const ElectrodeMaterial *>(particle1->get_material());
@@ -71,9 +71,9 @@ DEM::elastic_plastic_binder_rigid_perfect_plastic_particle::elastic_plastic_bind
     }
 }
 
-DEM::elastic_plastic_binder_rigid_perfect_plastic_particle::elastic_plastic_binder_rigid_perfect_plastic_particle(
-        DEM::elastic_plastic_binder_rigid_perfect_plastic_particle::ParticleType* particle1,
-        DEM::elastic_plastic_binder_rigid_perfect_plastic_particle::SurfaceType* surface, std::chrono::duration<double> dt)
+DEM::elastic_plastic_binder_rigid_perfect_plastic_particle_OLD::elastic_plastic_binder_rigid_perfect_plastic_particle_OLD(
+        DEM::elastic_plastic_binder_rigid_perfect_plastic_particle_OLD::ParticleType* particle1,
+        DEM::elastic_plastic_binder_rigid_perfect_plastic_particle_OLD::SurfaceType* surface, std::chrono::duration<double> dt)
 {
         auto mat1 = dynamic_cast<const ElectrodeMaterial *>(particle1->get_material());
         material = mat1;
@@ -116,9 +116,9 @@ DEM::elastic_plastic_binder_rigid_perfect_plastic_particle::elastic_plastic_bind
         }
 }
 
-DEM::elastic_plastic_binder_rigid_perfect_plastic_particle::elastic_plastic_binder_rigid_perfect_plastic_particle(
-        DEM::elastic_plastic_binder_rigid_perfect_plastic_particle::ParticleType* particle1,
-        DEM::elastic_plastic_binder_rigid_perfect_plastic_particle::ParticleType* particle2,
+DEM::elastic_plastic_binder_rigid_perfect_plastic_particle_OLD::elastic_plastic_binder_rigid_perfect_plastic_particle_OLD(
+        DEM::elastic_plastic_binder_rigid_perfect_plastic_particle_OLD::ParticleType* particle1,
+        DEM::elastic_plastic_binder_rigid_perfect_plastic_particle_OLD::ParticleType* particle2,
         std::chrono::duration<double>, const DEM::ParameterMap& parameters):
         psi0_(parameters.get_parameter<double>("psi0_")),
         psi0T_B_(parameters.get_parameter<double>("psi0T_B_")),
@@ -168,9 +168,9 @@ DEM::elastic_plastic_binder_rigid_perfect_plastic_particle::elastic_plastic_bind
             }
         }
 
-DEM::elastic_plastic_binder_rigid_perfect_plastic_particle::elastic_plastic_binder_rigid_perfect_plastic_particle(
-        DEM::elastic_plastic_binder_rigid_perfect_plastic_particle::ParticleType* particle1,
-        DEM::elastic_plastic_binder_rigid_perfect_plastic_particle::SurfaceType * surface1,
+DEM::elastic_plastic_binder_rigid_perfect_plastic_particle_OLD::elastic_plastic_binder_rigid_perfect_plastic_particle_OLD(
+        DEM::elastic_plastic_binder_rigid_perfect_plastic_particle_OLD::ParticleType* particle1,
+        DEM::elastic_plastic_binder_rigid_perfect_plastic_particle_OLD::SurfaceType * surface1,
         std::chrono::duration<double>, const DEM::ParameterMap& parameters):
         psi0_(parameters.get_parameter<double>("psi0_")),
         psi0T_B_(parameters.get_parameter<double>("psi0T_B_")),
@@ -220,7 +220,7 @@ DEM::elastic_plastic_binder_rigid_perfect_plastic_particle::elastic_plastic_bind
     }
 }
 
-void DEM::elastic_plastic_binder_rigid_perfect_plastic_particle::update(double h, const DEM::Vec3& dt, const Vec3& drot, const DEM::Vec3& normal)
+void DEM::elastic_plastic_binder_rigid_perfect_plastic_particle_OLD::update(double h, const DEM::Vec3& dt, const Vec3& drot, const DEM::Vec3& normal)
 {
 //    std::cout << "=======New iteration=======" << std::endl;
     rot_ += drot;
@@ -232,10 +232,10 @@ void DEM::elastic_plastic_binder_rigid_perfect_plastic_particle::update(double h
 //      std::cout << "F_particle:"<< F_particle << std::endl;
 }
 
-unsigned DEM::elastic_plastic_binder_rigid_perfect_plastic_particle::M;
-const DEM::ElectrodeMaterial* DEM::elastic_plastic_binder_rigid_perfect_plastic_particle::material;
+unsigned DEM::elastic_plastic_binder_rigid_perfect_plastic_particle_OLD::M;
+const DEM::ElectrodeMaterial* DEM::elastic_plastic_binder_rigid_perfect_plastic_particle_OLD::material;
 
-double  DEM::elastic_plastic_binder_rigid_perfect_plastic_particle::update_normal_force(double h)
+double  DEM::elastic_plastic_binder_rigid_perfect_plastic_particle_OLD::update_normal_force(double h)
 {
     double dh = h-h_;
     h_ = h;
@@ -346,7 +346,7 @@ double  DEM::elastic_plastic_binder_rigid_perfect_plastic_particle::update_norma
     }
 }
 
-void  DEM::elastic_plastic_binder_rigid_perfect_plastic_particle::update_tangential_force(const DEM::Vec3& dt, const DEM::Vec3& normal)
+void  DEM::elastic_plastic_binder_rigid_perfect_plastic_particle_OLD::update_tangential_force(const DEM::Vec3& dt, const DEM::Vec3& normal)
 {
     if (F_binder != 0. && adhesive() && bonded_)
     {
@@ -390,7 +390,7 @@ void  DEM::elastic_plastic_binder_rigid_perfect_plastic_particle::update_tangent
     }
 }
 
-std::string DEM::elastic_plastic_binder_rigid_perfect_plastic_particle::restart_data() const {
+std::string DEM::elastic_plastic_binder_rigid_perfect_plastic_particle_OLD::restart_data() const {
         std::ostringstream ss;
         ss << named_print(dt_, "dt") << ", "
            << named_print(bt_, "bt") << ", "
@@ -444,7 +444,7 @@ std::string DEM::elastic_plastic_binder_rigid_perfect_plastic_particle::restart_
 
 
 
-bool DEM::elastic_plastic_binder_rigid_perfect_plastic_particle::create_binder_contact(const ElectrodeMaterial* mat)
+bool DEM::elastic_plastic_binder_rigid_perfect_plastic_particle_OLD::create_binder_contact(const ElectrodeMaterial* mat)
 {
     std::random_device random_device;
     std::default_random_engine rand_engine { random_device() };
@@ -457,7 +457,7 @@ bool DEM::elastic_plastic_binder_rigid_perfect_plastic_particle::create_binder_c
     return false;
 }
 
-DEM::Vec3 DEM::elastic_plastic_binder_rigid_perfect_plastic_particle::get_rolling_resistance_torque() const {
+DEM::Vec3 DEM::elastic_plastic_binder_rigid_perfect_plastic_particle_OLD::get_rolling_resistance_torque() const {
     //if (binder_contact_) {
     //    return -Rb_*Rb_*0.01*kB_*rot_;
     //}
@@ -466,7 +466,7 @@ DEM::Vec3 DEM::elastic_plastic_binder_rigid_perfect_plastic_particle::get_rollin
     //    }
 }
 
-std::string DEM::elastic_plastic_binder_rigid_perfect_plastic_particle::get_output_string() const {
+std::string DEM::elastic_plastic_binder_rigid_perfect_plastic_particle_OLD::get_output_string() const {
     std::stringstream ss;
     ss  << F_ << ", " << F_binder << ", " << F_particle << ", " << hmax_ << ", "
         << FT_.x() << ", "  << FT_.y() << ", " << FT_.z() << ", "
@@ -476,7 +476,7 @@ std::string DEM::elastic_plastic_binder_rigid_perfect_plastic_particle::get_outp
     return ss.str();
 }
 
-void DEM::elastic_plastic_binder_rigid_perfect_plastic_particle::set_increment(std::chrono::duration<double> dt) {
+void DEM::elastic_plastic_binder_rigid_perfect_plastic_particle_OLD::set_increment(std::chrono::duration<double> dt) {
     dt_ = dt.count();
     Ai = {};
     Bi = {};
@@ -486,7 +486,7 @@ void DEM::elastic_plastic_binder_rigid_perfect_plastic_particle::set_increment(s
     }
 }
 
-bool DEM::elastic_plastic_binder_rigid_perfect_plastic_particle::adhesive() const
+bool DEM::elastic_plastic_binder_rigid_perfect_plastic_particle_OLD::adhesive() const
 {
     return adhesive_ && material->adhesive;
 }
