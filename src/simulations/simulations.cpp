@@ -47,6 +47,7 @@ std::map<std::string, DEM::SimulationFunctionPtr> DEM::valid_simulations() {
             {"electrode_mechanical_loading",            DEM::electrode_mechanical_loading},
             {"electrode_mechanical_loading_hertz",      DEM::electrode_mechanical_loading_hertz},
             {"restart_electrode_calendering_hertz",     DEM::restart_electrode_calendering_hertz},
+            {"restart_electrode_calendering_rigid_perfect_plastic",     DEM::restart_electrode_calendering_rigid_perfect_plastic},
             {"restart_electrode_calendering",           DEM::restart_electrode_calendering}
     };
 }
