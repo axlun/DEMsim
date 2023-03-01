@@ -47,9 +47,10 @@ namespace DEM {
     void restart_test(const std::string& settings_file_name);
     void restart_electrode_calendering(const std::string& settings_file_name);
     void restart_electrode_calendering_hertz(const std::string& settings_file_name);
-    void restart_electrode_calendering_rigid_perfect_plastic(const std::string& settings_file_name);
+    void restart_electrode_calendering_rigid_plastic(const std::string& settings_file_name);
     void electrode_mechanical_loading(const std::string& settings_file_name);
     void electrode_mechanical_loading_hertz(const std::string& settings_file_name);
+    void electrode_mechanical_loading_rigid_plastic(const std::string& settings_file_name);
     std::map<std::string, SimulationFunctionPtr> valid_simulations();
 
 

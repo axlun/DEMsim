@@ -11,31 +11,37 @@ def simulation_runner(program, sim_file):
 
     return
 if __name__ == '__main__':
-#==============ELECTRODE CALENDERING====================================================================================
+# ==============ELECTRODE CALENDERING====================================================================================
 #    simulation_name = "electrode_calendering"
 #    simulation_file = "/DEMsim/simulations/force_model_impact_on_electrode/Electrode_calendering_bertil"#dont add .sim
 
-#==============ELECTRODE MECHANICAL LOADING=============================================================================
-#    simulation_name = "electrode_mechanical_loading"
-#    simulation_file = "/DEMsim/simulations/force_model_impact_on_electrode/Electrode_mechanical_loading_bertil"  # dont add .sim
+# ==============ELECTRODE MECHANICAL LOADING=============================================================================
+#     simulation_name = "electrode_mechanical_loading"
+#     simulation_file = "/DEMsim/simulations/force_model_impact_on_electrode/Electrode_mechanical_loading_bertil"  # dont add .sim
 
-#=============CALENDERING RESTART=======================================================================================
+# =============CALENDERING RESTART=======================================================================================
 #    simulation_name = "restart_electrode_calendering"
 #    simulation_file = "/DEMsim/simulations/force_model_impact_on_electrode/Electrode_restart_calendering_bertil"  # dont add .sim
 
+# ================CALENDERING WITH HERTZ PARTICLES===================================================================
+#     simulation_name = "electrode_calendering_hertz"
+#     simulation_file = "/DEMsim/simulations/force_model_impact_on_electrode/Electrode_calendering_hertz_bertil"#dont add .sim
 
-#================CALENDERING WITH HERTZ PARTICLES===================================================================
-    simulation_name = "electrode_calendering_hertz"
-    simulation_file = "/DEMsim/simulations/force_model_impact_on_electrode/Electrode_calendering_hertz_bertil"#dont add .sim
+# ================NATURAL PACKING WITH HERTZ PARTICLES==================================================================
+#     simulation_name = "electrode_natural_packing_hertz"
+#     simulation_file = "/DEMsim/simulations/force_model_impact_on_electrode/Electrode_natural_packing_hertz_bertil"#dont add .sim
 
-#================MECHANICAL LOADING WITH HERTZ PARTICLES===============================================================
-    # simulation_name = "electrode_mechanical_loading_hertz"
-    # simulation_file = "/DEMsim/simulations/force_model_impact_on_electrode/Electrode_mechanical_loading_hertz_bertil"  # dont add .sim
+# ================MECHANICAL LOADING WITH HERTZ PARTICLES===============================================================
+#     simulation_name = "electrode_mechanical_loading_hertz"
+#     simulation_file = "/DEMsim/simulations/force_model_impact_on_electrode/Electrode_mechanical_loading_hertz_bertil"  # dont add .sim
 
-#=============CALENDERING RESTART HERTZ ================================================================================
-    # simulation_name = "restart_electrode_calendering_hertz"
-    # simulation_file = "/DEMsim/simulations/force_model_impact_on_electrode/Electrode_restart_calendering_hertz_bertil"  # dont add .sim
+# =============CALENDERING RESTART HERTZ ================================================================================
+    simulation_name = "restart_electrode_calendering_hertz"
+    simulation_file = "/DEMsim/simulations/force_model_impact_on_electrode/Electrode_restart_calendering_hertz_bertil"  # dont add .sim
 
+# =============ELECTRODE RESTING HERTZ =================================================================================
+#    simulation_name = "electrode_resting_hertz"
+#    simulation_file = "/DEMsim/simulations/force_model_impact_on_electrode/Electrode_resting_hertz_bertil"  # dont add .sim
 
     simulation_file = "/scratch/users/axlun/"+simulation_file
     simulation_runner(simulation_name,simulation_file)

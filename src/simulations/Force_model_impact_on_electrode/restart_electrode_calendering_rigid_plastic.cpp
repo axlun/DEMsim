@@ -1,5 +1,5 @@
 //
-// Created by Axel on 2022-05-18.
+// Created by Axel on 2022-03-01.
 //
 
 #include "../simulations.h"
@@ -11,7 +11,7 @@
 #include "../../contact_models/Binder_behavour_investigation/elastic_plastic_binder_rigid_plastic_particle.h"
 #include "../../materials/electrode_material.h"
 
-void DEM::restart_electrode_calendering_rigid_perfect_plastic(const std::string &settings_file_name)
+void DEM::restart_electrode_calendering_rigid_plastic(const std::string &settings_file_name)
 {
     using namespace DEM;
     using ForceModel = elastic_plastic_binder_rigid_plastic_particle;
