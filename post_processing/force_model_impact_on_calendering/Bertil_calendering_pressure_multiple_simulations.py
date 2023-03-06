@@ -3,6 +3,7 @@ from Bertil_functions.Bertil_functions import *
 import numpy as np
 import matplotlib
 import matplotlib.pyplot as plt
+from matplotlib.ticker import (MultipleLocator, AutoMinorLocator)
 from os.path import exists
 import shutil
 import os
@@ -28,6 +29,7 @@ def calendering_break_index_func(calendering_surface_position):
         val_hist2 = val_hist
         val_hist = val
     return calendering_initiate_index, calendering_break_index
+
 
 def calendering_plot_processing(simulation_directory):
     # =======================================================================================================================
@@ -66,9 +68,36 @@ def calendering_plot_processing(simulation_directory):
     tau_zy = -force_fabric_tensor_data_SN_run_1[:, 8] / vol_SN_run_1
 
     # =======================================================================================================================
-
-
     return time,calendering_surface_pressure,bottom_surface_pressure, calendering_surface_position, sig_x, sig_y,sig_z, tau_xy,tau_xz,tau_yx,tau_yz, tau_zx,tau_zy, kinetic_energy_data
+
+
+def elastic_springback_func(calendering_surface_pressure,calendering_surface_position):
+    load_limit = 0.5*1E6
+
+    load_limit_index = 0
+    unload_limit_index = 0
+
+    while calendering_surface_pressure[load_limit_index] < load_limit:
+        load_limit_index += 1
+        # print(calendering_surface_pressure[load_limit_index])
+        unload_limit_index = load_limit_index + 1
+    while calendering_surface_pressure[unload_limit_index] > load_limit:
+        unload_limit_index += 1
+
+    loading_height = calendering_surface_position[load_limit_index]
+    unload_height  = calendering_surface_position[unload_limit_index]
+    min_height = min(calendering_surface_position)
+    specific_elastic_springback = (unload_height-min_height)/(loading_height-min_height)
+    # print(loading_height)
+    #
+    # print(min_height)
+    #
+    # print(unload_height)
+    #
+    print(specific_elastic_springback)
+    return loading_height, unload_height, specific_elastic_springback
+
+
 
 
 if __name__ == '__main__':
@@ -78,7 +107,13 @@ if __name__ == '__main__':
 
     # ==CALENDERING=====================================================================================================
     simulation_directory_SN_run_1 = '/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1/electrode_calendering_hertz'
+    simulation_directory_SN_run_1_spread_1 = '/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1_spread_1/electrode_calendering_hertz'
+    simulation_directory_SN_run_1_spread_2 = '/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1_spread_2/electrode_calendering_hertz'
+    simulation_directory_SN_run_1_spread_3 = '/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1_spread_3/electrode_calendering_hertz'
+    simulation_directory_SN_run_1_spread_4 = '/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1_spread_4/electrode_calendering_hertz'
+
     simulation_directory_SN_run_1_El_Pl = '/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1_El_Pl/electrode_calendering_hertz'
+    simulation_directory_SN_run_1_br_175 = '/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1_br_175/electrode_calendering_hertz'
     simulation_directory_SN_run_1_br_10 = '/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1_br_10/electrode_calendering_hertz'
     simulation_directory_SN_run_1_br_05 = '/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1_br_05/electrode_calendering_hertz'
     simulation_directory_SN_run_1_2E = '/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1_2E/electrode_calendering_hertz'
@@ -90,7 +125,7 @@ if __name__ == '__main__':
     # simulation_directory = '/scratch/users/axlun/DEMsim/results/electrode_resting_hertz/SN_hertz_5000p_btr_8_brr_08_dt_5e1_MS_1e4_RT_10'
 
     # ==PLOT PARAMETERS=================================================================================================
-    fig_dir = 'C:/temp/figures/Bertil_calendering_pressure/'
+    fig_dir = 'C:/temp/figures/Bertil_calendering_pressure_multiple_simulation/'
     try:
         shutil.rmtree(fig_dir)
         os.mkdir(fig_dir)
@@ -104,12 +139,60 @@ if __name__ == '__main__':
     plt.style.use('axel_style')
 
     calendering_time_SN_run_1, calendering_surface_pressure_SN_run_1, bottom_surface_pressure_SN_run_1, calendering_surface_position_SN_run_1, sxx_SN_run_1, syy_SN_run_1, szz_SN_run_1, tau_xy_SN_run_1, tau_xz_SN_run_1, tau_yx_SN_run_1, tau_yz_SN_run_1, tau_zx_SN_run_1, tau_zy_SN_run_1,kinetic_energy_data_SN_run_1 = calendering_plot_processing(simulation_directory_SN_run_1)
-    calendering_time_SN_run_1_El_Pl, calendering_surface_pressure_SN_run_1_El_Pl, bottom_surface_pressure_SN_run_1_El_Pl, calendering_surface_position_SN_run_1_El_Pl, sxx_SN_run_1_El_Pl, syy_SN_run_1_El_Pl, szz_SN_run_1_El_Pl, tau_xy_SN_run_1_El_Pl, tau_xz_SN_run_1_El_Pl, tau_yx_SN_run_1_El_Pl, tau_yz_SN_run_1_El_Pl, tau_zx_SN_run_1_El_Pl, tau_zy_SN_run_1_El_Pl, kinetic_energy_data_SN_run_1_El_Pl = calendering_plot_processing(simulation_directory_SN_run_1_El_Pl)
 
+    calendering_time_SN_run_1_spread_1, calendering_surface_pressure_SN_run_1_spread_1, bottom_surface_pressure_SN_run_1_spread_1, calendering_surface_position_SN_run_1_spread_1, sxx_SN_run_1_spread_1, syy_SN_run_1_spread_1, szz_SN_run_1_spread_1, tau_xy_SN_run_1_spread_1, tau_xz_SN_run_1_spread_1, tau_yx_SN_run_1_spread_1, tau_yz_SN_run_1_spread_1, tau_zx_SN_run_1_spread_1, tau_zy_SN_run_1_spread_1, kinetic_energy_data_SN_run_1_spread_1 = calendering_plot_processing(
+        simulation_directory_SN_run_1_spread_1)
+
+    calendering_time_SN_run_1_spread_2, calendering_surface_pressure_SN_run_1_spread_2, bottom_surface_pressure_SN_run_1_spread_2, calendering_surface_position_SN_run_1_spread_2, sxx_SN_run_1_spread_2, syy_SN_run_1_spread_2, szz_SN_run_1_spread_2, tau_xy_SN_run_1_spread_2, tau_xz_SN_run_1_spread_2, tau_yx_SN_run_1_spread_2, tau_yz_SN_run_1_spread_2, tau_zx_SN_run_1_spread_2, tau_zy_SN_run_1_spread_2, kinetic_energy_data_SN_run_1_spread_2 = calendering_plot_processing(
+        simulation_directory_SN_run_1_spread_2)
+
+    calendering_time_SN_run_1_spread_3, calendering_surface_pressure_SN_run_1_spread_3, bottom_surface_pressure_SN_run_1_spread_3, calendering_surface_position_SN_run_1_spread_3, sxx_SN_run_1_spread_3, syy_SN_run_1_spread_3, szz_SN_run_1_spread_3, tau_xy_SN_run_1_spread_3, tau_xz_SN_run_1_spread_3, tau_yx_SN_run_1_spread_3, tau_yz_SN_run_1_spread_3, tau_zx_SN_run_1_spread_3, tau_zy_SN_run_1_spread_3, kinetic_energy_data_SN_run_1_spread_3 = calendering_plot_processing(
+        simulation_directory_SN_run_1_spread_3)
+
+    calendering_time_SN_run_1_spread_4, calendering_surface_pressure_SN_run_1_spread_4, bottom_surface_pressure_SN_run_1_spread_4, calendering_surface_position_SN_run_1_spread_4, sxx_SN_run_1_spread_4, syy_SN_run_1_spread_4, szz_SN_run_1_spread_4, tau_xy_SN_run_1_spread_4, tau_xz_SN_run_1_spread_4, tau_yx_SN_run_1_spread_4, tau_yz_SN_run_1_spread_4, tau_zx_SN_run_1_spread_4, tau_zy_SN_run_1_spread_4, kinetic_energy_data_SN_run_1_spread_4 = calendering_plot_processing(
+        simulation_directory_SN_run_1_spread_4)
+
+    calendering_time_SN_run_1_El_Pl, calendering_surface_pressure_SN_run_1_El_Pl, bottom_surface_pressure_SN_run_1_El_Pl, calendering_surface_position_SN_run_1_El_Pl, sxx_SN_run_1_El_Pl, syy_SN_run_1_El_Pl, szz_SN_run_1_El_Pl, tau_xy_SN_run_1_El_Pl, tau_xz_SN_run_1_El_Pl, tau_yx_SN_run_1_El_Pl, tau_yz_SN_run_1_El_Pl, tau_zx_SN_run_1_El_Pl, tau_zy_SN_run_1_El_Pl, kinetic_energy_data_SN_run_1_El_Pl = calendering_plot_processing(simulation_directory_SN_run_1_El_Pl)
+    calendering_time_SN_run_1_br_175, calendering_surface_pressure_SN_run_1_br_175, bottom_surface_pressure_SN_run_1_br_175, calendering_surface_position_SN_run_1_br_175, sxx_SN_run_1_br_175, syy_SN_run_1_br_175, szz_SN_run_1_br_175, tau_xy_SN_run_1_br_175, tau_xz_SN_run_1_br_175, tau_yx_SN_run_1_br_175, tau_yz_SN_run_1_br_175, tau_zx_SN_run_1_br_175, tau_zy_SN_run_1_br_175, kinetic_energy_data_SN_run_1_br_175 = calendering_plot_processing(
+        simulation_directory_SN_run_1_br_175)
     calendering_time_SN_run_1_br_10, calendering_surface_pressure_SN_run_1_br_10, bottom_surface_pressure_SN_run_1_br_10, calendering_surface_position_SN_run_1_br_10, sxx_SN_run_1_br_10, syy_SN_run_1_br_10, szz_SN_run_1_br_10, tau_xy_SN_run_1_br_10, tau_xz_SN_run_1_br_10, tau_yx_SN_run_1_br_10, tau_yz_SN_run_1_br_10, tau_zx_SN_run_1_br_10, tau_zy_SN_run_1_br_10, kinetic_energy_data_SN_run_1_br_10 = calendering_plot_processing(simulation_directory_SN_run_1_br_10)
     calendering_time_SN_run_1_br_05, calendering_surface_pressure_SN_run_1_br_05, bottom_surface_pressure_SN_run_1_br_05, calendering_surface_position_SN_run_1_br_05, sxx_SN_run_1_br_05, syy_SN_run_1_br_05, szz_SN_run_1_br_05, tau_xy_SN_run_1_br_05, tau_xz_SN_run_1_br_05, tau_yx_SN_run_1_br_05, tau_yz_SN_run_1_br_05, tau_zx_SN_run_1_br_05, tau_zy_SN_run_1_br_05, kinetic_energy_data_SN_run_1_br_05 = calendering_plot_processing(simulation_directory_SN_run_1_br_05)
     calendering_time_SN_run_1_2E, calendering_surface_pressure_SN_run_1_2E, bottom_surface_pressure_SN_run_1_2E, calendering_surface_position_SN_run_1_2E, sxx_SN_run_1_2E, syy_SN_run_1_2E, szz_SN_run_1_2E, tau_xy_SN_run_1_2E, tau_xz_SN_run_1_2E, tau_yx_SN_run_1_2E, tau_yz_SN_run_1_2E, tau_zx_SN_run_1_2E, tau_zy_SN_run_1_2E, kinetic_energy_data_SN_run_1_2E = calendering_plot_processing(
         simulation_directory_SN_run_1_2E)
+    print('Elastic springback with different binder radii')
+    loading_height_SN_run_1_2E, unload_height_SN_run_1_2E, specific_elastic_springback_SN_run_1_2E = \
+        elastic_springback_func(
+         calendering_surface_pressure_SN_run_1_2E,
+         calendering_surface_position_SN_run_1_2E)
+
+    loading_height_SN_run_1_br_175, unload_height_SN_run_1_br_175, specific_elastic_springback_SN_run_1_br_175 = \
+        elastic_springback_func(
+         calendering_surface_pressure_SN_run_1_br_175,
+         calendering_surface_position_SN_run_1_br_175)
+
+    loading_height_SN_run_1, unload_height_SN_run_1, specific_elastic_springback_SN_run_1 = \
+        elastic_springback_func(
+         calendering_surface_pressure_SN_run_1,
+         calendering_surface_position_SN_run_1)
+
+    loading_height_SN_run_1_br_10, unload_height_SN_run_1_br_10, specific_elastic_springback_SN_run_1_br_10 = \
+        elastic_springback_func(
+         calendering_surface_pressure_SN_run_1_br_10,
+         calendering_surface_position_SN_run_1_br_10)
+
+
+    print('El, El-Pl elastic springback')
+    elastic_springback_func(calendering_surface_pressure_SN_run_1, calendering_surface_position_SN_run_1)
+
+    loading_height_SN_run_1_El_Pl, unload_height_SN_run_1_El_Pl, specific_elastic_springback_SN_run_1_El_Pl = \
+        elastic_springback_func(
+         calendering_surface_pressure_SN_run_1_El_Pl,
+         calendering_surface_position_SN_run_1_El_Pl)
+
+
+
+
+
 
     # # ===FIG 1 CALENDERING SURFACE PRESSURE SURFACE POSITION TIME=======================================================
     # fig_calendering_surface_pressure, ax_calendering_surface_pressure = plt.subplots()
@@ -119,7 +202,7 @@ if __name__ == '__main__':
     #                                                                         calendering_surface_pressure_SN_run_1 * 1E-6,
     #                                                                         label='Pressure')
     # ax_calendering_surface_position = ax_calendering_surface_pressure.twinx()
-    # ax_calendering_surface_position.set_ylabel("Calendering surface position [m]")
+    # ax_calendering_surface_position.set_ylabel("Calendering surface height [m]")
     # lns_calendering_surface_position = ax_calendering_surface_position.plot(calendering_time_SN_run_1,
     #                                                                         calendering_surface_position_SN_run_1, 'c',
     #                                                                         label='Position')
@@ -140,22 +223,51 @@ if __name__ == '__main__':
     #                             calendering_surface_pressure_SN_run_1[
     #                             calendering_initiate_index:(calendering_break_index - 1)] * 1e-6)
     # ax_calendering_process.set_ylabel("Calendering surface pressure [MPa]")
-    # ax_calendering_process.set_xlabel("Calendering surface position [m]")
+    # ax_calendering_process.set_xlabel("Calendering surface height [m]")
     # # ax_calendering_process.set_title('Calendering surface pressure')
     # fig_calendering_process.tight_layout()
     #
     # fname = fig_dir + 'calendering_surface_pressure_surface_position'
     # plt.savefig(fname)
 
-    # ===FIG 3 CALENDERING SURFACE PRESSURE SURFACE POSITION FULL=======================================================
+    #==STATISTICAL SPREAD===============================================================================================
     fig_full_calendering_sim, ax_full_calendering_sim = plt.subplots()
-    ax_full_calendering_sim.plot(calendering_surface_position_SN_run_1[:], calendering_surface_pressure_SN_run_1[:] * 1E-6, label=r'$El$')
-    ax_full_calendering_sim.plot(calendering_surface_position_SN_run_1_El_Pl[:],
-                                 calendering_surface_pressure_SN_run_1_El_Pl[:] * 1E-6, label=r'$El-Pl$')
-    ax_full_calendering_sim.set_xlim(xmin=1.04,xmax=1.3)
+    ax_full_calendering_sim.plot(calendering_surface_position_SN_run_1[:] * 1E2, calendering_surface_pressure_SN_run_1[:] * 1E-6, label=r'$Run 1$')
+    ax_full_calendering_sim.plot(calendering_surface_position_SN_run_1_spread_1[:] * 1E2,
+                                 calendering_surface_pressure_SN_run_1_spread_1[:] * 1E-6, label=r'$Run 2$')
+    ax_full_calendering_sim.plot(calendering_surface_position_SN_run_1_spread_2[:] * 1E2,
+                                 calendering_surface_pressure_SN_run_1_spread_2[:] * 1E-6, label=r'$Run 3$')
+
+    ax_full_calendering_sim.plot(calendering_surface_position_SN_run_1_spread_3[:] * 1E2,
+                                 calendering_surface_pressure_SN_run_1_spread_3[:] * 1E-6, label=r'$Run 4$')
+
+    ax_full_calendering_sim.plot(calendering_surface_position_SN_run_1_spread_4[:] * 1E2,
+                                 calendering_surface_pressure_SN_run_1_spread_4[:] * 1E-6, label=r'$Run 5$')
+
+    ax_full_calendering_sim.set_xlim(xmin=104.8,xmax=120)
+    ax_full_calendering_sim.xaxis.set_major_locator(MultipleLocator(5))
+
     ax_full_calendering_sim.set_ylim(ymin=0)
     ax_full_calendering_sim.set_ylabel("Calendering surface pressure [MPa]")
-    ax_full_calendering_sim.set_xlabel("Calendering surface position [m]")
+    ax_full_calendering_sim.set_xlabel("Calendering surface height [µm]")
+    #    ax_full_calendering_sim.set_title('calendering surface pressure')
+    fig_full_calendering_sim.tight_layout()
+    ax_full_calendering_sim.legend(loc="best")
+
+    fname = fig_dir + 'calendering_surface_pressure_surface_position_full_statistical_spread'
+    plt.savefig(fname)
+
+    # ===FIG 3 EL/ EL-PL CALENDERING SURFACE PRESSURE SURFACE POSITION FULL=======================================================
+    fig_full_calendering_sim, ax_full_calendering_sim = plt.subplots()
+    ax_full_calendering_sim.plot(calendering_surface_position_SN_run_1[:] * 1E2, calendering_surface_pressure_SN_run_1[:] * 1E-6, label=r'$El$')
+    ax_full_calendering_sim.plot(calendering_surface_position_SN_run_1_El_Pl[:] * 1E2,
+                                 calendering_surface_pressure_SN_run_1_El_Pl[:] * 1E-6, label=r'$El-Pl$')
+    ax_full_calendering_sim.set_xlim(xmin=104.8,xmax=120)
+    ax_full_calendering_sim.xaxis.set_major_locator(MultipleLocator(5))
+
+    ax_full_calendering_sim.set_ylim(ymin=0)
+    ax_full_calendering_sim.set_ylabel("Calendering surface pressure [MPa]")
+    ax_full_calendering_sim.set_xlabel("Calendering surface height [µm]")
     #    ax_full_calendering_sim.set_title('calendering surface pressure')
     fig_full_calendering_sim.tight_layout()
     ax_full_calendering_sim.legend(loc="best")
@@ -165,18 +277,22 @@ if __name__ == '__main__':
 
     # ===FIG  CALENDERING SURFACE PRESSURE SURFACE POSITION FULL=======================================================
     fig_full_calendering_sim, ax_full_calendering_sim = plt.subplots()
-    ax_full_calendering_sim.plot(calendering_surface_position_SN_run_1_2E[:],
-                                 calendering_surface_pressure_SN_run_1_2E[:] * 1E-6, label=r'$b_r = 2.1$')
-    ax_full_calendering_sim.plot(calendering_surface_position_SN_run_1[:],
-                                 calendering_surface_pressure_SN_run_1[:] * 1E-6, label=r'$b_r = 1.5$')
-    ax_full_calendering_sim.plot(calendering_surface_position_SN_run_1_br_10[:],
-                                 calendering_surface_pressure_SN_run_1_br_10[:] * 1E-6, label=r'$b_r = 1.0$')
-    ax_full_calendering_sim.plot(calendering_surface_position_SN_run_1_br_05[:],
-                                 calendering_surface_pressure_SN_run_1_br_05[:] * 1E-6, label=r'$b_r = 0.5$')
-    ax_full_calendering_sim.set_xlim(xmin=1.04,xmax=1.2)
+    ax_full_calendering_sim.plot(calendering_surface_position_SN_run_1_2E[:] * 1E2,
+                                 calendering_surface_pressure_SN_run_1_2E[:] * 1E-6, label=r'$\frac{b_r}{R} = 2.0$')
+    ax_full_calendering_sim.plot(calendering_surface_position_SN_run_1_br_175[:] * 1E2,
+                                 calendering_surface_pressure_SN_run_1_br_175[:] * 1E-6, label=r'$\frac{b_r}{R} = 1.75$')
+    ax_full_calendering_sim.plot(calendering_surface_position_SN_run_1[:] * 1E2,
+                                 calendering_surface_pressure_SN_run_1[:] * 1E-6, label=r'$\frac{b_r}{R} = 1.5$')
+    ax_full_calendering_sim.plot(calendering_surface_position_SN_run_1_br_10[:] * 1E2,
+                                 calendering_surface_pressure_SN_run_1_br_10[:] * 1E-6, label=r'$\frac{b_r}{R} = 1.0$')
+    # ax_full_calendering_sim.plot(calendering_surface_position_SN_run_1_br_05[:],
+    #                              calendering_surface_pressure_SN_run_1_br_05[:] * 1E-6, label=r'$b_r = 0.5$')
+    ax_full_calendering_sim.set_xlim(xmin=104.8,xmax=120)
+    ax_full_calendering_sim.xaxis.set_major_locator(MultipleLocator(5))
+
     ax_full_calendering_sim.set_ylim(ymin=0)
     ax_full_calendering_sim.set_ylabel("Calendering surface pressure [MPa]")
-    ax_full_calendering_sim.set_xlabel("Calendering surface position [m]")
+    ax_full_calendering_sim.set_xlabel("Calendering surface height [µm]")
     #    ax_full_calendering_sim.set_title('calendering surface pressure')
     fig_full_calendering_sim.tight_layout()
     ax_full_calendering_sim.legend(loc="best")
@@ -184,14 +300,12 @@ if __name__ == '__main__':
     fname = fig_dir + 'calendering_surface_pressure_surface_position_full_br'
     plt.savefig(fname)
 
-
-
     # # ===FIG 4 STRESS ZZ SURFACE POSITION===============================================================================
     #
     # fig_sigma_zz_calendering_surface_position, ax_sigma_zz_calendering_surface_position = plt.subplots()
     # ax_sigma_zz_calendering_surface_position.plot(calendering_surface_position_SN_run_1[:], szz_SN_run_1)
     # ax_sigma_zz_calendering_surface_position.set_ylabel("Stress in z [Pa]")
-    # ax_sigma_zz_calendering_surface_position.set_xlabel("Calendering surface position [m]")
+    # ax_sigma_zz_calendering_surface_position.set_xlabel("Calendering surface height [m]")
     # # ax_sigma_zz_calendering_surface_position.set_title("Stress in Z to calendering surface position")
     # fig_sigma_zz_calendering_surface_position.tight_layout()
     #
@@ -203,7 +317,7 @@ if __name__ == '__main__':
     # ax_sigma_zz_time.set_ylabel("Stress in z [MPa]")
     # ax_sigma_zz_time.set_xlabel("Time [s]")
     # ax_calendering_surface_position_time = ax_sigma_zz_time.twinx()
-    # ax_calendering_surface_position_time.set_ylabel("Calendering surface position [m]")
+    # ax_calendering_surface_position_time.set_ylabel("Calendering surface height [m]")
     # lns_calendering_surface_position_time = ax_calendering_surface_position_time.plot(calendering_time_SN_run_1,
     #                                                                                   calendering_surface_position_SN_run_1, 'c',
     #                                                                                   label='Surface position')
@@ -236,7 +350,7 @@ if __name__ == '__main__':
     #                                                                     label=r'$\sigma_{zz}$')
     #
     # ax_calendering_surface_position_2 = ax_calendering_surface_bottom_surface.twinx()
-    # ax_calendering_surface_position_2.set_ylabel("Calendering surface position [m]")
+    # ax_calendering_surface_position_2.set_ylabel("Calendering surface height [m]")
     # #    ax_calendering_surface_position_2.set_ylim([0,200])
     #
     # lns_calendering_surface_position_2 = ax_calendering_surface_position_2.plot(calendering_time_SN_run_1,
