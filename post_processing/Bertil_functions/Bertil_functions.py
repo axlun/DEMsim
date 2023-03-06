@@ -75,11 +75,13 @@ def contact_counter_bertil(sim_dir):
     bertil_return = bertil_return[0].split('] [')
     time_vec = bertil_return[0][1:].split(', ')
     binder_contact_vec = bertil_return[1].split(', ')
-    particle_contact_vec = bertil_return[2][:-2].split(', ')
+    particle_contact_vec = bertil_return[2].split(', ')
+    binder_particle_contact_vec = bertil_return[3][:-2].split(', ')
     time_vec = np.array(time_vec, dtype=float)
     particle_contact_vec = np.array(particle_contact_vec, dtype=float)
     binder_contact_vec = np.array(binder_contact_vec, dtype=float)
-    return time_vec, particle_contact_vec, binder_contact_vec
+    binder_particle_contact_vec = np.array(binder_particle_contact_vec, dtype=float)
+    return time_vec, particle_contact_vec, binder_contact_vec, binder_particle_contact_vec
 
 
 # Input: String with directory of simulation
