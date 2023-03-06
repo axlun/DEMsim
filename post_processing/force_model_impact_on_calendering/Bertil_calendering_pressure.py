@@ -80,9 +80,9 @@ if __name__ == '__main__':
     # simulation_directory = '/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1_q_0_rmin_2_5_rmax_10/electrode_natural_packing_hertz'
 
     # simulation_directory = '/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1/electrode_natural_packing_hertz'
-    simulation_directory = '/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1_rigid_plastic_particle/electrode_natural_packing_rigid_plastic_SY_4GPa/'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1_rigid_plastic_particle/electrode_natural_packing_rigid_plastic_SY_4GPa/'
     # simulation_directory = 'c:/Users/Axel/Documents/DEM/results/electrode_natural_packing_rigid_plastic_particle/SN_0/'
-
+    simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/rigid_plastic_particle/SN_rigid_plastic_particle_N_500_dt_1e-1/electrode_natural_packing_rigid_plastic'
 
 # ==CALENDERING=====================================================================================================
     # simulation_directory = '/scratch/users/axlun/DEMsim/results/electrode_calendering_hertz/SN_ref_run_1_5000p_btr_5_brr_15_comp_time_20_hal_105_dt_1e2_MS_1e4'
