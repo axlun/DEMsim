@@ -1,12 +1,12 @@
-from Bertil_calendering_pressure import local_data_gatherer, bertil_data_gatherer
+from Bertil_calendering_pressure import local_data_gatherer, bertil_data_gatherer, one_file_reader
 
 import numpy as np
 import matplotlib.pyplot as plt
 import shutil
 import os
 import matplotlib
-# matplotlib.style.use('classic')
-
+from matplotlib.ticker import (MultipleLocator, AutoMinorLocator)
+import pandas as pd
 
 def stress_and_linear_strain_finder(periodic_BC_data, force_fabric_tensor_data, surface_position_data):
     time = periodic_BC_data[:, 0]
@@ -124,6 +124,11 @@ if __name__ == '__main__':
     simulation_directory_SN_run_1_El_Pl = '/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1_El_Pl/electrode_mechanical_loading_hertz'
     simulation_directory_SN_run_1_br_05 = '/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1_br_05/electrode_mechanical_loading_hertz'
     simulation_directory_SN_run_1_br_10 = '/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1_br_10/electrode_mechanical_loading_hertz'
+    simulation_directory_SN_run_1_br_175 = '/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1_br_175/electrode_mechanical_loading_hertz'
+    simulation_directory_SN_run_1_EL_particle = '/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1_EL_particle/electrode_mechanical_loading_hertz'
+    simulation_directory_SN_run_1_q_0_rmin_3_rmax_10 = '/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1_q_0_rmin_3_rmax_10/electrode_mechanical_loading_hertz'
+    simulation_directory_SN_run_1_q_0_rmin_4_rmax_10 = '/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1_q_0_rmin_4_rmax_10/electrode_mechanical_loading_hertz'
+
 
     time_tension_SN_run_1, linear_strain_tension_SN_run_1, sxx_tension_SN_run_1, syy_tension_SN_run_1, szz_tension_SN_run_1, tau_xy_tension_SN_run_1, tau_xz_tension_SN_run_1, \
     tau_yx_tension_SN_run_1, tau_yz_tension_SN_run_1, tau_zx_tension_SN_run_1, tau_zy_tension_SN_run_1, time_compression_SN_run_1, linear_strain_compression_SN_run_1, \
@@ -151,9 +156,33 @@ if __name__ == '__main__':
     sxx_compression_SN_run_1_br_10, syy_compression_SN_run_1_br_10, szz_compression_SN_run_1_br_10, tau_xy_compression_SN_run_1_br_10, \
     tau_xz_compression_SN_run_1_br_10, tau_yx_compression_SN_run_1_br_10, tau_yz_compression_SN_run_1_br_10, tau_zx_compression_SN_run_1_br_10, tau_zy_compression_SN_run_1_br_10 = mech_plot_prop(simulation_directory_SN_run_1_br_10)
 
+    time_tension_SN_run_1_br_175, linear_strain_tension_SN_run_1_br_175, sxx_tension_SN_run_1_br_175, syy_tension_SN_run_1_br_175, szz_tension_SN_run_1_br_175, tau_xy_tension_SN_run_1_br_175, tau_xz_tension_SN_run_1_br_175, \
+    tau_yx_tension_SN_run_1_br_175, tau_yz_tension_SN_run_1_br_175, tau_zx_tension_SN_run_1_br_175, tau_zy_tension_SN_run_1_br_175, time_compression_SN_run_1_br_175, linear_strain_compression_SN_run_1_br_175, \
+    sxx_compression_SN_run_1_br_175, syy_compression_SN_run_1_br_175, szz_compression_SN_run_1_br_175, tau_xy_compression_SN_run_1_br_175, \
+    tau_xz_compression_SN_run_1_br_175, tau_yx_compression_SN_run_1_br_175, tau_yz_compression_SN_run_1_br_175, tau_zx_compression_SN_run_1_br_175, tau_zy_compression_SN_run_1_br_175 = mech_plot_prop(
+        simulation_directory_SN_run_1_br_175)
+
+    time_tension_SN_run_1_EL_particle, linear_strain_tension_SN_run_1_EL_particle, sxx_tension_SN_run_1_EL_particle, syy_tension_SN_run_1_EL_particle, szz_tension_SN_run_1_EL_particle, tau_xy_tension_SN_run_1_EL_particle, tau_xz_tension_SN_run_1_EL_particle, \
+    tau_yx_tension_SN_run_1_EL_particle, tau_yz_tension_SN_run_1_EL_particle, tau_zx_tension_SN_run_1_EL_particle, tau_zy_tension_SN_run_1_EL_particle, time_compression_SN_run_1_EL_particle, linear_strain_compression_SN_run_1_EL_particle, \
+    sxx_compression_SN_run_1_EL_particle, syy_compression_SN_run_1_EL_particle, szz_compression_SN_run_1_EL_particle, tau_xy_compression_SN_run_1_EL_particle, \
+    tau_xz_compression_SN_run_1_EL_particle, tau_yx_compression_SN_run_1_EL_particle, tau_yz_compression_SN_run_1_EL_particle, tau_zx_compression_SN_run_1_EL_particle, tau_zy_compression_SN_run_1_EL_particle = mech_plot_prop(
+        simulation_directory_SN_run_1_EL_particle)
+
+    time_tension_SN_run_1_q_0_rmin_3_rmax_10, linear_strain_tension_SN_run_1_q_0_rmin_3_rmax_10, sxx_tension_SN_run_1_q_0_rmin_3_rmax_10, syy_tension_SN_run_1_q_0_rmin_3_rmax_10, szz_tension_SN_run_1_q_0_rmin_3_rmax_10, tau_xy_tension_SN_run_1_q_0_rmin_3_rmax_10, tau_xz_tension_SN_run_1_q_0_rmin_3_rmax_10, \
+    tau_yx_tension_SN_run_1_q_0_rmin_3_rmax_10, tau_yz_tension_SN_run_1_q_0_rmin_3_rmax_10, tau_zx_tension_SN_run_1_q_0_rmin_3_rmax_10, tau_zy_tension_SN_run_1_q_0_rmin_3_rmax_10, time_compression_SN_run_1_q_0_rmin_3_rmax_10, linear_strain_compression_SN_run_1_q_0_rmin_3_rmax_10, \
+    sxx_compression_SN_run_1_q_0_rmin_3_rmax_10, syy_compression_SN_run_1_q_0_rmin_3_rmax_10, szz_compression_SN_run_1_q_0_rmin_3_rmax_10, tau_xy_compression_SN_run_1_q_0_rmin_3_rmax_10, \
+    tau_xz_compression_SN_run_1_q_0_rmin_3_rmax_10, tau_yx_compression_SN_run_1_q_0_rmin_3_rmax_10, tau_yz_compression_SN_run_1_q_0_rmin_3_rmax_10, tau_zx_compression_SN_run_1_q_0_rmin_3_rmax_10, tau_zy_compression_SN_run_1_q_0_rmin_3_rmax_10 = mech_plot_prop(
+        simulation_directory_SN_run_1_q_0_rmin_3_rmax_10)
+
+    time_tension_SN_run_1_q_0_rmin_4_rmax_10, linear_strain_tension_SN_run_1_q_0_rmin_4_rmax_10, sxx_tension_SN_run_1_q_0_rmin_4_rmax_10, syy_tension_SN_run_1_q_0_rmin_4_rmax_10, szz_tension_SN_run_1_q_0_rmin_4_rmax_10, tau_xy_tension_SN_run_1_q_0_rmin_4_rmax_10, tau_xz_tension_SN_run_1_q_0_rmin_4_rmax_10, \
+    tau_yx_tension_SN_run_1_q_0_rmin_4_rmax_10, tau_yz_tension_SN_run_1_q_0_rmin_4_rmax_10, tau_zx_tension_SN_run_1_q_0_rmin_4_rmax_10, tau_zy_tension_SN_run_1_q_0_rmin_4_rmax_10, time_compression_SN_run_1_q_0_rmin_4_rmax_10, linear_strain_compression_SN_run_1_q_0_rmin_4_rmax_10, \
+    sxx_compression_SN_run_1_q_0_rmin_4_rmax_10, syy_compression_SN_run_1_q_0_rmin_4_rmax_10, szz_compression_SN_run_1_q_0_rmin_4_rmax_10, tau_xy_compression_SN_run_1_q_0_rmin_4_rmax_10, \
+    tau_xz_compression_SN_run_1_q_0_rmin_4_rmax_10, tau_yx_compression_SN_run_1_q_0_rmin_4_rmax_10, tau_yz_compression_SN_run_1_q_0_rmin_4_rmax_10, tau_zx_compression_SN_run_1_q_0_rmin_4_rmax_10, tau_zy_compression_SN_run_1_q_0_rmin_4_rmax_10 = mech_plot_prop(
+        simulation_directory_SN_run_1_q_0_rmin_4_rmax_10)
+
     stiffness_at_points_flag = 1
 
-    fig_dir = 'C:/temp/figures/Bertil_mechanical_properties/'
+    fig_dir = 'C:/temp/figures/Bertil_mechanical_properties_multiple_runs/'
     try:
         shutil.rmtree(fig_dir)
         os.mkdir(fig_dir)
@@ -165,7 +194,6 @@ if __name__ == '__main__':
         quit()
 # ==PLOT PARAMETERS=====================================================================================================
     plt.style.use('axel_style')
-
 
 # ==EXPERIMENTAL DATA===================================================================================================
     exp_strain_points_compression = [-1.00, -1.10, -1.23, -1.41, -1.65]
@@ -309,7 +337,16 @@ if __name__ == '__main__':
     if stiffness_at_points_flag == 1:
 
 
-        strain_points_total_SN_run_1, stiffness_values_total_SN_run_1=stiffness_func(sxx_tension_SN_run_1, linear_strain_tension_SN_run_1, sxx_compression_SN_run_1, linear_strain_compression_SN_run_1)
+        strain_points_total_SN_run_1, stiffness_values_total_SN_run_1=stiffness_func(sxx_tension_SN_run_1,
+                                                                                     linear_strain_tension_SN_run_1,
+                                                                                     sxx_compression_SN_run_1,
+                                                                                     linear_strain_compression_SN_run_1)
+
+        strain_points_total_SN_run_1_El_Pl, stiffness_values_total_SN_run_1_El_Pl = stiffness_func(sxx_tension_SN_run_1_El_Pl,
+                                                                                             linear_strain_tension_SN_run_1_El_Pl,
+                                                                                             sxx_compression_SN_run_1_El_Pl,
+                                                                                             linear_strain_compression_SN_run_1_El_Pl)
+
         strain_points_total_SN_run_1_2E, stiffness_values_total_SN_run_1_2E = stiffness_func(sxx_tension_SN_run_1_2E,
                                                                                        linear_strain_tension_SN_run_1_2E,
                                                                                        sxx_compression_SN_run_1_2E,
@@ -318,51 +355,240 @@ if __name__ == '__main__':
                                                                                        linear_strain_tension_SN_run_1_br_10,
                                                                                        sxx_compression_SN_run_1_br_10,
                                                                                        linear_strain_compression_SN_run_1_br_10)
-        strain_points_total_SN_run_1_br_05, stiffness_values_total_SN_run_1_br_05 = stiffness_func(sxx_tension_SN_run_1_br_05,
-                                                                                       linear_strain_tension_SN_run_1_br_05,
-                                                                                       sxx_compression_SN_run_1_br_05,
-                                                                                       linear_strain_compression_SN_run_1_br_05)
+
+        strain_points_total_SN_run_1_br_175, stiffness_values_total_SN_run_1_br_175 = stiffness_func(sxx_tension_SN_run_1_br_175,
+                                                                                       linear_strain_tension_SN_run_1_br_175,
+                                                                                       sxx_compression_SN_run_1_br_175,
+                                                                                       linear_strain_compression_SN_run_1_br_175)
+
+
+        strain_points_total_SN_run_1_EL_particle, stiffness_values_total_SN_run_1_EL_particle = stiffness_func(sxx_tension_SN_run_1_EL_particle,
+                                                                                       linear_strain_tension_SN_run_1_EL_particle,
+                                                                                       sxx_compression_SN_run_1_EL_particle,
+                                                                                       linear_strain_compression_SN_run_1_EL_particle)
+
+        strain_points_total_SN_run_1_q_0_rmin_3_rmax_10, stiffness_values_total_SN_run_1_q_0_rmin_3_rmax_10 = stiffness_func(sxx_tension_SN_run_1_q_0_rmin_3_rmax_10,
+                                                                                       linear_strain_tension_SN_run_1_q_0_rmin_3_rmax_10,
+                                                                                       sxx_compression_SN_run_1_q_0_rmin_3_rmax_10,
+                                                                                       linear_strain_compression_SN_run_1_q_0_rmin_3_rmax_10)
+
+        strain_points_total_SN_run_1_q_0_rmin_4_rmax_10, stiffness_values_total_SN_run_1_q_0_rmin_4_rmax_10 = stiffness_func(sxx_tension_SN_run_1_q_0_rmin_4_rmax_10,
+                                                                                       linear_strain_tension_SN_run_1_q_0_rmin_4_rmax_10,
+                                                                                       sxx_compression_SN_run_1_q_0_rmin_4_rmax_10,
+                                                                                       linear_strain_compression_SN_run_1_q_0_rmin_4_rmax_10)
+
+        # strain_points_total_SN_run_1_br_05, stiffness_values_total_SN_run_1_br_05 = stiffness_func(sxx_tension_SN_run_1_br_05,
+        #                                                                                linear_strain_tension_SN_run_1_br_05,
+        #                                                                                sxx_compression_SN_run_1_br_05,
+        #                                                                                linear_strain_compression_SN_run_1_br_05)
 
         fig_stiff, ax_stiff = plt.subplots()
-        ax_stiff.set_ylabel('Stiffness [GPa]')
+        ax_stiff.set_ylabel('Unloading stiffness [GPa]')
         ax_stiff.set_xlabel('Strain [%]')
-        ax_stiff.set_title('Stiffness of electrode layer')
+        # ax_stiff.set_title('Unloading stiffness of electrode layer')
+
+        lns_stiff_EL_particle = ax_stiff.plot(strain_points_total_SN_run_1_EL_particle * 100, stiffness_values_total_SN_run_1_EL_particle * 1E-9,
+                                     linestyle='dashed',
+                                     marker='*', markersize=12, markeredgewidth=3, linewidth=3,
+                                     label=r'EL Particle')
 
         lns_stiff_2E = ax_stiff.plot(strain_points_total_SN_run_1_2E * 100, stiffness_values_total_SN_run_1_2E * 1E-9, linestyle='dashed',
-                                  marker='x', markersize=12, markeredgewidth=3, linewidth=3, label='b_r = 2.1')
+                                  marker='+', markersize=12, markeredgewidth=3, linewidth=3, label=r'$\frac{b_r}{R} = 2.0$')
+        lns_stiff_br_175 = ax_stiff.plot(strain_points_total_SN_run_1_br_175 * 100, stiffness_values_total_SN_run_1_br_175 * 1E-9,
+                                        linestyle='dashed',
+                                        marker='o',fillstyle='none', markersize=12, markeredgewidth=3, linewidth=3, label=r'$\frac{b_r}{R} = 1.75$')
 
         lns_stiff_br_15 = ax_stiff.plot(strain_points_total_SN_run_1 * 100, stiffness_values_total_SN_run_1 * 1E-9, linestyle='dashed',
-                                  marker='x', markersize=12, markeredgewidth=3, linewidth=3, label='b_r = 1.5')
+                                  marker='x', markersize=12, markeredgewidth=3, linewidth=3, label=r'$\frac{b_r}{R} = 1.5$')
 
         lns_stiff_br_10 = ax_stiff.plot(strain_points_total_SN_run_1_br_10 * 100, stiffness_values_total_SN_run_1_br_10 * 1E-9, linestyle='dashed',
-                                  marker='x', markersize=12, markeredgewidth=3, linewidth=3, label='b_r = 1.0')
+                                  marker='s',fillstyle='none', markersize=12, markeredgewidth=3, linewidth=3, label=r'$\frac{b_r}{R} = 1.0$')
 
-        lns_stiff_br_05 = ax_stiff.plot(strain_points_total_SN_run_1_br_05 * 100, stiffness_values_total_SN_run_1_br_05 * 1E-9, linestyle='dashed',
-                                  marker='x', markersize=12, markeredgewidth=3, linewidth=3, label='b_r = 0.5')
-
-
+        # lns_stiff_br_05 = ax_stiff.plot(strain_points_total_SN_run_1_br_05 * 100, stiffness_values_total_SN_run_1_br_05 * 1E-9, linestyle='dashed',
+        #                           marker='x', markersize=12, markeredgewidth=3, linewidth=3, label=r'$b_r = 0.5$')
+        # lns_label = ax_stiff.plot([], [], ' ', label="Experiments")
 
         lns_stiff_exp_eps_dot_01 = ax_stiff.plot(exp_strain_points, Modulus_eps_dot_01,
-                                                 marker='x', markersize=12, markeredgewidth=3,
-                                                 linewidth=0, label='0.1 mm/min')
-
+                                                 marker='o', markersize=10, markeredgewidth=3,
+                                                 linewidth=0, color='C9', label='$\dot{\Delta} = 0.1 mm/min$')
         lns_stiff_exp_eps_dot_05 = ax_stiff.plot(exp_strain_points, Modulus_eps_dot_05,
-                                                 marker='x', markersize=12, markeredgewidth=3,
-                                                 linewidth=0, label='0.5 mm/min')
+                                                 marker='v', markersize=10, markeredgewidth=3,
+                                                 linewidth=0, color='C8', label='$\dot{\Delta} = 0.5 mm/min$')
         lns_stiff_exp_eps_dot_10 = ax_stiff.plot(exp_strain_points, Modulus_eps_dot_10,
-                                                 marker='x', markersize=12, markeredgewidth=3,
-                                                 linewidth=0, label='1.0 mm/min')
+                                                 marker='s', markersize=10, markeredgewidth=3,
+                                                 linewidth=0, color='C7', label='$\dot{\Delta} = 1.0 mm/min$')
         lns_stiff_exp_eps_dot_100 = ax_stiff.plot(exp_strain_points, Modulus_eps_dot_100,
-                                                  marker='x', markersize=12, markeredgewidth=3,
-                                                  linewidth=0, label='10 mm/min')
+                                                  marker='P', markersize=10, markeredgewidth=3,
+                                                  linewidth=0, color='C6', label='$\dot{\Delta} = 10 mm/min$')
         lns_stiff_exp_eps_dot_300 = ax_stiff.plot(exp_strain_points, Modulus_eps_dot_300,
-                                                  marker='x', markersize=12, markeredgewidth=3,
-                                                  linewidth=0, label='30 mm/min')
+                                                  marker='D', markersize=10, markeredgewidth=3,
+                                                  linewidth=0, color='C5', label='$\dot{\Delta} = 30 mm/min$')
+        # ===========Legends=================================
+        handles_exp = lns_stiff_exp_eps_dot_01 + lns_stiff_exp_eps_dot_05 + lns_stiff_exp_eps_dot_10 + lns_stiff_exp_eps_dot_100 + lns_stiff_exp_eps_dot_300
+        labels_exp = [l.get_label() for l in handles_exp]
+        first_legend_br = plt.legend(handles_exp, labels_exp, loc='upper right', title='Experimental results')
 
-        plt.legend(loc='best')
+        ax_stiff.add_artist(first_legend_br)
+
+        handles_br = lns_stiff_EL_particle + lns_stiff_2E + lns_stiff_br_175 + lns_stiff_br_15 +lns_stiff_br_10# +lns_stiff_br_05
+        labels_br = [l.get_label() for l in handles_br]
+        plt.legend(handles_br, labels_br, loc='upper center', title='Simulations')
 
         ax_stiff.set_ylim(ymin=0)
-        fname = fig_dir + 'stiffness_points'
+
+        fname = fig_dir + 'stiffness_points_br'
         plt.savefig(fname)
+
+        fig_stiff_El_Pl, ax_stiff_El_Pl = plt.subplots()
+        ax_stiff_El_Pl.set_ylabel('Unloading stiffness [GPa]')
+        ax_stiff_El_Pl.set_xlabel('Strain [%]')
+        # ax_stiff_El_Pl.set_title('Unloading stiffness of electrode layer')
+
+        lns_stiff_EL_particle = ax_stiff.plot(strain_points_total_SN_run_1_EL_particle * 100, stiffness_values_total_SN_run_1_EL_particle * 1E-9,
+                                     linestyle='dashed',
+                                     marker='*', markersize=12, markeredgewidth=3, linewidth=3,
+                                     label=r'$EL Particle$')
+
+        lns_stiff_El = ax_stiff_El_Pl.plot(strain_points_total_SN_run_1 * 100, stiffness_values_total_SN_run_1 * 1E-9,
+                                        linestyle='dashed',
+                                        marker='x', markersize=12, markeredgewidth=3, linewidth=3, label=r'$El$')
+
+        lns_stiff_El_Pl = ax_stiff_El_Pl.plot(strain_points_total_SN_run_1_El_Pl * 100,
+                                        stiffness_values_total_SN_run_1_El_Pl * 1E-9, linestyle='dashed',
+                                        marker='o',fillstyle='none', markersize=12, markeredgewidth=3, linewidth=3, label=r'$El-Pl$')
+
+        # lns_label = ax_stiff.plot([], [], ' ', label="Experiments")
+
+        lns_stiff_exp_eps_dot_01_El_Pl = ax_stiff_El_Pl.plot(exp_strain_points, Modulus_eps_dot_01,
+                                                 marker='o', markersize=10, markeredgewidth=3,
+                                                 linewidth=0, color='C9', label=r'$\dot{\Delta} = 0.1 mm/min$')
+        lns_stiff_exp_eps_dot_05_El_Pl = ax_stiff_El_Pl.plot(exp_strain_points, Modulus_eps_dot_05,
+                                                 marker='v', markersize=10, markeredgewidth=3,
+                                                 linewidth=0, color='C8', label='$\dot{\Delta} = 0.5 mm/min$')
+        lns_stiff_exp_eps_dot_10_El_Pl = ax_stiff_El_Pl.plot(exp_strain_points, Modulus_eps_dot_10,
+                                                 marker='s', markersize=10, markeredgewidth=3,
+                                                 linewidth=0, color='C7', label='$\dot{\Delta} = 1.0 mm/min$')
+        lns_stiff_exp_eps_dot_100_El_Pl = ax_stiff_El_Pl.plot(exp_strain_points, Modulus_eps_dot_100,
+                                                  marker='P', markersize=10, markeredgewidth=3,
+                                                  linewidth=0, color='C6', label='$\dot{\Delta} = 10 mm/min$')
+        lns_stiff_exp_eps_dot_300_El_Pl = ax_stiff_El_Pl.plot(exp_strain_points, Modulus_eps_dot_300,
+                                                  marker='D', markersize=10, markeredgewidth=3,
+                                                  linewidth=0, color='C5', label='$\dot{\Delta} = 30 mm/min$')
+        #===========Legends=================================
+        handles_exp = lns_stiff_exp_eps_dot_01_El_Pl+lns_stiff_exp_eps_dot_05_El_Pl+lns_stiff_exp_eps_dot_10_El_Pl+lns_stiff_exp_eps_dot_100_El_Pl+lns_stiff_exp_eps_dot_300_El_Pl
+        labels_exp = [l.get_label() for l in handles_exp]
+        first_legend_El_Pl = plt.legend(handles_exp,labels_exp,loc='upper right',title='Experimental results')
+
+        ax_stiff_El_Pl.add_artist(first_legend_El_Pl)
+
+        handles_El_Pl =  lns_stiff_EL_particle + lns_stiff_El+lns_stiff_El_Pl
+        labels_El_Pl = [l.get_label() for l in handles_El_Pl]
+        plt.legend(handles_El_Pl,labels_El_Pl,loc='upper center',title='Simulations')
+
+        ax_stiff_El_Pl.set_ylim(ymin=0)
+        fname = fig_dir + 'stiffness_points_El_Pl'
+        plt.savefig(fname)
+
+        # =FIGURE COMPARING SIZE DISTRIBUTIONS==============================================================================
+        fig_stiff_size_distr, ax_stiff_size_distr = plt.subplots()
+        ax_stiff_size_distr.set_ylabel('Unloading stiffness [GPa]')
+        ax_stiff_size_distr.set_xlabel('Strain [%]')
+        # ax_stiff_El_Pl.set_title('Unloading stiffness of electrode layer')
+
+        lns_stiff_reference = ax_stiff_size_distr.plot(strain_points_total_SN_run_1 * 100, stiffness_values_total_SN_run_1 * 1E-9,
+                                           linestyle='dashed',
+                                           marker='x', markersize=12, markeredgewidth=3, linewidth=3, label=r'$El$')
+
+        lns_stiff_q_0_rmin_3 = ax_stiff_size_distr.plot(strain_points_total_SN_run_1_q_0_rmin_3_rmax_10 * 100,
+                                              stiffness_values_total_SN_run_1_q_0_rmin_3_rmax_10 * 1E-9, linestyle='dashed',
+                                              marker='o', fillstyle='none', markersize=12, markeredgewidth=3, linewidth=3,
+                                              label=r'$r_min_3$')
+        lns_stiff_q_0_rmin_4 = ax_stiff_size_distr.plot(strain_points_total_SN_run_1_q_0_rmin_4_rmax_10 * 100,
+                                              stiffness_values_total_SN_run_1_q_0_rmin_4_rmax_10 * 1E-9, linestyle='dashed',
+                                              marker='*', fillstyle='none', markersize=12, markeredgewidth=3, linewidth=3,
+                                              label=r'$r_min_4$')
+
+        # lns_label = ax_stiff.plot([], [], ' ', label="Experiments")
+
+        lns_stiff_exp_eps_dot_01_El_Pl = ax_stiff_size_distr.plot(exp_strain_points, Modulus_eps_dot_01,
+                                                             marker='o', markersize=10, markeredgewidth=3,
+                                                             linewidth=0, color='C9', label=r'$\dot{\Delta} = 0.1 mm/min$')
+        lns_stiff_exp_eps_dot_05_El_Pl = ax_stiff_size_distr.plot(exp_strain_points, Modulus_eps_dot_05,
+                                                             marker='v', markersize=10, markeredgewidth=3,
+                                                             linewidth=0, color='C8', label='$\dot{\Delta} = 0.5 mm/min$')
+        lns_stiff_exp_eps_dot_10_El_Pl = ax_stiff_size_distr.plot(exp_strain_points, Modulus_eps_dot_10,
+                                                             marker='s', markersize=10, markeredgewidth=3,
+                                                             linewidth=0, color='C7', label='$\dot{\Delta} = 1.0 mm/min$')
+        lns_stiff_exp_eps_dot_100_El_Pl = ax_stiff_size_distr.plot(exp_strain_points, Modulus_eps_dot_100,
+                                                              marker='P', markersize=10, markeredgewidth=3,
+                                                              linewidth=0, color='C6', label='$\dot{\Delta} = 10 mm/min$')
+        lns_stiff_exp_eps_dot_300_El_Pl = ax_stiff_size_distr.plot(exp_strain_points, Modulus_eps_dot_300,
+                                                              marker='D', markersize=10, markeredgewidth=3,
+                                                              linewidth=0, color='C5', label='$\dot{\Delta} = 30 mm/min$')
+        # ===========Legends=================================
+        handles_exp = lns_stiff_exp_eps_dot_01_El_Pl + lns_stiff_exp_eps_dot_05_El_Pl + lns_stiff_exp_eps_dot_10_El_Pl + lns_stiff_exp_eps_dot_100_El_Pl + lns_stiff_exp_eps_dot_300_El_Pl
+        labels_exp = [l.get_label() for l in handles_exp]
+        first_legend_size_distr = plt.legend(handles_exp, labels_exp, loc='upper right', title='Experimental results')
+
+        ax_stiff_size_distr.add_artist(first_legend_size_distr)
+
+        handles_size_distr = lns_stiff_reference + lns_stiff_q_0_rmin_3 + lns_stiff_q_0_rmin_4
+        labels_size_distr = [l.get_label() for l in handles_size_distr]
+        plt.legend(handles_size_distr, labels_size_distr, loc='upper center', title='Simulations')
+
+        ax_stiff_size_distr.set_ylim(ymin=0)
+        fname = fig_dir + 'stiffness_points_size_distr'
+        plt.savefig(fname)
+
+    # =HISTOGRAM OF PARTICLE DISTRIBUTIONS==============================================================================
+    reference_particle_data = one_file_reader(
+        simulation_directory_SN_run_1 + '_compression/particles/particles_' + str(time_tension_SN_run_1[-1]) + '.dou')
+    reference_particle_radius = np.array([])
+    for x in reference_particle_data:
+        reference_particle_radius = np.append(reference_particle_radius, (float(x.split(", ")[7])))
+
+
+    q_0_rmin_3_particle_data = one_file_reader(
+        simulation_directory_SN_run_1_q_0_rmin_3_rmax_10 + '_compression/particles/particles_' + str(
+            time_tension_SN_run_1_q_0_rmin_3_rmax_10[-1]) + '.dou')
+    q_0_rmin_3_particle_radius = np.array([])
+    for x in q_0_rmin_3_particle_data:
+        q_0_rmin_3_particle_radius = np.append(q_0_rmin_3_particle_radius, (float(x.split(", ")[7])))
+
+
+    q_0_rmin_4_particle_data = one_file_reader(
+        simulation_directory_SN_run_1_q_0_rmin_4_rmax_10 + '_compression/particles/particles_' + str(
+            time_tension_SN_run_1_q_0_rmin_4_rmax_10[-1]) + '.dou')
+    q_0_rmin_4_particle_radius = np.array([])
+    for x in q_0_rmin_4_particle_data:
+        q_0_rmin_4_particle_radius = np.append(q_0_rmin_4_particle_radius, (float(x.split(", ")[7])))
+
+
+    Ebner_particle_data_df = pd.read_csv(
+    "G:/My Drive/Skola/KTH/PhD/Litteratur/X-Ray Tomography of Porous, Transition Metal Oxide Based Lithium Ion Battery Electrodes/NMC_96wt_0bar.dat")
+    Ebner_particle_volume=Ebner_particle_data_df['volume'].to_numpy()
+    Ebner_particle_radius = (Ebner_particle_volume*3/(4*3.14))**(1/3)
+    # Ebner_particle_radius = Ebner_particle_radius[(Ebner_particle_radius > 3) & (Ebner_particle_radius < 10)]
+
+    # s_q_0[(s_q_0 > D_min) & (s_q_0 < D_max)]
+    # q_0_rmin_4_particle_radius = np.array([])
+    # for x in q_0_rmin_4_particle_data:
+    #     q_0_rmin_4_particle_radius = np.append(q_0_rmin_4_particle_radius, (float(x.split(", ")[7])))
+
+    fig_size_hist,ax_size_hist = plt.subplots(1,4)
+    reference_lns = ax_size_hist[0].hist(reference_particle_radius*100,bins=50,density=True)#bins=50, label='ref')
+    q_0_rmin_3_lns = ax_size_hist[1].hist(q_0_rmin_3_particle_radius*100,bins=50,density=True)#bins=50, label='r_min=3µm')
+    q_0_rmin_4_lns = ax_size_hist[2].hist(q_0_rmin_4_particle_radius*100,bins=50,density=True)#bins=50, label='r_min=4µm')
+    Ebner_lns = ax_size_hist[3].hist(Ebner_particle_radius,bins=50,density=True)#bins=50)
+    ax_size_hist[0].set_title('ref')
+    ax_size_hist[1].set_title('r_min=3µm')
+    ax_size_hist[2].set_title('r_min=4µm')
+    ax_size_hist[3].set_title('Ebner')
+    for x in ax_size_hist:
+        x.set_xlabel('Particle radius [µm]')
+        x.set_ylabel('Number of particles')
+        # x.set_ylim(ymax=400)
+        x.set_xlim(xmin=3,xmax=12)
+        # ax_size_hist.legend(loc='best')
     # ==SHOW PLOT=======================================================================================================
     plt.show()
