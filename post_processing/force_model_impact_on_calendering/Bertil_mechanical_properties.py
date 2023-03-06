@@ -1,4 +1,4 @@
-from Bertil_calendering_pressure import local_data_gatherer, bertil_data_gatherer
+from Bertil_calendering_pressure import local_data_gatherer, bertil_data_gatherer, contact_counter_bertil
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -21,9 +21,20 @@ def stress_and_linear_strain_finder(periodic_BC_data, force_fabric_tensor_data, 
     sxx = -force_fabric_tensor_data[:, 1] / vol
     syy = -force_fabric_tensor_data[:, 5] / vol
     szz = -force_fabric_tensor_data[:, 9] / vol
+
+    tau_xy = -force_fabric_tensor_data[:, 2] / vol
+    tau_xz = -force_fabric_tensor_data[:, 3] / vol
+
+    tau_yx = -force_fabric_tensor_data[:, 4] / vol
+    tau_yz = -force_fabric_tensor_data[:, 6] / vol
+
+    tau_zx = -force_fabric_tensor_data[:, 7] / vol
+    tau_zy = -force_fabric_tensor_data[:, 8] / vol
+
+
     linear_strain = (x_side_length[:] - x_side_length_0) / x_side_length_0
 
-    return time, linear_strain, sxx, syy, szz
+    return time, linear_strain, sxx, syy, szz, tau_xy, tau_xz, tau_yx, tau_yz, tau_zx, tau_zy
 
 
 def stiffness_finder(stress_vec, strain_vec):
@@ -69,8 +80,8 @@ def stiffness_finder(stress_vec, strain_vec):
     return strain_points, stiffness_values  # returns strain in [-] and stiffness in Pa
 
 if __name__ == '__main__':
-
-    simulation_directory = '/scratch/users/axlun/DEMsim/results/electrode_mechanical_loading_hertz/SN_ref_run_1_5000p_btr_5_brr_15_dt_5e1_MS_1e2_SR_2e-3'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1/electrode_mechanical_loading_hertz'
+    simulation_directory = '/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1_Ebner_raw_data/electrode_mechanical_loading_hertz'
 
     stiffness_at_points_flag = 1
 
@@ -85,14 +96,7 @@ if __name__ == '__main__':
         print('Directory could not be removed')
         quit()
 # ==PLOT PARAMETERS=====================================================================================================
-    plt.rcParams['figure.figsize'] = (12,9)
-    plt.rcParams['lines.linewidth'] = 2
-    plt.rcParams['axes.labelweight'] = 'bold'
-    plt.rcParams['axes.titleweight'] = 'bold'
-    plt.rcParams['font.weight'] = 'bold'
-    plt.rcParams['font.size'] = 20
-    plt.rcParams["font.family"] = "Times New Roman"
-    plt.rcParams['mathtext.default'] = 'regular'
+    plt.style.use('axel_style')
 
 # ==EXPERIMENTAL DATA===================================================================================================
     exp_strain_points_compression = [-1.00, -1.10, -1.23, -1.41, -1.65]
@@ -119,22 +123,32 @@ if __name__ == '__main__':
     if simulation_directory.startswith("/scratch"):
         force_data_compression, surface_force_index_compression, surface_position_index_compression, surface_position_data_compression, periodic_BC_data_compression, force_fabric_tensor_data_compression, kinetic_energy_data_compression = bertil_data_gatherer(
             simulation_directory + '_compression')
+        time_vec_compression, particle_contact_vec_compression, binder_contact_vec_compression, binder_particle_contact_vec_compression = contact_counter_bertil(
+            simulation_directory+ '_compression')
     elif simulation_directory.startswith("c:"):
         force_data_compression, surface_force_index_compression, surface_position_index_compression, surface_position_data_compression, periodic_BC_data_compression, force_fabric_tensor_data_compression, kinetic_energy_data_compression = local_data_gatherer(
             simulation_directory + '_compression')
+        time_vec_compression, particle_contact_vec_compression, binder_contact_vec_compression, binder_particle_contact_vec_compression = contact_counter_bertil(
+            simulation_directory+ '_compression')
+
     else:
         print("Error with simulation directory")
 
     if simulation_directory.startswith("/scratch"):
         force_data_tension, surface_force_index_tension, surface_position_index_tension, surface_position_data_tension, periodic_BC_data_tension, force_fabric_tensor_data_tension, kinetic_energy_data_tension = bertil_data_gatherer(
             simulation_directory + '_tension')
+        time_vec_tension, particle_contact_vec_tension, binder_contact_vec_tension, binder_particle_contact_vec_tension = contact_counter_bertil(
+            simulation_directory + '_tension')
     elif simulation_directory.startswith("c:"):
         force_data_tension, surface_force_index_tension, surface_position_index_tension, surface_position_data_tension, periodic_BC_data_tension, force_fabric_tensor_data_tension, kinetic_energy_data_tension = local_data_gatherer(
             simulation_directory + '_tension')
+        time_vec_tension, particle_contact_vec_tension, binder_contact_vec_tension, binder_particle_contact_vec_tension = contact_counter_bertil(
+            simulation_directory+ '_tension')
+
     else:
         print("Error with simulation directory")
-    time_tension, linear_strain_tension, sxx_tension, syy_tension, szz_tension = stress_and_linear_strain_finder(periodic_BC_data_tension, force_fabric_tensor_data_tension,surface_position_data_tension)
-    time_compression, linear_strain_compression, sxx_compression, syy_compression, szz_compression = stress_and_linear_strain_finder(periodic_BC_data_compression, force_fabric_tensor_data_compression,surface_position_data_compression)
+    time_tension, linear_strain_tension, sxx_tension, syy_tension, szz_tension, tau_xy_tension, tau_xz_tension, tau_yx_tension, tau_yz_tension, tau_zx_tension, tau_zy_tension = stress_and_linear_strain_finder(periodic_BC_data_tension, force_fabric_tensor_data_tension,surface_position_data_tension)
+    time_compression, linear_strain_compression, sxx_compression, syy_compression, szz_compression, tau_xy_compression, tau_xz_compression, tau_yx_compression, tau_yz_compression, tau_zx_compression, tau_zy_compression = stress_and_linear_strain_finder(periodic_BC_data_compression, force_fabric_tensor_data_compression,surface_position_data_compression)
 
     # ==FIG 1 STRESS STRAIN IN COMPRESSION==============================================================================
     fig_compression,ax_compression = plt.subplots()
@@ -146,6 +160,14 @@ if __name__ == '__main__':
                                              label=r'$\sigma_{yy}$')
     lns_compression_zz = ax_compression.plot(linear_strain_compression[:] * 100, szz_compression[:] / 1e6,
                                              label=r'$\sigma_{zz}$')
+    lns_compression_tau_xy = ax_compression.plot(linear_strain_compression[:] * 100, tau_xy_compression[:] / 1e6, label=r'$\tau_{xy}$')
+    lns_compression_tau_xz = ax_compression.plot(linear_strain_compression[:] * 100, tau_xz_compression[:] / 1e6, label=r'$\tau_{xz}$')
+    lns_compression_tau_yx = ax_compression.plot(linear_strain_compression[:] * 100, tau_yx_compression[:] / 1e6, label=r'$\tau_{yx}$')
+    lns_compression_tau_yz = ax_compression.plot(linear_strain_compression[:] * 100, tau_yz_compression[:] / 1e6, label=r'$\tau_{yz}$')
+    lns_compression_tau_zx = ax_compression.plot(linear_strain_compression[:] * 100, tau_zx_compression[:] / 1e6, label=r'$\tau_{zx}$')
+    lns_compression_tau_zy = ax_compression.plot(linear_strain_compression[:] * 100, tau_zy_compression[:] / 1e6, label=r'$\tau_{zy}$')
+
+
     ax_compression.set_title('Macroscopic stress in compression')
     plt.legend(loc='best')
 
@@ -159,6 +181,15 @@ if __name__ == '__main__':
     lns_tension_xx = ax_tension.plot(linear_strain_tension[:] * 100, sxx_tension[:] / 1e6, label=r'$\sigma_{xx}$')
     lns__tension_yy = ax_tension.plot(linear_strain_tension[:] * 100, syy_tension[:] / 1e6, label=r'$\sigma_{yy}$')
     lns_tension_zz = ax_tension.plot(linear_strain_tension[:] * 100, szz_tension[:] / 1e6, label=r'$\sigma_{zz}$')
+
+    lns_tension_tau_xy = ax_tension.plot(linear_strain_tension[:] * 100, tau_xy_tension[:] / 1e6, label=r'$\tau_{xy}$')
+    lns_tension_tau_xz = ax_tension.plot(linear_strain_tension[:] * 100, tau_xz_tension[:] / 1e6, label=r'$\tau_{xz}$')
+    lns_tension_tau_yx = ax_tension.plot(linear_strain_tension[:] * 100, tau_yx_tension[:] / 1e6, label=r'$\tau_{yx}$')
+    lns_tension_tau_yz = ax_tension.plot(linear_strain_tension[:] * 100, tau_yz_tension[:] / 1e6, label=r'$\tau_{yz}$')
+    lns_tension_tau_zx = ax_tension.plot(linear_strain_tension[:] * 100, tau_zx_tension[:] / 1e6, label=r'$\tau_{zx}$')
+    lns_tension_tau_zy = ax_tension.plot(linear_strain_tension[:] * 100, tau_zy_tension[:] / 1e6, label=r'$\tau_{zy}$')
+
+
     ax_tension.set_title('Macroscopic stress in tension')
     plt.legend(loc='best')
 
@@ -209,7 +240,6 @@ if __name__ == '__main__':
 
     fname = fig_dir + 'compression_stress_strain_time'
     plt.savefig(fname)
-
 
     # ==FIG 5 KINETIC ENERGY IN TENSION=================================================================================
     fig_KE_tension,ax_KE_tension = plt.subplots()
@@ -275,5 +305,31 @@ if __name__ == '__main__':
         ax_stiff.set_ylim(ymin=0)
         fname = fig_dir + 'stiffness_points'
         plt.savefig(fname)
+    # ==FIG 8 CONTACTS FOR STRAINS=======================================================================================================
+    rm_list_compression = []
+    for i in range(len(time_compression)-1):
+        if time_compression[i] == time_compression[i+1]:
+            rm_list_compression.append(i)
+    time_compression_short = np.delete(time_compression,rm_list_compression)
+    linear_strain_compression_short = np.delete(linear_strain_compression,rm_list_compression)
+
+    rm_list_tension = []
+    for i in range(len(time_tension)-1):
+        if time_tension[i] == time_tension[i+1]:
+            rm_list_tension.append(i)
+    time_tension_short = np.delete(time_tension,rm_list_tension)
+    linear_strain_tension_short = np.delete(linear_strain_tension,rm_list_tension)
+
+    fig_contacts_compression,ax_contacts_compression = plt.subplots()
+    lns_contacts_compression = ax_contacts_compression.plot(linear_strain_compression_short[:300] * 100,
+                                                            particle_contact_vec_compression[:300],'C0')
+    lns_contacts_tension = ax_contacts_compression.plot(linear_strain_tension_short[:300] * 100,
+                                                            particle_contact_vec_tension[:300],'C0')
+    ax_contacts_compression.set_ylim(ymin=0)
+    ax_contacts_compression.set_xlim(xmin=-2.2, xmax=2.2)
+    ax_contacts_compression.set_ylabel('Particle contacts [-]')
+    ax_contacts_compression.set_xlabel('Strain [%]')
+    fname = fig_dir + 'contacts_to_strain'
+    plt.savefig(fname)
     # ==SHOW PLOT=======================================================================================================
     plt.show()
