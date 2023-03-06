@@ -10,9 +10,9 @@ import re
 import matplotlib
 import pandas as pd
 
-matplotlib.style.use('classic')
 
 if __name__ == '__main__':
+    plt.style.use('axel_style')
 
     simulation_directory = '/scratch/users/axlun/DEMsim/results/electrode_natural_packing_hertz/SN_hertz_500p_btr_8_brr_08_dt_1e0_MS_1e0_perBC_bugfix1/'
     particle_1,particle_2 = 40, 401

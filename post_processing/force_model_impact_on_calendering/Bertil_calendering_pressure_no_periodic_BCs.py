@@ -6,7 +6,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib
 
-matplotlib.style.use('classic')
 
 
 def local_data_gatherer(simulation_directory):
@@ -74,6 +73,8 @@ def calendering_surface_pressure_func(periodic_BC_data,force_data,surface_force_
     return calendering_time,calendering_surface_pressure,calendering_surface_position
 
 if __name__ == '__main__':
+
+    plt.style.use('axel_style')
 
     simulation_directory = '/scratch/users/axlun/DEMsim/results/electrode_calendaring/SN_hertz_1000p_btr_065_new_Ft_b_no_periodic_BCs_no_tangetial_force'
 

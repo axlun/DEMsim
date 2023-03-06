@@ -15,10 +15,14 @@ if __name__ == '__main__':
     # simulation_directory = '/scratch/users/axlun/DEMsim/results/electrode_natural_packing_hertz/SN_hertz_5000p_btr_5_brr_05_dt_1e0_MS_1e0'
 
     # ==CALENDERING=====================================================================================================
-    simulation_directory = '/scratch/users/axlun/DEMsim/results/electrode_calendering_hertz/SN_ref_run_1_5000p_btr_5_brr_8_comp_time_20_hal_105_dt_1e2_MS_1e4'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/electrode_calendering_hertz/SN_ref_run_1_5000p_btr_5_brr_8_comp_time_20_hal_105_dt_1e2_MS_1e4'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1_El_Pl/electrode_calendering_hertz'
+    simulation_directory = '/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1_rigid_plastic_particle/electrode_calendering_rigid_plastic/'
+
 
     # ==MECHANICAL LOADING==============================================================================================
     # simulation_directory = '/scratch/users/axlun/DEMsim/results/electrode_mechanical_loading_hertz/SN_hertz_5000p_btr_5_brr_05_dt_5e1_MS_1e2_SR_2e-3_compression'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1_El_Pl/electrode_mechanical_loading_hertz_compression'
 
     time_vec, particle_contact_valency_mat, binder_contact_valency_mat = contact_valency_bertil(simulation_directory)
 
@@ -34,14 +38,7 @@ if __name__ == '__main__':
         print('Directory could not be removed')
         quit()
 
-    plt.rcParams['figure.figsize'] = (12, 9)
-    plt.rcParams['lines.linewidth'] = 2
-    plt.rcParams['axes.labelweight'] = 'bold'
-    plt.rcParams['axes.titleweight'] = 'bold'
-    plt.rcParams['font.weight'] = 'bold'
-    plt.rcParams['font.size'] = 20
-    plt.rcParams["font.family"] = "Times New Roman"
-    plt.rcParams['mathtext.default'] = 'regular'
+    plt.style.use('axel_style')
 
     particle_contact_valency_0_vec = []
     particle_contact_valency_1_vec = []

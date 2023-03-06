@@ -15,12 +15,27 @@ if __name__ == '__main__':
 
     # ==NATUAL PACKING =================================================================================================
     # simulation_directory = '/scratch/users/axlun/DEMsim/results/electrode_natural_packing_hertz/SN_hertz_5000p_btr_5_brr_05_dt_1e0_MS_1e0'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/electrode_natural_packing_hertz/SN_ref_run_2_5000p_btr_5_brr_15_dt_1e0_MS_1e0/'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/electrode_natural_packing_hertz/SN_run_1'
+    simulation_directory = '/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1_rigid_plastic_particle/electrode_natural_packing_rigid_plastic_SY_4GPa_crash'
+
 
     # ==CALENDERING======================================================================================================
     # simulation_directory = '/scratch/users/axlun/DEMsim/results/electrode_calendering_hertz/SN_hertz_5000p_btr_5_brr_05_comp_time_20_hal_105_dt_1e2_MS_1e4'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/electrode_calendering_hertz/SN_ref_run_2_5000p_btr_5_brr_15_comp_time_20_hal_105_dt_1e2_MS_1e4_run_2'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/electrode_calendering_hertz/SN_ref_run_1_5000p_btr_5_brr_15_comp_time_20_hal_105_dt_1e2_MS_1e4_no_new_binder_run_3'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/electrode_calendering_hertz/SN_ref_run_1_5000p_btr_5_brr_15_comp_time_20_hal_105_dt_1e2_MS_1e4_rot/'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1_El_Pl/electrode_calendering_hertz'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1_rigid_plastic_particle/electrode_calendering_rigid_plastic/'
+
 
     # ==MECHANICAL LOADING==============================================================================================
-    simulation_directory = '/scratch/users/axlun/DEMsim/results/electrode_mechanical_loading_hertz/SN_hertz_5000p_btr_5_brr_05_dt_5e1_MS_1e2_SR_2e-3_tension'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/electrode_mechanical_loading_hertz/SN_ref_run_1_10000p_btr_5_brr_15_dt_5e1_MS_1e2_SR_2e-3_compression'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/electrode_mechanical_loading_hertz/SN_ref_run_1_5000p_btr_5_brr_15_dt_5e1_MS_1e2_SR_2e-3_no_new_binder_compression'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/electrode_mechanical_loading_hertz/SN_ref_run_1_5000p_btr_5_brr_15_dt_5e1_MS_1e2_SR_2e-3_no_new_binder_run_2_tension'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/electrode_mechanical_loading_hertz/SN_ref_run_1_5000p_btr_5_brr_15_dt_5e1_MS_1e2_SR_2e-3_no_new_binder_run_3_tension'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/electrode_mechanical_loading_hertz/SN_ref_run_1_5000p_btr_5_brr_15_dt_5e1_MS_1e2_SR_2e-3_rot_tension'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1_El_Pl/electrode_mechanical_loading_hertz_compression'
 
     time_steps, normal_force, compressive_normal_force_vec, tensile_normal_force_vec, binder_force_vec, \
         compressive_binder_force_vec, tensile_binder_force_vec, particle_force_vec, tangential_force = \
@@ -38,14 +53,7 @@ if __name__ == '__main__':
         quit()
 
     # ==PLOTTING PARAMETERS=============================================================================================
-    plt.rcParams['figure.figsize'] = (12, 9)
-    plt.rcParams['lines.linewidth'] = 2
-    plt.rcParams['axes.labelweight'] = 'bold'
-    plt.rcParams['axes.titleweight'] = 'bold'
-    plt.rcParams['font.weight'] = 'bold'
-    plt.rcParams['font.size'] = 20
-    plt.rcParams["font.family"] = "Times New Roman"
-    plt.rcParams['mathtext.default'] = 'regular'
+    plt.style.use('axel_style')
 
     # ==FIG 1 NORMAL AND TANGENTIAL FORCES==============================================================================
     figure_normal_tangential_force_time, ax_normal_tangential_force_time = plt.subplots()
