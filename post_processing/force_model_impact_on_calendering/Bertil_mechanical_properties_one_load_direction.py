@@ -9,7 +9,14 @@ import shutil
 
 if __name__ == '__main__':
 
-    simulation_directory = '/scratch/users/axlun/DEMsim/results/electrode_mechanical_loading_hertz/SN_ref_run_1_5000p_btr_5_brr_15_dt_5e1_MS_1e2_SR_2e-3_tension'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/electrode_mechanical_loading_hertz/SN_hertz_5000p_btr_5_brr_05_dt_5e1_MS_1e2_SR_2e-3_tension'
+
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/electrode_mechanical_loading_hertz/SN_ref_run_1_5000p_btr_5_brr_15_dt_5e1_MS_1e2_SR_2e-3_no_new_binder_run_3_tension'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/electrode_mechanical_loading_hertz/SN_ref_run_1_5000p_btr_5_brr_15_dt_5e1_MS_1e2_SR_2e-3_rot_compression'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1_br_175/electrode_mechanical_loading_hertz_compression'
+    simulation_directory = '/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1_q_0_rmin_3_rmax_10/electrode_mechanical_loading_hertz_tension'
+
+
 
     stiffness_at_points_flag = 1
 
@@ -25,14 +32,7 @@ if __name__ == '__main__':
         quit()
 
     # ==PLOT PARAMETERS=================================================================================================
-    plt.rcParams['figure.figsize'] = (12,9)
-    plt.rcParams['lines.linewidth'] = 2
-    plt.rcParams['axes.labelweight'] = 'bold'
-    plt.rcParams['axes.titleweight'] = 'bold'
-    plt.rcParams['font.weight'] = 'bold'
-    plt.rcParams['font.size'] = 20
-    plt.rcParams["font.family"] = "Times New Roman"
-    plt.rcParams['mathtext.default'] = 'regular'
+    plt.style.use('axel_style')
 
     # ==EXPERIMENTAL DATA===============================================================================================
 
@@ -62,7 +62,7 @@ if __name__ == '__main__':
             simulation_directory)
     else:
         print("Error with simulation directory")
-    time, linear_strain, sxx, syy, szz = stress_and_linear_strain_finder(periodic_BC_data_tension,
+    time, linear_strain, sxx, syy, szz, tau_xy, tau_xz, tau_yx, tau_yz, tau_zx, tau_zy = stress_and_linear_strain_finder(periodic_BC_data_tension,
                                                                          force_fabric_tensor_data_tension,
                                                                          surface_position_data_tension)
 
@@ -70,9 +70,17 @@ if __name__ == '__main__':
     fig_tension,ax_tension = plt.subplots()
     ax_tension.set_ylabel('Stress [MPa]')
     ax_tension.set_xlabel('Strain [%]')
-    lns_tension_xx = ax_tension.plot(linear_strain[:] * 100, sxx[:] / 1e6, label=r'$\sigma_{xx}$')
-    lns__tension_yy = ax_tension.plot(linear_strain[:] * 100, syy[:] / 1e6, label=r'$\sigma_{yy}$')
-    lns_tension_zz = ax_tension.plot(linear_strain[:] * 100, szz[:] / 1e6, label=r'$\sigma_{zz}$')
+    lns_tension_sig_xx = ax_tension.plot(linear_strain[:] * 100, sxx[:] / 1e6, label=r'$\sigma_{xx}$')
+    lns__tension_sig_yy = ax_tension.plot(linear_strain[:] * 100, syy[:] / 1e6, label=r'$\sigma_{yy}$')
+    lns_tension_sig_zz = ax_tension.plot(linear_strain[:] * 100, szz[:] / 1e6, label=r'$\sigma_{zz}$')
+
+    lns_tension_tau_xy = ax_tension.plot(linear_strain[:] * 100, tau_xy[:] / 1e6, label=r'$\tau_{xy}$')
+    lns_tension_tau_xz = ax_tension.plot(linear_strain[:] * 100, tau_xz[:] / 1e6, label=r'$\tau_{xz}$')
+    lns_tension_tau_yx = ax_tension.plot(linear_strain[:] * 100, tau_yx[:] / 1e6, label=r'$\tau_{yx}$')
+    lns_tension_tau_yz = ax_tension.plot(linear_strain[:] * 100, tau_yz[:] / 1e6, label=r'$\tau_{yz}$')
+    lns_tension_tau_zx = ax_tension.plot(linear_strain[:] * 100, tau_zx[:] / 1e6, label=r'$\tau_{zx}$')
+    lns_tension_tau_zy = ax_tension.plot(linear_strain[:] * 100, tau_zy[:] / 1e6, label=r'$\tau_{zy}$')
+
     ax_tension.set_title('Macroscopic stress')
     plt.legend(loc='best')
     fig_tension.tight_layout()
