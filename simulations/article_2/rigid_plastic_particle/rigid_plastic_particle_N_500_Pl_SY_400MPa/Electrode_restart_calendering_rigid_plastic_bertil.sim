@@ -1,0 +1,7 @@
+output_dir=/scratch/users/axlun/DEMsim/results/article_2/rigid_plastic_particle/SN_rigid_plastic_particle_N_500_SY_400MPa/electrode_calendering_rigid_plastic/
+restart_file_name=/scratch/users/axlun/DEMsim/results/article_2/rigid_plastic_particle/SN_rigid_plastic_particle_N_500_SY_400MPa/pre_calendered_electrode_restart_file.res
+time_step=1e1
+mass_scaling=1e4
+calendering_height=105e-2
+compaction_time=20.0
+output_number=4e2
