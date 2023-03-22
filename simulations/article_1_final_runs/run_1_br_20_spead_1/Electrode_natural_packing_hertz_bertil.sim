@@ -1,6 +1,6 @@
 N=5000
 filling_density=0.052
-output_dir=/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1_br_20_run_1/electrode_natural_packing_hertz/
+output_dir=/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1_br_20_spread_1/electrode_natural_packing_hertz/
 radius_file=/scratch/users/axlun/DEMsim/simulations/article_1_final_runs/particle_radius_distr_gamma_k_492_theta_263_r_min_4_r_max_12_cm_size.dat
 time_step=1e0
 mass_scaling=1e0
