@@ -121,18 +121,32 @@ class PointSurfacePlotter:
             fulfill_bounding_box(self.bounding_box, x, y, z, time)
 
         # This orders the points so that a rectangle is plotted
-        pts = mlab.points3d(x, y, z)
-        mesh = mlab.pipeline.delaunay2d(pts)
+        # pts = mlab.points3d(x, y, z)
+        # mesh = mlab.pipeline.delaunay2d(pts)
+        #
+        # pts.remove()
 
-        pts.remove()
+        # =SURFACE PLOTTING WITH TRIANGULAR MESH========================================================================
+        # Creates two two trianges for a surface with four vertices,
+        triangles = [[0,1,2],[2,3,0]] # verticies index for each triangle
+
         if self.ms is None:
-            self.ms = mlab.pipeline.surface(mesh, color=color, opacity=opacity, transparent=True,
-                                            reset_zoom=False).mlab_source
+            self.ms = mlab.triangular_mesh(x,y,z,triangles,color=color,opacity=opacity,reset_zoom=False)
+
+            # mlab.triangular_mesh(x, y, z, triangles, color=(0,0,0),representation='wireframe' , reset_zoom=False,line_width=5)
+            # ^ use to also plot wireframe for triangular mesh
+            # self.ms = mlab.pipeline.surface(mesh, color=color, opacity=opacity, transparent=True,
+            #                                 reset_zoom=False).mlab_source
         else:
             # Updating the pipeline with the new set of points
             # There is probably a cuter way to do this
-            self.ms.points = mesh.mlab_source.points
+            # self.ms.points = mesh.mlab_source.points
 
+
+            self.ms.mlab_source.x = x
+            self.ms.mlab_source.y = y
+            self.ms.mlab_source.z = z
+            # Update the x,y,z coordinates for the verticies, connectivity is not changed
 
 class CylinderPlotter:
     def __init__(self, bounding_box=None):
