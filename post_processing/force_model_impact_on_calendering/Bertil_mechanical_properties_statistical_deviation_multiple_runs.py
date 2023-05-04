@@ -124,12 +124,16 @@ def stiffness_func(sxx_tension, linear_strain_tension, sxx_compression, linear_s
 if __name__ == '__main__':
 
     simulation_directory_SN_run_1 = '/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1/electrode_mechanical_loading_hertz'
-
     simulation_directory_SN_run_1_spread_1 = '/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1_spread_1/electrode_mechanical_loading_hertz'
     simulation_directory_SN_run_1_spread_2 = '/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1_spread_2/electrode_mechanical_loading_hertz'
     simulation_directory_SN_run_1_spread_3 = '/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1_spread_3/electrode_mechanical_loading_hertz'
     simulation_directory_SN_run_1_spread_4 = '/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1_spread_4/electrode_mechanical_loading_hertz'
 
+    simulation_directory_SN_run_1_2E = '/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1_2E/electrode_mechanical_loading_hertz'
+    simulation_directory_SN_run_1_2E_spread_1 = '/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1_2E_spread_1_good_results/electrode_mechanical_loading_hertz'
+    simulation_directory_SN_run_1_2E_spread_2 = '/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1_2E_spread_2_good_results/electrode_mechanical_loading_hertz'
+    simulation_directory_SN_run_1_2E_spread_3 = '/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1_2E_spread_3_good_results/electrode_mechanical_loading_hertz'
+    simulation_directory_SN_run_1_2E_spread_4 = '/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1_2E_spread_4_good_results/electrode_mechanical_loading_hertz'
     # simulation_directory_SN_run_1_2E = '/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1_2E/electrode_mechanical_loading_hertz'
     # simulation_directory_SN_run_1_El_Pl = '/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1_El_Pl/electrode_mechanical_loading_hertz'
     # simulation_directory_SN_run_1_br_05 = '/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1_br_05/electrode_mechanical_loading_hertz'
@@ -192,6 +196,39 @@ if __name__ == '__main__':
     sxx_compression_SN_run_1_spread_4, syy_compression_SN_run_1_spread_4, szz_compression_SN_run_1_spread_4, tau_xy_compression_SN_run_1_spread_4, \
     tau_xz_compression_SN_run_1_spread_4, tau_yx_compression_SN_run_1_spread_4, tau_yz_compression_SN_run_1_spread_4, tau_zx_compression_SN_run_1_spread_4, tau_zy_compression_SN_run_1_spread_4 = mech_plot_prop(
         simulation_directory_SN_run_1_spread_4)
+
+    #= 2E ==============================================================================================================
+    time_tension_SN_run_1_2E, linear_strain_tension_SN_run_1_2E, sxx_tension_SN_run_1_2E, syy_tension_SN_run_1_2E, szz_tension_SN_run_1_2E, tau_xy_tension_SN_run_1_2E, tau_xz_tension_SN_run_1_2E, \
+    tau_yx_tension_SN_run_1_2E, tau_yz_tension_SN_run_1_2E, tau_zx_tension_SN_run_1_2E, tau_zy_tension_SN_run_1_2E, time_compression_SN_run_1_2E, linear_strain_compression_SN_run_1_2E, \
+    sxx_compression_SN_run_1_2E, syy_compression_SN_run_1_2E, szz_compression_SN_run_1_2E, tau_xy_compression_SN_run_1_2E, \
+    tau_xz_compression_SN_run_1_2E, tau_yx_compression_SN_run_1_2E, tau_yz_compression_SN_run_1_2E, tau_zx_compression_SN_run_1_2E, tau_zy_compression_SN_run_1_2E = mech_plot_prop(
+        simulation_directory_SN_run_1_2E)
+
+    time_tension_SN_run_1_2E_spread_1, linear_strain_tension_SN_run_1_2E_spread_1, sxx_tension_SN_run_1_2E_spread_1, syy_tension_SN_run_1_2E_spread_1, szz_tension_SN_run_1_2E_spread_1, tau_xy_tension_SN_run_1_2E_spread_1, tau_xz_tension_SN_run_1_2E_spread_1, \
+    tau_yx_tension_SN_run_1_2E_spread_1, tau_yz_tension_SN_run_1_2E_spread_1, tau_zx_tension_SN_run_1_2E_spread_1, tau_zy_tension_SN_run_1_2E_spread_1, time_compression_SN_run_1_2E_spread_1, linear_strain_compression_SN_run_1_2E_spread_1, \
+    sxx_compression_SN_run_1_2E_spread_1, syy_compression_SN_run_1_2E_spread_1, szz_compression_SN_run_1_2E_spread_1, tau_xy_compression_SN_run_1_2E_spread_1, \
+    tau_xz_compression_SN_run_1_2E_spread_1, tau_yx_compression_SN_run_1_2E_spread_1, tau_yz_compression_SN_run_1_2E_spread_1, tau_zx_compression_SN_run_1_2E_spread_1, tau_zy_compression_SN_run_1_2E_spread_1 = mech_plot_prop(
+        simulation_directory_SN_run_1_2E_spread_1)
+
+    time_tension_SN_run_1_2E_spread_2, linear_strain_tension_SN_run_1_2E_spread_2, sxx_tension_SN_run_1_2E_spread_2, syy_tension_SN_run_1_2E_spread_2, szz_tension_SN_run_1_2E_spread_2, tau_xy_tension_SN_run_1_2E_spread_2, tau_xz_tension_SN_run_1_2E_spread_2, \
+    tau_yx_tension_SN_run_1_2E_spread_2, tau_yz_tension_SN_run_1_2E_spread_2, tau_zx_tension_SN_run_1_2E_spread_2, tau_zy_tension_SN_run_1_2E_spread_2, time_compression_SN_run_1_2E_spread_2, linear_strain_compression_SN_run_1_2E_spread_2, \
+    sxx_compression_SN_run_1_2E_spread_2, syy_compression_SN_run_1_2E_spread_2, szz_compression_SN_run_1_2E_spread_2, tau_xy_compression_SN_run_1_2E_spread_2, \
+    tau_xz_compression_SN_run_1_2E_spread_2, tau_yx_compression_SN_run_1_2E_spread_2, tau_yz_compression_SN_run_1_2E_spread_2, tau_zx_compression_SN_run_1_2E_spread_2, tau_zy_compression_SN_run_1_2E_spread_2 = mech_plot_prop(
+        simulation_directory_SN_run_1_2E_spread_2)
+
+    time_tension_SN_run_1_2E_spread_3, linear_strain_tension_SN_run_1_2E_spread_3, sxx_tension_SN_run_1_2E_spread_3, syy_tension_SN_run_1_2E_spread_3, szz_tension_SN_run_1_2E_spread_3, tau_xy_tension_SN_run_1_2E_spread_3, tau_xz_tension_SN_run_1_2E_spread_3, \
+    tau_yx_tension_SN_run_1_2E_spread_3, tau_yz_tension_SN_run_1_2E_spread_3, tau_zx_tension_SN_run_1_2E_spread_3, tau_zy_tension_SN_run_1_2E_spread_3, time_compression_SN_run_1_2E_spread_3, linear_strain_compression_SN_run_1_2E_spread_3, \
+    sxx_compression_SN_run_1_2E_spread_3, syy_compression_SN_run_1_2E_spread_3, szz_compression_SN_run_1_2E_spread_3, tau_xy_compression_SN_run_1_2E_spread_3, \
+    tau_xz_compression_SN_run_1_2E_spread_3, tau_yx_compression_SN_run_1_2E_spread_3, tau_yz_compression_SN_run_1_2E_spread_3, tau_zx_compression_SN_run_1_2E_spread_3, tau_zy_compression_SN_run_1_2E_spread_3 = mech_plot_prop(
+        simulation_directory_SN_run_1_2E_spread_3)
+
+    time_tension_SN_run_1_2E_spread_4, linear_strain_tension_SN_run_1_2E_spread_4, sxx_tension_SN_run_1_2E_spread_4, syy_tension_SN_run_1_2E_spread_4, szz_tension_SN_run_1_2E_spread_4, tau_xy_tension_SN_run_1_2E_spread_4, tau_xz_tension_SN_run_1_2E_spread_4, \
+    tau_yx_tension_SN_run_1_2E_spread_4, tau_yz_tension_SN_run_1_2E_spread_4, tau_zx_tension_SN_run_1_2E_spread_4, tau_zy_tension_SN_run_1_2E_spread_4, time_compression_SN_run_1_2E_spread_4, linear_strain_compression_SN_run_1_2E_spread_4, \
+    sxx_compression_SN_run_1_2E_spread_4, syy_compression_SN_run_1_2E_spread_4, szz_compression_SN_run_1_2E_spread_4, tau_xy_compression_SN_run_1_2E_spread_4, \
+    tau_xz_compression_SN_run_1_2E_spread_4, tau_yx_compression_SN_run_1_2E_spread_4, tau_yz_compression_SN_run_1_2E_spread_4, tau_zx_compression_SN_run_1_2E_spread_4, tau_zy_compression_SN_run_1_2E_spread_4 = mech_plot_prop(
+        simulation_directory_SN_run_1_2E_spread_4)
+
+
 
     stiffness_at_points_flag = 1
 
@@ -382,6 +419,41 @@ if __name__ == '__main__':
         std_stiffness = np.std(all_stiffness, axis=0)
         mean_stiffness = np.mean(all_stiffness, axis=0)
 
+        strain_points_total_SN_run_1_2E, stiffness_values_total_SN_run_1_2E = stiffness_func(sxx_tension_SN_run_1_2E,
+                                                                                       linear_strain_tension_SN_run_1_2E,
+                                                                                       sxx_compression_SN_run_1_2E,
+                                                                                       linear_strain_compression_SN_run_1_2E)
+
+        strain_points_total_SN_run_1_2E_spread_1, stiffness_values_total_SN_run_1_2E_spread_1 = stiffness_func(
+            sxx_tension_SN_run_1_2E_spread_1,
+            linear_strain_tension_SN_run_1_2E_spread_1,
+            sxx_compression_SN_run_1_2E_spread_1,
+            linear_strain_compression_SN_run_1_2E_spread_1)
+
+        strain_points_total_SN_run_1_2E_spread_2, stiffness_values_total_SN_run_1_2E_spread_2 = stiffness_func(
+            sxx_tension_SN_run_1_2E_spread_2,
+            linear_strain_tension_SN_run_1_2E_spread_2,
+            sxx_compression_SN_run_1_2E_spread_2,
+            linear_strain_compression_SN_run_1_2E_spread_2)
+
+        strain_points_total_SN_run_1_2E_spread_3, stiffness_values_total_SN_run_1_2E_spread_3 = stiffness_func(
+            sxx_tension_SN_run_1_2E_spread_3,
+            linear_strain_tension_SN_run_1_2E_spread_3,
+            sxx_compression_SN_run_1_2E_spread_3,
+            linear_strain_compression_SN_run_1_2E_spread_3)
+
+        strain_points_total_SN_run_1_2E_spread_4, stiffness_values_total_SN_run_1_2E_spread_4 = stiffness_func(
+            sxx_tension_SN_run_1_2E_spread_4,
+            linear_strain_tension_SN_run_1_2E_spread_4,
+            sxx_compression_SN_run_1_2E_spread_4,
+            linear_strain_compression_SN_run_1_2E_spread_4)
+
+        all_stiffness_2E = np.vstack((stiffness_values_total_SN_run_1_2E, stiffness_values_total_SN_run_1_2E_spread_1,
+                                   stiffness_values_total_SN_run_1_2E_spread_2, stiffness_values_total_SN_run_1_2E_spread_3,
+                                   stiffness_values_total_SN_run_1_2E_spread_4))
+        std_stiffness_2E = np.std(all_stiffness_2E, axis=0)
+        mean_stiffness_2E = np.mean(all_stiffness_2E, axis=0)
+
         # ===============================================================================================================
         fig_error_bar, ax_error_bar = plt.subplots()
         ax_error_bar.set_ylabel('Unloading stiffness [GPa]')
@@ -426,6 +498,47 @@ if __name__ == '__main__':
                    , title='Simulations')  # ,loc=(.63,.38)
         ax_error_bar.set_xlim(xmin=-2.3, xmax=2.3)
         ax_error_bar.xaxis.set_major_locator(MultipleLocator(.5))
+
+        fname = fig_dir + 'stiffness_points_mean_std'
+        plt.savefig(fname)
+
+
+        fig_error_bar_no_exp, ax_error_bar_no_exp = plt.subplots()
+
+        lns_mean_stiff_points = ax_error_bar_no_exp.plot(strain_points_total_SN_run_1 * 1E2, mean_stiffness * 1E-9,
+                                             linestyle='dashed',
+                                             marker='x', markersize=12, markeredgewidth=3, linewidth=3, color='C0',
+                                             label='Mean')
+
+        lns_error_bar = ax_error_bar_no_exp.errorbar(strain_points_total_SN_run_1 * 1E2, mean_stiffness * 1E-9,
+                                              yerr=std_stiffness * 1E-9, elinewidth=2, capthick=None, capsize=12, lw=0,
+                                              marker='', markersize=0, markeredgewidth=2, color='C0',
+                                              label='Standard deviation')
+
+        lns_mean_stiff_points_2E = ax_error_bar_no_exp.plot(strain_points_total_SN_run_1_2E * 1E2, mean_stiffness_2E * 1E-9,
+                                             linestyle='dashed',
+                                             marker='x', markersize=12, markeredgewidth=3, linewidth=3, color='C1',
+                                             label='Mean')
+
+        lns_error_bar_2E = ax_error_bar_no_exp.errorbar(strain_points_total_SN_run_1_2E * 1E2, mean_stiffness_2E * 1E-9,
+                                              yerr=std_stiffness * 1E-9, elinewidth=2, capthick=None, capsize=12, lw=0,
+                                              marker='', markersize=0, markeredgewidth=2, color='C1',
+                                              label='Standard deviation')
+
+        # = LEGEND==========
+        legend_1 = ax_error_bar_no_exp.legend([lns_mean_stiff_points[0], lns_error_bar], ['Mean', 'Standard deviation'],
+                                                 loc='center right', title=r'$\frac{b_r}{R} = 1.5$')
+        ax_error_bar_no_exp.add_artist(legend_1)
+
+        ax_error_bar_no_exp.legend([lns_mean_stiff_points_2E[0], lns_error_bar_2E], ['Mean', 'Standard deviation'],
+                                                 loc='upper right', title=r'$\frac{b_r}{R} = 2.0$')
+        # =================
+        ax_error_bar_no_exp.set_xlim(xmin=-2.3, xmax=2.3)
+        ax_error_bar_no_exp.set_ylim(ymin=0, ymax=2.9)
+        ax_error_bar_no_exp.xaxis.set_major_locator(MultipleLocator(.5))
+        ax_error_bar_no_exp.set_ylabel('Unloading stiffness [GPa]')
+        ax_error_bar_no_exp.set_xlabel('Strain [%]')
+
 
         fname = fig_dir + 'stiffness_points_mean_std'
         plt.savefig(fname)
@@ -607,6 +720,76 @@ if __name__ == '__main__':
         ax_stiff.set_ylim(ymin=0)
         fname = fig_dir + 'stiffness_points_spread'
         plt.savefig(fname)
+
+        # =2E STIFFNESS FOR ALL RUNS========================================================================================
+        fig_stiff_2E, ax_stiff_2E = plt.subplots()
+        ax_stiff_2E.set_ylabel('Unloading stiffness [GPa]')
+        ax_stiff_2E.set_xlabel('Strain [%]')
+        # ax_stiff.set_title('Unloading stiffness of electrode layer')
+        lns_stiff_run_1_2E = ax_stiff_2E.plot(strain_points_total_SN_run_1_2E * 100, stiffness_values_total_SN_run_1_2E * 1E-9,
+                                        linestyle='dashed',
+                                        marker='x', markersize=12, markeredgewidth=3, linewidth=3, label=r'$Run 1$')
+
+        lns_stiff_run_1_spread_1_2E = ax_stiff_2E.plot(strain_points_total_SN_run_1_2E_spread_1 * 100,
+                                                 stiffness_values_total_SN_run_1_2E_spread_1 * 1E-9, linestyle='dashed',
+                                                 marker='+', markersize=12, markeredgewidth=3, linewidth=3,
+                                                 label=r'$Run 2$')
+        lns_stiff_run_1_spread_2_2E = ax_stiff_2E.plot(strain_points_total_SN_run_1_2E_spread_2 * 100,
+                                                 stiffness_values_total_SN_run_1_2E_spread_2 * 1E-9,
+                                                 linestyle='dashed',
+                                                 marker='x', markersize=12, markeredgewidth=3, linewidth=3,
+                                                 label=r'$Run 3$')
+
+        lns_stiff_run_1_spread_3_2E = ax_stiff_2E.plot(strain_points_total_SN_run_1_2E_spread_3 * 100,
+                                                 stiffness_values_total_SN_run_1_2E_spread_3 * 1E-9, linestyle='dashed',
+                                                 marker='s', fillstyle='none', markersize=12, markeredgewidth=3,
+                                                 linewidth=3, label=r'$Run 4$')
+
+        lns_stiff_run_1_spread_4_2E = ax_stiff_2E.plot(strain_points_total_SN_run_1_2E_spread_4 * 100,
+                                                 stiffness_values_total_SN_run_1_2E_spread_4 * 1E-9, linestyle='dashed',
+                                                 marker='s', fillstyle='none', markersize=12, markeredgewidth=3,
+                                                 linewidth=3, label=r'$Run 5$')
+
+        # lns_stiff_br_05 = ax_stiff.plot(strain_points_total_SN_run_1_br_05 * 100, stiffness_values_total_SN_run_1_br_05 * 1E-9, linestyle='dashed',
+        #                           marker='x', markersize=12, markeredgewidth=3, linewidth=3, label=r'$b_r = 0.5$')
+        # lns_label = ax_stiff.plot([], [], ' ', label="Experiments")
+
+        # =EXPERIMENTAL POINTS===========================================================================================
+        lns_stiff_exp_eps_dot_01_2E = ax_stiff_2E.plot(exp_strain_points, Modulus_eps_dot_01,
+                                                 marker='o', markersize=10, markeredgewidth=3,
+                                                 linewidth=0, color='C9', label='$\dot{\Delta} = 0.1 mm/min$')
+
+        lns_stiff_exp_eps_dot_05_2E = ax_stiff_2E.plot(exp_strain_points, Modulus_eps_dot_05,
+                                                 marker='v', markersize=10, markeredgewidth=3, color='C8',
+                                                 linewidth=0, label='$\dot{\Delta} = 0.5 mm/min$')
+        lns_stiff_exp_eps_dot_10_2E = ax_stiff_2E.plot(exp_strain_points, Modulus_eps_dot_10,
+                                                 marker='s', markersize=10, markeredgewidth=3, color='C7',
+                                                 linewidth=0, label='$\dot{\Delta} = 1.0 mm/min$')
+        lns_stiff_exp_eps_dot_100_2E = ax_stiff_2E.plot(exp_strain_points, Modulus_eps_dot_100,
+                                                  marker='P', markersize=10, markeredgewidth=3, color='C6',
+                                                  linewidth=0, label='$\dot{\Delta} = 10 mm/min$')
+        lns_stiff_exp_eps_dot_300_2E = ax_stiff_2E.plot(exp_strain_points, Modulus_eps_dot_300,
+                                                  marker='D', markersize=10, markeredgewidth=3, color='C5',
+                                                  linewidth=0, label='$\dot{\Delta} = 30 mm/min$')
+
+        # ===========Legends=================================
+        handles_exp_2E = lns_stiff_exp_eps_dot_01_2E + lns_stiff_exp_eps_dot_05_2E + lns_stiff_exp_eps_dot_10_2E + lns_stiff_exp_eps_dot_100_2E + lns_stiff_exp_eps_dot_300_2E
+        labels_exp_2E = [l.get_label() for l in handles_exp_2E]
+        first_legend_br_2E = plt.legend(handles_exp_2E, labels_exp_2E, loc='upper right', title='Experimental results')
+
+        ax_stiff_2E.add_artist(first_legend_br_2E)
+
+        handles_br_2E = lns_stiff_run_1_2E + lns_stiff_run_1_spread_1_2E + lns_stiff_run_1_spread_2_2E + lns_stiff_run_1_spread_3_2E + \
+                     lns_stiff_run_1_spread_4_2E  # +lns_stiff_br_05
+        labels_br_2E = [l.get_label() for l in handles_br_2E]
+        plt.legend(handles_br_2E, labels_br_2E, loc='upper center', title='Simulations')
+
+        ax_stiff_2E.set_ylim(ymin=0)
+        fname = fig_dir + 'stiffness_points_spread_2E'
+        plt.savefig(fname)
+
+
+
 
         # fig_stiff_El_Pl, ax_stiff_El_Pl = plt.subplots()
         # ax_stiff_El_Pl.set_ylabel('Unloading stiffness [GPa]')
