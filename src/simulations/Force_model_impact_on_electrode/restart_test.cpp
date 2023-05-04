@@ -8,7 +8,7 @@
 
 #include "../../engine/engine.h"
 #include "../../contact_models/viscoelastic.h"
-#include "../../contact_models/Binder_behavour_investigation/elastic_plastic_binder_rigid_perfect_plastic_particle_OLD.h"
+#include "../../contact_models/Positive_electrode/elastic_plastic_binder_rigid_perfect_plastic_particle_OLD.h"
 #include "../../materials/electrode_material.h"
 
 

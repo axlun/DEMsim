@@ -8,7 +8,7 @@
 
 #include "../../engine/engine.h"
 #include "../../contact_models/viscoelastic.h"
-#include "../../contact_models/Binder_behavour_investigation/elastic_plastic_binder_rigid_plastic_particle.h"
+#include "../../contact_models/Positive_electrode/elastic_plastic_binder_rigid_plastic_particle.h"
 #include "../../materials/electrode_material.h"
 
 void DEM::restart_electrode_calendering_rigid_plastic(const std::string &settings_file_name)

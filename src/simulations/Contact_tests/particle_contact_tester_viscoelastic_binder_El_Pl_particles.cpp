@@ -15,8 +15,8 @@
 #include "../../contact_models/porous_electrode_contact.h"
 #include "../../contact_models/viscoelastic_binder_with_deformable_particles.h"
 #include "../../contact_models/elastic_perfect_plastic.h"
-//#include "../../contact_models/Binder_behavour_investigation/elastic_plastic_binder_rigid_perfect_plastic_particle.h"
-#include "../../contact_models/Binder_behavour_investigation/elastic_plastic_binder_hertz_plastic_particle.h"
+//#include "../../contact_models/Positive_electrode/elastic_plastic_binder_rigid_perfect_plastic_particle_OLD.h"
+#include "../../contact_models/Positive_electrode/elastic_plastic_binder_hertz_plastic_particle.h"
 #include "../../materials/electrode_material.h"
 #include "../../materials/porous_electrode_material.h"
 
@@ -24,7 +24,7 @@ void DEM::particle_contact_tester_viscoelastic_binder_El_Pl_particles(const std:
 {
     using namespace DEM;
     using ForceModel = elastic_plastic_binder_hertz_plastic_particle;
-    //    using ForceModel = elastic_plastic_binder_rigid_perfect_plastic_particle;
+    //    using ForceModel = elastic_plastic_binder_rigid_perfect_plastic_particle_OLD;
     using ParticleType = SphericalParticle<ForceModel>;
     using SurfaceType = DeformablePointSurface<ForceModel,ParticleType>;
     using namespace std::chrono_literals;

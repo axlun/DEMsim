@@ -15,9 +15,9 @@
 #include "../../contact_models/porous_electrode_contact.h"
 #include "../../contact_models/viscoelastic_binder_with_deformable_particles.h"
 #include "../../contact_models/elastic_perfect_plastic.h"
-//#include "../../contact_models/Binder_behavour_investigation/elastic_plastic_binder_rigid_perfect_plastic_particle_OLD.h"
-//#include "../../contact_models/Binder_behavour_investigation/elastic_plastic_binder_hertz_plastic_particle.h"
-#include "../../contact_models/Binder_behavour_investigation/elastic_plastic_binder_rigid_plastic_particle.h"
+//#include "../../contact_models/Positive_electrode/elastic_plastic_binder_rigid_perfect_plastic_particle_OLD.h"
+//#include "../../contact_models/Positive_electrode/elastic_plastic_binder_hertz_plastic_particle.h"
+#include "../../contact_models/Positive_electrode/elastic_plastic_binder_rigid_plastic_particle.h"
 #include "../../materials/electrode_material.h"
 #include "../../materials/porous_electrode_material.h"
 
@@ -39,7 +39,7 @@ void DEM::particle_normal_contact_tester_elastic_plastic_binder_rigid_plastic_pa
     auto mass_scaling = parameters.get_parameter<double>("mass_scaling");
     float time_step = parameters.get_parameter<double>("time_step")*1e-6; //Time input in µs
     std::chrono::duration<double> time_step_us {time_step};
-    EngineType simulator(time_step_us); //orig  1E0
+    EngineType simulator(time_step_us); //orig 1E0
 
     auto mat = simulator.create_material<ElectrodeMaterial>(4800);
     auto radius = parameters.get_parameter<double>("R");
@@ -134,7 +134,7 @@ void DEM::particle_normal_contact_tester_elastic_plastic_binder_rigid_plastic_pa
     simulator.setup((radius * mat->binder_thickness_fraction)*1);
 //=====Time controlled=================================================================================================================
     std::chrono::duration<double> move_time( 1.0);//mat->tau_i[0] );
-    auto particle_normal_displacement =  (radius * mat->binder_thickness_fraction)+radius*0.01; //Move particles 1% of the radius
+    auto particle_normal_displacement =  (radius * mat->binder_thickness_fraction)+radius*0.1; //Move particles 1% of the radius
     auto particle_velocity = particle_normal_displacement/2.0/move_time.count();
 
     std::chrono::duration<double> output_duration(move_time.count()/output_number);
