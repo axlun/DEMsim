@@ -125,7 +125,13 @@ if __name__ == '__main__':
     simulation_directory_SN_run_1_br_175 = '/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1_br_175/electrode_calendering_hertz'
     simulation_directory_SN_run_1_br_10 = '/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1_br_10/electrode_calendering_hertz'
     simulation_directory_SN_run_1_br_05 = '/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1_br_05/electrode_calendering_hertz'
+
     simulation_directory_SN_run_1_2E = '/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1_2E/electrode_calendering_hertz'
+    simulation_directory_SN_run_1_2E_spread_1 = '/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1_2E_spread_1_good_results/electrode_calendering_hertz'
+    simulation_directory_SN_run_1_2E_spread_2 = '/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1_2E_spread_2_good_results/electrode_calendering_hertz'
+    simulation_directory_SN_run_1_2E_spread_3 = '/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1_2E_spread_3_good_results/electrode_calendering_hertz'
+    simulation_directory_SN_run_1_2E_spread_4 = '/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1_2E_spread_4_good_results/electrode_calendering_hertz'
+
 
     # ==MECHANICAL LOADING==============================================================================================
     # simulation_directory = '/scratch/users/axlun/DEMsim/results/electrode_mechanical_loading_hertz/SN_hertz_5000p_btr_8_brr_08_dt_1e1_MS_1e2_SR_2e-3_compression'
@@ -162,6 +168,19 @@ if __name__ == '__main__':
     calendering_time_SN_run_1_spread_4, calendering_surface_pressure_SN_run_1_spread_4, bottom_surface_pressure_SN_run_1_spread_4, calendering_surface_position_SN_run_1_spread_4, sxx_SN_run_1_spread_4, syy_SN_run_1_spread_4, szz_SN_run_1_spread_4, tau_xy_SN_run_1_spread_4, tau_xz_SN_run_1_spread_4, tau_yx_SN_run_1_spread_4, tau_yz_SN_run_1_spread_4, tau_zx_SN_run_1_spread_4, tau_zy_SN_run_1_spread_4, kinetic_energy_data_SN_run_1_spread_4 = calendering_plot_processing(
         simulation_directory_SN_run_1_spread_4)
 
+    calendering_time_SN_run_1_2E, calendering_surface_pressure_SN_run_1_2E, bottom_surface_pressure_SN_run_1_2E, calendering_surface_position_SN_run_1_2E, sxx_SN_run_1_2E, syy_SN_run_1_2E, szz_SN_run_1_2E, tau_xy_SN_run_1_2E, tau_xz_SN_run_1_2E, tau_yx_SN_run_1_2E, tau_yz_SN_run_1_2E, tau_zx_SN_run_1_2E, tau_zy_SN_run_1_2E,kinetic_energy_data_SN_run_1_2E = calendering_plot_processing(simulation_directory_SN_run_1_2E)
+
+    calendering_time_SN_run_1_2E_spread_1, calendering_surface_pressure_SN_run_1_2E_spread_1, bottom_surface_pressure_SN_run_1_2E_spread_1, calendering_surface_position_SN_run_1_2E_spread_1, sxx_SN_run_1_2E_spread_1, syy_SN_run_1_2E_spread_1, szz_SN_run_1_2E_spread_1, tau_xy_SN_run_1_2E_spread_1, tau_xz_SN_run_1_2E_spread_1, tau_yx_SN_run_1_2E_spread_1, tau_yz_SN_run_1_2E_spread_1, tau_zx_SN_run_1_2E_spread_1, tau_zy_SN_run_1_2E_spread_1, kinetic_energy_data_SN_run_1_2E_spread_1 = calendering_plot_processing(
+        simulation_directory_SN_run_1_2E_spread_1)
+
+    calendering_time_SN_run_1_2E_spread_2, calendering_surface_pressure_SN_run_1_2E_spread_2, bottom_surface_pressure_SN_run_1_2E_spread_2, calendering_surface_position_SN_run_1_2E_spread_2, sxx_SN_run_1_2E_spread_2, syy_SN_run_1_2E_spread_2, szz_SN_run_1_2E_spread_2, tau_xy_SN_run_1_2E_spread_2, tau_xz_SN_run_1_2E_spread_2, tau_yx_SN_run_1_2E_spread_2, tau_yz_SN_run_1_2E_spread_2, tau_zx_SN_run_1_2E_spread_2, tau_zy_SN_run_1_2E_spread_2, kinetic_energy_data_SN_run_1_2E_spread_2 = calendering_plot_processing(
+        simulation_directory_SN_run_1_2E_spread_2)
+
+    calendering_time_SN_run_1_2E_spread_3, calendering_surface_pressure_SN_run_1_2E_spread_3, bottom_surface_pressure_SN_run_1_2E_spread_3, calendering_surface_position_SN_run_1_2E_spread_3, sxx_SN_run_1_2E_spread_3, syy_SN_run_1_2E_spread_3, szz_SN_run_1_2E_spread_3, tau_xy_SN_run_1_2E_spread_3, tau_xz_SN_run_1_2E_spread_3, tau_yx_SN_run_1_2E_spread_3, tau_yz_SN_run_1_2E_spread_3, tau_zx_SN_run_1_2E_spread_3, tau_zy_SN_run_1_2E_spread_3, kinetic_energy_data_SN_run_1_2E_spread_3 = calendering_plot_processing(
+        simulation_directory_SN_run_1_2E_spread_3)
+
+    calendering_time_SN_run_1_2E_spread_4, calendering_surface_pressure_SN_run_1_2E_spread_4, bottom_surface_pressure_SN_run_1_2E_spread_4, calendering_surface_position_SN_run_1_2E_spread_4, sxx_SN_run_1_2E_spread_4, syy_SN_run_1_2E_spread_4, szz_SN_run_1_2E_spread_4, tau_xy_SN_run_1_2E_spread_4, tau_xz_SN_run_1_2E_spread_4, tau_yx_SN_run_1_2E_spread_4, tau_yz_SN_run_1_2E_spread_4, tau_zx_SN_run_1_2E_spread_4, tau_zy_SN_run_1_2E_spread_4, kinetic_energy_data_SN_run_1_2E_spread_4 = calendering_plot_processing(
+        simulation_directory_SN_run_1_2E_spread_4)
 
     # ==LOADING AND UNLOADING HEIGHTS===================================================================================
 
@@ -175,6 +194,17 @@ if __name__ == '__main__':
                                                                              calendering_surface_position_SN_run_1_spread_3)
     loading_height_SN_run_1_spread_4,unload_height_SN_run_1_spread_4, specific_elastic_springback_SN_run_1_spread_4 = load_unload_height_func(calendering_surface_pressure_SN_run_1_spread_4,
                                                                              calendering_surface_position_SN_run_1_spread_4)
+
+    loading_height_SN_run_1_2E,unload_height_SN_run_1_2E, specific_elastic_springback_SN_run_1_2E = load_unload_height_func(calendering_surface_pressure_SN_run_1_2E,
+                                                                             calendering_surface_position_SN_run_1_2E)
+    loading_height_SN_run_1_2E_spread_1,unload_height_SN_run_1_2E_spread_1, specific_elastic_springback_SN_run_1_2E_spread_1 = load_unload_height_func(calendering_surface_pressure_SN_run_1_2E_spread_1,
+                                                                             calendering_surface_position_SN_run_1_2E_spread_1)
+    loading_height_SN_run_1_2E_spread_2,unload_height_SN_run_1_2E_spread_2, specific_elastic_springback_SN_run_1_2E_spread_2 = load_unload_height_func(calendering_surface_pressure_SN_run_1_2E_spread_2,
+                                                                             calendering_surface_position_SN_run_1_2E_spread_2)
+    loading_height_SN_run_1_2E_spread_3,unload_height_SN_run_1_2E_spread_3, specific_elastic_springback_SN_run_1_2E_spread_3 = load_unload_height_func(calendering_surface_pressure_SN_run_1_2E_spread_3,
+                                                                             calendering_surface_position_SN_run_1_2E_spread_3)
+    loading_height_SN_run_1_2E_spread_4,unload_height_SN_run_1_2E_spread_4, specific_elastic_springback_SN_run_1_2E_spread_4 = load_unload_height_func(calendering_surface_pressure_SN_run_1_2E_spread_4,
+                                                                             calendering_surface_position_SN_run_1_2E_spread_4)
     # print(loading_height_SN_run_1, unload_height_SN_run_1,elastic_recovery_SN_run_1)
     # print(loading_height_SN_run_1_spread_1,unload_height_SN_run_1_spread_1, elastic_recovery_SN_run_1_spread_1)
     # print(loading_height_SN_run_1_spread_2, unload_height_SN_run_1_spread_2, elastic_recovery_SN_run_1_spread_2)
@@ -184,6 +214,15 @@ if __name__ == '__main__':
     print(np.mean([specific_elastic_springback_SN_run_1,specific_elastic_springback_SN_run_1_spread_1,specific_elastic_springback_SN_run_1_spread_2,specific_elastic_springback_SN_run_1_spread_3,specific_elastic_springback_SN_run_1_spread_4]))
     print('Standard deviation of elastic recovery: ')
     print(np.std([specific_elastic_springback_SN_run_1,specific_elastic_springback_SN_run_1_spread_1,specific_elastic_springback_SN_run_1_spread_2,specific_elastic_springback_SN_run_1_spread_3,specific_elastic_springback_SN_run_1_spread_4]))
+
+    print('Mean of elastic recovery 2E: ')
+    print(np.mean([specific_elastic_springback_SN_run_1_2E, specific_elastic_springback_SN_run_1_2E_spread_1,
+                specific_elastic_springback_SN_run_1_2E_spread_2, specific_elastic_springback_SN_run_1_2E_spread_3,
+                   specific_elastic_springback_SN_run_1_2E_spread_4]))
+    print('Standard deviation of elastic recovery 2E: ')
+    print(np.std([specific_elastic_springback_SN_run_1_2E, specific_elastic_springback_SN_run_1_2E_spread_1,
+                  specific_elastic_springback_SN_run_1_2E_spread_2, specific_elastic_springback_SN_run_1_2E_spread_3,
+                  specific_elastic_springback_SN_run_1_2E_spread_4]))
 
     #==LOADING PLOT===============================================================================================
 
@@ -277,6 +316,131 @@ if __name__ == '__main__':
     calendering_surface_pressure_unloading_SN_run_1_spread_4_common = calendering_surface_pressure_unloading_SN_run_1_spread_4_int_pol(
         common_array_unloading)
 
+
+    max_initial_height_2E = max([calendering_surface_position_SN_run_1_2E[0],calendering_surface_position_SN_run_1_2E_spread_1[0],calendering_surface_position_SN_run_1_2E_spread_2[0],calendering_surface_position_SN_run_1_2E_spread_3[0],calendering_surface_position_SN_run_1_2E_spread_4[0]])
+    max_unload_height_2E = max([calendering_surface_position_SN_run_1_2E[-1],calendering_surface_position_SN_run_1_2E_spread_1[-1],calendering_surface_position_SN_run_1_2E_spread_2[-1],calendering_surface_position_SN_run_1_2E_spread_3[-1],calendering_surface_position_SN_run_1_2E_spread_4[-1]])
+    min_calendering_height_2E = 1.05
+    common_array_loading_2E = np.linspace(min_calendering_height_2E,max_initial_height_2E,1000)
+    common_array_unloading_2E = np.linspace(min_calendering_height_2E,max_unload_height_2E)
+
+    max_displacement_index_SN_run_1_2E = max_displacement_index_func(calendering_surface_position_SN_run_1_2E)
+    calendering_surface_position_loading_SN_run_1_2E = calendering_surface_position_SN_run_1_2E[
+                                                       :max_displacement_index_SN_run_1_2E]
+    calendering_surface_pressure_loading_SN_run_1_2E = calendering_surface_pressure_SN_run_1_2E[
+                                                       :max_displacement_index_SN_run_1_2E]
+    #print('calendering_surface_position_loading_SN_run_1_2E:' + str(calendering_surface_position_loading_SN_run_1_2E))
+    #print('calendering_surface_pressure_loading_SN_run_1_2E' + str(calendering_surface_pressure_loading_SN_run_1_2E))
+
+    calendering_surface_pressure_loading_SN_run_1_2E_int_pol = interpolate.interp1d(
+        calendering_surface_position_loading_SN_run_1_2E, calendering_surface_pressure_loading_SN_run_1_2E,
+        bounds_error=False, fill_value=0)
+    calendering_surface_pressure_loading_SN_run_1_2E_common = calendering_surface_pressure_loading_SN_run_1_2E_int_pol(
+        common_array_loading_2E)
+    #('calendering_surface_pressure_loading_SN_run_1_2E_common' + str(calendering_surface_pressure_loading_SN_run_1_2E_common))
+
+    calendering_surface_position_unloading_SN_run_1_2E = calendering_surface_position_SN_run_1_2E[
+                                                         max_displacement_index_SN_run_1_2E:]
+    calendering_surface_pressure_unloading_SN_run_1_2E = calendering_surface_pressure_SN_run_1_2E[
+                                                         max_displacement_index_SN_run_1_2E:]
+    calendering_surface_pressure_unloading_SN_run_1_2E_int_pol = interpolate.interp1d(
+        calendering_surface_position_unloading_SN_run_1_2E, calendering_surface_pressure_unloading_SN_run_1_2E,
+        bounds_error=False, fill_value=0)
+    calendering_surface_pressure_unloading_SN_run_1_2E_common = calendering_surface_pressure_unloading_SN_run_1_2E_int_pol(
+        common_array_unloading_2E)
+
+    max_displacement_index_SN_run_1_2E_spread_1 = max_displacement_index_func(
+        calendering_surface_position_SN_run_1_2E_spread_1)
+    calendering_surface_position_loading_SN_run_1_2E_spread_1 = calendering_surface_position_SN_run_1_2E_spread_1[
+                                                                :max_displacement_index_SN_run_1_2E_spread_1]
+    calendering_surface_pressure_loading_SN_run_1_2E_spread_1 = calendering_surface_pressure_SN_run_1_2E_spread_1[
+                                                                :max_displacement_index_SN_run_1_2E_spread_1]
+    calendering_surface_pressure_loading_SN_run_1_2E_spread_1_int_pol = interpolate.interp1d(
+        calendering_surface_position_loading_SN_run_1_2E_spread_1,
+        calendering_surface_pressure_loading_SN_run_1_2E_spread_1, bounds_error=False, fill_value=0)
+    calendering_surface_pressure_loading_SN_run_1_2E_spread_1_common = calendering_surface_pressure_loading_SN_run_1_2E_spread_1_int_pol(
+        common_array_loading_2E)
+
+    calendering_surface_position_unloading_SN_run_1_2E_spread_1 = calendering_surface_position_SN_run_1_2E_spread_1[
+                                                                  max_displacement_index_SN_run_1_2E_spread_1:]
+    calendering_surface_pressure_unloading_SN_run_1_2E_spread_1 = calendering_surface_pressure_SN_run_1_2E_spread_1[
+                                                                  max_displacement_index_SN_run_1_2E_spread_1:]
+    calendering_surface_pressure_unloading_SN_run_1_2E_spread_1_int_pol = interpolate.interp1d(
+        calendering_surface_position_unloading_SN_run_1_2E_spread_1,
+        calendering_surface_pressure_unloading_SN_run_1_2E_spread_1,
+        bounds_error=False, fill_value=0)
+    calendering_surface_pressure_unloading_SN_run_1_2E_spread_1_common = calendering_surface_pressure_unloading_SN_run_1_2E_spread_1_int_pol(
+        common_array_unloading_2E)
+
+    max_displacement_index_SN_run_1_2E_spread_2 = max_displacement_index_func(
+        calendering_surface_position_SN_run_1_2E_spread_2)
+    calendering_surface_position_loading_SN_run_1_2E_spread_2 = calendering_surface_position_SN_run_1_2E_spread_2[
+                                                                :max_displacement_index_SN_run_1_2E_spread_2]
+    calendering_surface_pressure_loading_SN_run_1_2E_spread_2 = calendering_surface_pressure_SN_run_1_2E_spread_2[
+                                                                :max_displacement_index_SN_run_1_2E_spread_2]
+    calendering_surface_pressure_loading_SN_run_1_2E_spread_2_int_pol = interpolate.interp1d(
+        calendering_surface_position_loading_SN_run_1_2E_spread_2,
+        calendering_surface_pressure_loading_SN_run_1_2E_spread_2, bounds_error=False, fill_value=0)
+    calendering_surface_pressure_loading_SN_run_1_2E_spread_2_common = calendering_surface_pressure_loading_SN_run_1_2E_spread_2_int_pol(
+        common_array_loading_2E)
+
+    calendering_surface_position_unloading_SN_run_1_2E_spread_2 = calendering_surface_position_SN_run_1_2E_spread_2[
+                                                                  max_displacement_index_SN_run_1_2E_spread_2:]
+    calendering_surface_pressure_unloading_SN_run_1_2E_spread_2 = calendering_surface_pressure_SN_run_1_2E_spread_2[
+                                                                  max_displacement_index_SN_run_1_2E_spread_2:]
+    calendering_surface_pressure_unloading_SN_run_1_2E_spread_2_int_pol = interpolate.interp1d(
+        calendering_surface_position_unloading_SN_run_1_2E_spread_2,
+        calendering_surface_pressure_unloading_SN_run_1_2E_spread_2,
+        bounds_error=False, fill_value=0)
+    calendering_surface_pressure_unloading_SN_run_1_2E_spread_2_common = calendering_surface_pressure_unloading_SN_run_1_2E_spread_2_int_pol(
+        common_array_unloading_2E)
+
+    max_displacement_index_SN_run_1_2E_spread_3 = max_displacement_index_func(
+        calendering_surface_position_SN_run_1_2E_spread_3)
+    calendering_surface_position_loading_SN_run_1_2E_spread_3 = calendering_surface_position_SN_run_1_2E_spread_3[
+                                                                :max_displacement_index_SN_run_1_2E_spread_3]
+    calendering_surface_pressure_loading_SN_run_1_2E_spread_3 = calendering_surface_pressure_SN_run_1_2E_spread_3[
+                                                                :max_displacement_index_SN_run_1_2E_spread_3]
+    calendering_surface_pressure_loading_SN_run_1_2E_spread_3_int_pol = interpolate.interp1d(
+        calendering_surface_position_loading_SN_run_1_2E_spread_3,
+        calendering_surface_pressure_loading_SN_run_1_2E_spread_3, bounds_error=False, fill_value=0)
+    calendering_surface_pressure_loading_SN_run_1_2E_spread_3_common = calendering_surface_pressure_loading_SN_run_1_2E_spread_3_int_pol(
+        common_array_loading_2E)
+
+    calendering_surface_position_unloading_SN_run_1_2E_spread_3 = calendering_surface_position_SN_run_1_2E_spread_3[
+                                                                  max_displacement_index_SN_run_1_2E_spread_3:]
+    calendering_surface_pressure_unloading_SN_run_1_2E_spread_3 = calendering_surface_pressure_SN_run_1_2E_spread_3[
+                                                                  max_displacement_index_SN_run_1_2E_spread_3:]
+    calendering_surface_pressure_unloading_SN_run_1_2E_spread_3_int_pol = interpolate.interp1d(
+        calendering_surface_position_unloading_SN_run_1_2E_spread_3,
+        calendering_surface_pressure_unloading_SN_run_1_2E_spread_3,
+        bounds_error=False, fill_value=0)
+    calendering_surface_pressure_unloading_SN_run_1_2E_spread_3_common = calendering_surface_pressure_unloading_SN_run_1_2E_spread_3_int_pol(
+        common_array_unloading_2E)
+
+    max_displacement_index_SN_run_1_2E_spread_4 = max_displacement_index_func(
+        calendering_surface_position_SN_run_1_2E_spread_4)
+    calendering_surface_position_loading_SN_run_1_2E_spread_4 = calendering_surface_position_SN_run_1_2E_spread_4[
+                                                                :max_displacement_index_SN_run_1_2E_spread_4]
+    calendering_surface_pressure_loading_SN_run_1_2E_spread_4 = calendering_surface_pressure_SN_run_1_2E_spread_4[
+                                                                :max_displacement_index_SN_run_1_2E_spread_4]
+    calendering_surface_pressure_loading_SN_run_1_2E_spread_4_int_pol = interpolate.interp1d(
+        calendering_surface_position_loading_SN_run_1_2E_spread_4,
+        calendering_surface_pressure_loading_SN_run_1_2E_spread_4, bounds_error=False, fill_value=0)
+    calendering_surface_pressure_loading_SN_run_1_2E_spread_4_common = calendering_surface_pressure_loading_SN_run_1_2E_spread_4_int_pol(
+        common_array_loading_2E)
+
+    calendering_surface_position_unloading_SN_run_1_2E_spread_4 = calendering_surface_position_SN_run_1_2E_spread_4[
+                                                                  max_displacement_index_SN_run_1_2E_spread_4:]
+    calendering_surface_pressure_unloading_SN_run_1_2E_spread_4 = calendering_surface_pressure_SN_run_1_2E_spread_4[
+                                                                  max_displacement_index_SN_run_1_2E_spread_4:]
+    calendering_surface_pressure_unloading_SN_run_1_2E_spread_4_int_pol = interpolate.interp1d(
+        calendering_surface_position_unloading_SN_run_1_2E_spread_4,
+        calendering_surface_pressure_unloading_SN_run_1_2E_spread_4,
+        bounds_error=False, fill_value=0)
+    calendering_surface_pressure_unloading_SN_run_1_2E_spread_4_common = calendering_surface_pressure_unloading_SN_run_1_2E_spread_4_int_pol(
+        common_array_unloading_2E)
+
+
     all_pressures_loading = np.vstack((calendering_surface_pressure_loading_SN_run_1_common,
                                        calendering_surface_pressure_loading_SN_run_1_spread_1_common,
                                        calendering_surface_pressure_loading_SN_run_1_spread_2_common,
@@ -293,6 +457,24 @@ if __name__ == '__main__':
 
     std_unloading = np.std(all_pressures_unloading,axis=0)
     mean_unloading = np.mean(all_pressures_unloading,axis=0)
+
+    all_pressures_loading_2E = np.vstack((calendering_surface_pressure_loading_SN_run_1_2E_common,
+                                       calendering_surface_pressure_loading_SN_run_1_2E_spread_1_common,
+                                       calendering_surface_pressure_loading_SN_run_1_2E_spread_2_common,
+                                       calendering_surface_pressure_loading_SN_run_1_2E_spread_3_common,
+                                       calendering_surface_pressure_loading_SN_run_1_2E_spread_4_common))
+    all_pressures_unloading_2E = np.vstack((calendering_surface_pressure_unloading_SN_run_1_2E_common,
+                                       calendering_surface_pressure_unloading_SN_run_1_2E_spread_1_common,
+                                       calendering_surface_pressure_unloading_SN_run_1_2E_spread_2_common,
+                                       calendering_surface_pressure_unloading_SN_run_1_2E_spread_3_common,
+                                       calendering_surface_pressure_unloading_SN_run_1_2E_spread_4_common))
+
+    std_loading_2E = np.std(all_pressures_loading_2E,axis=0)
+    mean_loading_2E = np.mean(all_pressures_loading_2E,axis=0)
+
+    std_unloading_2E = np.std(all_pressures_unloading_2E,axis=0)
+    mean_unloading_2E = np.mean(all_pressures_unloading_2E,axis=0)
+
 
     fig_calendering_loading, ax_calendering_loading = plt.subplots()
 #    ax_calendering_loading.plot(calendering_surface_position_SN_run_1[:max_displacement_index_SN_run_1 ] * 1E2,
@@ -314,19 +496,37 @@ if __name__ == '__main__':
 #    ax_calendering_loading.plot(calendering_surface_position_SN_run_1_spread_2[:max_displacement_index_SN_run_1_spread_2] * 1E2,
 #                                 calendering_surface_pressure_SN_run_1_spread_2[:max_displacement_index_SN_run_1_spread_2] * 1E-6, label=r'$Run 3$')
 
-    lns_mean_loading = ax_calendering_loading.plot(common_array_loading * 1E2, mean_loading * 1E-6,'k-')
-    lns_std_loading = plt.fill_between(common_array_loading * 1E2, (mean_loading-std_loading) * 1E-6,
+    lns_mean_loading = ax_calendering_loading.plot(common_array_loading * 1E2, mean_loading * 1E-6,'k-',zorder=1)
+    lns_std_loading = ax_calendering_loading.fill_between(common_array_loading * 1E2, (mean_loading-std_loading) * 1E-6,
                                        (mean_loading + std_loading) * 1E-6, lw=2, color='C0', alpha=1)
 
-    ax_calendering_loading.plot(common_array_unloading * 1E2, mean_unloading * 1E-6, 'k-')
-    plt.fill_between(common_array_unloading * 1E2, (mean_unloading - std_unloading) * 1E-6,
+    lns_mean_unloading = ax_calendering_loading.plot(common_array_unloading * 1E2, mean_unloading * 1E-6, 'k-')
+    lns_std_unloading = ax_calendering_loading.fill_between(common_array_unloading * 1E2, (mean_unloading - std_unloading) * 1E-6,
                      (mean_unloading + std_unloading) * 1E-6, color='C0',alpha=1)
+
+    lns_mean_loading_2E = ax_calendering_loading.plot(common_array_loading_2E * 1E2, mean_loading_2E * 1E-6,'k-')
+    lns_std_loading_2E = ax_calendering_loading.fill_between(common_array_loading_2E * 1E2, (mean_loading_2E-std_loading_2E) * 1E-6,
+                                       (mean_loading_2E + std_loading_2E) * 1E-6, lw=2, color='C1',alpha=1)
+
+    lns_mean_unloading_2E = ax_calendering_loading.plot(common_array_unloading_2E * 1E2, mean_unloading_2E * 1E-6, 'k-')
+    lns_std_unloading_2E = ax_calendering_loading.fill_between(common_array_unloading_2E * 1E2, (mean_unloading_2E - std_unloading_2E) * 1E-6,
+                     (mean_unloading_2E + std_unloading_2E) * 1E-6, color='C1',alpha=1,zorder=2)
+
 
     ax_calendering_loading.set_ylim(ymin=0)
     ax_calendering_loading.set_xlim(xmin=104.8,xmax=125)
     ax_calendering_loading.xaxis.set_major_locator(MultipleLocator(5))
 
-    ax_calendering_loading.legend([lns_mean_loading[0],lns_std_loading],['Mean','Standard deviation'],loc='best')
+    # = LEGEND==========
+    legend_1 = ax_calendering_loading.legend([lns_mean_loading[0],lns_std_loading],['Mean','Standard deviation'],loc='center right', title=r'$\frac{b_r}{R} = 1.5$')
+    ax_calendering_loading.add_artist(legend_1)
+
+    ax_calendering_loading.legend([lns_mean_loading_2E[0],lns_std_loading_2E],['Mean','Standard deviation'],loc='upper right', title=r'$\frac{b_r}{R} = 2.0$')
+    # =================
+
+
+
+
     ax_calendering_loading.set_ylabel("Calendering surface pressure [MPa]")
     ax_calendering_loading.set_xlabel("Calendering surface height [µm]")
 
@@ -357,5 +557,39 @@ if __name__ == '__main__':
 
     fname = fig_dir + 'calendering_surface_pressure_surface_position_full_statistical_spread'
     plt.savefig(fname)
+
+
+    fig_full_calendering_sim_2E, ax_full_calendering_sim_2E = plt.subplots()
+    ax_full_calendering_sim_2E.plot(calendering_surface_position_SN_run_1_2E[:] * 1E2, calendering_surface_pressure_SN_run_1_2E[:] * 1E-6, label=r'$Run 1$')
+    ax_full_calendering_sim_2E.plot(calendering_surface_position_SN_run_1_2E_spread_1[:] * 1E2,
+                                 calendering_surface_pressure_SN_run_1_2E_spread_1[:] * 1E-6, label=r'$Run 2$')
+    ax_full_calendering_sim_2E.plot(calendering_surface_position_SN_run_1_2E_spread_2[:] * 1E2,
+                                 calendering_surface_pressure_SN_run_1_2E_spread_2[:] * 1E-6, label=r'$Run 3$')
+    ax_full_calendering_sim_2E.plot(calendering_surface_position_SN_run_1_2E_spread_3[:] * 1E2,
+                                 calendering_surface_pressure_SN_run_1_2E_spread_3[:] * 1E-6, label=r'$Run 4$')
+    ax_full_calendering_sim_2E.plot(calendering_surface_position_SN_run_1_2E_spread_4[:] * 1E2,
+                                 calendering_surface_pressure_SN_run_1_2E_spread_4[:] * 1E-6, label=r'$Run 5$')
+    ax_full_calendering_sim_2E.set_xlim(xmin=104.8,xmax=125)
+    ax_full_calendering_sim_2E.xaxis.set_major_locator(MultipleLocator(5))
+
+    ax_full_calendering_sim_2E.set_ylim(ymin=0)
+    ax_full_calendering_sim_2E.set_ylabel("Calendering surface pressure [MPa]")
+    ax_full_calendering_sim_2E.set_xlabel("Calendering surface height [µm]")
+    #    ax_full_calendering_sim.set_title('calendering surface pressure')
+    fig_full_calendering_sim_2E.tight_layout()
+    ax_full_calendering_sim_2E.legend(loc="best")
+
+    fname = fig_dir + 'calendering_surface_pressure_surface_position_full_statistical_spread_2E'
+    plt.savefig(fname)
+
+
+    fig_common_and_real, ax_common_and_real = plt.subplots()
+    ax_common_and_real.plot(common_array_loading_2E,all_pressures_loading_2E[0,:])
+    ax_common_and_real.plot(calendering_surface_position_SN_run_1_2E[:],
+                            calendering_surface_pressure_SN_run_1_2E[:])
+    #ax_common_and_real.plot(common_array_loading_2E,all_pressures_loading_2E[1,:])
+    #ax_common_and_real.plot(calendering_surface_position_SN_run_1_2E_spread_1[:],
+    #                        calendering_surface_pressure_SN_run_1_2E_spread_1[:])
+
 
     plt.show()
