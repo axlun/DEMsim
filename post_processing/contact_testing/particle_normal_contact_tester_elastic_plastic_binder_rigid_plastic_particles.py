@@ -5,6 +5,7 @@ import re
 import matplotlib.pyplot as plt
 import matplotlib
 import matplotlib.style
+plt.style.use('axel_style')
 
 
 def get_parameter(parameter_dir, parameter):
@@ -16,7 +17,8 @@ def get_parameter(parameter_dir, parameter):
 
 if __name__ == '__main__':
 
-    simulation_directory = "C:/Users/Axel/Documents/DEM/results/contact_testing/elastic_plastic_binder_rigid_plastic_particle/particle_normal_contact/contact_test_1/"
+    # simulation_directory = "C:/Users/Axel/Documents/DEM/results/contact_testing/elastic_plastic_binder_rigid_plastic_particle/particle_normal_contact/contact_test_1/"
+    simulation_directory =  "C:/Users/Axel/Documents/DEM/results/contact_testing/elastic_plastic_binder_elastic_plastic_particle/particle_normal_contact/contact_test_1/"
     particle_files = os.listdir(simulation_directory+"particles/")
     time = []
     particle_time_and_file_name_dict = {}
@@ -52,6 +54,10 @@ if __name__ == '__main__':
     p1_data_mat = np.stack(p1_data,axis=0)
     contact_data_mat = np.stack(contact_data,axis=0)
       #print(force_fabric_tensor[1:,1]/(p1_data_mat[:,1]-p2_data_mat[:1]))
+    print(p1_data_mat[0,:])
+    R_0 = 1/(1/p1_data_mat[0,7] + 1/p2_data_mat[0,7])
+    print(R_0)
+
 
     # =====================================PARTICLE 1 y POSITION========================================================
     figure_partcle_y_positions_time, ax_particle_y_positions_time = plt.subplots()
@@ -64,7 +70,7 @@ if __name__ == '__main__':
     lns_particle_1 = ax_particle_positions.plot(p1_data_mat[:,1],p1_data_mat[:,2],'r*',linewidth=3,label=r'P_1')
     lns_particle_2 = ax_particle_positions.plot(p2_data_mat[:,1],p2_data_mat[:,2],'b*',linewidth=3,label=r'P_2')
     ax_particle_positions.set_xlabel("x position [m]")
-    ax_particle_positions.set_ylabel("y postition [m]")
+    ax_particle_positions.set_ylabel("y position [m]")
     ax_particle_positions.legend()
 
     # =====================================OVERLAP TO CONTACT FORCE========================================================
@@ -75,6 +81,15 @@ if __name__ == '__main__':
     ax_overlap_force.set_xlabel("Overlap [m]")
     ax_overlap_force.set_ylabel("Contact force [N]")
     ax_overlap_force.legend()
+
+    # =====================================NORMALISED OVERLAP TO CONTACT FORCE==========================================
+    figure_norm_overlap_force, ax_norm_overlap_force = plt.subplots()
+    lns_norm_overlap_force = ax_norm_overlap_force.plot(contact_data_mat[:,5]/R_0,contact_data_mat[:,6]/(R_0**2 * 4e9),'r',linewidth=3,label=r'Contact force')
+    lns_norm_binder_force = ax_norm_overlap_force.plot(contact_data_mat[:,5]/R_0,contact_data_mat[:,7]/(R_0**2 * 4e9),'g--',linewidth=3,label=r'Binder force')
+    lns_norm_particle_force = ax_norm_overlap_force.plot(contact_data_mat[:,5]/R_0,contact_data_mat[:,8]/(R_0**2 * 4e9),'b--',linewidth=3,label=r'Particle force')
+    ax_norm_overlap_force.set_xlabel("$h / R_0$")
+    ax_norm_overlap_force.set_ylabel("$F / R_0^2 \sigma_Y$")
+    ax_norm_overlap_force.legend()
 
     # ==KINETIC ENERGY=======================================================================================================
     figure_KE, ax_KE = plt.subplots()
