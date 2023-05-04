@@ -7,6 +7,15 @@ from os.path import exists
 import shutil
 import os
 
+def time_duplicate_remover(time_list, calendering_surface_position_list):
+    rm_list = []
+    for i in range(len(time_list) - 1):
+        if time_list[i] == time_list[i + 1]:
+            rm_list.append(i)
+    time_short = np.delete(time_list, rm_list)
+    calendering_surface_position_list_short = np.delete(calendering_surface_position_list, rm_list)
+    return time_short, calendering_surface_position_list_short
+
 def local_data_gatherer(simulation_directory):
     if exists(simulation_directory + '/periodic_bc.dou'):
         periodic_BC_data = np.genfromtxt(simulation_directory + '/periodic_bc.dou', delimiter=', ')
@@ -79,20 +88,31 @@ if __name__ == '__main__':
     # simulation_directory = '/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1_q3/electrode_natural_packing_hertz'
     # simulation_directory = '/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1_q_0_rmin_2_5_rmax_10/electrode_natural_packing_hertz'
 
-    # simulation_directory = '/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1/electrode_natural_packing_hertz'
+
     # simulation_directory = '/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1_rigid_plastic_particle/electrode_natural_packing_rigid_plastic_SY_4GPa/'
     # simulation_directory = 'c:/Users/Axel/Documents/DEM/results/electrode_natural_packing_rigid_plastic_particle/SN_0/'
-    simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/rigid_plastic_particle/SN_rigid_plastic_particle_N_500_dt_1e-1/electrode_natural_packing_rigid_plastic'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/rigid_plastic_particle/SN_rigid_plastic_particle_N_500_dt_1e0/electrode_natural_packing_rigid_plastic'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/rigid_plastic_particle/SN_rigid_plastic_particle_N_500_SY_400MPa/electrode_natural_packing_rigid_plastic'
 
-# ==CALENDERING=====================================================================================================
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1/electrode_natural_packing_hertz'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1_2E_spread_1/electrode_natural_packing_hertz'
+
+    # ==CALENDERING=====================================================================================================
     # simulation_directory = '/scratch/users/axlun/DEMsim/results/electrode_calendering_hertz/SN_ref_run_1_5000p_btr_5_brr_15_comp_time_20_hal_105_dt_1e2_MS_1e4'
     # simulation_directory = '/scratch/users/axlun/DEMsim/results/electrode_calendering_hertz/SN_ref_run_1_10000p_btr_5_brr_15_comp_time_20_hal_105_dt_1e2_MS_1e4'
     # simulation_directory = '/scratch/users/axlun/DEMsim/results/electrode_calendering_hertz/SN_ref_run_1_5000p_btr_5_brr_15_comp_time_20_hal_105_dt_1e2_MS_1e4'
     # simulation_directory = '/scratch/users/axlun/DEMsim/results/electrode_calendering_hertz/SN_ref_run_1_5000p_btr_5_brr_15_comp_time_20_hal_105_dt_1e2_MS_1e4_rot/'
-    # simulation_directory = '/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1/electrode_calendering_hertz'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1_10t/electrode_calendering_hertz'
     # simulation_directory = '/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1_q_0_rmin_3_rmax_10/electrode_calendering_hertz'
     # simulation_directory = '/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1_Ebner_raw_data/electrode_calendering_hertz'
     # simulation_directory = '/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1_rigid_plastic_particle/electrode_calendering_rigid_plastic/'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/rigid_plastic_particle/SN_rigid_plastic_particle_N_500_SY_400MPa/electrode_calendering_rigid_plastic'
+
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1_El_Pl/electrode_calendering_hertz'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1_2E_spread_4/electrode_calendering_hertz'
+    simulation_directory = '/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1/electrode_calendering_hertz'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1_br_20/electrode_calendering_hertz'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1_2E_spread_1/electrode_calendering_hertz'
 
     # ==MECHANICAL LOADING==============================================================================================
     # simulation_directory = '/scratch/users/axlun/DEMsim/results/electrode_mechanical_loading_hertz/SN_hertz_5000p_btr_8_brr_08_dt_1e1_MS_1e2_SR_2e-3_compression'
@@ -317,5 +337,24 @@ if __name__ == '__main__':
 
     fname = fig_dir + 'all_stress_time'
     plt.savefig(fname)
+
+    # # = CONTACTS TO CALENDERING HEIGHT ==================================================================================
+    #
+    # time_vec_contacts, particle_contact_vec, binder_contact_vec, binder_particle_contact_vec = \
+    #     contact_counter_bertil(simulation_directory)
+    # calendering_time_short, calendering_surface_position_short = time_duplicate_remover(
+    #     calendering_time, calendering_surface_position)
+    #
+    # fig_contacts_calendering_surface_position, ax_contacts_calendering_surface_position = plt.subplots()
+    # lns_contacts_calendering_surface_position = ax_contacts_calendering_surface_position.plot(calendering_surface_position_short,particle_contact_vec)
+    # ax_contacts_calendering_surface_position.set_xlabel("Calendering surface position [m]")
+    # ax_contacts_calendering_surface_position.set_ylabel('Contacts [-]')
+    #
+    # # = CONTACTS TO TIME ===============================================================================================
+    # fig_contacts_time, ax_contacts_time = plt.subplots()
+    # lns_contacts_time = ax_contacts_time.plot(
+    #     calendering_time_short, particle_contact_vec)
+    # ax_contacts_calendering_surface_position.set_xlabel("Time [s]")
+    # ax_contacts_calendering_surface_position.set_ylabel('Contacts [-]')
 
     plt.show()
