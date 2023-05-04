@@ -248,10 +248,10 @@ double  DEM::elastic_plastic_binder_rigid_plastic_particle::update_normal_force(
 {
     double dh = h-h_;
     h_ = h;
-    if (h > hmax_)
-    {
-        hmax_ = h;
-    }
+//    if (h > hmax_)
+//    {
+//        hmax_ = h;
+//    }
 
 // ==BINDER CONTACT MODEL===============================================================================================
     if(binder_contact_)
@@ -333,22 +333,58 @@ double  DEM::elastic_plastic_binder_rigid_plastic_particle::update_normal_force(
 //            bonded_ = false;
 //        }
         // Perfectly plastic deformation of particles, new maximum overlap and contact radius
-        if (h>=hmax_)
+        if (h_>hmax_)
         {
-            F_particle += pi * c_max_2_ * 2 * dh * R0_ * H_max_bar_ * particle_yield_stress_;
+            hmax_ = h_;
+            F_particle += pi * c_max_2_ * 2  * R0_ * H_max_bar_ * particle_yield_stress_ * dh;
+
+//            std::cout << "Delta F: "<<  pi * c_max_2_ * 2  * R0_ * H_max_bar_ * particle_yield_stress_ * dh << std::endl;
+
             // Update force to maximum force
             if (F_particle <= F_0_)
             {
                 F_particle = F_0_;
             }
             F_0_ = F_particle;
-            a_0_ = sqrt(c_max_2_*2*R0_*h);
+            a_0_ = sqrt(c_max_2_*2*R0_*hmax_);
         }
+//        else if (0 <= hmax_-(H_max_bar_*particle_yield_stress_*2*a_0_/Ep_eff_))
+//        {
+//            F_particle = 0;
+//        }
         // if overlap larger than elastic recover region initiation
-        else if (h > hmax_-(H_max_bar_*particle_yield_stress_*2*a_0_/Ep_eff_))
+        else if (h_ > hmax_-(H_max_bar_*particle_yield_stress_*2*a_0_/Ep_eff_))
         {
-            double a = 1*a_0_ * sqrt(1-pow((Ep_eff_ * (hmax_-h_)/(H_max_bar_*particle_yield_stress_*2*a_0_)),2));
-            F_particle += F_0_ * (2/pi)*((2*pow(a,2))/(pow(a_0_,3)*sqrt(1-pow((a/a_0_),2))))*a_0_*pow((Ep_eff_/(H_max_bar_*particle_yield_stress_*2*a_0_)),2)*((hmax_-h)/(sqrt(1-(pow((Ep_eff_/(H_max_bar_*particle_yield_stress_*2*a_0_)),2)*pow((hmax_-h),2)))))*dh;
+            std::cout << "elastic recovery region: "<< hmax_-(H_max_bar_*particle_yield_stress_*2*a_0_/Ep_eff_) << std::endl;
+            double a = 1 * a_0_ * sqrt(1-pow((Ep_eff_ * (hmax_-h_)/(H_max_bar_*particle_yield_stress_*2*a_0_)),2));
+            std::cout << "a_0_: "<< a_0_ << std::endl;
+            std::cout << "a: "<< a << std::endl;
+            std::cout << "F_0_: "<< F_0_ << std::endl;
+
+            std::cout << "dP/da: "<< (4/pi) * F_0_ * (pow(a,2)/(pow(a_0_,3)*
+                    sqrt(1-pow((a/a_0_),2)))) << std::endl;
+
+
+            std::cout << "da/dh: "<< a_0_ * pow((Ep_eff_/(H_max_bar_*particle_yield_stress_*2*a_0_)),2)
+                                     *((hmax_-h)/(sqrt(1-(pow((Ep_eff_/(H_max_bar_*particle_yield_stress_*2*a_0_))
+                    ,2)*pow((hmax_-h),2))))) << std::endl;
+
+            std::cout << "dh: "<< dh << std::endl;
+
+
+            std::cout << "Delta F: "<< F_0_ * (2/pi)*((2*pow(a,2))/(pow(a_0_,3)*
+                                         sqrt(1-pow((a/a_0_),2))))*a_0_*
+            pow((Ep_eff_/(H_max_bar_*particle_yield_stress_*2*a_0_)),2)
+            *((hmax_-h)/(sqrt(1-(pow((Ep_eff_/(H_max_bar_*particle_yield_stress_*2*a_0_))
+                    ,2)*pow((hmax_-h),2)))))*dh << std::endl;
+
+            F_particle += F_0_ * (2/pi)*((2*pow(a,2))/(pow(a_0_,3)*
+                    sqrt(1-pow((a/a_0_),2))))*a_0_*
+                            pow((Ep_eff_/(H_max_bar_*particle_yield_stress_*2*a_0_)),2)
+                            *((hmax_-h)/(sqrt(1-(pow((Ep_eff_/(H_max_bar_*particle_yield_stress_*2*a_0_))
+                                                     ,2)*pow((hmax_-h),2)))))*dh;
+            std::cout << "F_particle: "<< F_particle << std::endl;
+
             if(F_particle<0)
             {
                 F_particle = 0;
