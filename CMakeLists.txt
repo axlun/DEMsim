@@ -62,9 +62,12 @@ add_executable(DEMsim
 				src/simulations/Contact_tests/contact_tester.cpp
 				src/simulations/Contact_tests/binder_tangential_contact_tester_elastic_plastic_binder_hertz_particles.cpp
 				src/simulations/Contact_tests/particle_normal_contact_tester_elastic_plastic_binder_rigid_plastic_particles.cpp
+				src/simulations/Contact_tests/particle_normal_contact_tester_elastic_plastic_binder_elastic_plastic_particles.cpp
 				src/simulations/Contact_tests/binder_wall_tangential_contact_tester_elastic_plastic_binder_hertz_particles.cpp
 				src/simulations/Contact_tests/normal_contact_tester_elastic_plastic_binder_hertz_particles.cpp
 				src/simulations/Contact_tests/particle_to_wall_contact_tester_elastic_plastic_binder_hertz_particles.cpp
+				src/simulations/Contact_tests/particle_to_wall_drop_contact_tester_elastic_plastic_binder_rigid_plastic_particles.cpp
+				src/simulations/Contact_tests/particle_to_wall_drop_contact_tester_elastic_plastic_binder_elastic_plastic_particles.cpp
 				src/simulations/Contact_tests/contact_tester_linear_elastic_perfect_plastic_material.cpp
 				src/simulations/Contact_tests/binder_contact_tester_viscoelastic_binder_El_Pl_particles.cpp
 				src/simulations/Contact_tests/particle_contact_tester_viscoelastic_binder_El_Pl_particles.cpp
@@ -90,12 +93,14 @@ add_executable(DEMsim
 				src/simulations/stone_compaction.cpp
 				src/contact_models/viscoelastic.cpp
 				src/contact_models/viscoelastic.h
-        		src/contact_models/Binder_behavour_investigation/elastic_plastic_binder_rigid_perfect_plastic_particle_OLD.cpp
-       			src/contact_models/Binder_behavour_investigation/elastic_plastic_binder_rigid_perfect_plastic_particle_OLD.h
-				src/contact_models/Binder_behavour_investigation/elastic_plastic_binder_hertz_plastic_particle.cpp
-				src/contact_models/Binder_behavour_investigation/elastic_plastic_binder_hertz_plastic_particle.h
-				src/contact_models/Binder_behavour_investigation/elastic_plastic_binder_rigid_plastic_particle.cpp
-				src/contact_models/Binder_behavour_investigation/elastic_plastic_binder_rigid_plastic_particle.h
+				src/contact_models/Positive_electrode/elastic_plastic_binder_rigid_perfect_plastic_particle_OLD.cpp
+				src/contact_models/Positive_electrode/elastic_plastic_binder_rigid_perfect_plastic_particle_OLD.h
+				src/contact_models/Positive_electrode/elastic_plastic_binder_hertz_plastic_particle.cpp
+				src/contact_models/Positive_electrode/elastic_plastic_binder_hertz_plastic_particle.h
+				src/contact_models/Positive_electrode/elastic_plastic_binder_rigid_plastic_particle.cpp
+				src/contact_models/Positive_electrode/elastic_plastic_binder_rigid_plastic_particle.h
+				src/contact_models/Positive_electrode/elastic_plastic_binder_elastic_plastic_particle.cpp
+				src/contact_models/Positive_electrode/elastic_plastic_binder_elastic_plastic_particle.h
 				src/materials/electrode_material.h
 				src/materials/electrode_material.cpp
 				src/utilities/printing_functions.h
