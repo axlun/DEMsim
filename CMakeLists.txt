@@ -74,6 +74,7 @@ add_executable(DEMsim
 				src/simulations/Contact_tests/wall_contact_tester_viscoelastic_binder_El_Pl_particles.cpp
 				src/simulations/Contact_tests/contact_tester_viscoelastic_binder_El_Pl_particles.cpp
 				src/simulations/Force_model_impact_on_electrode/natural_packing_hertz.cpp
+				src/simulations/Force_model_impact_on_electrode/el_pl_binder_el_pl_particle/electrode_natural_packing_el_pl_binder_el_pl_particle.cpp
 				src/simulations/Force_model_impact_on_electrode/electrode_calendering.cpp
 				src/simulations/Force_model_impact_on_electrode/electrode_calendering_hertz.cpp
 				src/simulations/Force_model_impact_on_electrode/electrode_natural_packing_hertz.cpp
@@ -81,6 +82,7 @@ add_executable(DEMsim
 				src/simulations/Force_model_impact_on_electrode/restart_test.cpp
 				src/simulations/Force_model_impact_on_electrode/restart_electrode_calendering.cpp
 				src/simulations/Force_model_impact_on_electrode/restart_electrode_calendering_hertz.cpp
+				src/simulations/Force_model_impact_on_electrode/el_pl_binder_el_pl_particle/restart_electrode_calendering_el_pl_binder_el_pl_particle.cpp
 				src/simulations/Force_model_impact_on_electrode/restart_electrode_calendering_rigid_plastic.cpp
 				src/simulations/Force_model_impact_on_electrode/electrode_mechanical_loading.cpp
 				src/simulations/Force_model_impact_on_electrode/electrode_mechanical_loading_hertz.cpp

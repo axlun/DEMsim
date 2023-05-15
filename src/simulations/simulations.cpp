@@ -44,6 +44,7 @@ std::map<std::string, DEM::SimulationFunctionPtr> DEM::valid_simulations() {
             {"electrode_calendering_hertz",                                                   DEM::electrode_calendering_hertz},
             {"electrode_resting_hertz",                                                       DEM::electrode_resting_hertz},
             {"electrode_natural_packing_hertz",                                               DEM::electrode_natural_packing_hertz},
+            {"electrode_natural_packing_el_pl_binder_el_pl_particle",                         DEM::electrode_natural_packing_el_pl_binder_el_pl_particle},
             {"electrode_natural_packing_rigid_perfect_plastic",                               DEM::electrode_natural_packing_rigid_perfect_plastic},
             {"natural_packing_hertz",                                                         DEM::natural_packing_hertz},
             {"restart_test",                                                                  DEM::restart_test},
@@ -51,6 +52,7 @@ std::map<std::string, DEM::SimulationFunctionPtr> DEM::valid_simulations() {
             {"electrode_mechanical_loading_hertz",                                            DEM::electrode_mechanical_loading_hertz},
             {"electrode_mechanical_loading_rigid_plastic",                                    DEM::electrode_mechanical_loading_rigid_plastic},
             {"restart_electrode_calendering_hertz",                                           DEM::restart_electrode_calendering_hertz},
+            {"restart_electrode_calendering_el_pl_binder_el_pl_particle",                     DEM::restart_electrode_calendering_el_pl_binder_el_pl_particle},
             {"restart_electrode_calendering_rigid_plastic",                                   DEM::restart_electrode_calendering_rigid_plastic},
             {"restart_electrode_calendering",                                                 DEM::restart_electrode_calendering}
     };

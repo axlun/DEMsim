@@ -54,16 +54,12 @@ namespace DEM{
         double kp_ = 0.;
         double kTp_ = 0.;
         double psi0_ = 0;
-        double kb_coeff = 1;
         double psi0T_B_ = 0.;
-        double h_ = 0;
+        double h_ = 0.0;
         double hmax_ = -1e99;
-        double c_max_2_ = 1.43; //From EO2013
-        double H_max_bar_ =  2.8; //From EO2013
         double h_plast_ =0.0;
         double a_0_ = -1e99;
         double F_0_ = -1e99; //Maximum particle contact force
-        double yield_h_ = 1e99;
         double particle_yield_stress_ = 1e99; //high stress if yield is not used
         double binder_yield_stress_ = 1e99; //high stress if yield is not used
         double A = 0.0;

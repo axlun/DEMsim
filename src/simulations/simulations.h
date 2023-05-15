@@ -45,11 +45,13 @@ namespace DEM {
     void electrode_calendering_hertz(const std::string& settings_file_name);
     void electrode_resting_hertz(const std::string& settings_file_name);
     void electrode_natural_packing_hertz(const std::string& settings_file_name);
+    void electrode_natural_packing_el_pl_binder_el_pl_particle(const std::string& settings_file_name);
     void electrode_natural_packing_rigid_perfect_plastic(const std::string& settings_file_name);
     void electrode_calendering(const std::string& settings_file_name);
     void restart_test(const std::string& settings_file_name);
     void restart_electrode_calendering(const std::string& settings_file_name);
     void restart_electrode_calendering_hertz(const std::string& settings_file_name);
+    void restart_electrode_calendering_el_pl_binder_el_pl_particle(const std::string& settings_file_name);
     void restart_electrode_calendering_rigid_plastic(const std::string& settings_file_name);
     void electrode_mechanical_loading(const std::string& settings_file_name);
     void electrode_mechanical_loading_hertz(const std::string& settings_file_name);

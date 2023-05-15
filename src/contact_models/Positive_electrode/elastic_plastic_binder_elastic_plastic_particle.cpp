@@ -34,13 +34,11 @@ DEM::elastic_plastic_binder_elastic_plastic_particle::elastic_plastic_binder_ela
     br_ = mat1-> binder_radius_fraction * particle1->get_radius();
     bt_ = mat1-> binder_thickness_fraction * particle1->get_radius(); //Binder thickness determined by fraction of
     A = DEM::pi*br_*br_;
-    kb_coeff = mat1->binder_stiffness_coefficient; //reduction of binder stiffness due to geometry
     binder_yield_stress_ = mat1->binder_yield_stress_;
     particle_yield_stress_ = mat1->particle_yield_stress_;
-    psi0_ = kb_coeff*(1 - v1)/(1 + v1)/(1 - 2*v1)*E1*A/bt_; //The instantaneous value of the relaxation function for the binder
+    psi0_ = (1 - v1)/(1 + v1)/(1 - 2*v1)*E1*A/bt_; //The instantaneous value of the relaxation function for the binder
     psi0T_B_ = E1/bt_*A/2/(1+v1);
     kTp_ = 8/((2-vp1)/Gp1 + (2-vp2)/Gp2)*0.001*R0_; //Tangential particle stiffness following Hertz contact for two particles, 0.001R0 represents
-    kp_ = (4./3)*Ep_eff_* sqrt(R0_); //Particle stiffness following Hertz contact for two particles
     adhesive_ = true;
 //    new_binder_contacts_ = true;
     binder_contact_ = create_binder_contact(mat1);
@@ -81,13 +79,11 @@ DEM::elastic_plastic_binder_elastic_plastic_particle::elastic_plastic_binder_ela
         br_ = mat1-> binder_radius_fraction * particle1->get_radius();
         bt_ = mat1-> binder_thickness_fraction * particle1->get_radius();
         A = DEM::pi*br_*br_;
-        kb_coeff = mat1->binder_stiffness_coefficient; //reduction of binder stiffness due to geometry
         binder_yield_stress_ = mat1->binder_yield_stress_;
         particle_yield_stress_ = mat1->particle_yield_stress_;
-        psi0_ = kb_coeff*(1 - v1)/(1 + v1)/(1 - 2*v1)*E1*A/bt_; //The instantaneous value of the relaxation function for the binder
+        psi0_ = (1 - v1)/(1 + v1)/(1 - 2*v1)*E1*A/bt_; //The instantaneous value of the relaxation function for the binder
         psi0T_B_ = E1/bt_*A/2/(1+v1); //The instantaneous  value of the shear relaxation function for the binder
         kTp_ = 8/((2-vp1)/Gp1)*0.001*R0_;                 //Tangential particle stiffness following Hertz contact for two particles, 0.001R0 represents
-        kp_ = (4./3)*Ep_eff_* sqrt(R0_); //Particle stiffness following Hertz contact for two particles
         adhesive_ = surface->adhesive();
 //        new_binder_contacts_ = true;
         binder_contact_ = create_binder_contact(mat1);
@@ -116,14 +112,12 @@ DEM::elastic_plastic_binder_elastic_plastic_particle::elastic_plastic_binder_ela
         psi0_(parameters.get_parameter<double>("psi0_")),
         psi0T_B_(parameters.get_parameter<double>("psi0T_B_")),
         kTp_(parameters.get_parameter<double>("kTp_")),
-        kp_(parameters.get_parameter<double>("kp_")),
         R0_(parameters.get_parameter<double>("R0")),
         //Rb_(parameters.get_parameter<double>("Rb")),
         bt_(parameters.get_parameter<double>("bt")),
         br_(parameters.get_parameter<double>("br")),
         A(parameters.get_parameter<double>("A")),
         Ep_eff_(parameters.get_parameter<double>("Ep_eff")),
-        kb_coeff(parameters.get_parameter<double>("kb_coeff")),
         binder_yield_stress_(parameters.get_parameter<double>("binder_yield_stress_")),
         h_(parameters.get_parameter<double>("h")),
         hmax_(parameters.get_parameter<double>("hmax")),
@@ -173,11 +167,9 @@ DEM::elastic_plastic_binder_elastic_plastic_particle::elastic_plastic_binder_ela
         psi0_(parameters.get_parameter<double>("psi0_")),
         psi0T_B_(parameters.get_parameter<double>("psi0T_B_")),
         kTp_(parameters.get_parameter<double>("kTp_")),
-        kp_(parameters.get_parameter<double>("kp_")),
         R0_(parameters.get_parameter<double>("R0")),
         //Rb_(parameters.get_parameter<double>("Rb")),
         Ep_eff_(parameters.get_parameter<double>("Ep_eff")),
-        kb_coeff(parameters.get_parameter<double>("kb_coeff")),
         binder_yield_stress_(parameters.get_parameter<double>("binder_yield_stress_")),
         particle_yield_stress_(parameters.get_parameter<double>("particle_yield_stress_")),
         bt_(parameters.get_parameter<double>("bt")),
@@ -340,26 +332,13 @@ double  DEM::elastic_plastic_binder_elastic_plastic_particle::update_normal_forc
                 a_0_ = (a_1_ * pow(0.25, beta_1_) + a_2_ * pow((0.25), beta_2_)) +
                         (h_norm-0.25) * (a_1_ * beta_1_ * pow((0.25), (beta_1_ - 1)) + a_2_ * beta_2_ * pow((0.25), (beta_2_ - 1)));
             }
-//            std::cout << "Delta F: "<<  pi * c_max_2_ * 2  * R0_ * H_max_bar_ * particle_yield_stress_ * dh << std::endl;
-            // Update force to maximum force
-//            if (F_particle <= F_0_) // Not needed as force is not updated iteratively
-//            {
-//                F_particle = F_0_;
-//            }
-
         h_plast_  = h_ - pow(pow(F_particle * (3./(4.*Ep_eff_)),2)/R0_,(1./3.));
-        // std::cout << "h_-h_plast_: "<<  h_plast_ << std::endl;
         }
-//        else if (0 <= hmax_-(H_max_bar_*particle_yield_stress_*2*a_0_/Ep_eff_))
-//        {
-//            F_particle = 0;
-//        }
         // if overlap larger than elastic recover region initiation
         else if (h_ > h_plast_)
         {
             // std::cout << "h_-h_plast_: "<<  h_-h_plast_ << std::endl;
             F_particle = 4./3. * Ep_eff_ * pow(R0_* pow((h_-h_plast_),3) ,1./2.);
-            // F_particle += 1.5*kp_*sqrt(h_)*dh;
             if(F_particle<0)
             {
                 F_particle = 0;
@@ -367,25 +346,6 @@ double  DEM::elastic_plastic_binder_elastic_plastic_particle::update_normal_forc
         }
         else {F_particle = 0;} // See how the hertz unloading should be performed
     }
-// ==HERTZ-PLASTIC MODEL================================================================================================
-//        if (h>=yield_h_ && h >= hmax_) // Perfectly plastic deformation of particles, new maximum overlap and contact radius
-//        {
-//            F_particle += 1.5 * kp_ * sqrt(yield_h_) * dh;
-//        }
-//        else if (h > h_plast_) //if overlap larger than elastic recover region
-//        {
-//            F_particle += 1.5*kp_*sqrt(h_)*dh;
-//            if(F_particle<0)
-//            {
-//                F_particle = 0;
-//                h_plast_ = h_;
-//            }
-//        }
-//        else
-//        {
-//            F_particle = 0;
-//        }
-// =====================================================================================================================
     else
     {
         F_particle = 0;
@@ -492,8 +452,6 @@ std::string DEM::elastic_plastic_binder_elastic_plastic_particle::restart_data()
            << named_print(hmax_, "hmax") << ", "
            << named_print(h_plast_, "h_plast_") << ", "
            << named_print(kTp_, "kTp_") << ", "
-           << named_print(kp_, "kp_") << ", "
-           << named_print(kb_coeff, "kb_coeff") << ", "
            << named_print(Ep_eff_, "Ep_eff") << ", "
            << named_print(binder_yield_stress_, "binder_yield_stress_") << ", "
            << named_print(particle_yield_stress_, "particle_yield_stress_") << ", "
