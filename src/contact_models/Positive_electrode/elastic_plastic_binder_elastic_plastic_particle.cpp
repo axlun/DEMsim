@@ -314,7 +314,7 @@ double  DEM::elastic_plastic_binder_elastic_plastic_particle::update_normal_forc
 //            bonded_ = false;
 //        }
         // Elastic-plastic deformation of particles, new maximum overlap and contact radius
-        if (h_>=hmax_)
+        if (h_>=hmax_ || h_plast_ <= 0)
         {
 //            hmax_ = h_;
             double h_norm = h_/R0_;
