@@ -86,6 +86,7 @@ add_executable(DEMsim
 				src/simulations/Force_model_impact_on_electrode/restart_electrode_calendering_rigid_plastic.cpp
 				src/simulations/Force_model_impact_on_electrode/electrode_mechanical_loading.cpp
 				src/simulations/Force_model_impact_on_electrode/electrode_mechanical_loading_hertz.cpp
+				src/simulations/Force_model_impact_on_electrode/el_pl_binder_el_pl_particle/electrode_mechanical_loading_el_pl_binder_el_pl_particle.cpp
 				src/simulations/Force_model_impact_on_electrode/electrode_mechanical_loading_rigid_plastic.cpp
 				src/simulations/Force_model_impact_on_electrode/electrode_resting_hertz.cpp
 				src/simulations/cyclic_triaxial.cpp

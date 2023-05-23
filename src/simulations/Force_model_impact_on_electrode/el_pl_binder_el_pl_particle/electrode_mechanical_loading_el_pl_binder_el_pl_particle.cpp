@@ -33,6 +33,7 @@ void DEM::electrode_mechanical_loading_el_pl_binder_el_pl_particle(const std::st
 
     auto mat = dynamic_cast<ElectrodeMaterial *>(simulator.get_material(0));
     mat->new_binder_contacts = false;
+    //comment
 
 //==================SET TIMESTEP AND MASS SCALING=======================================================================
     double time_step = parameters.get_parameter<double>("time_step")*1e-6;
