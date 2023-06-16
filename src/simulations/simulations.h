@@ -57,6 +57,7 @@ namespace DEM {
     void electrode_mechanical_loading_hertz(const std::string& settings_file_name);
     void electrode_mechanical_loading_rigid_plastic(const std::string& settings_file_name);
     void electrode_mechanical_loading_el_pl_binder_el_pl_particle(const std::string& settings_file_name);
+    void electrode_relaxation_el_pl_binder_el_pl_particle(const std::string& settings_file_name);
     std::map<std::string, SimulationFunctionPtr> valid_simulations();
 
 
