@@ -71,6 +71,13 @@ void DEM::electrode_relaxation_el_pl_binder_el_pl_particle(const std::string &se
 
     auto deformable_surface = simulator.get_surface<EngineType::DeformablePointSurfacePointer>("bottom_plate");
 
+    std::cout << "**************** Load step 0 - pre relaxation ****************\n";
+    std::chrono::duration<double> pre_relaxation_time {100};
+    EngineType::RunForTime run_for_pre_relaxation_time(simulator,pre_relaxation_time);
+    simulator.run(run_for_pre_relaxation_time);
+
+
+
     std::cout << "**************** Load step 1 ****************\n";
     std::chrono::duration<double> strain_time_0_relax {(strain_point_relaxation)/strain_rate};
     std::cout << "Loading time: " << strain_time_0_relax.count() << "s\n";
@@ -85,7 +92,7 @@ void DEM::electrode_relaxation_el_pl_binder_el_pl_particle(const std::string &se
     deformable_surface->set_in_plane_strain_rates(0,0);
     run_for_time_BC_stretch.reset(relaxation_time);
     simulator.run(run_for_time_BC_stretch);
-
+    std::cout << "**************** Simulation finished ****************\n";
 
 //
 //    std::cout << "**************** Load step 2 ****************\n";
@@ -180,7 +187,6 @@ void DEM::electrode_relaxation_el_pl_binder_el_pl_particle(const std::string &se
 //    simulator.set_periodic_boundary_condition_strain_rate('x',-loading_direction*strain_rate);
 //    deformable_surface->set_in_plane_strain_rates(-loading_direction*strain_rate,0);
 //    simulator.run(run_for_time_BC_stretch);
-    std::cout << "**************** Simulation finished ****************\n";
 
 //=====================================================STRETCH THE PERIODIC BCs=======================================
 //    std::cout << "**************** Load step 1 ****************\n";
