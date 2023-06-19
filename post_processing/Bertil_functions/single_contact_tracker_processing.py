@@ -41,11 +41,12 @@ if __name__ == '__main__':
             # contact_data_vec = np.vstack([contact_data_vec,data[np.where((data[:, 0] == p1))]])
 
             print(type(data[np.where((data[:, 0] == p1))]))
+            print(data[np.where((data[:, 0] == p1))].shape)
             print(data[np.where((data[:, 0] == p1))])
             print(type(data[np.where((data[:, 0] == p1))][0]))
             print(data[np.where((data[:, 0] == p1))][0])
-            print(type(data[np.where((data[:, 0] == p1))][0][0]))
-            print(data[np.where((data[:, 0] == p1))][0][0])
+            print(type(data[np.where((data[:, 0] == p1))][:][0]))
+            print(data[np.where((data[:, 0] == p1))][:][0])
 
             # print(type(data[np.where((data[:, 0] == p1))]))
             # print(data[np.where((data[:, 0] == p1))])
