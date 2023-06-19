@@ -52,6 +52,7 @@ if __name__ == '__main__':
             # print(data[np.where((data[:, 0] == p1))])
             # print(type(data[np.where((data[:, 0] == p1))][:][19]))
             # print(data[np.where((data[:, 0] == p1))][:][19])
+
             temp_result_data_vec = np.array([np.shape((np.where((data[:, 0] == p1))))[0], np.sum(data[np.where((data[:, 0] == p1))][:,19])])
             result_data_vec = np.vstack([result_data_vec,temp_result_data_vec])
         elif len(data[np.where((data[:, 1] == p1))]) != 0:
