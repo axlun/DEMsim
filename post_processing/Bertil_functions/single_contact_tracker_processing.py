@@ -30,7 +30,7 @@ if __name__ == '__main__':
             key = str(int(time[i]))
         ## Read file here
         file_to_open = argument_string+'/'+contact_time_and_file_name_dict[key]
-
+        temp_result_data_vec = np.array([0.0,0.0])
         data = pd.read_csv(file_to_open).to_numpy()
         if i == 0:
             # contact_data_vec =np.zeros(len(data[0,:]))
@@ -53,15 +53,16 @@ if __name__ == '__main__':
             # print(type(data[np.where((data[:, 0] == p1))][:][19]))
             # print(data[np.where((data[:, 0] == p1))][:][19])
 
-            temp_result_data_vec = np.array([np.shape((np.where((data[:, 0] == p1))))[0], np.sum(data[np.where((data[:, 0] == p1))][:,19])])
-            result_data_vec = np.vstack([result_data_vec,temp_result_data_vec])
-        elif len(data[np.where((data[:, 1] == p1))]) != 0:
+            temp_result_data_vec += np.array([np.shape((np.where((data[:, 0] == p1))))[0], np.sum(data[np.where((data[:, 0] == p1))][:,19])])
+            # result_data_vec = np.vstack([result_data_vec,temp_result_data_vec])
+        if len(data[np.where((data[:, 1] == p1))]) != 0:
             # contact_data_vec = np.vstack([contact_data_vec, data[np.where((data[:, 1] == p1))]])
-            temp_result_data_vec = np.array([np.shape((np.where((data[:, 1] == p1))))[0], np.sum(data[np.where((data[:, 1] == p1))][:,19])])
-            result_data_vec = np.vstack([result_data_vec,temp_result_data_vec])
-        else:
-            # contact_data_vec = np.vstack([contact_data_vec,np.zeros(len(data[0,:]))])
-            result_data_vec = np.vstack([result_data_vec,np.array([0,0])])
+            temp_result_data_vec += np.array([np.shape((np.where((data[:, 1] == p1))))[0], np.sum(data[np.where((data[:, 1] == p1))][:,19])])
+            # result_data_vec = np.vstack([result_data_vec,temp_result_data_vec])
+        # else:
+        #     # contact_data_vec = np.vstack([contact_data_vec,np.zeros(len(data[0,:]))])
+        #     result_data_vec = np.vstack([result_data_vec,np.array([0,0])])
+        result_data_vec = np.vstack([result_data_vec, temp_result_data_vec])
         time_vec.append(float(key))
     print(time_vec)
 
