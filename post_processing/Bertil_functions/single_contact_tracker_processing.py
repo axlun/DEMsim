@@ -45,7 +45,7 @@ if __name__ == '__main__':
             result_data_vec = np.vstack([result_data_vec, temp_result_data_vec])
         time_vec.append(float(key))
     print(time_vec)
-    print(np.array2string(result_data_vec.flatten(),separator=','))
+    print(np.array2string(result_data_vec.flatten(),separator=',',max_line_width=int(1e99)))
     # for i in range(0, len(result_data_vec[:, 0])):
     #     for j in range(0, len(result_data_vec[0, :])):
     #         print(result_data_vec[i, j])
