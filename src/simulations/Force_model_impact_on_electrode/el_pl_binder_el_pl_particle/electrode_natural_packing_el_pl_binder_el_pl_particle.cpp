@@ -236,17 +236,25 @@ void DEM::electrode_natural_packing_el_pl_binder_el_pl_particle(const std::strin
 //=====================================================================================================================
 
 // =====================MOVE THE STIFF SURFACE TO INITIATE THE PERIODIC BC:S ==========================================
-    side1_surface->move(Vec3(5*box_side,0,0), Vec3(0, 0, 0));
-    side2_surface->move(Vec3(0,5*box_side,0), Vec3(0,0,0));
-    side3_surface->move(-Vec3(5*box_side,0,0), Vec3(0,0,0));
-    side4_surface->move(-Vec3(0,5*box_side,0), Vec3(0,0,0));
+//    side1_surface->move(Vec3(5*box_side,0,0), Vec3(0, 0, 0));
+//    side2_surface->move(Vec3(0,5*box_side,0), Vec3(0,0,0));
+//    side3_surface->move(-Vec3(5*box_side,0,0), Vec3(0,0,0));
+//    side4_surface->move(-Vec3(0,5*box_side,0), Vec3(0,0,0));
+    side1_surface->move(Vec3(0, 0, 0),Vec3(5*box_side/fall_time.count(),0,0));
+    side2_surface->move(Vec3(0, 0, 0),Vec3(0,5*box_side/fall_time.count(),0));
+    side3_surface->move(Vec3(0, 0, 0),-Vec3(5*box_side/fall_time.count(),0,0));
+    side4_surface->move(Vec3(0, 0, 0),-Vec3(0,5*box_side/fall_time.count(),0));
 //=====================================================================================================================
 
     EngineType::RunForTime Run_for_initiation_of_periodic_BCs(simulator,fall_time);
     std::cout << "Running for: "<< (fall_time).count() <<" \n";
     simulator.run(Run_for_initiation_of_periodic_BCs);
 
-    // Stop all the particles
+    // Stop all the particles and surfaces
+    side1_surface->move(Vec3(0, 0, 0),Vec3(0, 0, 0));
+    side2_surface->move(Vec3(0, 0, 0),Vec3(0, 0, 0));
+    side3_surface->move(Vec3(0, 0, 0),Vec3(0, 0, 0));
+    side4_surface->move(Vec3(0, 0, 0),Vec3(0, 0, 0));
     for (auto& p: simulator.get_particles())
     {
         p->set_velocity(Vec3(0,0,0));
