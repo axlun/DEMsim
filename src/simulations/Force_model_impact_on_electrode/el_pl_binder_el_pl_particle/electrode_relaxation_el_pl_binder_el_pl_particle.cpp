@@ -34,8 +34,7 @@ void DEM::electrode_relaxation_el_pl_binder_el_pl_particle(const std::string &se
     calendering_surface->move(Vec3(0, 0,  1), Vec3(0, 0, 0));
 
     auto mat = dynamic_cast<ElectrodeMaterial *>(simulator.get_material(0));
-    mat->new_binder_contacts = false;
-    //comment
+//    mat->new_binder_contacts = false;
 
 //==================SET TIME STEP AND MASS SCALING=======================================================================
     double time_step = parameters.get_parameter<double>("time_step")*1e-6;
@@ -72,7 +71,7 @@ void DEM::electrode_relaxation_el_pl_binder_el_pl_particle(const std::string &se
     auto deformable_surface = simulator.get_surface<EngineType::DeformablePointSurfacePointer>("bottom_plate");
 
     std::cout << "**************** Load step 0 - pre relaxation ****************\n";
-    std::chrono::duration<double> pre_relaxation_time {100};
+    std::chrono::duration<double> pre_relaxation_time {10000};
     EngineType::RunForTime run_for_pre_relaxation_time(simulator,pre_relaxation_time);
     simulator.run(run_for_pre_relaxation_time);
 
