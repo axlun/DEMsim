@@ -24,7 +24,7 @@ if __name__ == '__main__':
     result_data_vec = []
     # contact_data_vec = []
 
-    for i in range(0,len(time)):
+    for i in range(0, len(time)):
         key = str(time[i])
         if time[i].is_integer():
             key = str(int(time[i]))
@@ -32,42 +32,20 @@ if __name__ == '__main__':
         file_to_open = argument_string+'/'+contact_time_and_file_name_dict[key]
         temp_result_data_vec = np.array([0.0,0.0])
         data = pd.read_csv(file_to_open).to_numpy()
-        if i == 0:
-            # contact_data_vec =np.zeros(len(data[0,:]))
-            result_data_vec = np.array([0, 0])
-            time_vec.append(float(key))
-            continue
         if len(data[np.where((data[:, 0] == p1))]) != 0:
-            # contact_data_vec = np.vstack([contact_data_vec,data[np.where((data[:, 0] == p1))]])
 
-            # print(type(data[np.where((data[:, 0] == p1))]))
-            # print(data[np.where((data[:, 0] == p1))].shape)
-            # print(data[np.where((data[:, 0] == p1))])
-            # print(type(data[np.where((data[:, 0] == p1))][0]))
-            # print(data[np.where((data[:, 0] == p1))][0])
-            # print(type(data[np.where((data[:, 0] == p1))][:,19]))
-            # print(data[np.where((data[:, 0] == p1))][:,19])
-
-            # print(type(data[np.where((data[:, 0] == p1))]))
-            # print(data[np.where((data[:, 0] == p1))])
-            # print(type(data[np.where((data[:, 0] == p1))][:][19]))
-            # print(data[np.where((data[:, 0] == p1))][:][19])
-
-            temp_result_data_vec += np.array([np.shape((np.where((data[:, 0] == p1))))[0], np.sum(data[np.where((data[:, 0] == p1))][:,19])])
-            # result_data_vec = np.vstack([result_data_vec,temp_result_data_vec])
+            temp_result_data_vec += np.array([len(np.where((data[:, 0] == p1))[0]),
+                                              np.sum(data[np.where((data[:, 0] == p1))][:, 19])])
         if len(data[np.where((data[:, 1] == p1))]) != 0:
-            # contact_data_vec = np.vstack([contact_data_vec, data[np.where((data[:, 1] == p1))]])
-            temp_result_data_vec += np.array([np.shape((np.where((data[:, 1] == p1))))[0], np.sum(data[np.where((data[:, 1] == p1))][:,19])])
-            # result_data_vec = np.vstack([result_data_vec,temp_result_data_vec])
-        # else:
-        #     # contact_data_vec = np.vstack([contact_data_vec,np.zeros(len(data[0,:]))])
-        #     result_data_vec = np.vstack([result_data_vec,np.array([0,0])])
-        result_data_vec = np.vstack([result_data_vec, temp_result_data_vec])
+            temp_result_data_vec += np.array([len(np.where((data[:, 1] == p1))[0]),
+                                              np.sum(data[np.where((data[:, 1] == p1))][:, 19])])
+        if i == 0:
+            result_data_vec = temp_result_data_vec
+        else:
+            result_data_vec = np.vstack([result_data_vec, temp_result_data_vec])
         time_vec.append(float(key))
     print(time_vec)
-
-    for i in range(0,len(result_data_vec[:,0])):
-        for j in range(0,len(result_data_vec[0,:])):
-            print(result_data_vec[i,j])
-
-    # print(contact_data_vec )
+    print(np.array2string(result_data_vec.flatten(),separator=','))
+    # for i in range(0, len(result_data_vec[:, 0])):
+    #     for j in range(0, len(result_data_vec[0, :])):
+    #         print(result_data_vec[i, j])
