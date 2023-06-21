@@ -48,4 +48,4 @@ if __name__ == '__main__':
         result_data_vec = np.vstack([result_data_vec, particle_data])
         time_vec.append(float(key))
     print(time_vec)
-    print(np.array2string(result_data_vec, separator=',', max_line_width=int(1e99)))
+    print(np.array2string(result_data_vec.flatten(), separator=',', max_line_width=int(1e99)))
