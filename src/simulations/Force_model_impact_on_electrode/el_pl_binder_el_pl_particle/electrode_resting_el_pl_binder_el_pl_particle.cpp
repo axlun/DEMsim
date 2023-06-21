@@ -68,7 +68,8 @@ void DEM::electrode_resting_el_pl_binder_el_pl_particle(const std::string &setti
     EngineType::RunForTime run_for_resting_time(simulator,resting_time);
     simulator.run(run_for_resting_time);
     std::cout << "**************** Simulation finished ****************\n";
-
+    std::cout<<"Writing restart file ";
+    simulator.write_restart_file(output_directory + "/rested_electrode_restart_file.res");
 
 //
 //    std::cout << "**************** Load step 1 ****************\n";
