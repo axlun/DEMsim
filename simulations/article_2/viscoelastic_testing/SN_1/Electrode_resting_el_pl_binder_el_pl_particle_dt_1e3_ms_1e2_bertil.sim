@@ -1,0 +1,6 @@
+output_dir=/scratch/users/axlun/DEMsim/results/article_2/viscoelastic_testing/SN_1/electrode_resting_el_pl_binder_el_pl_particle_dt_1e3_ms_1e2/
+restart_file_name=/scratch/users/axlun/DEMsim/results/article_2/viscoelastic_testing/SN_1/electrode_calendering_el_pl_binder_el_pl_particle/calendered_electrode_restart_file.res
+resting_time=1e5
+time_step=1e3
+mass_scaling=1e2
+output_frequency=1
