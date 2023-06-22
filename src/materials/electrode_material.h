@@ -16,7 +16,14 @@ namespace DEM {
         explicit ElectrodeMaterial(const ParameterMap& parameters);
         ~ElectrodeMaterial() override = default;
         [[nodiscard]] std::string restart_data() const override;
-
+        double F_1_{0.};
+        double alpha_1_{0.};
+        double F_2_{0.};
+        double alpha_2_{0.};
+        double a_1_{0.};
+        double beta_1_{0.};
+        double a_2_{0.};
+        double beta_2_{0.};
         double E{ 0. };    // E0 for the binder material
         double nu{ 0. };   // nu for the binder material
         double binder_yield_stress_{ 1.0e99 };  //Yield strength for the binder material

@@ -41,15 +41,15 @@ namespace DEM{
     private:
         const static ElectrodeMaterial* material;
 
-        double F_1_ = 77.46;
-        double alpha_1_ = 1.495;
-        double F_2_ = -66.71;
-        double alpha_2_ = 1.589;
+        double F_1_ = 0.0;
+        double alpha_1_ = 0.0;
+        double F_2_ = 0.0;
+        double alpha_2_ = 0.0;
 
-        double a_1_ = -1.988e-2;
-        double beta_1_ =2.594e-15;
-        double a_2_ = 1.351;
-        double beta_2_ = 0.5648;
+        double a_1_ = 0.0;
+        double beta_1_ = 0.0;
+        double a_2_ = 0.0;
+        double beta_2_ = 0.0;
 
         double kp_ = 0.;
         double kTp_ = 0.;

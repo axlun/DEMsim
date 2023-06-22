@@ -33,6 +33,17 @@ void DEM::electrode_natural_packing_el_pl_binder_el_pl_particle(const std::strin
     auto N = parameters.get_parameter<double>("N"); //Number of particles
     auto particle_file = parameters.get_parameter<std::string>("radius_file");
     auto mat = simulator.create_material<ElectrodeMaterial>(4800);
+
+    auto master_curve_file = parameters.get_parameter<std::string>("master_curve_file");
+    auto master_curve_vec = read_vector_from_file<double>(master_curve_file);
+    mat->F_1_ = master_curve_vec[0];
+    mat->alpha_1_ = master_curve_vec[1];
+    mat->F_2_ = master_curve_vec[2];
+    mat->alpha_2_ = master_curve_vec[3];
+    mat->a_1_ = master_curve_vec[4];
+    mat->beta_1_ = master_curve_vec[5];
+    mat->a_2_ = master_curve_vec[6];
+    mat->beta_2_ = master_curve_vec[7];
     mat->E = parameters.get_parameter<double>("E");
     mat->Ep = parameters.get_parameter<double>("Ep");
     mat->nu = parameters.get_parameter<double>("nu");

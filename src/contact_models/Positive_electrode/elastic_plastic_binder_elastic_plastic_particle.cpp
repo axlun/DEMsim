@@ -20,6 +20,16 @@ DEM::elastic_plastic_binder_elastic_plastic_particle::elastic_plastic_binder_ela
     auto mat2 = dynamic_cast<const ElectrodeMaterial *>(particle2->get_material());
     material = mat1;
     R0_ = 1. / (1. / particle1->get_radius() + 1. / particle2->get_radius());
+
+    F_1_ = mat1->F_1_;
+    alpha_1_ = mat1->alpha_1_;
+    F_2_ = mat1->F_2_;
+    alpha_2_ = mat1->alpha_2_;
+    a_1_ = mat1->a_1_;
+    beta_1_ = mat1->beta_1_;
+    a_2_ = mat1->a_2_;
+    beta_2_ = mat1->beta_2_;
+
     double E1 = mat1->E;
     v1 = mat1->nu;
     double vp1 = mat1->nup;
@@ -68,6 +78,16 @@ DEM::elastic_plastic_binder_elastic_plastic_particle::elastic_plastic_binder_ela
         auto mat1 = dynamic_cast<const ElectrodeMaterial *>(particle1->get_material());
         material = mat1;
         R0_ = particle1->get_radius(); //Effective radius for one particle and one rigid surface
+
+        F_1_ = mat1->F_1_;
+        alpha_1_ = mat1->alpha_1_;
+        F_2_ = mat1->F_2_;
+        alpha_2_ = mat1->alpha_2_;
+        a_1_ = mat1->a_1_;
+        beta_1_ = mat1->beta_1_;
+        a_2_ = mat1->a_2_;
+        beta_2_ = mat1->beta_2_;
+
         double E1 = mat1->E;
         double v1 = mat1->nu;
         double vp1=mat1->nup;
@@ -111,6 +131,14 @@ DEM::elastic_plastic_binder_elastic_plastic_particle::elastic_plastic_binder_ela
         std::chrono::duration<double>, const DEM::ParameterMap& parameters):
         psi0_(parameters.get_parameter<double>("psi0_")),
         psi0T_B_(parameters.get_parameter<double>("psi0T_B_")),
+        F_1_(parameters.get_parameter<double>("F_1_")),
+        alpha_1_(parameters.get_parameter<double>("alpha_1_")),
+        F_2_(parameters.get_parameter<double>("F_2_")),
+        alpha_2_(parameters.get_parameter<double>("alpha_2_")),
+        a_1_(parameters.get_parameter<double>("a_1_")),
+        beta_1_(parameters.get_parameter<double>("beta_1_")),
+        a_2_(parameters.get_parameter<double>("a_2_")),
+        beta_2_(parameters.get_parameter<double>("beta_2_")),
         kTp_(parameters.get_parameter<double>("kTp_")),
         R0_(parameters.get_parameter<double>("R0")),
         //Rb_(parameters.get_parameter<double>("Rb")),
@@ -166,6 +194,14 @@ DEM::elastic_plastic_binder_elastic_plastic_particle::elastic_plastic_binder_ela
         std::chrono::duration<double>, const DEM::ParameterMap& parameters):
         psi0_(parameters.get_parameter<double>("psi0_")),
         psi0T_B_(parameters.get_parameter<double>("psi0T_B_")),
+        F_1_(parameters.get_parameter<double>("F_1_")),
+        alpha_1_(parameters.get_parameter<double>("alpha_1_")),
+        F_2_(parameters.get_parameter<double>("F_2_")),
+        alpha_2_(parameters.get_parameter<double>("alpha_2_")),
+        a_1_(parameters.get_parameter<double>("a_1_")),
+        beta_1_(parameters.get_parameter<double>("beta_1_")),
+        a_2_(parameters.get_parameter<double>("a_2_")),
+        beta_2_(parameters.get_parameter<double>("beta_2_")),
         kTp_(parameters.get_parameter<double>("kTp_")),
         R0_(parameters.get_parameter<double>("R0")),
         //Rb_(parameters.get_parameter<double>("Rb")),
@@ -478,6 +514,14 @@ std::string DEM::elastic_plastic_binder_elastic_plastic_particle::restart_data()
            << named_print(fractured_, "fractured") << ", "
            << named_print(psi0_, "psi0_") << ", "
            << named_print(psi0T_B_, "psi0T_B_") << ", "
+           << named_print(F_1_, "F_1_") << ", "
+           << named_print(alpha_1_, "alpha_1_") << ", "
+           << named_print(F_2_, "F_2_") << ", "
+           << named_print(alpha_2_, "alpha_2_") << ", "
+           << named_print(a_1_, "a_1_") << ", "
+           << named_print(beta_1_, "beta_1_") << ", "
+           << named_print(a_2_, "a_2_") << ", "
+           << named_print(beta_2_, "beta_2_") << ", "
            << named_print(M, "M");
 
         for (unsigned i=0; i != M; ++i) {
