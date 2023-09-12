@@ -1,4 +1,4 @@
-N=10000
+N=5000
 filling_density=0.052
 output_dir=/scratch/users/axlun/DEMsim/results/article_2/viscoelastic_testing/SN_3/electrode_natural_packing_el_pl_binder_el_pl_particle/
 radius_file=/scratch/users/axlun/DEMsim/simulations/force_model_impact_on_electrode/particle_radius_distr_gamma_k_492_theta_263_r_min_4_r_max_12_cm_size.dat
