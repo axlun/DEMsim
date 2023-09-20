@@ -3,4 +3,4 @@ restart_file_name=/scratch/users/axlun/DEMsim/results/article_2/viscoelastic_tes
 resting_time=1e6
 time_step=5e2
 mass_scaling=1e3
-output_frequency=1e0
+output_frequency=1e-3
