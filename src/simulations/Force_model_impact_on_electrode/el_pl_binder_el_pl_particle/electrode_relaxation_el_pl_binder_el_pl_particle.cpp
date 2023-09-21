@@ -71,7 +71,7 @@ void DEM::electrode_relaxation_el_pl_binder_el_pl_particle(const std::string &se
     auto deformable_surface = simulator.get_surface<EngineType::DeformablePointSurfacePointer>("bottom_plate");
 
     std::cout << "**************** Load step 0 - pre relaxation ****************\n";
-    std::chrono::duration<double> pre_relaxation_time {10000};
+    std::chrono::duration<double> pre_relaxation_time {10};
     EngineType::RunForTime run_for_pre_relaxation_time(simulator,pre_relaxation_time);
     simulator.run(run_for_pre_relaxation_time);
 
