@@ -1,4 +1,4 @@
-output_dir=/scratch/users/axlun/DEMsim/results/article_2/resource_management_test/CPU_2/electrode_calendering_el_pl_binder_el_pl_particle/
+output_dir=/scratch/users/axlun/DEMsim/results/article_2/resource_management_test/CPU_16/electrode_calendering_el_pl_binder_el_pl_particle/
 restart_file_name=/scratch/users/axlun/DEMsim/results/article_2/viscoelastic_testing/SN_2/electrode_natural_packing_el_pl_binder_el_pl_particle/pre_calendered_electrode_restart_file.res
 time_step=1e2
 mass_scaling=1e4
