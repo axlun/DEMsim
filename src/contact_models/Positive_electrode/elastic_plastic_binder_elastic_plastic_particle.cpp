@@ -543,7 +543,7 @@ std::string DEM::elastic_plastic_binder_elastic_plastic_particle::restart_data()
 bool DEM::elastic_plastic_binder_elastic_plastic_particle::create_binder_contact(const ElectrodeMaterial* mat)
 {
     std::random_device random_device;
-    std::default_random_engine rand_engine { random_device() };
+    std::default_random_engine rand_engine(0); //{ random_device() };
     std::uniform_real_distribution<double> distribution{0., 1.};
     double random_value = distribution(rand_engine);
     return random_value < mat->fraction_binder_contacts && mat->new_binder_contacts;
