@@ -1,0 +1,6 @@
+output_dir=/scratch/users/axlun/DEMsim/results/article_2/final_runs/ref_sim/SN_1/electrode_mechanical_loading_hertz_compression/
+restart_file_name=/scratch/users/axlun/DEMsim/results/article_2/final_runs/ref_sim/SN_1/electrode_calendering_hertz/calendered_electrode_restart_file.res
+loading_direction=-1
+time_step=5e1
+mass_scaling=1e2
+strain_rate=2e-3
