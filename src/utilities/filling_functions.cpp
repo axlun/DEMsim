@@ -57,7 +57,7 @@ std::vector<DEM::Vec3> DEM::random_fill_box(double x1, double x2, double y1, dou
                                        const std::vector<double>& radii, double delta) {
     std::vector<Vec3> particle_positions;
     std::random_device random_device;
-    std::default_random_engine rand_engine(0); //(random_device());
+    std::default_random_engine rand_engine{ random_device() };
     for (auto r : radii) {
         std::uniform_real_distribution<double> dist_x(x1 + r + delta, x2 - r - delta);
         std::uniform_real_distribution<double> dist_y(y1 + r + delta, y2 - r - delta);
@@ -69,7 +69,7 @@ std::vector<DEM::Vec3> DEM::random_fill_box(double x1, double x2, double y1, dou
             position.x() = dist_x(rand_engine);
             position.y() = dist_y(rand_engine);
             position.z() = dist_z(rand_engine);
-            //Check if a particle at the chosen position overlaps with an other
+            //Check if a particle at the chosen position overlaps with another
             overlapping = check_overlaps(position, r + delta, particle_positions, radii);
         }
 
@@ -84,7 +84,7 @@ std::vector<DEM::Vec3> DEM::random_fill_box_periodic(double x1, double x2, doubl
     std::vector<Vec3> particle_positions;
     std::vector<Vec3> mirror_positions;
     std::random_device random_device;
-    std::default_random_engine rand_engine(0); //(random_device());
+    std::default_random_engine rand_engine{ random_device() };
     std::array<bool, 3> periodic_directions = {false, false, false};
     std::array<Interval, 3> periodic_boundaries;
     for(const auto& dir: directions) {
