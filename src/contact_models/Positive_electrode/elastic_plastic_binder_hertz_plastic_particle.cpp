@@ -159,7 +159,7 @@ DEM::elastic_plastic_binder_hertz_plastic_particle::elastic_plastic_binder_hertz
                 tau_i.push_back(parameters.get_parameter<double>("tau_" + std::to_string(i)));
                 alpha_i.push_back(parameters.get_parameter<double>("alpha_" + std::to_string(i)));
                 Ai.push_back(parameters.get_parameter<double>("A_" + std::to_string(i)));
-                Bi.push_back(parameters.get_parameter<double>("A_" + std::to_string(i)));
+                Bi.push_back(parameters.get_parameter<double>("B_" + std::to_string(i)));
                 di_.push_back(parameters.get_parameter<double>("d_" + std::to_string(i)));
                 ddi_.push_back(parameters.get_parameter<double>("dd_" + std::to_string(i)));
                 dti_Scalar.push_back(parameters.get_parameter<double>("dti_Scalar"+ std::to_string(i)));
@@ -217,7 +217,7 @@ DEM::elastic_plastic_binder_hertz_plastic_particle::elastic_plastic_binder_hertz
         tau_i.push_back(parameters.get_parameter<double>("tau_" + std::to_string(i)));
         alpha_i.push_back(parameters.get_parameter<double>("alpha_" + std::to_string(i)));
         Ai.push_back(parameters.get_parameter<double>("A_" + std::to_string(i)));
-        Bi.push_back(parameters.get_parameter<double>("A_" + std::to_string(i)));
+        Bi.push_back(parameters.get_parameter<double>("B_" + std::to_string(i)));
         di_.push_back(parameters.get_parameter<double>("d_" + std::to_string(i)));
         ddi_.push_back(parameters.get_parameter<double>("dd_" + std::to_string(i)));
         dti_Scalar.push_back(parameters.get_parameter<double>("dti_Scalar"+ std::to_string(i)));

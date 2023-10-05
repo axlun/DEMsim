@@ -178,7 +178,7 @@ DEM::elastic_plastic_binder_elastic_plastic_particle::elastic_plastic_binder_ela
                 tau_i.push_back(parameters.get_parameter<double>("tau_" + std::to_string(i)));
                 alpha_i.push_back(parameters.get_parameter<double>("alpha_" + std::to_string(i)));
                 Ai.push_back(parameters.get_parameter<double>("A_" + std::to_string(i)));
-                Bi.push_back(parameters.get_parameter<double>("A_" + std::to_string(i)));
+                Bi.push_back(parameters.get_parameter<double>("B_" + std::to_string(i)));
                 di_.push_back(parameters.get_parameter<double>("d_" + std::to_string(i)));
                 ddi_.push_back(parameters.get_parameter<double>("dd_" + std::to_string(i)));
                 dti_Scalar.push_back(parameters.get_parameter<double>("dti_Scalar"+ std::to_string(i)));
@@ -241,7 +241,7 @@ DEM::elastic_plastic_binder_elastic_plastic_particle::elastic_plastic_binder_ela
         tau_i.push_back(parameters.get_parameter<double>("tau_" + std::to_string(i)));
         alpha_i.push_back(parameters.get_parameter<double>("alpha_" + std::to_string(i)));
         Ai.push_back(parameters.get_parameter<double>("A_" + std::to_string(i)));
-        Bi.push_back(parameters.get_parameter<double>("A_" + std::to_string(i)));
+        Bi.push_back(parameters.get_parameter<double>("B_" + std::to_string(i)));
         di_.push_back(parameters.get_parameter<double>("d_" + std::to_string(i)));
         ddi_.push_back(parameters.get_parameter<double>("dd_" + std::to_string(i)));
         dti_Scalar.push_back(parameters.get_parameter<double>("dti_Scalar"+ std::to_string(i)));
@@ -543,7 +543,7 @@ std::string DEM::elastic_plastic_binder_elastic_plastic_particle::restart_data()
 bool DEM::elastic_plastic_binder_elastic_plastic_particle::create_binder_contact(const ElectrodeMaterial* mat)
 {
     std::random_device random_device;
-    std::default_random_engine rand_engine(0); //{ random_device() };
+    std::default_random_engine rand_engine{ random_device() };
     std::uniform_real_distribution<double> distribution{0., 1.};
     double random_value = distribution(rand_engine);
     return random_value < mat->fraction_binder_contacts && mat->new_binder_contacts;
