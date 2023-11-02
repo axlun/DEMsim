@@ -165,8 +165,7 @@ void DEM::electrode_natural_packing_el_pl_binder_el_pl_particle(const std::strin
     std::cout << "fall time " << fall_time.count() << "\n";
     std::cout << "output exp " << output_exp << "\n";
 
-   std::chrono::duration<double> output_interval {0.1 * pow(10 ,output_exp-2)}; //Output scaled by factor
-                                                                                                // .10 for bug checking
+   std::chrono::duration<double> output_interval {pow(10 ,output_exp-2)};
    std::cout << "Output interval: " << output_interval.count() << "\n";
 //==================================OUTPUTS=============================================================================
     auto filling_output = simulator.create_output(output_directory , output_interval);
