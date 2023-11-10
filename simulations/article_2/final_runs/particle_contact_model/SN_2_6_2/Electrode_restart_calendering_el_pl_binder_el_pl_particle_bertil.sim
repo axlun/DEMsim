@@ -1,5 +1,5 @@
 output_dir=/scratch/users/axlun/DEMsim/results/article_2/final_runs/particle_contact_model/SN_2_6_2/electrode_calendering_el_pl_binder_el_pl_particle/
-restart_file_name=/scratch/users/axlun/DEMsim/results/article_2/final_runs/particle_contact_model/SN_2_6_2/electrode_natural_packing_el_pl_binder_el_pl_particle/pre_calendered_electrode_restart_file.res
+restart_file_name=/scratch/users/axlun/DEMsim/results/article_2/final_runs/particle_contact_model/SN_2_6/electrode_natural_packing_el_pl_binder_el_pl_particle/pre_calendered_electrode_restart_file.res
 time_step=5e1
 mass_scaling=1e4
 calendering_height=105e-2
