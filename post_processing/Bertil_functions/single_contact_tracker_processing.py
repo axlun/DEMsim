@@ -31,7 +31,7 @@ if __name__ == '__main__':
         ## Read file here
         file_to_open = argument_string+'/'+contact_time_and_file_name_dict[key]
         temp_result_data_vec = np.array([0.0,0.0])
-        data = pd.read_csv(file_to_open).to_numpy()
+        data = pd.read_csv(file_to_open,header=None).to_numpy()
         if len(data[np.where((data[:, 0] == p1))]) != 0:
 
             temp_result_data_vec += np.array([len(np.where((data[:, 0] == p1))[0]),

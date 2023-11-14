@@ -38,7 +38,7 @@ if __name__ == '__main__':
             key = str(int(time[i]))
         ## Read file here
         file_to_open = argument_string+'/'+contact_time_and_file_name_dict[key]
-        data = pd.read_csv(file_to_open).to_numpy()
+        data = pd.read_csv(file_to_open,header=None).to_numpy()
         normal_force_vec.append(np.sum((data[:, 6] ** 2) ** .5))
         compressive_normal_force_vec.append(np.sum((data[:,6][data[:,6] >= 0] ** 2) ** .5))
         tensile_normal_force_vec.append(np.sum((data[:,6][data[:,6] < 0] ** 2) ** .5))

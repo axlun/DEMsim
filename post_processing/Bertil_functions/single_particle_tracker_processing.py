@@ -18,12 +18,9 @@ if __name__ == '__main__':
 
         time.append(float(time_stamp[0]))
         particle_time_and_file_name_dict[time_stamp[0]] = particle_file
-
     time.sort()
     time_vec = []
     result_data_vec = []
-    # contact_data_vec = []
-
     for i in range(0, len(time)):
         key = str(time[i])
         if time[i].is_integer():
@@ -31,16 +28,8 @@ if __name__ == '__main__':
         ## Read file here
         file_to_open = argument_string + '/' + particle_time_and_file_name_dict[key]
         temp_result_data_vec = np.array([0.0, 0.0])
-        # data = pd.read_csv(file_to_open).to_numpy()
-        # particle_data = data[np.where((data[:, 0] == p1))]
         data = pd.read_csv(file_to_open,names=list(range(13)))
         particle_data = data.loc[data[0] == p1].to_numpy()
-        # if len(data[np.where((data[:, 0] == p1))]) != 0:
-        #     temp_result_data_vec += np.array([len(np.where((data[:, 0] == p1))[0]),
-        #                                       np.sum(data[np.where((data[:, 0] == p1))][:, 19])])
-        # if len(data[np.where((data[:, 1] == p1))]) != 0:
-        #     temp_result_data_vec += np.array([len(np.where((data[:, 1] == p1))[0]),
-        #                                       np.sum(data[np.where((data[:, 1] == p1))][:, 19])])
         if i == 0:
             time_vec.append(float(key))
             result_data_vec = particle_data

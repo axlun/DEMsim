@@ -44,7 +44,7 @@ if __name__ == '__main__':
         particle_contact_number_vec = [0] * number_of_contacts_observed
         binder_contact_number_vec = [0] * number_of_contacts_observed
 
-        line_data = pd.read_csv(file_to_open).to_numpy()
+        line_data = pd.read_csv(file_to_open,header=None).to_numpy()
         for j in range(0, len(line_data[:,0])):
             # PARTICLE CONTACT
             if float(line_data[j,5]) >= 0:
