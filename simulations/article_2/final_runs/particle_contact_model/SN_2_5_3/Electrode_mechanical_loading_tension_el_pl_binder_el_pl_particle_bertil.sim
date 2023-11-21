@@ -1,0 +1,6 @@
+output_dir=/scratch/users/axlun/DEMsim/results/article_2/final_runs/particle_contact_model/SN_2_5_3/electrode_mechanical_loading_el_pl_binder_el_pl_particle_tension/
+restart_file_name=/scratch/users/axlun/DEMsim/results/article_2/final_runs/particle_contact_model/SN_2_5_3/electrode_calendering_el_pl_binder_el_pl_particle/calendered_electrode_restart_file.res
+loading_direction=1
+time_step=5e1
+mass_scaling=1e2
+strain_rate=2e-3
