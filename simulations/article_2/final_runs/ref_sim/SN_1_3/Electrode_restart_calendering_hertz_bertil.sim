@@ -1,0 +1,7 @@
+output_dir=/scratch/users/axlun/DEMsim/results/article_2/final_runs/ref_sim/SN_1_3/electrode_calendering_hertz/
+restart_file_name=/scratch/users/axlun/DEMsim/results/article_2/final_runs/ref_sim/SN_1_3/electrode_natural_packing_hertz/pre_calendered_electrode_restart_file.res
+time_step=1e2
+mass_scaling=1e4
+calendering_height=105e-2
+compaction_time=20.0
+output_number=2e2
