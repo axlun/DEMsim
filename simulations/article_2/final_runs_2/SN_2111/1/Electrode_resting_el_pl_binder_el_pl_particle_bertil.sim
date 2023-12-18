@@ -1,0 +1,6 @@
+output_dir=/scratch/users/axlun/DEMsim/results/article_2/final_runs_2/SN_2111/1/electrode_resting_el_pl_binder_el_pl_particle/
+restart_file_name=/scratch/users/axlun/DEMsim/results/article_2/final_runs_2/SN_2111/1/electrode_calendering_el_pl_binder_el_pl_particle/calendered_electrode_restart_file.res
+resting_time=2e2
+time_step=2e2
+mass_scaling=1e3
+output_frequency=1e0
