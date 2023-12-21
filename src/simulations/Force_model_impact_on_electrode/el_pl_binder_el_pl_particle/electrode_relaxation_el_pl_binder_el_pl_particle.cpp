@@ -22,7 +22,7 @@ void DEM::electrode_relaxation_el_pl_binder_el_pl_particle(const std::string &se
     SimulationParameters parameters(settings_file_name);
     auto restart_file_name =parameters.get_parameter<std::string>("restart_file_name");
     auto output_directory = parameters.get_parameter<std::string>("output_dir");
-    auto loading_direction = parameters.get_parameter<int>("loading_direction"); // compression -> -1, tension -> 1
+    auto loading_direction = parameters.get_parameter<int>("loading_direction"); // compression->-1, tension->1
     auto strain_load = parameters.get_parameter<double>("strain");
     std::chrono::duration<double> relaxation_time {parameters.get_parameter<double>("relaxation_time")};
     auto simulator = EngineType(restart_file_name);
@@ -37,7 +37,7 @@ void DEM::electrode_relaxation_el_pl_binder_el_pl_particle(const std::string &se
 //    mat->new_binder_contacts = false;
 
 //==================SET TIME STEP AND MASS SCALING=======================================================================
-    double time_step = parameters.get_parameter<double>("time_step")*1e-6;
+    double time_step = parameters.get_parameter<double>("time_step")*1E-6;
     std::chrono::duration<double> time_step_us {time_step};
     std::cout << "Time step is:" << time_step_us.count()*1E6 << " µs\n";
     simulator.set_time_increment(time_step_us);
@@ -49,7 +49,8 @@ void DEM::electrode_relaxation_el_pl_binder_el_pl_particle(const std::string &se
 //========================STRAIN RATES==================================================================================
     double strain_rate = parameters.get_parameter<double>("strain_rate");
     std::cout << "Strain rate: " << strain_rate << "\n";
-    double strain_point_relaxation = 1.65e-2;
+    double strain_point_relaxation = parameters.get_parameter<double>("strain")
+//    double strain_point_relaxation = 1.65e-2;
 //======================================================================================================================
 
 //====================MAKE OUTPUT PRESCRIBED==============================================================================
@@ -76,7 +77,6 @@ void DEM::electrode_relaxation_el_pl_binder_el_pl_particle(const std::string &se
     simulator.run(run_for_pre_relaxation_time);
     */
 
-
     std::cout << "**************** Load step 1 ****************\n";
     std::chrono::duration<double> strain_time_0_relax {(strain_point_relaxation)/strain_rate};
     std::cout << "Loading time: " << strain_time_0_relax.count() << "s\n";
@@ -92,5 +92,4 @@ void DEM::electrode_relaxation_el_pl_binder_el_pl_particle(const std::string &se
     run_for_time_BC_stretch.reset(relaxation_time);
     simulator.run(run_for_time_BC_stretch);
     std::cout << "**************** Simulation finished ****************\n";
-
 }
