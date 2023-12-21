@@ -49,7 +49,7 @@ void DEM::electrode_relaxation_el_pl_binder_el_pl_particle(const std::string &se
 //========================STRAIN RATES==================================================================================
     double strain_rate = parameters.get_parameter<double>("strain_rate");
     std::cout << "Strain rate: " << strain_rate << "\n";
-    double strain_point_relaxation = parameters.get_parameter<double>("strain")
+    double strain_point_relaxation = parameters.get_parameter<double>("strain");
 //    double strain_point_relaxation = 1.65e-2;
 //======================================================================================================================
 
