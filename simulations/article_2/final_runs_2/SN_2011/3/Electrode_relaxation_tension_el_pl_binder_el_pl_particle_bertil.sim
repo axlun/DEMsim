@@ -1,0 +1,9 @@
+output_dir=/scratch/users/axlun/DEMsim/results/article_2/final_runs_2/SN_2011/3/electrode_relaxation_el_pl_binder_el_pl_particle_tension/
+restart_file_name=/scratch/users/axlun/DEMsim/results/article_2/final_runs_2/SN_2011/3/electrode_resting_el_pl_binder_el_pl_particle/rested_electrode_restart_file.res
+relaxation_time=21.6
+loading_direction=1
+time_step=1e1
+mass_scaling=1e1
+strain=1.65e-2
+strain_rate=1
+output_frequency =2e1
