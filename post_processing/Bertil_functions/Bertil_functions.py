@@ -170,6 +170,51 @@ def bertil_contact_tracker(sim_dir, p1, p2):
 
     return time_vec, contact_data_vec
 
+def bertil_single_contact_tracker(sim_dir, p1):
+    bertil_post_process_call = 'cd /scratch/users/axlun/DEMsim/post_processing/Bertil_functions/ ' \
+                               '\npython3 single_contact_tracker_processing.py '\
+                               + sim_dir + '/contacts ' + str(p1)
+    print('Calling Bertil post processing script')
+    bertil_return = input_output_return(bertil_post_process_call)
+    # print(bertil_return)
+    time_vec = bertil_return[0][1:-2].split(', ')
+    time_vec = np.array(time_vec, dtype=float)
+    contact_vec = bertil_return[1][1:-2].split(',')
+    contact_vec = np.array(contact_vec,dtype=float)
+    columns = 2
+    contact_vec= contact_vec.reshape((len(contact_vec)//columns,columns))
+
+    # bertil_return = bertil_return[1:]
+    # contact_data_vec = []
+
+    # for i in range(0, len(time_vec)):
+    #     step_vec = bertil_return[3 * i][:-1]
+    #     for j in range(1, 3):
+    #         step_vec += ' ' + bertil_return[3 * i + j][:-1]
+    #     # print(step_vec)
+    #     if i == 0:
+    #         contact_data_vec = np.fromstring(step_vec, dtype=float, sep=' ')
+    #         continue
+    #     contact_data_vec = np.vstack((contact_data_vec, np.fromstring(step_vec, dtype=float, sep=' ')))
+
+    return time_vec, contact_vec
+
+def bertil_single_particle_tracker(sim_dir, p1):
+    bertil_post_process_call = 'cd /scratch/users/axlun/DEMsim/post_processing/Bertil_functions/ ' \
+                               '\npython3 single_particle_tracker_processing.py '\
+                               + sim_dir + '/particles ' + str(p1)
+    print('Calling Bertil post processing script')
+    bertil_return = input_output_return(bertil_post_process_call)
+    print(bertil_return)
+    print(len(bertil_return))
+    time_vec = bertil_return[0][1:-2].split(', ')
+    time_vec = np.array(time_vec, dtype=float)
+
+    particle_vec = bertil_return[1][1:-2].split(',')
+    particle_vec = np.array(particle_vec,dtype=float)
+    columns = 13
+    particle_vec= particle_vec.reshape((len(particle_vec)//columns,columns))
+    return time_vec, particle_vec
 
 # Input: String with directory of simulation
 # Output: np.array of force_data, surface_force_index, surface_position_index,surface_position_data, periodic_BC_data, force_fabric_tensor_data as floats
