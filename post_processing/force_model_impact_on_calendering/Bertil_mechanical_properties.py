@@ -1,4 +1,4 @@
-from Bertil_calendering_pressure import local_data_gatherer, bertil_data_gatherer, contact_counter_bertil
+from force_model_impact_on_calendering.Bertil_calendering_pressure import local_data_gatherer, bertil_data_gatherer, contact_counter_bertil
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -79,17 +79,9 @@ def stiffness_finder(stress_vec, strain_vec):
 
     return strain_points, stiffness_values  # returns strain in [-] and stiffness in Pa
 
-if __name__ == '__main__':
-    # simulation_directory = '/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1/electrode_mechanical_loading_hertz'
-    # simulation_directory = '/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1_Ebner_raw_data/electrode_mechanical_loading_hertz'
-    # simulation_directory = '/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1_2E_spread_1/electrode_mechanical_loading_hertz'
-    simulation_directory = '/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1/electrode_mechanical_loading_hertz'
-    # simulation_directory = '/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1_10t/electrode_mechanical_loading_hertz'
 
+def mechanical_properties_plotting_func(simulation_directory, stiffness_at_points_flag=1, contact_flag=0):
 
-
-    stiffness_at_points_flag = 1
-    contact_flag = 0
     fig_dir = 'C:/temp/figures/Bertil_mechanical_properties/'
     try:
         shutil.rmtree(fig_dir)
@@ -126,18 +118,19 @@ if __name__ == '__main__':
     Modulus_eps_dot_300 = Modulus_eps_dot_300_compression[::-1] + Modulus_eps_dot_300_tension
 
     if simulation_directory.startswith("/scratch"):
-        force_data_compression, surface_force_index_compression, surface_position_index_compression, surface_position_data_compression, periodic_BC_data_compression, force_fabric_tensor_data_compression, kinetic_energy_data_compression = bertil_data_gatherer(
-            simulation_directory + '_compression')
+        force_data_compression, surface_force_index_compression, surface_position_index_compression,\
+            surface_position_data_compression, periodic_BC_data_compression, force_fabric_tensor_data_compression, \
+            kinetic_energy_data_compression = bertil_data_gatherer(simulation_directory + '_compression')
         if contact_flag ==1:
-            time_vec_compression, particle_contact_vec_compression, binder_contact_vec_compression, binder_particle_contact_vec_compression = contact_counter_bertil(
-                simulation_directory+ '_compression')
+            time_vec_compression, particle_contact_vec_compression, binder_contact_vec_compression, \
+                binder_particle_contact_vec_compression = contact_counter_bertil(simulation_directory+ '_compression')
     elif simulation_directory.startswith("c:"):
-        force_data_compression, surface_force_index_compression, surface_position_index_compression, surface_position_data_compression, periodic_BC_data_compression, force_fabric_tensor_data_compression, kinetic_energy_data_compression = local_data_gatherer(
-            simulation_directory + '_compression')
+        force_data_compression, surface_force_index_compression, surface_position_index_compression, \
+        surface_position_data_compression, periodic_BC_data_compression, force_fabric_tensor_data_compression, \
+        kinetic_energy_data_compression = local_data_gatherer(simulation_directory + '_compression')
         if contact_flag == 1:
-            time_vec_compression, particle_contact_vec_compression, binder_contact_vec_compression, binder_particle_contact_vec_compression = contact_counter_bertil(
-                simulation_directory+ '_compression')
-
+            time_vec_compression, particle_contact_vec_compression, binder_contact_vec_compression, \
+                binder_particle_contact_vec_compression = contact_counter_bertil(simulation_directory+ '_compression')
     else:
         print("Error with simulation directory")
 
@@ -341,5 +334,25 @@ if __name__ == '__main__':
         ax_contacts_compression.set_xlabel('Strain [%]')
         fname = fig_dir + 'contacts_to_strain'
         plt.savefig(fname)
+
+if __name__ == '__main__':
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/final_runs/ref_sim/SN_2/electrode_mechanical_loading_hertz'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/final_runs/particle_contact_model/SN_1_2/electrode_mechanical_loading_el_pl_binder_el_pl_particle'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/final_runs/particle_contact_model/SN_1_2_2/electrode_mechanical_loading_el_pl_binder_el_pl_particle'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/final_runs/particle_contact_model/SN_1_2_3/electrode_mechanical_loading_el_pl_binder_el_pl_particle'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/final_runs/particle_contact_model/SN_1_2_4/electrode_mechanical_loading_el_pl_binder_el_pl_particle'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/final_runs/particle_contact_model/SN_2_5/electrode_mechanical_loading_el_pl_binder_el_pl_particle'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/final_runs/particle_contact_model/SN_2_5_2/electrode_mechanical_loading_el_pl_binder_el_pl_particle'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/final_runs/particle_contact_model/SN_2_5_3/electrode_mechanical_loading_el_pl_binder_el_pl_particle'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/final_runs/particle_contact_model/SN_2_6/electrode_mechanical_loading_el_pl_binder_el_pl_particle'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/final_runs/particle_contact_model/SN_2_6_2/electrode_mechanical_loading_el_pl_binder_el_pl_particle'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/particle_size_distribution/SN_1/electrode_mechanical_loading_hertz'
+
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/final_runs_2/SN_101/1/electrode_mechanical_loading_hertz'
+    simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/final_runs_2/SN_101/2/electrode_mechanical_loading_hertz'
+
+    stiffness_at_points_flag = 1
+    contact_flag = 0
+    mechanical_properties_plotting_func(simulation_directory, stiffness_at_points_flag, contact_flag)
     # ==SHOW PLOT=======================================================================================================
     plt.show()

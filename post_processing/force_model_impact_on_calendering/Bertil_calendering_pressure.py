@@ -7,6 +7,7 @@ from os.path import exists
 import shutil
 import os
 
+
 def time_duplicate_remover(time_list, calendering_surface_position_list):
     rm_list = []
     for i in range(len(time_list) - 1):
@@ -15,6 +16,7 @@ def time_duplicate_remover(time_list, calendering_surface_position_list):
     time_short = np.delete(time_list, rm_list)
     calendering_surface_position_list_short = np.delete(calendering_surface_position_list, rm_list)
     return time_short, calendering_surface_position_list_short
+
 
 def local_data_gatherer(simulation_directory):
     if exists(simulation_directory + '/periodic_bc.dou'):
@@ -43,6 +45,7 @@ def local_data_gatherer(simulation_directory):
 
     return force_data, surface_force_index, surface_position_index, surface_position_data, periodic_BC_data, force_fabric_tensor_data, kinetic_energy_data
 
+
 def calendering_break_index_func(calendering_surface_position):
     calendering_initiate_index = 0
     calendering_break_index = -1
@@ -65,9 +68,11 @@ def calendering_break_index_func(calendering_surface_position):
         val_hist = val
     return calendering_initiate_index, calendering_break_index
 
+
 def calendering_surface_force_func(force_data, surface_force_index):
     calendering_surface_force = force_data[:, surface_force_index[1] + 1].astype(float)
     return calendering_surface_force
+
 
 def calendering_surface_pressure_func(periodic_BC_data, force_data, surface_force_index, surface_position_index):
     calendering_surface_force = force_data[:, surface_force_index[1] + 1].astype(float)
@@ -82,44 +87,7 @@ def calendering_surface_pressure_func(periodic_BC_data, force_data, surface_forc
     calendering_surface_position = surface_position_data[:, surface_position_index[1] + 14].astype(float)
     return calendering_time, calendering_surface_pressure, calendering_surface_position
 
-if __name__ == '__main__':
-
-    # ==NATUAL PACKING =================================================================================================
-    # simulation_directory = '/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1_q3/electrode_natural_packing_hertz'
-    # simulation_directory = '/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1_q_0_rmin_2_5_rmax_10/electrode_natural_packing_hertz'
-
-
-    # simulation_directory = '/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1_rigid_plastic_particle/electrode_natural_packing_rigid_plastic_SY_4GPa/'
-    # simulation_directory = 'c:/Users/Axel/Documents/DEM/results/electrode_natural_packing_rigid_plastic_particle/SN_0/'
-    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/rigid_plastic_particle/SN_rigid_plastic_particle_N_500_dt_1e0/electrode_natural_packing_rigid_plastic'
-    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/rigid_plastic_particle/SN_rigid_plastic_particle_N_500_SY_400MPa/electrode_natural_packing_rigid_plastic'
-
-    # simulation_directory = '/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1/electrode_natural_packing_hertz'
-    # simulation_directory = '/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1_2E_spread_1/electrode_natural_packing_hertz'
-
-    # ==CALENDERING=====================================================================================================
-    # simulation_directory = '/scratch/users/axlun/DEMsim/results/electrode_calendering_hertz/SN_ref_run_1_5000p_btr_5_brr_15_comp_time_20_hal_105_dt_1e2_MS_1e4'
-    # simulation_directory = '/scratch/users/axlun/DEMsim/results/electrode_calendering_hertz/SN_ref_run_1_10000p_btr_5_brr_15_comp_time_20_hal_105_dt_1e2_MS_1e4'
-    # simulation_directory = '/scratch/users/axlun/DEMsim/results/electrode_calendering_hertz/SN_ref_run_1_5000p_btr_5_brr_15_comp_time_20_hal_105_dt_1e2_MS_1e4'
-    # simulation_directory = '/scratch/users/axlun/DEMsim/results/electrode_calendering_hertz/SN_ref_run_1_5000p_btr_5_brr_15_comp_time_20_hal_105_dt_1e2_MS_1e4_rot/'
-    # simulation_directory = '/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1_10t/electrode_calendering_hertz'
-    # simulation_directory = '/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1_q_0_rmin_3_rmax_10/electrode_calendering_hertz'
-    # simulation_directory = '/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1_Ebner_raw_data/electrode_calendering_hertz'
-    # simulation_directory = '/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1_rigid_plastic_particle/electrode_calendering_rigid_plastic/'
-    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/rigid_plastic_particle/SN_rigid_plastic_particle_N_500_SY_400MPa/electrode_calendering_rigid_plastic'
-
-    # simulation_directory = '/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1_El_Pl/electrode_calendering_hertz'
-    # simulation_directory = '/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1_2E_spread_4/electrode_calendering_hertz'
-    simulation_directory = '/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1/electrode_calendering_hertz'
-    # simulation_directory = '/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1_br_20/electrode_calendering_hertz'
-    # simulation_directory = '/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1_2E_spread_1/electrode_calendering_hertz'
-
-    # ==MECHANICAL LOADING==============================================================================================
-    # simulation_directory = '/scratch/users/axlun/DEMsim/results/electrode_mechanical_loading_hertz/SN_hertz_5000p_btr_8_brr_08_dt_1e1_MS_1e2_SR_2e-3_compression'
-
-    # ==RESTING=========================================================================================================
-    # simulation_directory = '/scratch/users/axlun/DEMsim/results/electrode_resting_hertz/SN_hertz_5000p_btr_8_brr_08_dt_5e1_MS_1e4_RT_10'
-
+def calendering_pressure_plotting_func(simulation_directory):
     # ==PLOT PARAMETERS=================================================================================================
     fig_dir = 'c:/temp/figures/Bertil_calendering_pressure/'
     try:
@@ -144,13 +112,11 @@ if __name__ == '__main__':
     kinetic_energy_data = []
 
     if simulation_directory.startswith("/scratch"):
-        force_data, surface_force_index, surface_position_index, surface_position_data, periodic_BC_data,\
-        force_fabric_tensor_data, kinetic_energy_data = bertil_data_gatherer(
-            simulation_directory)
+        force_data, surface_force_index, surface_position_index, surface_position_data, periodic_BC_data, \
+            force_fabric_tensor_data, kinetic_energy_data = bertil_data_gatherer(simulation_directory)
     elif simulation_directory.startswith("c:"):
-        force_data, surface_force_index, surface_position_index, surface_position_data, periodic_BC_data,\
-        force_fabric_tensor_data, kinetic_energy_data = local_data_gatherer(
-            simulation_directory)
+        force_data, surface_force_index, surface_position_index, surface_position_data, periodic_BC_data, \
+            force_fabric_tensor_data, kinetic_energy_data = local_data_gatherer(simulation_directory)
     else:
         print("Error with simulation directory")
 
@@ -164,9 +130,9 @@ if __name__ == '__main__':
     # y_side_length = (periodic_BC_y_max - periodic_BC_y_min)
 
     x_side_length = ((surface_position_data[:, surface_position_index[0] + 9]).astype(float) - (
-    surface_position_data[:, surface_position_index[0] + 3]).astype(float))
+        surface_position_data[:, surface_position_index[0] + 3]).astype(float))
     y_side_length = ((surface_position_data[:, surface_position_index[0] + 10]).astype(float) - (
-    surface_position_data[:, surface_position_index[0] + 4]).astype(float))
+        surface_position_data[:, surface_position_index[0] + 4]).astype(float))
 
     calendering_surface_pressure = calendering_surface_force / (x_side_length * y_side_length)
     bottom_surface_pressure = bottom_surface_force / (x_side_length * y_side_length)
@@ -186,7 +152,6 @@ if __name__ == '__main__':
 
     tau_zx = -force_fabric_tensor_data[:, 7] / vol
     tau_zy = -force_fabric_tensor_data[:, 8] / vol
-
 
     # ===FIG 1 CALENDERING SURFACE PRESSURE SURFACE POSITION TIME=======================================================
     fig_calendering_surface_pressure, ax_calendering_surface_pressure = plt.subplots()
@@ -295,7 +260,8 @@ if __name__ == '__main__':
     ax_calendering_surface_bottom_surface.set_ylabel("Stress in z [MPa]")
     ax_calendering_surface_bottom_surface.set_xlabel("Time [s]")
     # ax_calendering_surface_bottom_surface.set_title("Pressure on calendering surface and bottom surface")
-    lns_sum = lns_calendering_surface_pressure_2 + lns_bottom_surface_pressure + lns_macroscopic_stress + lns_calendering_surface_position_2
+    lns_sum = lns_calendering_surface_pressure_2 + lns_bottom_surface_pressure + lns_macroscopic_stress +\
+              lns_calendering_surface_position_2
     labs4 = [l.get_label() for l in lns_sum]
     # ax_calendering_surface_bottom_surface.set_ylim(ymin=-.02,ymax=.12)
     ax_calendering_surface_bottom_surface.legend(lns_sum, labs4, loc="best")
@@ -304,7 +270,7 @@ if __name__ == '__main__':
     fname = fig_dir + 'all_surface_pressure_stess_ZZ_surface_position_time'
     plt.savefig(fname)
 
-    # ===FIG 8 KINETIC  ENERGY===============================================================================================
+    # ===FIG 8 KINETIC  ENERGY==========================================================================================
     fig_KE, ax_KE = plt.subplots()
     lns5 = ax_KE.plot(kinetic_energy_data[:, -1], kinetic_energy_data[:, 0], label=r'KE')
     ax_KE.set_ylabel("Kinetic energy [J]")
@@ -316,7 +282,7 @@ if __name__ == '__main__':
     fname = fig_dir + 'KE'
     plt.savefig(fname)
 
-    # ===FIG 9 STRESS XX YY ZZ TIME===============================================================================================
+    # ===FIG 9 STRESS XX YY ZZ TIME=====================================================================================
     fig_force_fabric_stress_time, ax_force_fabric_stress_time = plt.subplots()
     lns_sxx = ax_force_fabric_stress_time.plot(calendering_time, -sxx * 1e-6, label=r'$\sigma_{xx}$')
     lns_syy = ax_force_fabric_stress_time.plot(calendering_time, -syy * 1e-6, label=r'$\sigma_{yy}$')
@@ -333,12 +299,13 @@ if __name__ == '__main__':
     ax_force_fabric_stress_time.legend(loc="best")
     ax_force_fabric_stress_time.set_xlabel('Time [s]')
     ax_force_fabric_stress_time.set_ylabel('Stress [MPa]')
+    # ax_force_fabric_stress_time.set_ylim(ymin=-.005, ymax=160)
     fig_force_fabric_stress_time.tight_layout()
 
     fname = fig_dir + 'all_stress_time'
     plt.savefig(fname)
 
-    # # = CONTACTS TO CALENDERING HEIGHT ==================================================================================
+    # = CONTACTS TO CALENDERING HEIGHT =================================================================================
     #
     # time_vec_contacts, particle_contact_vec, binder_contact_vec, binder_particle_contact_vec = \
     #     contact_counter_bertil(simulation_directory)
@@ -357,4 +324,40 @@ if __name__ == '__main__':
     # ax_contacts_calendering_surface_position.set_xlabel("Time [s]")
     # ax_contacts_calendering_surface_position.set_ylabel('Contacts [-]')
 
+if __name__ == '__main__':
+    # ==NATUAL PACKING =================================================================================================
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/final_runs/particle_contact_model/SN_2_5/electrode_natural_packing_el_pl_binder_el_pl_particle/'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/final_runs/particle_contact_model/SN_2_5_3/electrode_natural_packing_el_pl_binder_el_pl_particle/'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/final_runs/particle_contact_model/SN_2_6/electrode_natural_packing_el_pl_binder_el_pl_particle/'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/particle_size_distribution/SN_1/electrode_natural_packing_hertz/'
+
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/final_runs_2/SN_101/1/electrode_natural_packing_hertz/'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/final_runs_2/SN_101/2/electrode_natural_packing_hertz/'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/final_runs_2/SN_211/2/electrode_natural_packing_el_pl_binder_el_pl_particle/'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/final_runs_2/SN_2011/1/electrode_natural_packing_el_pl_binder_el_pl_particle/'
+
+    # ==CALENDERING=====================================================================================================
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/final_runs/particle_contact_model/SN_2_5_3/electrode_calendering_el_pl_binder_el_pl_particle/'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/final_runs/particle_contact_model/SN_2_6/electrode_calendering_el_pl_binder_el_pl_particle/'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/final_runs/particle_contact_model/SN_2_6_2/electrode_calendering_el_pl_binder_el_pl_particle/'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/particle_size_distribution/SN_1/electrode_calendering_hertz/'
+
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/final_runs_2/SN_101/1/electrode_calendering_hertz/'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/final_runs_2/SN_101/2/electrode_calendering_hertz/'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/final_runs_2/SN_201/3/electrode_calendering_el_pl_binder_el_pl_particle/'
+
+    # ==MECHANICAL LOADING==============================================================================================
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/electrode_mechanical_loading_hertz/SN_hertz_5000p_btr_8_brr_08_dt_1e1_MS_1e2_SR_2e-3_compression'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/final_runs_2/SN_201/1/electrode_mechanical_loading_el_pl_binder_el_pl_particle_tension/'
+
+    # ==RESTING=========================================================================================================
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/viscoelastic_testing/SN_1_p_5t/electrode_short_resting_el_pl_binder_el_pl_particle_dt_2e2_ms_1e3/'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/final_runs_2/SN_2011/1/electrode_resting_el_pl_binder_el_pl_particle/'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/final_runs_2/SN_2011/1/electrode_relaxation_el_pl_binder_el_pl_particle_compression/'
+    simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/final_runs_2/SN_2011/1/electrode_relaxation_el_pl_binder_el_pl_particle_tension/'
+
+    # ==RESOURCE MANAGEMENT=============================================================================================
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/resource_management_test/CPU_1/electrode_natural_packing_el_pl_binder_el_pl_particle/'
+
+    calendering_pressure_plotting_func(simulation_directory)
     plt.show()
