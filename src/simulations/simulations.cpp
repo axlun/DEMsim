@@ -22,6 +22,8 @@ std::map<std::string, DEM::SimulationFunctionPtr> DEM::valid_simulations() {
             {"binder_tangential_contact_tester_elastic_plastic_binder_hertz_particles",       DEM::binder_tangential_contact_tester_elastic_plastic_binder_hertz_particles},
             {"particle_normal_contact_tester_elastic_plastic_binder_rigid_plastic_particles", DEM::particle_normal_contact_tester_elastic_plastic_binder_rigid_plastic_particles},
             {"particle_normal_contact_tester_elastic_plastic_binder_elastic_plastic_particles", DEM::particle_normal_contact_tester_elastic_plastic_binder_elastic_plastic_particles},
+            {"particle_force_overlap_el_pl_particles",                                        DEM::particle_force_overlap_el_pl_particles},
+            {"particle_force_overlap_hertz_particles",                                        DEM::particle_force_overlap_hertz_particles},
             {"binder_wall_tangential_contact_tester_elastic_plastic_binder_hertz_particles",  DEM::binder_wall_tangential_contact_tester_elastic_plastic_binder_hertz_particles},
             {"normal_contact_tester_elastic_plastic_binder_hertz_particles",                  DEM::normal_contact_tester_elastic_plastic_binder_hertz_particles},
             {"particle_to_wall_drop_contact_tester_elastic_plastic_binder_elastic_plastic_particles",   DEM::particle_to_wall_drop_contact_tester_elastic_plastic_binder_elastic_plastic_particles},
@@ -57,7 +59,8 @@ std::map<std::string, DEM::SimulationFunctionPtr> DEM::valid_simulations() {
             {"restart_electrode_calendering_hertz",                                           DEM::restart_electrode_calendering_hertz},
             {"restart_electrode_calendering_el_pl_binder_el_pl_particle",                     DEM::restart_electrode_calendering_el_pl_binder_el_pl_particle},
             {"restart_electrode_calendering_rigid_plastic",                                   DEM::restart_electrode_calendering_rigid_plastic},
-            {"restart_electrode_calendering",                                                 DEM::restart_electrode_calendering}
+            {"restart_electrode_calendering",                                                 DEM::restart_electrode_calendering},
+            {"restart_file_tester",                                                           DEM::restart_file_tester}
     };
 }
 

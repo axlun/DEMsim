@@ -21,6 +21,8 @@ namespace DEM {
     void binder_tangential_contact_tester_elastic_plastic_binder_hertz_particles(const std::string& settings_file_name);
     void particle_normal_contact_tester_elastic_plastic_binder_rigid_plastic_particles(const std::string& settings_file_name);
     void particle_normal_contact_tester_elastic_plastic_binder_elastic_plastic_particles(const std::string& settings_file_name);
+    void particle_force_overlap_el_pl_particles(const std::string& settings_file_name);
+    void particle_force_overlap_hertz_particles(const std::string& settings_file_name);
     void particle_to_wall_drop_contact_tester_elastic_plastic_binder_elastic_plastic_particles(const std::string& settings_file_name);
     void binder_wall_tangential_contact_tester_elastic_plastic_binder_hertz_particles(const std::string& settings_file_name);
     void normal_contact_tester_elastic_plastic_binder_hertz_particles(const std::string& settings_file_name);
@@ -50,6 +52,7 @@ namespace DEM {
     void electrode_calendering(const std::string& settings_file_name);
     void restart_test(const std::string& settings_file_name);
     void restart_electrode_calendering(const std::string& settings_file_name);
+    void restart_file_tester(const std::string& settings_file_name);
     void restart_electrode_calendering_hertz(const std::string& settings_file_name);
     void restart_electrode_calendering_el_pl_binder_el_pl_particle(const std::string& settings_file_name);
     void restart_electrode_calendering_rigid_plastic(const std::string& settings_file_name);

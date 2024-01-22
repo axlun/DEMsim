@@ -59,6 +59,8 @@ add_executable(DEMsim
 				src/contact_models/stone_material_contact.cpp
 				src/contact_models/stone_material_contact.h
 				src/materials/stone_material.h
+				src/simulations/Contact_tests/force_overlap_curves/particle_force_overlap_el_pl_particles.cpp
+				src/simulations/Contact_tests/force_overlap_curves/particle_force_overlap_hertz_particles.cpp
 				src/simulations/Contact_tests/contact_tester.cpp
 				src/simulations/Contact_tests/binder_tangential_contact_tester_elastic_plastic_binder_hertz_particles.cpp
 				src/simulations/Contact_tests/particle_normal_contact_tester_elastic_plastic_binder_rigid_plastic_particles.cpp
@@ -89,6 +91,7 @@ add_executable(DEMsim
 				src/simulations/Force_model_impact_on_electrode/el_pl_binder_el_pl_particle/electrode_mechanical_loading_el_pl_binder_el_pl_particle.cpp
 				src/simulations/Force_model_impact_on_electrode/el_pl_binder_el_pl_particle/electrode_relaxation_el_pl_binder_el_pl_particle.cpp
 				src/simulations/Force_model_impact_on_electrode/el_pl_binder_el_pl_particle/electrode_resting_el_pl_binder_el_pl_particle.cpp
+				src/simulations/Force_model_impact_on_electrode/el_pl_binder_el_pl_particle/restart_file_tester.cpp
 				src/simulations/Force_model_impact_on_electrode/electrode_mechanical_loading_rigid_plastic.cpp
 				src/simulations/Force_model_impact_on_electrode/electrode_resting_hertz.cpp
 				src/simulations/cyclic_triaxial.cpp
