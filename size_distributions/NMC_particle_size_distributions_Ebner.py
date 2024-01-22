@@ -84,6 +84,15 @@ if __name__ == '__main__':
                                                   Ebner_q0_pdf_log, label='Tomography, raw data - fitted q0')
     ax_q3_log.legend(loc='best')
 
+    # =FIG HISTOGRAM EBNER PARTICLE VOLUME DATA=========================================================================
+    fig_particle_volume_histogram, ax_particle_volume_histogram = plt.subplots()
+    lns_Ebner_vol = ax_particle_volume_histogram.hist([Ebner_particle_volume, Ebner_particle_volume2], 100, density=True, label=['$Tomography, raw data by volume - 96wt$','$Tomography, raw data by volume - 90wt$'])
+    ax_particle_volume_histogram.set_title('Particle volume distribution from tomography raw data')
+    ax_particle_volume_histogram.set_xlabel('particle diameter [µm]')
+    ax_particle_volume_histogram.set_ylabel('Number of particles normalised/ q0')
+    ax_particle_volume_histogram.legend(loc='best')
+
+
     # =FIG HISTOGRAM EBNER PARTICLE DATA================================================================================
     fig_particle_histogram,ax_particle_histogram = plt.subplots()
     lns_Ebner = ax_particle_histogram.hist([Ebner_particle_size,Ebner_particle_size2], 100, density=True, label=['$Tomography, raw data - 96wt$','$Tomography, raw data - 90wt$'])
