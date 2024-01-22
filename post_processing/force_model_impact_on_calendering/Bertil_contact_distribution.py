@@ -14,33 +14,22 @@ import shutil
 
 if __name__ == '__main__':
 
-#==NATUAL PACKING ======================================================================================================
-#     simulation_directory = '/scratch/users/axlun/DEMsim/results/electrode_natural_packing_hertz/SN_hertz_500p_btr_8_brr_08_dt_1e0_MS_1e0_perBC_bugfix1/'
-#     simulation_directory = '/scratch/users/axlun/DEMsim/results/electrode_natural_packing_hertz/SN_hertz_5000p_btr_8_brr_08_dt_1e0_MS_1e0/'
-#     simulation_directory = '/scratch/users/axlun/DEMsim/results/electrode_natural_packing_hertz/SN_hertz_5000p_btr_5_brr_05_dt_1e0_MS_1e0'
-#     simulation_directory = '/scratch/users/axlun/DEMsim/results/electrode_natural_packing_hertz/SN_Forsknings_frukost/'
+    #==NATUAL PACKING ======================================================================================================
 
 
-#==CALENDERING==========================================================================================================
-     # simulation_directory = '/scratch/users/axlun/DEMsim/results/electrode_calendering_hertz/SN_hertz_5000p_btr_8_brr_08_comp_time_20_hal_105_dt_1e2_MS_1e4'
-    # simulation_directory = '/scratch/users/axlun/DEMsim/results/electrode_calendering_hertz/SN_hertz_5000p_btr_5_brr_05_comp_time_20_hal_105_dt_1e2_MS_1e4'
-    # simulation_directory = '/scratch/users/axlun/DEMsim/results/electrode_calendering_hertz/SN_ref_run_1_5000p_btr_5_brr_8_comp_time_20_hal_105_dt_1e2_MS_1e4'
-    # simulation_directory = '/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1_El_Pl/electrode_calendering_hertz'
-    simulation_directory = '/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1_rigid_plastic_particle/electrode_calendering_rigid_plastic/'
+    #==CALENDERING==========================================================================================================
+    simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/final_runs_2/SN_301/2/' \
+                       'electrode_calendering_el_pl_binder_el_pl_particle'
 
-#==MECHANICAL LOADING===================================================================================================
-    # simulation_directory = '/scratch/users/axlun/DEMsim/results/electrode_mechanical_loading_hertz/SN_hertz_5000p_btr_8_brr_08_dt_1e1_MS_1e2_SR_2e-3_compression'
-    # simulation_directory = '/scratch/users/axlun/DEMsim/results/electrode_mechanical_loading_hertz/SN_hertz_5000p_btr_8_brr_08_dt_1e2_MS_1e4_SR_2e-3_tension'
-    # simulation_directory = '/scratch/users/axlun/DEMsim/results/electrode_mechanical_loading_hertz/SN_hertz_5000p_btr_5_brr_05_dt_5e1_MS_1e2_SR_2e-3_tension'
-    # simulation_directory = '/scratch/users/axlun/DEMsim/results/electrode_mechanical_loading_hertz/SN_ref_run_1_5000p_btr_5_brr_15_dt_5e1_MS_1e2_SR_2e-3_tension'
-    # simulation_directory = '/scratch/users/axlun/DEMsim/results/electrode_mechanical_loading_hertz/SN_ref_run_1_5000p_btr_5_brr_15_dt_5e1_MS_1e2_SR_2e-3_no_new_binder_tension'
-    # simulation_directory = '/scratch/users/axlun/DEMsim/results/electrode_mechanical_loading_hertz/SN_ref_run_1_5000p_btr_5_brr_15_dt_5e1_MS_1e2_SR_2e-3_no_new_binder_run_2_tension'
-    # simulation_directory = '/scratch/users/axlun/DEMsim/results/electrode_mechanical_loading_hertz/SN_ref_run_1_5000p_btr_5_brr_15_dt_5e1_MS_1e2_SR_2e-3_no_new_binder_rot_tension'
-    # simulation_directory = '/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1_El_Pl/electrode_mechanical_loading_hertz_compression'
+    #==MECHANICAL LOADING===================================================================================================
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/final_runs/ref_sim/SN_1_3/electrode_mechanical_loading_hertz_tension/'
 
+    # ==RESTING==============================================================================================================
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/viscoelastic_testing/SN_1/electrode_relaxation_el_pl_binder_el_pl_particle_compression_01/'
 
-#==RESTING==============================================================================================================
-#    simulation_directory = '/scratch/users/axlun/DEMsim/results/electrode_resting_hertz/SN_hertz_5000p_btr_8_brr_08_dt_5e1_MS_1e4_RT_10'
+    # ==RELAXATION==============================================================================================================
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/final_runs_2/SN_2111/1/' \
+    #                    'electrode_relaxation_el_pl_binder_el_pl_particle_tension'
 
     time_vec, particle_contact_vec, binder_contact_vec, binder_particle_contact_vec = contact_counter_bertil(simulation_directory)
 
@@ -75,9 +64,7 @@ if __name__ == '__main__':
     fname = fig_dir + 'number_of_contacts'
     plt.savefig(fname)
 
-
-
-    print('Plotting')
+    print('Plotting results')
     plt.show()
 
 def no_of_contact_foo():

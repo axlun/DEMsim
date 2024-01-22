@@ -9,16 +9,9 @@ import shutil
 
 if __name__ == '__main__':
 
-    # simulation_directory = '/scratch/users/axlun/DEMsim/results/electrode_mechanical_loading_hertz/SN_hertz_5000p_btr_5_brr_05_dt_5e1_MS_1e2_SR_2e-3_tension'
-
-    # simulation_directory = '/scratch/users/axlun/DEMsim/results/electrode_mechanical_loading_hertz/SN_ref_run_1_5000p_btr_5_brr_15_dt_5e1_MS_1e2_SR_2e-3_no_new_binder_run_3_tension'
-    # simulation_directory = '/scratch/users/axlun/DEMsim/results/electrode_mechanical_loading_hertz/SN_ref_run_1_5000p_btr_5_brr_15_dt_5e1_MS_1e2_SR_2e-3_rot_compression'
-    # simulation_directory = '/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1_br_175/electrode_mechanical_loading_hertz_compression'
-    simulation_directory = '/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1_q_0_rmin_3_rmax_10/electrode_mechanical_loading_hertz_tension'
-
-
-
-    stiffness_at_points_flag = 1
+    simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/final_runs_2/SN_2111/1_cpy_2/' \
+                           'electrode_relaxation_el_pl_binder_el_pl_particle_compression'
+    stiffness_at_points_flag = 0
 
     fig_dir = 'C:/temp/figures/Bertil_mechanical_properties_one_load_direction/'
     try:

@@ -103,34 +103,18 @@ if __name__ == '__main__':
     periodic_BCs = False
 
     # ==NATUAL PACKING =================================================================================================
-    # simulation_directory = '/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1/electrode_natural_packing_hertz'
-    # time_step = 11.59
-    simulation_directory = '/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1_q_0_rmin_2_5_rmax_10/electrode_natural_packing_hertz'
-    time_step = 9.3
-
-
+    # simulation_directory = "/scratch/users/axlun/DEMsim/results/article_2/viscoelastic_testing/SN_4/electrode_natural_packing_el_pl_binder_el_pl_particle/"
+    # time_step = 10.66
 
     # ==CALENDERING=====================================================================================================
-
-    # time_step = 12.6979
-    # # time_step = 51.3979 #5K particles, run 1
-    # simulation_directory = '/scratch/users/axlun/DEMsim/results/electrode_calendering_hertz/SN_ref_run_2_5000p_btr_5_brr_15_comp_time_20_hal_105_dt_1e2_MS_1e4'
-
-    # time_step = 15.698  # 5K particles, run 2
-    # # time_step = 50.298 #5K particles, run 2
-    # simulation_directory = '/scratch/users/axlun/DEMsim/results/electrode_calendering_hertz/SN_ref_run_2_5000p_btr_5_brr_15_comp_time_20_hal_105_dt_1e2_MS_1e4_run_2'
-
-    # simulation_directory = '/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1/electrode_calendering_hertz'
-    # time_step = 32.5975
-
+    # simulation_directory = "/scratch/users/axlun/DEMsim/results/electrode_calendaring/SN00_400p_plastic_binder"
+    # time_step = 14.32
 
     # ==MECHANICAL LOADING==============================================================================================
-   # bertil_simulation_directory = '/scratch/users/axlun/DEMsim/results/electrode_mechanical_loading_hertz/SN_hertz_5000p_btr_8_brr_08_large_part_dt_5e1_MS_1e4_SR_1e-3_compression'
-   #  simulation_directory = '/scratch/users/axlun/DEMsim/results/electrode_mechanical_loading_hertz/SN_ref_run_1_5000p_btr_5_brr_15_dt_5e1_MS_1e2_SR_2e-3_no_new_binder_run_3_tension'
-   #  time_step = 78.2313
+    simulation_directory = '/scratch/users/axlun/DEMsim/results/electrode_mechanical_loading_hertz/SN_ref_run_1_5000p_btr_5_brr_15_dt_5e1_MS_1e2_SR_2e-3_no_new_binder_run_3_tension'
+    time_step = 78.2313
 
     # ==RESTING=========================================================================================================
-#    bertil_simulation_directory = '/scratch/users/axlun/DEMsim/results/electrode_resting_hertz/SN_hertz_5000p_btr_8_brr_08_dt_5e1_MS_1e4_RT_10'
 
     if (one_file_reader(simulation_directory+'/particles/particles_'+str(time_step)+'.dou') == OSError):
         print("Particle file not existing on Bertil")
@@ -288,7 +272,11 @@ if __name__ == '__main__':
     snapshot.plot_velocity_arrow=velocity_arrow
     snapshot.plot_force_arrow= force_arrow
     # snapshot.surfaces_colors[1] = colors.red
-    # snapshot.surfaces_opacities[1] = 0      # Calendering surface
+    snapshot.surfaces_opacities[5] = 0
+    snapshot.surfaces_opacities[4] = 0
+    snapshot.surfaces_opacities[3] = 0
+    snapshot.surfaces_opacities[2] = 0
+    snapshot.surfaces_opacities[1] = 0      # Calendering surface
     # snapshot.surfaces_opacities[0] = 0    # Current collector surface
     #Initiate the bounding box
     bbox = BoundingBox()

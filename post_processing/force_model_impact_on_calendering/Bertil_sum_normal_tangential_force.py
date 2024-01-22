@@ -14,29 +14,20 @@ import os
 if __name__ == '__main__':
 
     # ==NATUAL PACKING =================================================================================================
-    # simulation_directory = '/scratch/users/axlun/DEMsim/results/electrode_natural_packing_hertz/SN_hertz_5000p_btr_5_brr_05_dt_1e0_MS_1e0'
-    # simulation_directory = '/scratch/users/axlun/DEMsim/results/electrode_natural_packing_hertz/SN_ref_run_2_5000p_btr_5_brr_15_dt_1e0_MS_1e0/'
-    # simulation_directory = '/scratch/users/axlun/DEMsim/results/electrode_natural_packing_hertz/SN_run_1'
-    simulation_directory = '/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1_rigid_plastic_particle/electrode_natural_packing_rigid_plastic_SY_4GPa_crash'
-
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/final_runs/particle_contact_model/SN_2_2/electrode_natural_packing_el_pl_binder_el_pl_particle/'
 
     # ==CALENDERING======================================================================================================
-    # simulation_directory = '/scratch/users/axlun/DEMsim/results/electrode_calendering_hertz/SN_hertz_5000p_btr_5_brr_05_comp_time_20_hal_105_dt_1e2_MS_1e4'
-    # simulation_directory = '/scratch/users/axlun/DEMsim/results/electrode_calendering_hertz/SN_ref_run_2_5000p_btr_5_brr_15_comp_time_20_hal_105_dt_1e2_MS_1e4_run_2'
-    # simulation_directory = '/scratch/users/axlun/DEMsim/results/electrode_calendering_hertz/SN_ref_run_1_5000p_btr_5_brr_15_comp_time_20_hal_105_dt_1e2_MS_1e4_no_new_binder_run_3'
-    # simulation_directory = '/scratch/users/axlun/DEMsim/results/electrode_calendering_hertz/SN_ref_run_1_5000p_btr_5_brr_15_comp_time_20_hal_105_dt_1e2_MS_1e4_rot/'
-    # simulation_directory = '/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1_El_Pl/electrode_calendering_hertz'
-    # simulation_directory = '/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1_rigid_plastic_particle/electrode_calendering_rigid_plastic/'
-
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/final_runs/particle_contact_model/SN_2_5_3/electrode_calendering_el_pl_binder_el_pl_particle/'
 
     # ==MECHANICAL LOADING==============================================================================================
-    # simulation_directory = '/scratch/users/axlun/DEMsim/results/electrode_mechanical_loading_hertz/SN_ref_run_1_10000p_btr_5_brr_15_dt_5e1_MS_1e2_SR_2e-3_compression'
-    # simulation_directory = '/scratch/users/axlun/DEMsim/results/electrode_mechanical_loading_hertz/SN_ref_run_1_5000p_btr_5_brr_15_dt_5e1_MS_1e2_SR_2e-3_no_new_binder_compression'
-    # simulation_directory = '/scratch/users/axlun/DEMsim/results/electrode_mechanical_loading_hertz/SN_ref_run_1_5000p_btr_5_brr_15_dt_5e1_MS_1e2_SR_2e-3_no_new_binder_run_2_tension'
-    # simulation_directory = '/scratch/users/axlun/DEMsim/results/electrode_mechanical_loading_hertz/SN_ref_run_1_5000p_btr_5_brr_15_dt_5e1_MS_1e2_SR_2e-3_no_new_binder_run_3_tension'
-    # simulation_directory = '/scratch/users/axlun/DEMsim/results/electrode_mechanical_loading_hertz/SN_ref_run_1_5000p_btr_5_brr_15_dt_5e1_MS_1e2_SR_2e-3_rot_tension'
-    # simulation_directory = '/scratch/users/axlun/DEMsim/results/final_runs/SN_run_1_El_Pl/electrode_mechanical_loading_hertz_compression'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/final_runs/particle_contact_model/SN_1_2_4/electrode_mechanical_loading_el_pl_binder_el_pl_particle_compression/'
 
+    # ==RELAXATION======================================================================================================
+    simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/final_runs_2/SN_2111/1/' \
+                           'electrode_relaxation_el_pl_binder_el_pl_particle_compression'
+
+    # ==RELAXATION======================================================================================================
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/viscoelastic_testing/SN_1/electrode_relaxation_el_pl_binder_el_pl_particle_compression'
     time_steps, normal_force, compressive_normal_force_vec, tensile_normal_force_vec, binder_force_vec, \
         compressive_binder_force_vec, tensile_binder_force_vec, particle_force_vec, tangential_force = \
         sum_normal_tangential_force_bertil(simulation_directory)
@@ -111,7 +102,8 @@ if __name__ == '__main__':
 
     # ==FIG 4 TOTAL BINDER AND PARTICLE FORCES==========================================================================
     figure_total_binder_particle_forces, ax_total_binder_particle_forces = plt.subplots()
-    lns_normal_force_time2 = ax_total_binder_particle_forces.plot(time_steps, normal_force, 'r', linewidth=3, label=r'$F_n$')
+    lns_normal_force_time2 = ax_total_binder_particle_forces.plot(time_steps, normal_force, 'r', linewidth=3,
+                                                                  label=r'$F_n$')
     lns_binder_force_time2 = ax_total_binder_particle_forces.plot(time_steps, binder_force_vec, 'g',
                                                               linewidth=3, label=r'$F_b$')
     lns_particle_force_time = ax_total_binder_particle_forces.plot(time_steps, particle_force_vec, 'b', linewidth=3,

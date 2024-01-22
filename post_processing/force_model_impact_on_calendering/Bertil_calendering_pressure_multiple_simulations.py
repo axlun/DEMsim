@@ -270,7 +270,7 @@ if __name__ == '__main__':
     ax_full_calendering_sim.set_xlabel("Calendering surface height [µm]")
     #    ax_full_calendering_sim.set_title('calendering surface pressure')
     fig_full_calendering_sim.tight_layout()
-    ax_full_calendering_sim.legend(loc="best")
+    ax_full_calendering_sim.legend(loc="best",fontsize="25")
 
     fname = fig_dir + 'calendering_surface_pressure_surface_position_full_El_Pl'
     plt.savefig(fname)
@@ -283,8 +283,8 @@ if __name__ == '__main__':
                                  calendering_surface_pressure_SN_run_1_br_175[:] * 1E-6, label=r'$\frac{b_r}{R} = 1.75$')
     ax_full_calendering_sim.plot(calendering_surface_position_SN_run_1[:] * 1E2,
                                  calendering_surface_pressure_SN_run_1[:] * 1E-6, label=r'$\frac{b_r}{R} = 1.5$')
-    ax_full_calendering_sim.plot(calendering_surface_position_SN_run_1_br_10[:] * 1E2,
-                                 calendering_surface_pressure_SN_run_1_br_10[:] * 1E-6, label=r'$\frac{b_r}{R} = 1.0$')
+    # ax_full_calendering_sim.plot(calendering_surface_position_SN_run_1_br_10[:] * 1E2,
+    #                              calendering_surface_pressure_SN_run_1_br_10[:] * 1E-6, label=r'$\frac{b_r}{R} = 1.0$')
     # ax_full_calendering_sim.plot(calendering_surface_position_SN_run_1_br_05[:],
     #                              calendering_surface_pressure_SN_run_1_br_05[:] * 1E-6, label=r'$b_r = 0.5$')
     ax_full_calendering_sim.set_xlim(xmin=104.8,xmax=120)
@@ -295,7 +295,7 @@ if __name__ == '__main__':
     ax_full_calendering_sim.set_xlabel("Calendering surface height [µm]")
     #    ax_full_calendering_sim.set_title('calendering surface pressure')
     fig_full_calendering_sim.tight_layout()
-    ax_full_calendering_sim.legend(loc="best")
+    ax_full_calendering_sim.legend(loc="best",fontsize="25")
 
     fname = fig_dir + 'calendering_surface_pressure_surface_position_full_br'
     plt.savefig(fname)

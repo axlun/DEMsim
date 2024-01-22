@@ -14,8 +14,9 @@ import pandas as pd
 if __name__ == '__main__':
     plt.style.use('axel_style')
 
-    simulation_directory = '/scratch/users/axlun/DEMsim/results/electrode_natural_packing_hertz/SN_hertz_500p_btr_8_brr_08_dt_1e0_MS_1e0_perBC_bugfix1/'
-    particle_1,particle_2 = 40, 401
+    simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/final_runs/particle_contact_model/SN_2/electrode_natural_packing_el_pl_binder_el_pl_particle/'
+    particle_1, particle_2 = 3618, 4950
+
     time_vec, contact_data_vec = bertil_contact_tracker(simulation_directory,particle_1,particle_2)
 
     # =FIG 1 FORCE FOR CONTACT==========================================================================================
@@ -46,4 +47,5 @@ if __name__ == '__main__':
     labs = [l.get_label() for l in lns]
     ax_overlap.legend(lns, labs, loc='best')
     # =SHOW PLOT========================================================================================================
+    print('Plotting results')
     plt.show()
