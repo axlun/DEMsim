@@ -41,17 +41,20 @@ if __name__ == '__main__':
         # print(lines)
         # # print(simulation_directory+'particles/'+particle_time_and_file_name_dict[key])
         data = np.genfromtxt(simulation_directory+'particles/'+particle_time_and_file_name_dict[key],delimiter=', ')
-        print((data))
+        # print((data))
         p1_data.append(data)
-        contact_data.append(np.genfromtxt((simulation_directory+'contacts/'+particle_time_and_file_name_dict[key]).replace("particles","contacts"),delimiter=', '))
+        contact_data.append(
+            np.genfromtxt((simulation_directory+'contacts/'+particle_time_and_file_name_dict[key]).replace(
+                "particles","contacts"),delimiter=', '))
     p1_data_mat = np.stack(p1_data,axis=0)
     contact_data_mat = np.stack(contact_data, axis=0)
-    print(contact_data_mat)
+    # print(contact_data_mat)
     force_fabric_tensor = np.genfromtxt(simulation_directory+'force_fabric_tensor.dou',delimiter=', ')
     kinetic_energy = np.genfromtxt(simulation_directory+'kinetic_energy.dou',delimiter=', ')
-    print(p1_data_mat)
+    # print(p1_data_mat)
     kinetic_energy_particle_1 = p1_data_mat[:,7]
-    potential_energy_particle_1 = 4/3 * 3.14* p1_data_mat[:,7] ** 3 * 4800 * 10 * (p1_data_mat[:,3] - p1_data_mat[:,7])#m*a*h
+    potential_energy_particle_1 = 4/3 * 3.14* p1_data_mat[:,7] ** 3 * 4800 * 10 * (p1_data_mat[:,3] - p1_data_mat[:,7])
+    #m*a*h
 
     # contact_data_mat = np.stack(contact_data,axis=0)
 
@@ -92,16 +95,19 @@ if __name__ == '__main__':
     # ax_full_calendering_sim.set_xlabel("Calendering surface position [µm]")
     # ax_full_calendering_sim.set_title('calendering surface pressure')
 
-#=====================================OVERLAP TO CONTACT FORCE========================================================
+    # =====================================OVERLAP TO CONTACT FORCE=====================================================
     figure_overlap_force, ax_overlap_force = plt.subplots()
-    lns_overlap_force = ax_overlap_force.plot(contact_data_mat[:,5],contact_data_mat[:,6],'r',linewidth=3,label=r'Contact force')
-    lns_binder_force = ax_overlap_force.plot(contact_data_mat[:,5],contact_data_mat[:,7],'g--',linewidth=3,label=r'Binder force')
-    lns_particle_force = ax_overlap_force.plot(contact_data_mat[:,5],contact_data_mat[:,8],'b--*',linewidth=3,label=r'Particle force')
+    lns_overlap_force = ax_overlap_force.plot(
+        contact_data_mat[:,5],contact_data_mat[:,6],'r',linewidth=3,label=r'Contact force')
+    lns_binder_force = ax_overlap_force.plot(
+        contact_data_mat[:,5],contact_data_mat[:,7],'g--',linewidth=3,label=r'Binder force')
+    lns_particle_force = ax_overlap_force.plot(
+        contact_data_mat[:,5],contact_data_mat[:,8],'b--*',linewidth=3,label=r'Particle force')
     ax_overlap_force.set_xlabel("Overlap [m]")
     ax_overlap_force.set_ylabel("Contact force [N]")
     ax_overlap_force.legend()
 
-    # =====================================OVERLAP TIME========================================================
+    # =====================================OVERLAP TIME=================================================================
     figure_overlap_time, ax_overlap_time = plt.subplots()
     lns_overlap_time = ax_overlap_time.plot(time, contact_data_mat[:, 5], 'r', linewidth=3,
                                               label=r'overlap')
@@ -114,66 +120,3 @@ if __name__ == '__main__':
     ax_overlap_time.legend()
 
     plt.show()
-
-
-
-
-
-    #
-    #
-    # matplotlib.style.use('classic')
-    # plt.rc('font', serif='Computer Modern Roman')
-    # plt.rcParams.update({'font.size': 15})
-    # plt.rcParams['lines.linewidth'] = 2
-    # force_data = np.genfromtxt('C:/Users/Axel/Documents/DEM/results/contact_testing/hertz_particle/contact_testing.dou',
-    #                             delimiter=',')
-    # simulation_dir = 'C:/Users/Axel/Documents/DEM/DEMsim/simulations/force_model_impact_on_electrode/contact_test.sim'
-    #
-    #
-    # time_parameter = get_parameter(simulation_dir,'t')
-    # R_eff = get_parameter(simulation_dir,'R')/2
-    # Syp = get_parameter(simulation_dir,'particle_yield_stress_')
-    # time = force_data[:,4]
-    # ticks = time/time_parameter
-    # plt.figure(1)
-    # Ep = get_parameter(simulation_dir,'Ep')
-    # nup = get_parameter(simulation_dir,'nup')
-    # E0 = Ep/(1-nup**2)/2
-    # R0 = 0.03/2
-    # h = force_data[:, 0]
-    # F = force_data[:,1]
-    # h_norm = h/(R_eff)
-    # F_norm = F/(R_eff**2 * Syp)
-    # plt.plot(h, F)
-    # plt.ylabel("Force [N]")
-    # plt.xlabel("Overlap [m]")
-    # plt.tight_layout()
-    #
-    # # print(ticks)
-    # plt.figure(2)
-    # plt.plot(ticks,F)
-    # plt.ylabel("Force [N]")
-    # plt.xlabel("Ticks [-]")
-    # plt.tight_layout()
-    #
-    #
-    # plt.figure(3)
-    # plt.plot(time,F)
-    # plt.ylabel("Force [N]")
-    # plt.xlabel("Time [s]")
-    # plt.tight_layout()
-    #
-    # plt.figure(4)
-    # plt.plot(time,h)
-    # plt.ylabel("Overlap [m]")
-    # plt.xlabel("Time [s]")
-    # plt.tight_layout()
-    #
-    #
-    # plt.figure(5)
-    # plt.plot(h_norm, F_norm)
-    # plt.ylabel("Force/R²_eff [-]")
-    # plt.xlabel("Overlap/R_eff  [-]")
-    # plt.tight_layout()
-    #
-    # plt.show()
