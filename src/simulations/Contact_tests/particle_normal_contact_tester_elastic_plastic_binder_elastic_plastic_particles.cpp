@@ -34,7 +34,7 @@ void DEM::particle_normal_contact_tester_elastic_plastic_binder_elastic_plastic_
     auto mat = simulator.create_material<ElectrodeMaterial>(4800);
     auto radius_1 = parameters.get_parameter<double>("R1");
     auto radius_2 = parameters.get_parameter<double>("R2");
-    std::cout << "R1, R2: "<< radius_1 << radius_2 << "m\n";
+    std::cout << "R1, R2: "<< radius_1 << radius_2 << "m" << std::endl;
     auto output_directory = parameters.get_parameter<std::string>("output_dir");
     double output_number = parameters.get_parameter<double>("output_number");
     mat->E = parameters.get_parameter<double>("E");
@@ -56,8 +56,8 @@ void DEM::particle_normal_contact_tester_elastic_plastic_binder_elastic_plastic_
 
 // =PARTICLE CONTACT TEST================================================================================================
 
-    auto p1 = simulator.create_particle(radius_1,Vec3{-radius_1*1.0010,0 , 0},Vec3{0,0,0}, mat);
-    auto p2 = simulator.create_particle(radius_2,Vec3{radius_2*1.0010,0 , 0},Vec3{0,0,0}, mat);
+    auto p1 = simulator.create_particle(radius_1,Vec3{-radius_1*1.00010,0 , 0},Vec3{0,0,0}, mat);
+    auto p2 = simulator.create_particle(radius_2,Vec3{radius_2*1.00010,0 , 0},Vec3{0,0,0}, mat);
     simulator.set_mass_scale_factor(mass_scaling);
 
     simulator.setup(radius_2*1);
@@ -86,7 +86,7 @@ void DEM::particle_normal_contact_tester_elastic_plastic_binder_elastic_plastic_
     double R0_ = 1 / (1 / radius_1 + 1 / radius_2);
     std::cout << "R0: "<< R0_<< "m\n";
 
-    auto particle_normal_displacement =  R0_ * 0.4; //Move particles 1% of the radius
+    auto particle_normal_displacement =  R0_ * 0.2; //Move particles 1% of the radius
     auto particle_velocity = particle_normal_displacement/2.0/move_time.count();
 
     std::chrono::duration<double> output_duration(move_time.count()/output_number);
@@ -105,7 +105,7 @@ void DEM::particle_normal_contact_tester_elastic_plastic_binder_elastic_plastic_
 //    simulator.run(RunForTime);
 
 //Normal movement
-    double num_array[] = {1.0};//{.2, -.2, .9, -.8, .9};
+    double num_array[] = {1.0, -1.0};//{.2, -.2, .9, -.8, .9};
 
     for (double n : num_array)
     {
