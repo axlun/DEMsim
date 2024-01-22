@@ -31,58 +31,58 @@ def stiffness_spread_processing(sim_dir, sim_type, no_sims):
     return strain_points, stiffness_mean, stiffness_std
 
 
-def calendering_spread_processing(sim_dir, sim_type, no_sims):
-    simulation_dictionary = {}
-    max_load_height = -1
-    max_unload_height = -1
-    min_calendering_height = 1e99
-    for i in range(1, no_sims + 1):
-        simulation_dictionary[i] = Calendering(sim_dir + str(i) + '/electrode_calendering_' + sim_type)
-        temp_min_height = min(simulation_dictionary[i].calendering_surface_position)
-        if min_calendering_height > temp_min_height:
-            min_calendering_height = temp_min_height
-        if simulation_dictionary[i].calendering_surface_position[0] > max_load_height:
-            max_load_height = simulation_dictionary[i].calendering_surface_position[0]
-        if simulation_dictionary[i].calendering_surface_position[-1] > max_unload_height:
-            max_unload_height = simulation_dictionary[i].calendering_surface_position[-1]
-    lin_space_size = 1000
-    loading_array = np.linspace(min_calendering_height, max_load_height, lin_space_size)
-    unloading_array = np.linspace(min_calendering_height, max_unload_height, lin_space_size)
-    loading_pressure_matrix = np.zeros((no_sims, lin_space_size))
-    unloading_pressure_matrix = np.zeros((no_sims, lin_space_size))
-    for i in range(no_sims):
-        loading_pressure_matrix[i, :] = simulation_dictionary[i + 1].loading_surface_pressure_interpol(loading_array)
-        unloading_pressure_matrix[i, :] = simulation_dictionary[i + 1].unloading_surface_pressure_interpol(
-            unloading_array)
-    loading_surface_pressure_mean = np.mean(loading_pressure_matrix, axis=0)
-    loading_surface_pressure_std = np.std(loading_pressure_matrix, axis=0)
-    unloading_surface_pressure_mean = np.mean(unloading_pressure_matrix, axis=0)
-    unloading_surface_pressure_std = np.std(unloading_pressure_matrix, axis=0)
-    return loading_array, loading_surface_pressure_mean, loading_surface_pressure_std, \
-           unloading_array, unloading_surface_pressure_mean, unloading_surface_pressure_std
+#def calendering_spread_processing(sim_dir, sim_type, no_sims):
+#    simulation_dictionary = {}
+#    max_load_height = -1
+#    max_unload_height = -1
+#    min_calendering_height = 1e99
+#    for i in range(1, no_sims + 1):
+#        simulation_dictionary[i] = Calendering(sim_dir + str(i) + '/electrode_calendering_' + sim_type)
+#        temp_min_height = min(simulation_dictionary[i].calendering_surface_position)
+#        if min_calendering_height > temp_min_height:
+#            min_calendering_height = temp_min_height
+#        if simulation_dictionary[i].calendering_surface_position[0] > max_load_height:
+#            max_load_height = simulation_dictionary[i].calendering_surface_position[0]
+#        if simulation_dictionary[i].calendering_surface_position[-1] > max_unload_height:
+#            max_unload_height = simulation_dictionary[i].calendering_surface_position[-1]
+#    lin_space_size = 1000
+#    loading_array = np.linspace(min_calendering_height, max_load_height, lin_space_size)
+#    unloading_array = np.linspace(min_calendering_height, max_unload_height, lin_space_size)
+#    loading_pressure_matrix = np.zeros((no_sims, lin_space_size))
+#    unloading_pressure_matrix = np.zeros((no_sims, lin_space_size))
+#    for i in range(no_sims):
+#        loading_pressure_matrix[i, :] = simulation_dictionary[i + 1].loading_surface_pressure_interpol(loading_array)
+#        unloading_pressure_matrix[i, :] = simulation_dictionary[i + 1].unloading_surface_pressure_interpol(
+#            unloading_array)
+#    loading_surface_pressure_mean = np.mean(loading_pressure_matrix, axis=0)
+#    loading_surface_pressure_std = np.std(loading_pressure_matrix, axis=0)
+#    unloading_surface_pressure_mean = np.mean(unloading_pressure_matrix, axis=0)
+#    unloading_surface_pressure_std = np.std(unloading_pressure_matrix, axis=0)
+#    return loading_array, loading_surface_pressure_mean, loading_surface_pressure_std, \
+#           unloading_array, unloading_surface_pressure_mean, unloading_surface_pressure_std
 
 
-class Calendering:
-    def __init__(self, sim_dir):
-        self.sim_dir = sim_dir
-
-        self.time, self.calendering_surface_pressure, self.bottom_surface_pressure, self.calendering_surface_position, \
-        self.sxx, self.syy, self.szz, self.tau_xy, self.tau_xz, self.tau_yx, self.tau_yz, self.tau_zx, self.tau_zy, \
-        self.ke = calendering_plot_processing(sim_dir)
-        i = 1
-        while self.calendering_surface_position[i - 1] >= self.calendering_surface_position[i]:
-            i += 1
-        self.min_surface_height_index = i - 1
-        self.loading_surface_position = self.calendering_surface_position[:self.min_surface_height_index]
-        self.loading_surface_pressure = self.calendering_surface_pressure[:self.min_surface_height_index]
-        self.loading_surface_pressure_interpol = interpolate.interp1d(self.loading_surface_position,
-                                                                      self.loading_surface_pressure,
-                                                                      bounds_error=False, fill_value=0)
-        self.unloading_surface_position = self.calendering_surface_position[self.min_surface_height_index:]
-        self.unloading_surface_pressure = self.calendering_surface_pressure[self.min_surface_height_index:]
-        self.unloading_surface_pressure_interpol = interpolate.interp1d(self.unloading_surface_position,
-                                                                        self.unloading_surface_pressure,
-                                                                        bounds_error=False, fill_value=0)
+#class Calendering:
+#    def __init__(self, sim_dir):
+#        self.sim_dir = sim_dir
+#
+#        self.time, self.calendering_surface_pressure, self.bottom_surface_pressure, self.calendering_surface_position, \
+#        self.sxx, self.syy, self.szz, self.tau_xy, self.tau_xz, self.tau_yx, self.tau_yz, self.tau_zx, self.tau_zy, \
+#        self.ke = calendering_plot_processing(sim_dir)
+#        i = 1
+#        while self.calendering_surface_position[i - 1] >= self.calendering_surface_position[i]:
+#            i += 1
+#        self.min_surface_height_index = i - 1
+#        self.loading_surface_position = self.calendering_surface_position[:self.min_surface_height_index]
+#        self.loading_surface_pressure = self.calendering_surface_pressure[:self.min_surface_height_index]
+#        self.loading_surface_pressure_interpol = interpolate.interp1d(self.loading_surface_position,
+#                                                                      self.loading_surface_pressure,
+#                                                                      bounds_error=False, fill_value=0)
+#        self.unloading_surface_position = self.calendering_surface_position[self.min_surface_height_index:]
+#        self.unloading_surface_pressure = self.calendering_surface_pressure[self.min_surface_height_index:]
+#        self.unloading_surface_pressure_interpol = interpolate.interp1d(self.unloading_surface_position,
+#                                                                        self.unloading_surface_pressure,
+#                                                                        bounds_error=False, fill_value=0)
 
 
 class MechanicalLoading:
@@ -94,6 +94,7 @@ class MechanicalLoading:
             self.tau_zy_tension, self.time_compression, self.linear_strain_compression, self.sxx_compression, \
             self.syy_compression, self.szz_compression, self.tau_xy_compression, self.tau_xz, self.tau_yx, \
             self.tau_yz_compression, self.tau_zx_compression, self.tau_zy_compression = mech_plot_prop(sim_dir)
+
         self.strain_points_total, self.stiffness_values_total = stiffness_func(self.sxx_tension,
                                                                                self.linear_strain_tension,
                                                                                self.sxx_compression,
@@ -107,19 +108,19 @@ class Simulation:
         self.no_sims = no_sims
         self.strain_points, self.stiffness_mean, self.stiffness_std = stiffness_spread_processing(sim_dir, sim_type,
                                                                                                   no_sims)
-        self.loading_surface_position, self.loading_surface_pressure_mean, self.loading_surface_pressure_std, \
-            self.unloading_surface_position, self.unloading_surface_pressure_mean, self.unloading_surface_pressure_std \
-            = calendering_spread_processing(sim_dir, sim_type, no_sims)
+        #self.loading_surface_position, self.loading_surface_pressure_mean, self.loading_surface_pressure_std, \
+        #    self.unloading_surface_position, self.unloading_surface_pressure_mean, self.unloading_surface_pressure_std \
+        #    = calendering_spread_processing(sim_dir, sim_type, no_sims)
         self.label = label
 
 
 if __name__ == '__main__':
 
     simulation_directory_SN_101 = '/scratch/users/axlun/DEMsim/results/article_2/final_runs_2/SN_101/'
-    SN_101 = Simulation(simulation_directory_SN_101, 'hertz', 4, 'SN_101')
+    SN_101 = Simulation(simulation_directory_SN_101, 'hertz', 4, 'Reference')
 
     simulation_directory_SN_101P = '/scratch/users/axlun/DEMsim/results/article_2/final_runs_2/SN_101P/'
-    SN_101P = Simulation(simulation_directory_SN_101P, 'hertz', 4, 'SN_101P')
+    SN_101P = Simulation(simulation_directory_SN_101P, 'hertz', 4, 'New PSD')
 
     simulation_directory_SN_111 = '/scratch/users/axlun/DEMsim/results/article_2/final_runs_2/SN_111/'
     SN_111 = Simulation(simulation_directory_SN_111, 'hertz', 4, 'SN_111')
@@ -128,16 +129,16 @@ if __name__ == '__main__':
     SN_200 = Simulation(simulation_directory_SN_200, 'el_pl_binder_el_pl_particle', 4, 'SN_200')
 
     simulation_directory_SN_201 = '/scratch/users/axlun/DEMsim/results/article_2/final_runs_2/SN_201/'
-    SN_201 = Simulation(simulation_directory_SN_201, 'el_pl_binder_el_pl_particle', 4, 'SN_201')
+    SN_201 = Simulation(simulation_directory_SN_201, 'el_pl_binder_el_pl_particle', 4, 'Material 1')
 
-    # simulation_directory_SN_202 = '/scratch/users/axlun/DEMsim/results/article_2/final_runs_2/SN_202/'
-    # SN_202 = Simulation(simulation_directory_SN_202, 'el_pl_binder_el_pl_particle', 4, 'SN_202')
+    simulation_directory_SN_202 = '/scratch/users/axlun/DEMsim/results/article_2/final_runs_2/SN_202/'
+    SN_202 = Simulation(simulation_directory_SN_202, 'el_pl_binder_el_pl_particle', 4, 'SN_202')
 
     simulation_directory_SN_301 = '/scratch/users/axlun/DEMsim/results/article_2/final_runs_2/SN_301/'
-    SN_301 = Simulation(simulation_directory_SN_301, 'el_pl_binder_el_pl_particle', 4, 'SN_301')
+    SN_301 = Simulation(simulation_directory_SN_301, 'el_pl_binder_el_pl_particle', 4, 'Material 2')
 
     # ==FIGURE SAVE DIR=================================================================================================
-    fig_dir = 'C:/temp/figures/calendering_spreads/'
+    fig_dir = 'C:/temp/figures/stiffness_spreads/'
     try:
         shutil.rmtree(fig_dir)
         os.mkdir(fig_dir)
@@ -208,6 +209,7 @@ if __name__ == '__main__':
                                       lw=0, marker='', markersize=0, markeredgewidth=2, color='C1',
                                       label='Standard deviation')
 
+    """
     # --EXPERIMENTS-----------------------------------------------------------------------------------------------------
     lns_stiff_exp_eps_dot_01_El_Pl = ax_PSD.plot(exp_strain_points, Modulus_eps_dot_01,
                                                  marker='o', markersize=10, markeredgewidth=3,
@@ -237,10 +239,10 @@ if __name__ == '__main__':
     first_legend_exp = plt.legend(handles_exp, labels_exp, loc='upper right', title='Experimental results')
 
     ax_PSD.add_artist(first_legend_exp)
-
+    """
     handles_sim = lns_SN_101_mean + lns_SN_101P_mean
     labels_sim = [l.get_label() for l in handles_sim]
-    plt.legend(handles_sim, labels_sim, loc='upper center', title='Simulations')
+    plt.legend(handles_sim, labels_sim, loc='upper right')#, title='Simulations')
 
     ax_PSD.set_ylim(ymin=0)
     fname = fig_dir + 'particle_size'
@@ -283,6 +285,7 @@ if __name__ == '__main__':
                                            lw=0, marker='', markersize=0, markeredgewidth=2, color='C3',
                                            label='Standard deviation')
     # --EXPERIMENTS-----------------------------------------------------------------------------------------------------
+    """
     lns_stiff_exp_eps_dot_01_El_Pl = ax_stiffness.plot(exp_strain_points, Modulus_eps_dot_01,
                                                        marker='o', markersize=10, markeredgewidth=3,
                                                        linewidth=0, color='C9',
@@ -312,9 +315,10 @@ if __name__ == '__main__':
 
     ax_stiffness.add_artist(first_legend_exp)
 
+    """
     handles_sim = lns_SN_101_mean + lns_SN_201_mean + lns_SN_301_mean
     labels_sim = [l.get_label() for l in handles_sim]
-    plt.legend(handles_sim, labels_sim, loc='upper center', title='Simulations')
+    plt.legend(handles_sim, labels_sim, loc='upper right')#, title='Simulations')
 
     ax_stiffness.set_ylim(ymin=0)
     fname = fig_dir + 'contact_model'
@@ -340,7 +344,6 @@ if __name__ == '__main__':
                                             yerr=SN_201.stiffness_std * 1E-9, elinewidth=2, capthick=None, capsize=12,
                                             lw=0, marker='', markersize=0, markeredgewidth=2, color='C2',
                                             label='Standard deviation')
-    """
     lns_SN_202_mean = ax_cal_degree.plot(SN_202.strain_points * 1E2, SN_202.stiffness_mean * 1E-9,
                                          linestyle='dashed', marker='x', markersize=12, markeredgewidth=3, linewidth=3,
                                          color='C3', label=SN_202.label)
@@ -348,7 +351,6 @@ if __name__ == '__main__':
                                             yerr=SN_202.stiffness_std * 1E-9, elinewidth=2, capthick=None, capsize=12,
                                             lw=0, marker='', markersize=0, markeredgewidth=2, color='C3',
                                             label='Standard deviation')
-    """
     # --EXPERIMENTS-----------------------------------------------------------------------------------------------------
     lns_stiff_exp_eps_dot_01_El_Pl = ax_cal_degree.plot(exp_strain_points, Modulus_eps_dot_01,
                                                         marker='o', markersize=10, markeredgewidth=3,
@@ -379,12 +381,12 @@ if __name__ == '__main__':
 
     ax_cal_degree.add_artist(first_legend_exp)
 
-    handles_sim = lns_SN_200_mean + lns_SN_201_mean  # + lns_SN_202_mean
+    handles_sim = lns_SN_200_mean + lns_SN_201_mean + lns_SN_202_mean
     labels_sim = [l.get_label() for l in handles_sim]
     plt.legend(handles_sim, labels_sim, loc='upper center', title='Simulations')
 
     ax_cal_degree.set_ylim(ymin=0)
-    fname = fig_dir + 'stiffness_points_cal_degree'
+    fname = fig_dir + 'cal_degree'
 
     plt.savefig(fname)
 

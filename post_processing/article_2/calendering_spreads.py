@@ -83,10 +83,10 @@ class Simulation:
 if __name__ == '__main__':
 
     simulation_directory_SN_101 = '/scratch/users/axlun/DEMsim/results/article_2/final_runs_2/SN_101/'
-    SN_101 = Simulation(simulation_directory_SN_101, 'hertz', 4, 'SN_101')
+    SN_101 = Simulation(simulation_directory_SN_101, 'hertz', 4, 'Reference')
 
     simulation_directory_SN_101P = '/scratch/users/axlun/DEMsim/results/article_2/final_runs_2/SN_101P/'
-    SN_101P = Simulation(simulation_directory_SN_101P, 'hertz', 4, 'SN_101P')
+    SN_101P = Simulation(simulation_directory_SN_101P, 'hertz', 4, 'New PSD')
 
     simulation_directory_SN_111 = '/scratch/users/axlun/DEMsim/results/article_2/final_runs_2/SN_111/'
     SN_111 = Simulation(simulation_directory_SN_111, 'hertz', 4, 'SN_111')
@@ -95,16 +95,16 @@ if __name__ == '__main__':
     SN_200 = Simulation(simulation_directory_SN_200, 'el_pl_binder_el_pl_particle', 4, 'SN_200')
 
     simulation_directory_SN_201 = '/scratch/users/axlun/DEMsim/results/article_2/final_runs_2/SN_201/'
-    SN_201 = Simulation(simulation_directory_SN_201, 'el_pl_binder_el_pl_particle', 4, 'SN_201')
+    SN_201 = Simulation(simulation_directory_SN_201, 'el_pl_binder_el_pl_particle', 4, 'Material 1')
 
-    # simulation_directory_SN_202 = '/scratch/users/axlun/DEMsim/results/article_2/final_runs_2/SN_202/'
-    # SN_202 = Simulation(simulation_directory_SN_202, 'el_pl_binder_el_pl_particle', 4, 'SN_202')
+    simulation_directory_SN_202 = '/scratch/users/axlun/DEMsim/results/article_2/final_runs_2/SN_202/'
+    SN_202 = Simulation(simulation_directory_SN_202, 'el_pl_binder_el_pl_particle', 4, 'SN_202')
 
     # simulation_directory_SN_211 = '/scratch/users/axlun/DEMsim/results/article_2/final_runs_2/SN_211/'
     # SN_211 = Simulation(simulation_directory_SN_211, 'el_pl_binder_el_pl_particle', 4, 'SN_211')
 
     simulation_directory_SN_301 = '/scratch/users/axlun/DEMsim/results/article_2/final_runs_2/SN_301/'
-    SN_301 = Simulation(simulation_directory_SN_301, 'el_pl_binder_el_pl_particle', 3, 'SN_301')
+    SN_301 = Simulation(simulation_directory_SN_301, 'el_pl_binder_el_pl_particle', 4, 'Material 2')
 
     # ==FIGURE SAVE DIR=================================================================================================
     fig_dir = 'C:/temp/figures/calendering_spreads/'
@@ -119,8 +119,7 @@ if __name__ == '__main__':
         quit()
     # ==================================================================================================================
 
-    """
-    # =FIGURE PARTICLE SIZE==============================================================================================
+    # =FIGURE PARTICLE SIZE=============================================================================================
     fig_particle_size, ax_particle_size = plt.subplots()
     ax_particle_size.plot(SN_101.loading_surface_position * 1E2,
                           SN_101.loading_surface_pressure_mean * 1E-6,
@@ -128,10 +127,11 @@ if __name__ == '__main__':
     ax_particle_size.plot(SN_101.unloading_surface_position * 1E2,
                           SN_101.unloading_surface_pressure_mean * 1E-6,
                           'k-', zorder=1)
-    ax_particle_size.fill_between(SN_101.loading_surface_position * 1E2,
-                                  (SN_101.loading_surface_pressure_mean - SN_101.loading_surface_pressure_std) * 1E-6,
-                                  (SN_101.loading_surface_pressure_mean + SN_101.loading_surface_pressure_std) * 1E-6,
-                                  color='C0', label=SN_101.label, alpha=1)
+    ax_particle_size.fill_between(
+        SN_101.loading_surface_position * 1E2,
+        (SN_101.loading_surface_pressure_mean - SN_101.loading_surface_pressure_std) * 1E-6,
+        (SN_101.loading_surface_pressure_mean + SN_101.loading_surface_pressure_std) * 1E-6,
+        color='C0', label=SN_101.label, alpha=1)
     ax_particle_size.fill_between(
         SN_101.unloading_surface_position * 1E2,
         (SN_101.unloading_surface_pressure_mean - SN_101.unloading_surface_pressure_std) * 1E-6,
@@ -140,47 +140,32 @@ if __name__ == '__main__':
 
     ax_particle_size.plot(SN_101P.loading_surface_position * 1E2,
                           SN_101P.loading_surface_pressure_mean * 1E-6,
-                          'k-', zorder=1)
+                          'k-', zorder=2)
     ax_particle_size.plot(SN_101P.unloading_surface_position * 1E2,
                           SN_101P.unloading_surface_pressure_mean * 1E-6,
-                          'k-', zorder=1)
-    ax_particle_size.fill_between(SN_101P.loading_surface_position * 1E2,
-                                  (SN_101P.loading_surface_pressure_mean - SN_101P.loading_surface_pressure_std) * 1E-6,
-                                  (SN_101P.loading_surface_pressure_mean + SN_101P.loading_surface_pressure_std) * 1E-6,
-                                  color='C1', label=SN_101P.label, alpha=1)
+                          'k-', zorder=2)
+    ax_particle_size.fill_between(
+        SN_101P.loading_surface_position * 1E2,
+        (SN_101P.loading_surface_pressure_mean - SN_101P.loading_surface_pressure_std) * 1E-6,
+        (SN_101P.loading_surface_pressure_mean + SN_101P.loading_surface_pressure_std) * 1E-6,
+        color='C1', zorder=2, label=SN_101P.label, alpha=1)
     ax_particle_size.fill_between(
         SN_101P.unloading_surface_position * 1E2,
         (SN_101P.unloading_surface_pressure_mean - SN_101P.unloading_surface_pressure_std) * 1E-6,
         (SN_101P.unloading_surface_pressure_mean + SN_101P.unloading_surface_pressure_std) * 1E-6,
-        color='C1', alpha=1)
+        color='C1', zorder=2, alpha=1)
 
     ax_particle_size.set_xlim(xmin=104.8, xmax=120)
     ax_particle_size.xaxis.set_major_locator(MultipleLocator(5))
     ax_particle_size.set_ylim(ymin=0)
     ax_particle_size.set_ylabel('Calendering surface pressure [MPa]')
-    ax_particle_size.set_xlabel('Calendering surface hetight [µm]')
+    ax_particle_size.set_xlabel('Calendering surface height [µm]')
     fig_particle_size.tight_layout()
     ax_particle_size.legend(loc='best')
     fname = fig_dir + 'size_distribution'
     plt.savefig(fname)
-    """
     # =FIGURE CONTACT MODEL=============================================================================================
     fig_calendering, ax_calendering = plt.subplots()
-    ax_calendering.plot(SN_101.loading_surface_position * 1E2,
-                        SN_101.loading_surface_pressure_mean * 1E-6,
-                        'k-', zorder=1)
-    ax_calendering.plot(SN_101.unloading_surface_position * 1E2,
-                        SN_101.unloading_surface_pressure_mean * 1E-6,
-                        'k-', zorder=1)
-    ax_calendering.fill_between(SN_101.loading_surface_position * 1E2,
-                                (SN_101.loading_surface_pressure_mean - SN_101.loading_surface_pressure_std) * 1E-6,
-                                (SN_101.loading_surface_pressure_mean + SN_101.loading_surface_pressure_std) * 1E-6,
-                                color='C0', label=SN_101.label, alpha=1)
-    ax_calendering.fill_between(SN_101.unloading_surface_position * 1E2,
-                                (SN_101.unloading_surface_pressure_mean - SN_101.unloading_surface_pressure_std) * 1E-6,
-                                (SN_101.unloading_surface_pressure_mean + SN_101.unloading_surface_pressure_std) * 1E-6,
-                                color='C0', alpha=1)
-
     """
     ax_calendering.plot(SN_111.loading_surface_position * 1E2,
                         SN_111.loading_surface_pressure_mean * 1E-6,
@@ -197,20 +182,6 @@ if __name__ == '__main__':
                                 (SN_111.unloading_surface_pressure_mean + SN_111.unloading_surface_pressure_std) * 1E-6,
                                 color='C1', alpha=1)
     """
-    ax_calendering.plot(SN_201.loading_surface_position * 1E2,
-                        SN_201.loading_surface_pressure_mean * 1E-6,
-                        'k-', zorder=1)
-    ax_calendering.plot(SN_201.unloading_surface_position * 1E2,
-                        SN_201.unloading_surface_pressure_mean * 1E-6,
-                        'k-', zorder=1)
-    ax_calendering.fill_between(SN_201.loading_surface_position * 1E2,
-                                (SN_201.loading_surface_pressure_mean - SN_201.loading_surface_pressure_std) * 1E-6,
-                                (SN_201.loading_surface_pressure_mean + SN_201.loading_surface_pressure_std) * 1E-6,
-                                color='C2', label=SN_201.label, alpha=1)
-    ax_calendering.fill_between(SN_201.unloading_surface_position * 1E2,
-                                (SN_201.unloading_surface_pressure_mean - SN_201.unloading_surface_pressure_std) * 1E-6,
-                                (SN_201.unloading_surface_pressure_mean + SN_201.unloading_surface_pressure_std) * 1E-6,
-                                color='C2', alpha=1)
     """"
     ax_calendering.plot(SN_211.loading_surface_position * 1E2,
                         SN_211.loading_surface_pressure_mean * 1E-6,
@@ -227,6 +198,36 @@ if __name__ == '__main__':
                                 (SN_211.unloading_surface_pressure_mean + SN_211.unloading_surface_pressure_std) * 1E-6,
                                 color='C2', alpha=1)
     """
+    ax_calendering.plot(SN_101.loading_surface_position * 1E2,
+                        SN_101.loading_surface_pressure_mean * 1E-6,
+                        'k-', zorder=3)
+    ax_calendering.plot(SN_101.unloading_surface_position * 1E2,
+                        SN_101.unloading_surface_pressure_mean * 1E-6,
+                        'k-', zorder=3)
+    ax_calendering.fill_between(SN_101.loading_surface_position * 1E2,
+                                (SN_101.loading_surface_pressure_mean - SN_101.loading_surface_pressure_std) * 1E-6,
+                                (SN_101.loading_surface_pressure_mean + SN_101.loading_surface_pressure_std) * 1E-6,
+                                color='C0', zorder=3, label=SN_101.label, alpha=1)
+    ax_calendering.fill_between(SN_101.unloading_surface_position * 1E2,
+                                (SN_101.unloading_surface_pressure_mean - SN_101.unloading_surface_pressure_std) * 1E-6,
+                                (SN_101.unloading_surface_pressure_mean + SN_101.unloading_surface_pressure_std) * 1E-6,
+                                color='C0', zorder=3, alpha=1)
+
+    ax_calendering.plot(SN_201.loading_surface_position * 1E2,
+                        SN_201.loading_surface_pressure_mean * 1E-6,
+                        'k-', zorder=2)
+    ax_calendering.plot(SN_201.unloading_surface_position * 1E2,
+                        SN_201.unloading_surface_pressure_mean * 1E-6,
+                        'k-', zorder=2)
+    ax_calendering.fill_between(SN_201.loading_surface_position * 1E2,
+                                (SN_201.loading_surface_pressure_mean - SN_201.loading_surface_pressure_std) * 1E-6,
+                                (SN_201.loading_surface_pressure_mean + SN_201.loading_surface_pressure_std) * 1E-6,
+                                color='C2', zorder=2, label=SN_201.label, alpha=1)
+    ax_calendering.fill_between(SN_201.unloading_surface_position * 1E2,
+                                (SN_201.unloading_surface_pressure_mean - SN_201.unloading_surface_pressure_std) * 1E-6,
+                                (SN_201.unloading_surface_pressure_mean + SN_201.unloading_surface_pressure_std) * 1E-6,
+                                color='C2', zorder=2, alpha=1)
+
     ax_calendering.plot(SN_301.loading_surface_position * 1E2,
                         SN_301.loading_surface_pressure_mean * 1E-6,
                         'k-', zorder=1)
@@ -236,39 +237,42 @@ if __name__ == '__main__':
     ax_calendering.fill_between(SN_301.loading_surface_position * 1E2,
                                 (SN_301.loading_surface_pressure_mean - SN_301.loading_surface_pressure_std) * 1E-6,
                                 (SN_301.loading_surface_pressure_mean + SN_301.loading_surface_pressure_std) * 1E-6,
-                                color='C3', label=SN_301.label, alpha=1)
+                                color='C3', zorder=1, label=SN_301.label, alpha=1)
     ax_calendering.fill_between(SN_301.unloading_surface_position * 1E2,
                                 (SN_301.unloading_surface_pressure_mean - SN_301.unloading_surface_pressure_std) * 1E-6,
                                 (SN_301.unloading_surface_pressure_mean + SN_301.unloading_surface_pressure_std) * 1E-6,
-                                color='C3', alpha=1)
+                                color='C3', zorder=1, alpha=1)
+
     ax_calendering.set_xlim(xmin=104.8, xmax=120)
     ax_calendering.xaxis.set_major_locator(MultipleLocator(5))
     ax_calendering.set_ylim(ymin=0)
     ax_calendering.set_ylabel('Calendering surface pressure [MPa]')
-    ax_calendering.set_xlabel('Calendering surface hetight [µm]')
+    ax_calendering.set_xlabel('Calendering surface height [µm]')
     fig_calendering.tight_layout()
+
+    # handles_sim = lns_fill_SN_101 + lns_fill_SN_201 + lns_fill_SN_301
+    # labels_sim = [l.get_label() for l in handles_sim]
+    # plt.legend(handles_sim, labels_sim, loc='upper right')#, title='Simulations')
     ax_calendering.legend(loc='best')
     fname = fig_dir + 'contact_model'
     plt.savefig(fname)
 
     # =FIGURE CALENDERING DEGREE======================================================================================
     fig_calendering_degree, ax_calendering_degree = plt.subplots()
-    ax_calendering_degree.plot(SN_200.loading_surface_position * 1E2,
-                               SN_200.loading_surface_pressure_mean * 1E-6,
+    ax_calendering_degree.plot(SN_202.loading_surface_position*1E2,
+                               SN_202.loading_surface_pressure_mean*1E-6,
                                'k-', zorder=1)
-    ax_calendering_degree.plot(SN_200.unloading_surface_position * 1E2,
-                               SN_200.unloading_surface_pressure_mean * 1E-6,
+    ax_calendering_degree.plot(SN_202.unloading_surface_position*1E2,
+                               SN_202.unloading_surface_pressure_mean*1E-6,
                                'k-', zorder=1)
-    ax_calendering_degree.fill_between(
-        SN_200.loading_surface_position * 1E2,
-        (SN_200.loading_surface_pressure_mean - SN_200.loading_surface_pressure_std) * 1E-6,
-        (SN_200.loading_surface_pressure_mean + SN_200.loading_surface_pressure_std) * 1E-6,
-        color='C0', label=SN_200.label, alpha=1)
-    ax_calendering_degree.fill_between(
-        SN_200.unloading_surface_position * 1E2,
-        (SN_200.unloading_surface_pressure_mean - SN_200.unloading_surface_pressure_std) * 1E-6,
-        (SN_200.unloading_surface_pressure_mean + SN_200.unloading_surface_pressure_std) * 1E-6,
-        color='C0', alpha=1)
+    ax_calendering_degree.fill_between(SN_202.loading_surface_position*1E2,
+                               (SN_202.loading_surface_pressure_mean-SN_202.loading_surface_pressure_std)*1E-6,
+                               (SN_202.loading_surface_pressure_mean+SN_202.loading_surface_pressure_std)*1E-6,
+                               color='C2', label=SN_202.label, alpha=1)
+    ax_calendering_degree.fill_between(SN_202.unloading_surface_position*1E2,
+                               (SN_202.unloading_surface_pressure_mean-SN_202.unloading_surface_pressure_std)*1E-6,
+                               (SN_202.unloading_surface_pressure_mean+SN_202.unloading_surface_pressure_std)*1E-6,
+                               color='C2', alpha=1)
 
     ax_calendering_degree.plot(SN_201.loading_surface_position * 1E2,
                                SN_201.loading_surface_pressure_mean * 1E-6,
@@ -287,27 +291,28 @@ if __name__ == '__main__':
         (SN_201.unloading_surface_pressure_mean + SN_201.unloading_surface_pressure_std) * 1E-6,
         color='C1', alpha=1)
 
-    """
-    ax_calendering_degree.plot(SN_202.loading_surface_position*1E2,
-                               SN_202.loading_surface_pressure_mean*1E-6,
-                               'k-',zorder=1)
-    ax_calendering_degree.plot(SN_202.unloading_surface_position*1E2,
-                               SN_202.unloading_surface_pressure_mean*1E-6,
-                               'k-',zorder=1)
-    ax_calendering_degree.fill_between(SN_202.loading_surface_position*1E2,
-                               (SN_202.loading_surface_pressure_mean-SN_202.loading_surface_pressure_std)*1E-6,
-                               (SN_202.loading_surface_pressure_mean+SN_202.loading_surface_pressure_std)*1E-6,
-                               color='C2', label=SN_202.label, alpha=1)
-    ax_calendering_degree.fill_between(SN_202.unloading_surface_position*1E2,
-                               (SN_202.unloading_surface_pressure_mean-SN_202.unloading_surface_pressure_std)*1E-6,
-                               (SN_202.unloading_surface_pressure_mean+SN_202.unloading_surface_pressure_std)*1E-6,
-                               color='C2', alpha=1)
-    """
-    ax_calendering_degree.set_xlim(xmin=104.8, xmax=120)
+    ax_calendering_degree.plot(SN_200.loading_surface_position * 1E2,
+                               SN_200.loading_surface_pressure_mean * 1E-6,
+                               'k-', zorder=1)
+    ax_calendering_degree.plot(SN_200.unloading_surface_position * 1E2,
+                               SN_200.unloading_surface_pressure_mean * 1E-6,
+                               'k-', zorder=1)
+    ax_calendering_degree.fill_between(
+        SN_200.loading_surface_position * 1E2,
+        (SN_200.loading_surface_pressure_mean - SN_200.loading_surface_pressure_std) * 1E-6,
+        (SN_200.loading_surface_pressure_mean + SN_200.loading_surface_pressure_std) * 1E-6,
+        color='C0', label=SN_200.label, alpha=1)
+    ax_calendering_degree.fill_between(
+        SN_200.unloading_surface_position * 1E2,
+        (SN_200.unloading_surface_pressure_mean - SN_200.unloading_surface_pressure_std) * 1E-6,
+        (SN_200.unloading_surface_pressure_mean + SN_200.unloading_surface_pressure_std) * 1E-6,
+        color='C0', alpha=1)
+
+    ax_calendering_degree.set_xlim(xmin=102.2, xmax=120)
     ax_calendering_degree.xaxis.set_major_locator(MultipleLocator(5))
     ax_calendering_degree.set_ylim(ymin=0)
     ax_calendering_degree.set_ylabel('Calendering surface pressure [MPa]')
-    ax_calendering_degree.set_xlabel('Calendering surface hetight [µm]')
+    ax_calendering_degree.set_xlabel('Calendering surface height [µm]')
     fig_calendering_degree.tight_layout()
     ax_calendering_degree.legend(loc='best')
     fname = fig_dir + 'calendering_degree'
