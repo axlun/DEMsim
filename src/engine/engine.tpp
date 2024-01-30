@@ -566,6 +566,8 @@ void DEM::Engine<ForceModel, ParticleType>::do_step()
 {
     // std::cout << "new step at time " << get_time().count() << "\n";
     move_particles();
+    //Add a function to swell particles after moving them
+    //swell_particle();
     move_surfaces();
     collision_detector_.do_check();
     destroy_contacts();
