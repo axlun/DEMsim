@@ -71,6 +71,11 @@ template<typename ForceModel, typename ParticleType>
 void DEM::CollisionDetector<ForceModel, ParticleType>::restart(std::vector<ParameterMap>& restart_parameters) {
     for (const auto& parameter_line: restart_parameters) {
         auto data = parameter_line.get_parameter<std::string>("data");
+        if (data == "number_of_collision_objects")
+        {
+            auto current_cont = parameter_line.get_parameter<std::size_t>("number_of_collision_objects");
+            current_contacts_.resize(current_cont);
+        }
         if (data == "active_collisions") {
             auto id1 = parameter_line.get_parameter<std::size_t>("object1");
             auto id2 = parameter_line.get_parameter<std::size_t>("object2");
@@ -266,6 +271,8 @@ template<typename ForceModel, typename ParticleType>
 std::vector<std::string> DEM::CollisionDetector<ForceModel, ParticleType>::restart_data() const {
     std::vector<std::string> restart_strings;
     restart_strings.push_back("data=stretch, stretch=" + std::to_string(bounding_box_stretch_));
+    restart_strings.push_back("data=number_of_collision_objects, number_of_collision_objects=" +
+        std::to_string(collision_id_counter_));
     auto contact_indices = current_contacts_.get_matrix_indices();
     std::sort(contact_indices.begin(), contact_indices.end(),
               [](const auto& pair1, const auto& pair2) {

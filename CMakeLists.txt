@@ -75,6 +75,10 @@ add_executable(DEMsim
 				src/simulations/Contact_tests/particle_contact_tester_viscoelastic_binder_El_Pl_particles.cpp
 				src/simulations/Contact_tests/wall_contact_tester_viscoelastic_binder_El_Pl_particles.cpp
 				src/simulations/Contact_tests/contact_tester_viscoelastic_binder_El_Pl_particles.cpp
+				src/simulations/particle_tests/swelling_particle.cpp
+				src/simulations/particle_tests/swelling_particle_wall.cpp
+				src/simulations/particle_tests/swelling_cube_die_compaction.cpp
+				src/simulations/particle_tests/swelling_periodic_compaction.cpp
 				src/simulations/Force_model_impact_on_electrode/natural_packing_hertz.cpp
 				src/simulations/Force_model_impact_on_electrode/el_pl_binder_el_pl_particle/electrode_natural_packing_el_pl_binder_el_pl_particle.cpp
 				src/simulations/Force_model_impact_on_electrode/electrode_calendering.cpp
@@ -97,6 +101,8 @@ add_executable(DEMsim
 				src/simulations/cyclic_triaxial.cpp
 				src/particles/spherical_particle_base.tpp
 				src/particles/spherical_particle_base.h
+				src/particles/swelling_spherical_particle.h
+				src/particles/swelling_spherical_particle.tpp
 				src/simulations/proctor_test.cpp
 				src/simulations/stone_compaction.cpp
 				src/contact_models/viscoelastic.cpp
@@ -109,6 +115,8 @@ add_executable(DEMsim
 				src/contact_models/Positive_electrode/elastic_plastic_binder_rigid_plastic_particle.h
 				src/contact_models/Positive_electrode/elastic_plastic_binder_elastic_plastic_particle.cpp
 				src/contact_models/Positive_electrode/elastic_plastic_binder_elastic_plastic_particle.h
+				src/contact_models/Positive_electrode/swelling_elastic_plastic_binder_elastic_plastic_particle.cpp
+				src/contact_models/Positive_electrode/swelling_elastic_plastic_binder_elastic_plastic_particle.h
 				src/materials/electrode_material.h
 				src/materials/electrode_material.cpp
 				src/utilities/printing_functions.h
@@ -119,6 +127,7 @@ add_executable(DEMsim
 				src/engine/periodic_bc_handler.tpp
 				src/simulations/periodic_bc/periodic_bc_simulation.cpp
 				src/simulations/periodic_bc/filling_periodic_box.cpp
+				src/simulations/periodic_bc/periodic_bc_restart_tester.cpp
 				src/surfaces/deformable_point_surface.h
 				src/surfaces/deformable_point_surface.tpp
 				src/simulations/cathode_mechanical_simulations.cpp
@@ -131,6 +140,7 @@ add_executable(DEMsim
 				src/simulations/electrode_mechanical_test.cpp
 				src/simulations/cube_die_compaction.cpp
 				src/simulations/cathode_compaction.cpp
+				src/simulations/sintering/swelling_cube_die.cpp
 				src/contact_models/viscoelastic_binder_with_deformable_particles.h
 				src/contact_models/viscoelastic_binder_with_deformable_particles.cpp
 				src/contact_models/elastic_perfect_plastic.h

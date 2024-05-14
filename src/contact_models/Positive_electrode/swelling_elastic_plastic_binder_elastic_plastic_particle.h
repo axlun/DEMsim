@@ -1,13 +1,14 @@
 //
-// Created by Axel on 2022-10-16.
+// Created by Axel on 2024-03-06.
+// Adapted from elastic_plastic_binder_elastic_plastic_particle.h
 //
+#ifndef SWELLING_ELASTIC_PLASTIC_BINDER_ELASTIC_PLASTIC_PARTICLE_H
+#define SWELLING_ELASTIC_PLASTIC_BINDER_ELASTIC_PLASTIC_PARTICLE_H
 
-#ifndef ELASTIC_PLASTIC_BINDER_ELASTIC_PLASTIC_PARTICLE_H
-#define ELASTIC_PLASTIC_BINDER_ELASTIC_PLASTIC_PARTICLE_H
 #include <chrono>
 #include <vector>
 
-#include "../../particles/spherical_particle.h"
+#include "../../particles/swelling_spherical_particle.h"
 #include "../../surfaces/surface_base.h"
 #include "../../surfaces/point_surface.h"
 #include "../../utilities/vec3.h"
@@ -15,16 +16,20 @@
 namespace DEM{
     class ElectrodeMaterial;
     class ParameterMap;
-    class elastic_plastic_binder_elastic_plastic_particle{
-        using ParticleType = SphericalParticle<elastic_plastic_binder_elastic_plastic_particle>;
-        using SurfaceType = Surface<elastic_plastic_binder_elastic_plastic_particle, ParticleType>;
+    class swelling_elastic_plastic_binder_elastic_plastic_particle{
+        using ParticleType = SwellingSphericalParticle<swelling_elastic_plastic_binder_elastic_plastic_particle>;
+        using SurfaceType = Surface<swelling_elastic_plastic_binder_elastic_plastic_particle, ParticleType>;
 
     public:
-        elastic_plastic_binder_elastic_plastic_particle(ParticleType* particle1, ParticleType* particle2, std::chrono::duration<double>dt);
-        elastic_plastic_binder_elastic_plastic_particle(ParticleType* particle1, SurfaceType* surface, std::chrono::duration<double>dt );
+        swelling_elastic_plastic_binder_elastic_plastic_particle(
+                ParticleType* particle1, ParticleType* particle2, std::chrono::duration<double>dt);
+        swelling_elastic_plastic_binder_elastic_plastic_particle(
+                ParticleType* particle1, SurfaceType* surface, std::chrono::duration<double>dt );
 
-        elastic_plastic_binder_elastic_plastic_particle(ParticleType*, ParticleType*, std::chrono::duration<double>, const ParameterMap& parameters);
-        elastic_plastic_binder_elastic_plastic_particle(ParticleType*, SurfaceType*, std::chrono::duration<double>, const ParameterMap& parameters);
+        swelling_elastic_plastic_binder_elastic_plastic_particle(
+                ParticleType*, ParticleType*, std::chrono::duration<double>, const ParameterMap& parameters);
+        swelling_elastic_plastic_binder_elastic_plastic_particle(
+                ParticleType*, SurfaceType*, std::chrono::duration<double>, const ParameterMap& parameters);
 
 
         [[nodiscard]] double get_overlap() const {return h_;};
@@ -65,7 +70,10 @@ namespace DEM{
         double v1 = 0.0;
         double bt_ = 0;
         double br_ = 0;
-        double R0_ = 0;
+//        double R0 = 0;
+        //Pointer to particle, which enables access to the particle radius.
+        ParticleType* particle1_ = nullptr;
+        ParticleType* particle2_ = nullptr;
         double Ep_eff_ = 0;
         bool bonded_ = false;
         bool particle_contact_ = false;
@@ -74,7 +82,7 @@ namespace DEM{
         bool fractured_ = true;
 
         static unsigned M;
-        double dt_;
+        double dt_ = 0;
 
         std::vector<double> tau_i{};
         std::vector<double> alpha_i{};
@@ -88,7 +96,7 @@ namespace DEM{
         std::vector <DEM::Vec3> dti_{};
 
         double dF_ = 0.;
-        double F_ = 0;
+        double F_ = 0.;
         double F_binder = 0;
         double FT_binder_Scalar_ = 0;
         double F_particle = 0;
@@ -103,12 +111,8 @@ namespace DEM{
         double update_normal_force(double h);
         void update_tangential_force(const Vec3& dt, const Vec3& normal);
         static bool create_binder_contact(const ElectrodeMaterial* mat);
-        bool adhesive() const;
+        [[nodiscard]] bool adhesive() const;
     };
 }
 
-
-
-
-
-#endif //ELASTIC_PLASTIC_BINDER_ELASTIC_PLASTIC_PARTICLE_H
+#endif //SWELLING_ELASTIC_PLASTIC_BINDER_ELASTIC_PLASTIC_PARTICLE_H

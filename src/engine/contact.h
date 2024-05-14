@@ -63,7 +63,7 @@ namespace DEM {
         ParticleType* p2_;
         SurfaceType*  surface_;
 
-        double r2_;                       // r2 - distance between particles or particle plane is overlap
+//        double r2_;                       // r2 - distance between particles or particle plane is overlap
         char position_divider_;
         Vec3 normal_;                     // Contact plane normal, same direction as normal_force_
 

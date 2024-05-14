@@ -121,10 +121,6 @@ DEM::Engine<ForceModel, ParticleType>::Engine(const std::string& restart_file_na
         make_contact_from_restart_data(contact_data);
     }
 
-    if (keyword_data["*periodicbc"].size() > 0 ){
-        periodic_bc_handler_ = std::make_unique<PeriodicBCHandlerType>(*this, particles_, collision_detector_,contacts_,
-                                                                       keyword_data["*periodicbc"]);
-    }
 
     for (const auto& output_data: keyword_data["*output"]) {
         make_output_from_restart_data(output_data);
@@ -134,12 +130,16 @@ DEM::Engine<ForceModel, ParticleType>::Engine(const std::string& restart_file_na
         c->update();
     }
     */
+    collision_detector_.setup(bounding_box_stretch_);
+    if (keyword_data["*periodicbc"].size() > 0 ){
+        periodic_bc_handler_ = std::make_unique<PeriodicBCHandlerType>(*this, particles_, collision_detector_,contacts_,
+                                                                       keyword_data["*periodicbc"]);
+    }
+    collision_detector_.restart(keyword_data["*collision_detector"]);
+    collision_detector_.do_check();
     for (auto& p: particles_) {
         p->sum_contact_forces();
     }
-    collision_detector_.setup(bounding_box_stretch_);
-    collision_detector_.restart(keyword_data["*collision_detector"]);
-    collision_detector_.do_check();
 }
 
 //=====================================================================================================================
@@ -177,9 +177,10 @@ void DEM::Engine<ForceModel, ParticleType>::run(Condition& condition)
     std::chrono::duration<double> logging_interval = 0.01s;
     std::chrono::duration<double> time_to_log = 0.01s;
     // Run all outputs in the beginning of the simulation
-    for (auto& o : outputs_) {
-        o->run_output();
-    }
+   /* for (auto& o : outputs_) {
+    *     o->run_output();
+    * }
+    */
     while (condition()) {
         time_ += increment_;
         do_step();
@@ -193,9 +194,11 @@ void DEM::Engine<ForceModel, ParticleType>::run(Condition& condition)
         }
     }
     // Running all outputs in the end of the simulation
-    for (auto& o : outputs_) {
-        o->run_output();
-    }
+   /*
+    * for (auto& o : outputs_) {
+    *     o->run_output();
+    * }
+    */
     std::cout << "Simulation finalized at " << get_time().count() << std::endl;
 }
 
@@ -566,8 +569,6 @@ void DEM::Engine<ForceModel, ParticleType>::do_step()
 {
     // std::cout << "new step at time " << get_time().count() << "\n";
     move_particles();
-    //Add a function to swell particles after moving them
-    //swell_particle();
     move_surfaces();
     collision_detector_.do_check();
     destroy_contacts();
@@ -770,6 +771,7 @@ void DEM::Engine<ForceModel, ParticleType>::move_particles()
             p->set_angular_acceleration(new_ang_a);
             p->rotate(new_rot);
         }
+        p->swell(p->get_swell_rate() * dt);
     }
 
     if (periodic_bc_handler_ != nullptr) {

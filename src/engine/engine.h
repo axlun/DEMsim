@@ -119,6 +119,7 @@ namespace DEM {
         [[maybe_unused]] void set_time_increment(std::chrono::duration<double> dt);
 
         void write_restart_file(const std::string& filename) const;
+        [[maybe_unused]] void make_output(){ for (auto& o : outputs_) o->run_output(); }
 
         class RunFunctorBase {
         public:

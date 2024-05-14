@@ -236,7 +236,7 @@ void PeriodicBCHandler<ForceModel, ParticleType>::move_mirror_particles(Particle
                 else if (i == 6) {
                     bc_velocity = calc_bc_velocity(0, d) + calc_bc_velocity(1, d) + calc_bc_velocity(2, d);
                 }
-
+                mp->swell(simulation_particle->get_swelling_this_increment());
                 mp->move(bc_velocity);
                 mp->move(simulation_particle->get_displacement_this_increment());
                 mp->set_velocity(simulation_particle->get_velocity());
@@ -697,7 +697,7 @@ std::vector<std::string> PeriodicBCHandler<ForceModel, ParticleType>::restart_da
     restart_data.push_back(boundary_info.str());
     restart_data.push_back(velocity_info.str());
     restart_data.push_back(strain_rate_info.str());
-    restart_data.push_back("data=stretch," + named_print(stretch_, "stretch"));
+    restart_data.push_back("data=stretch, " + named_print(stretch_, "stretch"));
     for (const auto&[id, mp_array]: mirror_particles_) {
         for (unsigned axis = 0; axis != 7; ++axis) {
             auto mp = mp_array[axis];

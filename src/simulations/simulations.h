@@ -15,6 +15,12 @@ namespace DEM {
     void closed_die_compaction(const std::string& settings_file_name);
     void cathode_compaction(const std::string& settings_file_name);
     void cube_die_compaction(const std::string& settings_file_name);
+    void swelling_particle_tester(const std::string& settings_file_name);
+    void swelling_particle_wall_tester(const std::string& settings_file_name);
+    void swelling_cube_die_compaction(const std::string& settings_file_name);
+    void swelling_cube_die(const std::string& settings_file_name);
+    void swelling_periodic_compaction(const std::string& settings_file_name);
+    void periodic_bc_restart_tester(const std::string& settings_file_name);
     void contact_tester(const std::string& settings_file_name);
     void contact_tester_elastic_perfect_plastic_material(const std::string& settings_file_name);
     void contact_tester_viscoelastic_binder_El_Pl_particles(const std::string& settings_file_name);

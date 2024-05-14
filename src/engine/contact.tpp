@@ -16,7 +16,7 @@ DEM::Contact<ForceModel, ParticleType>::Contact(ParticleType* particle1, Particl
     p1_(particle1),
     p2_(particle2),
     surface_(nullptr),
-    r2_(particle1->get_radius() + particle2->get_radius()),
+    //    r2_(particle1->get_radius() + particle2->get_radius()),
     position_divider_(2),
     force_model_(particle1, particle2, increment),
     distance_function(&Contact::calculate_distance_vector_particle),
@@ -31,7 +31,7 @@ DEM::Contact<ForceModel, ParticleType>::Contact(ParticleType* particle1, Surface
     p1_(particle1),
     p2_(nullptr),
     surface_(surface),
-    r2_(particle1->get_radius()),
+//    r2_(particle1->get_radius()),
     position_divider_(1),
     force_model_(particle1, surface, increment),
     distance_function(&Contact::calculate_distance_vector_surface),
@@ -48,7 +48,7 @@ DEM::Contact<ForceModel, ParticleType>::Contact(ParticleType *particle1, Particl
     p1_(particle1),
     p2_(particle2),
     surface_(nullptr),
-    r2_(particle1->get_radius() + particle2->get_radius()),
+//    r2_(particle1->get_radius() + particle2->get_radius()),
     position_divider_(2),
     force_model_(particle1, particle2, increment, parameters),
     distance_function(&Contact::calculate_distance_vector_particle),
@@ -65,7 +65,7 @@ DEM::Contact<ForceModel, ParticleType>::Contact(ParticleType *particle1, Surface
     p1_(particle1),
     p2_(nullptr),
     surface_(surface),
-    r2_(particle1->get_radius()),
+//    r2_(particle1->get_radius()),
     position_divider_(1),
     force_model_(particle1, surface, increment, parameters),
     distance_function(&Contact::calculate_distance_vector_surface),
@@ -79,14 +79,16 @@ template<typename ForceModel, typename ParticleType>
 void DEM::Contact<ForceModel, ParticleType>::update()
 {
     auto distance_vector = calculate_distance_vector();
-    auto h = r2_ - distance_vector.length();
+    double r2 = p1_->get_radius();
+    if (surface_ == nullptr) r2 += p2_->get_radius();
+    auto h = r2 - distance_vector.length();
     normal_ = distance_vector.normal();
     Vec3 dt(0, 0, 0);
     Vec3 w(0, 0, 0);
     
     dt = calculate_tangential_displacement_this_inc();
     w = calculate_rotation_this_inc();
-    
+
     force_model_.update(h, dt, w, get_normal());
 }
 
