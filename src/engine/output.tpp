@@ -70,8 +70,8 @@ DEM::Output<ForceModel, ParticleType>::Output(const DEM::ParameterMap& parameter
         surfaces_(engine.surfaces_),
         contacts_(engine.contacts_),
         engine_(engine),
-        directory_(fs::path(parameters.get_parameter<std::string>("directory"))),
-        current_time_(engine.get_time()),
+        directory_(parameters.get_parameter<fs::path>("directory")),
+        current_time_(parameters.get_parameter<double>("current_time")),//engine.get_time()),
         time_until_output_(parameters.get_parameter<double>("time_until_output")),
         interval_(parameters.get_parameter<double>("interval"))
 {
@@ -97,12 +97,12 @@ template<typename ForceModel, typename ParticleType>
 void DEM::Output<ForceModel, ParticleType>::run_output(const std::chrono::duration<double>& increment)
 {
     using namespace std::chrono_literals;
-    if (time_until_output_ - increment < -1ns || current_time_ == 0s) {
+    current_time_ += increment;
+    time_until_output_ -= increment;
+    if (time_until_output_ - increment < -1ns){// || current_time_ == 0s) {
         time_until_output_ = interval_;
         run_output();
     }
-    current_time_ += increment;
-    time_until_output_ -= increment;
 }
 
 template<typename ForceModel, typename ParticleType>

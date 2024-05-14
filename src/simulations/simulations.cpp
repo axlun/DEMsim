@@ -37,6 +37,7 @@ std::map<std::string, DEM::SimulationFunctionPtr> DEM::valid_simulations() {
             {"electrode_cylinder_compaction",                                                 DEM::electrode_cylinder_compaction},
             {"periodic_bc_tester",                                                            DEM::periodic_bc_tester},
             {"periodic_bc_simulation",                                                        DEM::periodic_bc_simulation},
+            {"periodic_bc_restart_tester",                                                    DEM::periodic_bc_restart_tester},
             {"filling_periodic_box",                                                          DEM::filling_periodic_box},
             {"Cathode_mechanical_simulations",                                                DEM::Cathode_mechanical_simulations},
             {"battery_rve_compaction",                                                        DEM::battery_rve_compaction},

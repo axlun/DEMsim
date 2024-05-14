@@ -119,6 +119,7 @@ add_executable(DEMsim
 				src/engine/periodic_bc_handler.tpp
 				src/simulations/periodic_bc/periodic_bc_simulation.cpp
 				src/simulations/periodic_bc/filling_periodic_box.cpp
+				src/simulations/periodic_bc/periodic_bc_restart_tester.cpp
 				src/surfaces/deformable_point_surface.h
 				src/surfaces/deformable_point_surface.tpp
 				src/simulations/cathode_mechanical_simulations.cpp

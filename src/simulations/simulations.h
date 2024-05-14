@@ -38,6 +38,7 @@ namespace DEM {
     void electrode_cylinder_compaction(const std::string& settings_file_name);
     void periodic_bc_tester(const std::string& settings_file_name);
     void periodic_bc_simulation(const std::string& settings_file_name);
+    void periodic_bc_restart_tester(const std::string& settings_file_name);
     void filling_periodic_box(const std::string& settings_file_name);
     void battery_rve_compaction(const std::string &settings_file_name);
     void Cathode_mechanical_simulations(const std::string& settings_file_name);

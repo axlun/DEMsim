@@ -121,10 +121,6 @@ DEM::Engine<ForceModel, ParticleType>::Engine(const std::string& restart_file_na
         make_contact_from_restart_data(contact_data);
     }
 
-    if (keyword_data["*periodicbc"].size() > 0 ){
-        periodic_bc_handler_ = std::make_unique<PeriodicBCHandlerType>(*this, particles_, collision_detector_,contacts_,
-                                                                       keyword_data["*periodicbc"]);
-    }
 
     for (const auto& output_data: keyword_data["*output"]) {
         make_output_from_restart_data(output_data);
@@ -134,12 +130,16 @@ DEM::Engine<ForceModel, ParticleType>::Engine(const std::string& restart_file_na
         c->update();
     }
     */
+    collision_detector_.setup(bounding_box_stretch_);
+    if (keyword_data["*periodicbc"].size() > 0 ){
+        periodic_bc_handler_ = std::make_unique<PeriodicBCHandlerType>(*this, particles_, collision_detector_,contacts_,
+                                                                       keyword_data["*periodicbc"]);
+    }
+    collision_detector_.restart(keyword_data["*collision_detector"]);
+    collision_detector_.do_check();
     for (auto& p: particles_) {
         p->sum_contact_forces();
     }
-    collision_detector_.setup(bounding_box_stretch_);
-    collision_detector_.restart(keyword_data["*collision_detector"]);
-    collision_detector_.do_check();
 }
 
 //=====================================================================================================================
