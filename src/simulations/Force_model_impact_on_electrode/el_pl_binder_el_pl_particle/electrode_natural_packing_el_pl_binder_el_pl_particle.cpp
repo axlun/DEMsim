@@ -113,7 +113,7 @@ void DEM::electrode_natural_packing_el_pl_binder_el_pl_particle(const std::strin
     std::vector <Vec3> side_2{p3_stiff, p4_stiff, p8_stiff, p7_stiff};
     std::vector <Vec3> side_3{p4_stiff, p1_stiff, p5_stiff, p8_stiff};
     std::vector <Vec3> side_4{p1_stiff, p2_stiff, p6_stiff, p5_stiff};
-
+    //Use random_fill_box_periodic to decrease packing time
     auto particle_positions = random_fill_box(-stiff_wall_fraction*box_side / 2, stiff_wall_fraction*box_side / 2, -stiff_wall_fraction*box_side / 2, stiff_wall_fraction*box_side / 2,
                                              0, 0+box_height, particle_radii, max_binder_thickness);
 
