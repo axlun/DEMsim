@@ -74,7 +74,8 @@ void DEM::periodic_bc_restart_tester(const std::string& settings_file_name)
     // Creating the particles
     // ================================================================================================================
     auto particle_radii = read_vector_from_file<double>(particle_file);
-    particle_radii.assign(N, *particle_radii.begin());
+    particle_radii.assign(N, 1.0); // *****one particle size with radius 1*****
+//    particle_radii.assign(N, *particle_radii.begin());
     if (particle_radii.size() == 1)
     {
         particle_radii.assign(N, *particle_radii.begin());
@@ -97,6 +98,10 @@ void DEM::periodic_bc_restart_tester(const std::string& settings_file_name)
     //Creates the cube so that the volume corresponds to an initial density of filling_density
 
     auto box_side = pow(particle_volume / particle_density_at_filling, 1. / 3);
+    double aspect_ratio = 1.5;
+    auto box_height = box_side * aspect_ratio;
+    box_side *= pow(1. / aspect_ratio, 0.5);
+    std::cout << "box_height" << box_height<< "\n";
     std::cout << "box_side " << box_side << "\n";
 
     // ================================================================================================================
@@ -104,14 +109,14 @@ void DEM::periodic_bc_restart_tester(const std::string& settings_file_name)
     // ================================================================================================================
 
     //Creates all the points that define the initial box
-    auto p1 = Vec3(-box_side / 2, -box_side / 2, -box_side / 2);
-    auto p2 = Vec3(box_side / 2, -box_side / 2, -box_side / 2);
-    auto p3 = Vec3(box_side / 2, box_side / 2, -box_side / 2);
-    auto p4 = Vec3(-box_side / 2, box_side / 2, -box_side / 2);
-    auto p5 = Vec3(-box_side / 2, -box_side / 2, box_side / 2);
-    auto p6 = Vec3(box_side / 2, -box_side / 2, box_side / 2);
-    auto p7 = Vec3(box_side / 2, box_side / 2, box_side / 2);
-    auto p8 = Vec3(-box_side / 2, box_side / 2, box_side / 2);
+    auto p1 = Vec3(-box_side / 2, -box_side / 2, 0);
+    auto p2 = Vec3(box_side / 2, -box_side / 2, 0);
+    auto p3 = Vec3(box_side / 2, box_side / 2, 0);
+    auto p4 = Vec3(-box_side / 2, box_side / 2, 0);
+    auto p5 = Vec3(-box_side / 2, -box_side / 2, box_height);
+    auto p6 = Vec3(box_side / 2, -box_side / 2, box_height);
+    auto p7 = Vec3(box_side / 2, box_side / 2, box_height);
+    auto p8 = Vec3(-box_side / 2, box_side / 2, box_height);
 
     //Saves the points corresponding to a surface in a vector
     std::vector <Vec3> front_points{p5, p6, p2, p1};
@@ -140,7 +145,7 @@ void DEM::periodic_bc_restart_tester(const std::string& settings_file_name)
     // Generates the position of the particles with the function random_fill_box
     auto particle_positions =
             random_fill_box_periodic(-box_side / 2, box_side / 2, -box_side / 2, box_side / 2,
-                                     -box_side / 2, box_side / 2, particle_radii, 0,"xy"); //, material->bt); what material parameter is this?
+                                     0, box_height, particle_radii, 0,"xy"); //, material->bt); what material parameter is this?
 //    auto particle_positions = random_fill_box(-box_side/2, box_side/2, -box_side/2, box_side/2,
 //                                              -box_side/2, box_side/2, particle_radii); //, material->bt); what material parameter is this?
     std::cout << "Particle positions generated" << "\n";

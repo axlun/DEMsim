@@ -48,6 +48,7 @@ std::map<std::string, DEM::SimulationFunctionPtr> DEM::valid_simulations() {
             {"electrode_resting_hertz",                                                       DEM::electrode_resting_hertz},
             {"electrode_natural_packing_hertz",                                               DEM::electrode_natural_packing_hertz},
             {"electrode_natural_packing_el_pl_binder_el_pl_particle",                         DEM::electrode_natural_packing_el_pl_binder_el_pl_particle},
+            {"electrode_natural_periodic_packing_el_pl_binder_el_pl_particle",                DEM::electrode_natural_periodic_packing_el_pl_binder_el_pl_particle},
             {"electrode_natural_packing_rigid_perfect_plastic",                               DEM::electrode_natural_packing_rigid_perfect_plastic},
             {"natural_packing_hertz",                                                         DEM::natural_packing_hertz},
             {"restart_test",                                                                  DEM::restart_test},

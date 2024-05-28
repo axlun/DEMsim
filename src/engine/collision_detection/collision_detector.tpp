@@ -201,9 +201,10 @@ void DEM::CollisionDetector<ForceModel, ParticleType>::create_contact_pair(const
                                                                            const BoundingBoxProjectionType* b2)
 {
     if (b1->get_particle() != nullptr && b2->get_particle() != nullptr)
+    {
         contacts_to_create_.insert(std::make_pair(b1->get_collision_id(), b2->get_collision_id()),
                                    CollisionPair(b1->get_particle(), b2->get_particle()));
-
+    }
     else if (b1->get_particle() != nullptr && b2->get_surface() != nullptr)
         contacts_to_create_.insert(std::make_pair(b1->get_collision_id(), b2->get_collision_id()),
                                    CollisionPair(b1->get_particle(), b2->get_surface()));
@@ -217,7 +218,9 @@ template<typename ForceModel, typename ParticleType>
 void DEM::CollisionDetector<ForceModel, ParticleType>::destroy_contact_pair(const BoundingBoxProjectionType* b1,
                                                                             const BoundingBoxProjectionType* b2)
 {
-    if (contacts_to_create_.erase(std::make_pair(b1->get_collision_id(), b2->get_collision_id()))) {
+    if (contacts_to_create_.erase(std::make_pair(b1->get_collision_id(), b2->get_collision_id())) ||
+        contacts_to_create_.erase(std::make_pair(b2->get_collision_id(), b1->get_collision_id()))) {
+        // Check both possible particle contact pairs, i.e (A,B) and (B,A)
         return;
     }
     if (current_contacts_.erase(b1->get_collision_id(), b2->get_collision_id())) {

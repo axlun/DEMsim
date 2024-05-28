@@ -49,6 +49,7 @@ namespace DEM {
     void electrode_resting_hertz(const std::string& settings_file_name);
     void electrode_natural_packing_hertz(const std::string& settings_file_name);
     void electrode_natural_packing_el_pl_binder_el_pl_particle(const std::string& settings_file_name);
+    void electrode_natural_periodic_packing_el_pl_binder_el_pl_particle(const std::string& settings_file_name);
     void electrode_natural_packing_rigid_perfect_plastic(const std::string& settings_file_name);
     void electrode_calendering(const std::string& settings_file_name);
     void restart_test(const std::string& settings_file_name);
@@ -70,4 +71,4 @@ namespace DEM {
 
 }
 
-#endif //DEMSIM_SIMULATIONS_H
+#endif //SIMULATIONS_H
