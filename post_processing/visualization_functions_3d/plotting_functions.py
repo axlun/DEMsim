@@ -92,7 +92,7 @@ class SpheresPlotter:
                                             opacity=self.opacity,
                                             reset_zoom=False).mlab_source
                 elif self.ms.points.shape[0] == data.shape[0]: # If points -> update x,y,z
-                    self.ms.set(x=x, y=y, z=z)
+                    self.ms.set(x=x, y=y, z=z, scalars=2*r)
                 else:
                     self.ms.reset(x=x, y=y, z=z, scalars=2*r)
 
