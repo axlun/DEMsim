@@ -1,5 +1,5 @@
 //
-// Created by Axel on 2023-06-11.
+// Adapted from electrode_natural_packing_el_pl_binder_el_pl_particle.cpp on 2024-05-16
 //
 #include "../../simulations.h"
 
@@ -11,7 +11,7 @@
 #include "../../../utilities/file_reading_functions.h"
 #include "../../../utilities/filling_functions.h"
 
-void DEM::electrode_natural_packing_el_pl_binder_el_pl_particle(const std::string& settings_file_name) {
+void DEM::electrode_natural_periodic_packing_el_pl_binder_el_pl_particle(const std::string& settings_file_name) {
     using namespace DEM;
     using ForceModel = elastic_plastic_binder_elastic_plastic_particle;
     using ParticleType = SphericalParticle<ForceModel>;
@@ -94,45 +94,28 @@ void DEM::electrode_natural_packing_el_pl_binder_el_pl_particle(const std::strin
     auto p7 = Vec3(box_side / 2, box_side / 2, box_height);
     auto p8 = Vec3(-box_side / 2, box_side / 2, box_height);
 
-    auto stiff_wall_fraction = 0.9;
-
-    auto p1_stiff = Vec3(-stiff_wall_fraction*box_side / 2, -stiff_wall_fraction*box_side / 2, 0);
-    auto p2_stiff = Vec3(stiff_wall_fraction*box_side / 2, -stiff_wall_fraction*box_side / 2, 0);
-    auto p3_stiff = Vec3(stiff_wall_fraction*box_side / 2, stiff_wall_fraction*box_side / 2, 0);
-    auto p4_stiff = Vec3(-stiff_wall_fraction*box_side / 2, stiff_wall_fraction*box_side / 2, 0);
-    auto p5_stiff = Vec3(-stiff_wall_fraction*box_side / 2, -stiff_wall_fraction*box_side / 2, box_height);
-    auto p6_stiff = Vec3(stiff_wall_fraction*box_side / 2, -stiff_wall_fraction*box_side / 2, box_height);
-    auto p7_stiff = Vec3(stiff_wall_fraction*box_side / 2, stiff_wall_fraction*box_side / 2, box_height);
-    auto p8_stiff = Vec3(-stiff_wall_fraction*box_side / 2, stiff_wall_fraction*box_side / 2, box_height);
-
     std::vector <Vec3> bottom_points{p1, p2, p3, p4};
     std::vector <Vec3> top_points{p8, p7, p6, p5};
 
-    //side panels for non periodic BCs
-    std::vector <Vec3> side_1{p2_stiff, p3_stiff, p7_stiff, p6_stiff};
-    std::vector <Vec3> side_2{p3_stiff, p4_stiff, p8_stiff, p7_stiff};
-    std::vector <Vec3> side_3{p4_stiff, p1_stiff, p5_stiff, p8_stiff};
-    std::vector <Vec3> side_4{p1_stiff, p2_stiff, p6_stiff, p5_stiff};
+//=======================================PERIODIC BC:S===============================================================
+    simulator.add_periodic_boundary_condition('x', -box_side/2, box_side/2);
+    simulator.add_periodic_boundary_condition('y', -box_side/2, box_side/2);
+//=====================================================================================================================
     //Use random_fill_box_periodic to decrease packing time
-    auto particle_positions = random_fill_box(-stiff_wall_fraction*box_side / 2, stiff_wall_fraction*box_side / 2, -stiff_wall_fraction*box_side / 2, stiff_wall_fraction*box_side / 2,
-                                             0, 0+box_height, particle_radii, max_binder_thickness);
+    auto particle_positions = random_fill_box_periodic(-box_side/ 2,
+                                                       box_side/ 2,
+                                                       -box_side/ 2,
+                                                       box_side/ 2,
+                                                       0, 0+box_height,
+                                                       particle_radii, max_binder_thickness,"xy");
 
     auto deformable_surface = simulator.create_deformable_point_surface(bottom_points,"bottom_plate", true);
     auto top_surface = simulator.create_point_surface(top_points, true, "top_plate", false);
 
 
     //Side surface for non periodic BCs
-    auto side1_surface = simulator.create_point_surface(side_1, true, "side1_plate", false);
-    auto side2_surface = simulator.create_point_surface(side_2, true, "side2_plate", false);
-    auto side3_surface = simulator.create_point_surface(side_3, true, "side3_plate", false);
-    auto side4_surface = simulator.create_point_surface(side_4, true, "side4_plate", false);
-
     std::cout << "Normal of top surface: " << top_surface->get_normal() << "\n";
     std::cout << "Normal of bottom surface: " << deformable_surface->get_normal() << "\n";
-    std::cout << "Normal of side surface 1: " << side1_surface->get_normal() << "\n";
-    std::cout << "Normal of side surface 2: " << side2_surface->get_normal() << "\n";
-    std::cout << "Normal of side surface 3: " << side3_surface->get_normal() << "\n";
-    std::cout << "Normal of side surface 4: " << side4_surface->get_normal() << "\n";
 
     for (std::size_t i = 0; i != particle_positions.size(); ++i) {
         simulator.create_particle(particle_radii[i], particle_positions[i], Vec3(0,0,0), mat);
@@ -143,7 +126,6 @@ void DEM::electrode_natural_packing_el_pl_binder_el_pl_particle(const std::strin
     simulator.set_gravity(Vec3(0, 0, -gravity)); //Use gravity for initial packing of particles
     std::cout << "max_binder_thickness: "<< max_binder_thickness <<"\n";
     simulator.setup(1.01*max_binder_thickness); //Size of box for detecting contacts between particles
-//    simulator.set_rotation(false);
 
 //============================CALCULATE FALL TIMES ==============================================================
     double fall_distance = box_height-mat->active_particle_height;
@@ -158,7 +140,7 @@ void DEM::electrode_natural_packing_el_pl_binder_el_pl_particle(const std::strin
         if(float(pow(10,(std::log10(fall_time.count())-int(std::log10(fall_time.count())))))>=5.0){output_exp = 1 +
                 std::log10(fall_time.count());}else{output_exp = 0 + std::log10(fall_time.count());}
     }else{
-        std::cout << "std::log10(fall_time.count()) " << std::log10(fall_time.count()) << "\n";
+        std::cout << "std::log10(fall_time.count()) = " << std::log10(fall_time.count()) << "\n";
         if(float(pow(10,(std::log10(fall_time.count())-(int(std::log10(fall_time.count()))-1))))>=5.0){output_exp = 1 +
         std::log10(fall_time.count())-1;}else{output_exp = 0 + std::log10(fall_time.count())-1;}
     }
@@ -187,7 +169,8 @@ void DEM::electrode_natural_packing_el_pl_binder_el_pl_particle(const std::strin
 
     simulator.set_gravity(Vec3(0,0,0));
 
-    std::chrono::duration<double> fall_time_constant_vel {(fall_distance-gravity*pow(fall_time.count()/10.0,2)/1.0)/1.0/(gravity*fall_time.count()/10.0)};
+    std::chrono::duration<double> fall_time_constant_vel {
+        (fall_distance-gravity*pow(fall_time.count()/10.0,2)/1.0)/1.0/(gravity*fall_time.count()/10.0)};
 
     double pre_calendering_surface_velocity = 1 * gravity * fall_time.count()/10.0;
     std::cout << "Surface velocity: "<< pre_calendering_surface_velocity <<" \n";
@@ -218,11 +201,13 @@ void DEM::electrode_natural_packing_el_pl_binder_el_pl_particle(const std::strin
         std::cout<<"Height of uppermost particle: "<< h_1<< std::endl;
     }
 
-    top_surface->move(-Vec3(0, 0,  top_surface->get_points()[0][2] - h_1-1.01*max_binder_thickness), Vec3(0, 0, 0)); //Move top surface to uppermost partile+binder thickness
+    top_surface->move(-Vec3(0, 0,  top_surface->get_points()[0][2] - h_1-1.01*max_binder_thickness),
+                      Vec3(0, 0, 0)); //Move top surface to uppermost partile+binder thickness
 
     top_surface->set_velocity(Vec3(0,0,-2 * pre_calendering_surface_velocity));
 
-    std::chrono::duration<double> compaction_time_pre_cal {((h_1+1.01*max_binder_thickness - mat->active_particle_height*3) / (2 * pre_calendering_surface_velocity))};
+    std::chrono::duration<double> compaction_time_pre_cal {
+        ((h_1+1.01*max_binder_thickness - mat->active_particle_height*3) / (2 * pre_calendering_surface_velocity))};
 
     std::cout<<"Pre-calendering time: "<< compaction_time_pre_cal.count()<< std::endl;
     EngineType::RunForTime Run_for_Pre_calendering_time(simulator, compaction_time_pre_cal);
@@ -235,23 +220,12 @@ void DEM::electrode_natural_packing_el_pl_binder_el_pl_particle(const std::strin
     std::cout<<"Resting for: "<< fall_time.count()<< std::endl;
     simulator.run(Run_for_rest_time);
 
-    std::cout << "****************Wall removal**************** \n";
+    std::cout << "****************Stop particles**************** \n";
     // Stop all the particles
     for (auto& p: simulator.get_particles())
     {
         p->set_velocity(Vec3(0,0,0));
     }
-//=======================================PERIODIC BC:S===============================================================
-    simulator.add_periodic_boundary_condition('x', -box_side/2, box_side/2);
-    simulator.add_periodic_boundary_condition('y', -box_side/2, box_side/2);
-//=====================================================================================================================
-
-// =====================MOVE THE STIFF SURFACE TO INITIATE THE PERIODIC BC:S ==========================================
-    side1_surface->move(Vec3(5*box_side,0,0), Vec3(0, 0, 0));
-    side2_surface->move(Vec3(0,5*box_side,0), Vec3(0,0,0));
-    side3_surface->move(-Vec3(5*box_side,0,0), Vec3(0,0,0));
-    side4_surface->move(-Vec3(0,5*box_side,0), Vec3(0,0,0));
-//=====================================================================================================================
 
     EngineType::RunForTime Run_for_initiation_of_periodic_BCs(simulator,fall_time);
     std::cout << "Running for: "<< (fall_time).count() <<" \n";

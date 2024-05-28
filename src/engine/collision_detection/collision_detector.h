@@ -54,6 +54,12 @@ namespace DEM {
                     return std::make_pair(particle1->get_id(), surface->get_id());
             }
 
+            std::pair<std::size_t, size_t> get_collision_id_pair() const {
+                if (surface == nullptr)
+                    return std::make_pair(particle1->get_collision_id(), particle2->get_collision_id());
+                else
+                    return std::make_pair(particle1->get_collision_id(), surface->get_collision_id());
+            }
 
         };
 

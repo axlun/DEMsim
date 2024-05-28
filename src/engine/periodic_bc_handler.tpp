@@ -351,6 +351,7 @@ void DEM::PeriodicBCHandler<ForceModel, ParticleType>::respect_boundaries(Partic
         else {
             mirror_idx = 6;
         }
+        //when is distance_to_move used? TODO: remove in next iteration!
         for (std::size_t direction = 0; direction != active_directions_.size(); ++direction) {
             if (directions[direction]) {
                 distance_to_move[direction] = -(boundaries_[direction].max
@@ -414,24 +415,75 @@ void PeriodicBCHandler<ForceModel, ParticleType>::handle_jump_contacts() {
     for (auto& jump_particle: jump_particles_){
         for (auto& c: jump_particle->get_contacts().get_objects()) {
             auto contact_pair = c.first->get_particles();
-            if ((contact_pair.first == jump_particle || contact_pair.second == jump_particle) && contact_pair.second) {
-                auto old_distance = (contact_pair.first->get_position() -
-                                     contact_pair.second->get_position()).length();
-                // The particle p1 is arbitrary chosen as the one belonging to the simulation box
-                auto p1 = get_simulation_particle(jump_particle->get_id());
+            /* If the contact contains two particles and one is a jump particle, iterate through the possible contact
+             * pairs between the two particles simulation and mirror particles and move the contact to two particles
+             * which have the shortest distance, with a preference of using the simulation particles.
+             */
+             if ((contact_pair.first == jump_particle || contact_pair.second == jump_particle) && contact_pair.second)
+             {
+                 auto min_distance = contact_pair.first->get_position().length();
+                 min_distance = 1e99;
+                 auto p1 = get_simulation_particle(contact_pair.first->get_id());
+                 auto p2 = get_simulation_particle(contact_pair.second->get_id());
 
-                auto p2 = get_simulation_particle(contact_pair.second->get_id());
-                for (unsigned i = 0; i != 7; ++i) {
-                    auto p = get_mirror_particle(p2, i);
-                    if (p != nullptr) {
-                        auto new_distance = (p1->get_position() - p->get_position()).length();
-                        if (new_distance - old_distance < 1e-12) {
-                            p2 = p;
-                        }
-                    }
-                }
-                c.first->assign_new_contact_particles(p1, p2);
-            }
+                 auto p1_new = get_simulation_particle(contact_pair.first->get_id());
+                 auto p2_new = get_simulation_particle(contact_pair.second->get_id());
+                 // TODO: reset these to nullptr?
+
+                 // Iterate through all pairs of mirror particles contacts
+                 for(unsigned i = 0; i != 7; ++i)
+                 {
+                     auto mp1 = get_mirror_particle(p1,i);
+                     for(unsigned j = 0; j != 7; ++j)
+                     {
+                         auto mp2 = get_mirror_particle(p2,j);
+                         if (mp1 != nullptr && mp2 != nullptr)
+                         {
+                             auto new_distance = (mp2->get_position() - mp1->get_position()).length();
+                             if (new_distance - min_distance < 1e-12)
+                             {
+                                 min_distance = new_distance;
+                                 p1_new = mp1;
+                                 p2_new = mp2;
+                             }
+                         }
+                     }
+                 }
+
+                 // Iterate through all pairs of one simulation particles and mirror particles
+                 for(unsigned i = 0; i != 7; ++i)
+                 {
+                     auto p = get_mirror_particle(p2,i);
+                     if (p != nullptr)
+                     {
+                         auto new_distance = (p1->get_position() - p->get_position()).length();
+                         if (new_distance - min_distance < 1e-12)
+                         {
+                             min_distance = new_distance;
+                             p1_new = p1;
+                             p2_new = p;
+                         }
+                     }
+                     p = get_mirror_particle(p1,i);
+                     if (p != nullptr)
+                     {
+                         auto new_distance = (p2->get_position() - p->get_position()).length();
+                         if (new_distance - min_distance < 1e-12)
+                         {
+                             min_distance = new_distance;
+                             p1_new = p;
+                             p2_new = p2;
+                         }
+                     }
+                 }
+                 // Check if the simulation particles make the best contact pair
+                 if ((p1->get_position() - p2->get_position()).length()- min_distance < 1e-12)
+                 {
+                     p1_new = p1;
+                     p2_new = p2;
+                 }
+                 c.first->assign_new_contact_particles(p1_new, p2_new);
+             }
         }
     }
 }
@@ -535,29 +587,28 @@ void PeriodicBCHandler<ForceModel, ParticleType>::create_periodic_bc_contacts() 
         std::size_t id2 = c_data.get_id_pair().second;
         auto p1 = c_data.particle1;
         auto p2 = c_data.particle2;
-        if (!(is_mirror_particle(p1) && is_mirror_particle(p2))) {
-            auto s = c_data.surface;
-            if (s == nullptr) {
-                if (is_mirror_particle(p1) && !is_mirror_particle(p2)) {
-                    std::swap(p1, p2);
-                    std::swap(id1, id2);
-                }
-                c = contacts_.create_item_inplace(id1, id2, p1, p2, engine_.get_time_increment());
+
+        auto s = c_data.surface;
+        if (s == nullptr) {
+            if (is_mirror_particle(p1) && !is_mirror_particle(p2)) {
+                std::swap(p1, p2);
+                std::swap(id1, id2);
+            }
+            c = contacts_.create_item_inplace(id1, id2, p1, p2, engine_.get_time_increment());
+        }
+        else {
+            c = contacts_.create_item_inplace(id1, id2, p1, s, engine_.get_time_increment());
+        }
+        if (c != nullptr) {
+            p1->add_contact(c, id2, 1.);
+            if (p2 != nullptr) {
+                p2->add_contact(c, id1, -1);
             }
             else {
-                c = contacts_.create_item_inplace(id1, id2, p1, s, engine_.get_time_increment());
+                s->add_contact(c, id1);
             }
-            if (c != nullptr) {
-                p1->add_contact(c, id2, 1.);
-                if (p2 != nullptr) {
-                    p2->add_contact(c, id1, -1);
-                }
-                else {
-                    s->add_contact(c, id1);
-                }
-                handle_mirror_particles_add_contact(c, id1, id2, p1, 1);
-                handle_mirror_particles_add_contact(c, id2, id1, p2, -1);
-            }
+            handle_mirror_particles_add_contact(c, id1, id2, p1, 1);
+            handle_mirror_particles_add_contact(c, id2, id1, p2, -1);
         }
     }
     contacts_to_create.clear();
@@ -572,10 +623,15 @@ void PeriodicBCHandler<ForceModel, ParticleType>::destroy_periodic_bc_contacts()
         const auto id2 = c_data.get_id_pair().second;
         auto p1 = c_data.particle1;
         auto p2 = c_data.particle2;
+        const auto cid1 = c_data.get_collision_id_pair().first;
+        const auto cid2 = c_data.get_collision_id_pair().second;
         auto s = c_data.surface;
         auto jump_contact = false;
         for (auto& jp: jump_particles_) {
-            if (jp->get_id() == id1 || jp->get_id() == id2) {
+            if (jp->get_collision_id() == cid1 || jp->get_collision_id() == cid2) {
+                /* do the comparison with collision_id instead of particle_id, only skip removal of contacts when we are
+                 * on  a jump particle
+                 */
                 jump_contact = true;
             }
         }

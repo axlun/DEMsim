@@ -81,6 +81,7 @@ add_executable(DEMsim
 				src/simulations/particle_tests/swelling_periodic_compaction.cpp
 				src/simulations/Force_model_impact_on_electrode/natural_packing_hertz.cpp
 				src/simulations/Force_model_impact_on_electrode/el_pl_binder_el_pl_particle/electrode_natural_packing_el_pl_binder_el_pl_particle.cpp
+				src/simulations/Force_model_impact_on_electrode/el_pl_binder_el_pl_particle/electrode_natural_periodic_packing_el_pl_binder_el_pl_particle.cpp
 				src/simulations/Force_model_impact_on_electrode/electrode_calendering.cpp
 				src/simulations/Force_model_impact_on_electrode/electrode_calendering_hertz.cpp
 				src/simulations/Force_model_impact_on_electrode/electrode_natural_packing_hertz.cpp
