@@ -17,6 +17,7 @@ std::map<std::string, DEM::SimulationFunctionPtr> DEM::valid_simulations() {
             {"swelling_particle_wall_tester",                                                 DEM::swelling_particle_wall_tester},
             {"swelling_cube_die_compaction",                                                  DEM::swelling_cube_die_compaction},
             {"swelling_cube_die",                                                             DEM::swelling_cube_die},
+            {"cube_die_packing_and_swelling_wc",                                            DEM::cube_die_packing_and_swelling_wc},
             {"swelling_periodic_compaction",                                                  DEM::swelling_periodic_compaction},
             {"periodic_bc_restart_tester",                                                   DEM::periodic_bc_restart_tester},
             {"contact_tester",                                                                DEM::contact_tester},

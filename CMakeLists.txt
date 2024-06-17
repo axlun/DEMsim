@@ -142,6 +142,7 @@ add_executable(DEMsim
 				src/simulations/cube_die_compaction.cpp
 				src/simulations/cathode_compaction.cpp
 				src/simulations/sintering/swelling_cube_die.cpp
+				src/simulations/sintering/cube_die_packing_and_swelling_wc.cpp
 				src/contact_models/viscoelastic_binder_with_deformable_particles.h
 				src/contact_models/viscoelastic_binder_with_deformable_particles.cpp
 				src/contact_models/elastic_perfect_plastic.h

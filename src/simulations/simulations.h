@@ -18,6 +18,7 @@ namespace DEM {
     void swelling_particle_tester(const std::string& settings_file_name);
     void swelling_particle_wall_tester(const std::string& settings_file_name);
     void swelling_cube_die_compaction(const std::string& settings_file_name);
+    void cube_die_packing_and_swelling_wc(const std::string& settings_file_name);
     void swelling_cube_die(const std::string& settings_file_name);
     void swelling_periodic_compaction(const std::string& settings_file_name);
     void periodic_bc_restart_tester(const std::string& settings_file_name);
