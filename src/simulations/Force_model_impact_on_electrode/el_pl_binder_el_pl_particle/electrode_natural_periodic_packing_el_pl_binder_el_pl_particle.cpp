@@ -160,8 +160,8 @@ void DEM::electrode_natural_periodic_packing_el_pl_binder_el_pl_particle(const s
     filling_output->print_mirror_particles = true;
     filling_output->print_fabric_force_tensor=true;
 //======================================================================================================================
-
-    std::chrono::duration<double> acceleration_fall_time {fall_time.count()/10.0};
+    double acc_frac = 5.0; //for how much of the required falltime should the particles accelerate
+    std::chrono::duration<double> acceleration_fall_time {fall_time.count()/acc_frac};
     std::cout << "****************Acceleration of particles**************** \n";
     std::cout << "Acceleration time: "<< acceleration_fall_time.count() <<" \n";
     EngineType::RunForTime Run_for_Particle_acceleration(simulator, acceleration_fall_time);
@@ -170,15 +170,16 @@ void DEM::electrode_natural_periodic_packing_el_pl_binder_el_pl_particle(const s
     simulator.set_gravity(Vec3(0,0,0));
 
     std::chrono::duration<double> fall_time_constant_vel {
-        (fall_distance-gravity*pow(fall_time.count()/10.0,2)/1.0)/1.0/(gravity*fall_time.count()/10.0)};
+        (fall_distance-gravity*pow(fall_time.count()/acc_frac,2)/1.0)/1.0/(gravity*fall_time.count()/acc_frac)};
 
-    double pre_calendering_surface_velocity = 1 * gravity * fall_time.count()/10.0;
+    double pre_calendering_surface_velocity = 1 * gravity * fall_time.count()/acc_frac;
     std::cout << "Surface velocity: "<< pre_calendering_surface_velocity <<" \n";
 
-    if (pre_calendering_surface_velocity*fall_time_constant_vel.count() >= box_height-3.2*mat->active_particle_height)
+    if (pre_calendering_surface_velocity*fall_time_constant_vel.count() >= box_height-2*mat->active_particle_height)
     {
-    pre_calendering_surface_velocity = (box_height-3.2*mat->active_particle_height)/fall_time_constant_vel.count();
-    std::cout << "Reducing surface velocity to: "<< pre_calendering_surface_velocity <<" \n";
+        pre_calendering_surface_velocity = (box_height-2*mat->active_particle_height)/fall_time_constant_vel.count();
+        if (pre_calendering_surface_velocity < 0) pre_calendering_surface_velocity = 0;
+        std::cout << "Reducing surface velocity to: "<< pre_calendering_surface_velocity <<" \n";
     }
 
     top_surface->set_velocity(Vec3(0,0,-pre_calendering_surface_velocity));
@@ -193,27 +194,29 @@ void DEM::electrode_natural_periodic_packing_el_pl_binder_el_pl_particle(const s
     simulator.set_gravity(Vec3(0,0,-gravity));
     auto bbox = simulator.get_bounding_box(); //get the XYZ max/min that contain all particles
     double h_1 = bbox[5]; //height of uppermost particle (Z-max)
-    if (h_1<3.1*mat->active_particle_height){
-        h_1=3.1*mat->active_particle_height;
-        std::cout<<"Height of uppermost particle lower then 3.1 h_al: "<< h_1<< std::endl;
+    if (h_1<2*mat->active_particle_height){
+        h_1=2*mat->active_particle_height;
+        std::cout<<"Height of uppermost particle lower then 2 h_al: "<< h_1<< std::endl;
     }
     else{
         std::cout<<"Height of uppermost particle: "<< h_1<< std::endl;
     }
 
     top_surface->move(-Vec3(0, 0,  top_surface->get_points()[0][2] - h_1-1.01*max_binder_thickness),
-                      Vec3(0, 0, 0)); //Move top surface to uppermost partile+binder thickness
+                      Vec3(0, 0, 0)); //Move top surface to uppermost particle+binder thickness
+    if (pre_calendering_surface_velocity != 0)
+    {
+        top_surface->set_velocity(Vec3(0, 0, -2 * pre_calendering_surface_velocity));
 
-    top_surface->set_velocity(Vec3(0,0,-2 * pre_calendering_surface_velocity));
+        std::chrono::duration<double> compaction_time_pre_cal{
+                ((h_1 + 1.01 * max_binder_thickness - mat->active_particle_height * 2) /
+                 (2 * pre_calendering_surface_velocity))};
 
-    std::chrono::duration<double> compaction_time_pre_cal {
-        ((h_1+1.01*max_binder_thickness - mat->active_particle_height*3) / (2 * pre_calendering_surface_velocity))};
+        std::cout << "Pre-calendering time: " << compaction_time_pre_cal.count() << std::endl;
+        EngineType::RunForTime Run_for_Pre_calendering_time(simulator, compaction_time_pre_cal);
 
-    std::cout<<"Pre-calendering time: "<< compaction_time_pre_cal.count()<< std::endl;
-    EngineType::RunForTime Run_for_Pre_calendering_time(simulator, compaction_time_pre_cal);
-
-    simulator.run(Run_for_Pre_calendering_time);
-
+        simulator.run(Run_for_Pre_calendering_time);
+    }
     top_surface->set_velocity(Vec3(0,0,0));
 
     EngineType::RunForTime Run_for_rest_time(simulator, fall_time);

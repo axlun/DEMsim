@@ -428,7 +428,8 @@ void PeriodicBCHandler<ForceModel, ParticleType>::handle_jump_contacts() {
 
                  auto p1_new = get_simulation_particle(contact_pair.first->get_id());
                  auto p2_new = get_simulation_particle(contact_pair.second->get_id());
-                 // TODO: reset these to nullptr?
+                 p1_new = nullptr;
+                 p2_new = nullptr;
 
                  // Iterate through all pairs of mirror particles contacts
                  for(unsigned i = 0; i != 7; ++i)
@@ -481,6 +482,9 @@ void PeriodicBCHandler<ForceModel, ParticleType>::handle_jump_contacts() {
                  {
                      p1_new = p1;
                      p2_new = p2;
+                 }
+                 if (p1_new == nullptr || p2_new == nullptr){
+                     //todo: Throw error if new pointers are not assigned!
                  }
                  c.first->assign_new_contact_particles(p1_new, p2_new);
              }
