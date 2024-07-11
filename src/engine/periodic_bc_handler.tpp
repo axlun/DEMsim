@@ -236,6 +236,7 @@ void PeriodicBCHandler<ForceModel, ParticleType>::move_mirror_particles(Particle
                 else if (i == 6) {
                     bc_velocity = calc_bc_velocity(0, d) + calc_bc_velocity(1, d) + calc_bc_velocity(2, d);
                 }
+                mp->set_swell_rate(simulation_particle->get_swell_rate());
                 mp->swell(simulation_particle->get_swelling_this_increment());
                 mp->move(bc_velocity);
                 mp->move(simulation_particle->get_displacement_this_increment());
@@ -428,7 +429,8 @@ void PeriodicBCHandler<ForceModel, ParticleType>::handle_jump_contacts() {
 
                  auto p1_new = get_simulation_particle(contact_pair.first->get_id());
                  auto p2_new = get_simulation_particle(contact_pair.second->get_id());
-                 // TODO: reset these to nullptr?
+                 p1_new = nullptr;
+                 p2_new = nullptr;
 
                  // Iterate through all pairs of mirror particles contacts
                  for(unsigned i = 0; i != 7; ++i)

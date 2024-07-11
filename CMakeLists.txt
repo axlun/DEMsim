@@ -99,6 +99,10 @@ add_executable(DEMsim
 				src/simulations/Force_model_impact_on_electrode/el_pl_binder_el_pl_particle/restart_file_tester.cpp
 				src/simulations/Force_model_impact_on_electrode/electrode_mechanical_loading_rigid_plastic.cpp
 				src/simulations/Force_model_impact_on_electrode/electrode_resting_hertz.cpp
+				src/simulations/Force_model_impact_on_electrode/swelling/swelling_electrode_calendering.cpp
+				src/simulations/Force_model_impact_on_electrode/swelling/swelling_periodic_packing.cpp
+				src/simulations/Force_model_impact_on_electrode/swelling/electrode_swelling.cpp
+				src/simulations/Force_model_impact_on_electrode/swelling/swelling_electrode_mechanical_loading.cpp
 				src/simulations/cyclic_triaxial.cpp
 				src/particles/spherical_particle_base.tpp
 				src/particles/spherical_particle_base.h

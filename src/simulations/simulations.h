@@ -21,6 +21,9 @@ namespace DEM {
     void cube_die_packing_and_swelling_wc(const std::string& settings_file_name);
     void swelling_cube_die(const std::string& settings_file_name);
     void swelling_periodic_compaction(const std::string& settings_file_name);
+    void swelling_periodic_packing(const std::string& settings_file_name);
+    void swelling_electrode_calendering(const std::string& settings_file_name);
+    void swelling_electrode_mechanical_loading(const std::string& settings_file_name);
     void periodic_bc_restart_tester(const std::string& settings_file_name);
     void contact_tester(const std::string& settings_file_name);
     void contact_tester_elastic_perfect_plastic_material(const std::string& settings_file_name);
@@ -42,6 +45,7 @@ namespace DEM {
     void proctor_test(const std::string& settings_file_name);
     void stone_compaction(const std::string& settings_file_name);
     void electrode_compaction(const std::string& settings_file_name);
+    void electrode_swelling(const std::string& settings_file_name);
     void electrode_cylinder_compaction(const std::string& settings_file_name);
     void periodic_bc_tester(const std::string& settings_file_name);
     void periodic_bc_simulation(const std::string& settings_file_name);

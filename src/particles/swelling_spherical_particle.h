@@ -51,19 +51,18 @@ namespace DEM
         using SphericalParticleBase<ForceModel>::get_position;
 
         [[nodiscard]] double get_radius() const override { return swell_state_*radius_; }
-//        [[nodiscard]] double get_inertia() const override {return inertia_;}//0.4 * mass_ * radius_ * swell_state_radius_ *
-//            radius_ * swell_state_radius_;} //I = 2/5 * m * r^2
 
-       void set_swell_rate(const double& swell_rate) {swell_rate_ = swell_rate;}
-       void swell(const double new_swelling_this_inc) override;
+        using SphericalParticleBase<ForceModel>::set_swell_rate;
+//        void set_swell_rate(const double& swell_rate) {swell_rate_ = swell_rate;}
+        void swell(const double new_swelling_this_inc) override;
 
 
         using SphericalParticleBase<ForceModel>::get_swell_rate;
 
-       using SphericalParticleBase<ForceModel>::kinetic_energy;
+        using SphericalParticleBase<ForceModel>::kinetic_energy;
 
-       [[nodiscard]] virtual std::string get_output_string() const override;
-       [[nodiscard]] virtual std::string restart_data() const override;
+        [[nodiscard]] virtual std::string get_output_string() const override;
+        [[nodiscard]] virtual std::string restart_data() const override;
 
     private:
         ContactVector<std::pair<ContactPointerType, int>> contacts_;

@@ -32,7 +32,7 @@ template <typename ForceModel>
 void DEM::SwellingSphericalParticle<ForceModel>::swell(const double new_swelling_this_inc)
 {
     swelling_this_inc_ = new_swelling_this_inc;
-    swell_state_ += swelling_this_inc_;
+    swell_state_ += new_swelling_this_inc;
     inertia_ = 0.4 * mass_ * swell_state_ * radius_ * swell_state_ * radius_;
 }
 

@@ -48,6 +48,7 @@ namespace DEM {
 
         [[nodiscard]] double get_swelling_this_increment() const {return swelling_this_inc_;}
         [[nodiscard]] double get_swell_rate() const {return swell_rate_;}
+        void set_swell_rate(const double& swell_rate) {swell_rate_ = swell_rate;}
 
         [[nodiscard]] virtual std::string restart_data() const;
         void reset_contact_forces() {f_.set_zero(); torque_.set_zero(); }

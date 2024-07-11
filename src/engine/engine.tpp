@@ -157,7 +157,7 @@ void DEM::Engine<ForceModel, ParticleType>::setup()
     setup(pr_max->get_radius()*1e-2);
 
 }
-
+// TODO: can bbox_stretch be increased during a simulation or are contact detections missed?
 template<typename ForceModel, typename ParticleType>
 void DEM::Engine<ForceModel, ParticleType>::setup(double bounding_box_stretch) {
     std::cout << "Number of objects is " << object_id_counter_ << "\n";
