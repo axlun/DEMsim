@@ -1,0 +1,6 @@
+output_dir=/mnt/c/Users/Axel/Documents/DEM/results/swelling_electrode/SN_5/swelling_electrode_mechanical_loading_tension/
+restart_file_name=/mnt/c/Users/Axel/Documents/DEM/results/swelling_electrode/SN_5/swelling_electrode_calendering/calendered_electrode_restart_file.res
+loading_direction=1
+time_step=5e1
+mass_scaling=1e2
+strain_rate=2e-3
