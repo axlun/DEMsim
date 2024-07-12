@@ -1,0 +1,7 @@
+output_dir=/mnt/c/Users/Axel/Documents/DEM/results/swelling_electrode/SN_6/electrode_swelling/
+restart_file_name=/mnt/c/Users/Axel/Documents/DEM/results/swelling_electrode/SN_6/swelling_electrode_calendering/calendered_electrode_restart_file.res
+time_step=1e2
+mass_scaling=1e4
+swelling_time=2e1
+output_number=5e2
+swell_states=0.95,0.9

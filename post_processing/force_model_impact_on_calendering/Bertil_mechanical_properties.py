@@ -1,4 +1,5 @@
 from force_model_impact_on_calendering.Bertil_calendering_pressure import local_data_gatherer, bertil_data_gatherer, contact_counter_bertil
+from Local_contact_distribution import contact_counter_local
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -130,7 +131,7 @@ def mechanical_properties_plotting_func(simulation_directory, stiffness_at_point
         kinetic_energy_data_compression = local_data_gatherer(simulation_directory + '_compression')
         if contact_flag == 1:
             time_vec_compression, particle_contact_vec_compression, binder_contact_vec_compression, \
-                binder_particle_contact_vec_compression = contact_counter_bertil(simulation_directory+ '_compression')
+                binder_particle_contact_vec_compression = contact_counter_local(simulation_directory+ '_compression/')
     else:
         print("Error with simulation directory")
 
@@ -144,8 +145,8 @@ def mechanical_properties_plotting_func(simulation_directory, stiffness_at_point
         force_data_tension, surface_force_index_tension, surface_position_index_tension, surface_position_data_tension, periodic_BC_data_tension, force_fabric_tensor_data_tension, kinetic_energy_data_tension = local_data_gatherer(
             simulation_directory + '_tension')
         if contact_flag == 1:
-            time_vec_tension, particle_contact_vec_tension, binder_contact_vec_tension, binder_particle_contact_vec_tension = contact_counter_bertil(
-                simulation_directory+ '_tension')
+            time_vec_tension, particle_contact_vec_tension, binder_contact_vec_tension, binder_particle_contact_vec_tension = contact_counter_local(
+                simulation_directory+ '_tension/')
     else:
         print("Error with simulation directory")
     time_tension, linear_strain_tension, sxx_tension, syy_tension, szz_tension, tau_xy_tension, tau_xz_tension, tau_yx_tension, tau_yz_tension, tau_zx_tension, tau_zy_tension = stress_and_linear_strain_finder(periodic_BC_data_tension, force_fabric_tensor_data_tension,surface_position_data_tension)
@@ -349,7 +350,14 @@ if __name__ == '__main__':
     # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/particle_size_distribution/SN_1/electrode_mechanical_loading_hertz'
 
     # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/final_runs_2/SN_101/1/electrode_mechanical_loading_hertz'
-    simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/final_runs_2/SN_101/2/electrode_mechanical_loading_hertz'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/final_runs_2/SN_201_periodic_packing/1/electrode_mechanical_loading_el_pl_binder_el_pl_particle'
+    # simulation_directory = 'c:/Users/Axel/Documents/DEM/results/swelling_electrode/SN_5/swelling_electrode_mechanical_loading'
+    # simulation_directory = 'c:/Users/Axel/Documents/DEM/results/swelling_electrode/SN_5/swelling_electrode_mechanical_loading_ss_0.9'
+    # simulation_directory = 'c:/Users/Axel/Documents/DEM/results/swelling_electrode/SN_5/swelling_electrode_mechanical_loading_ss_0.95'
+
+    # simulation_directory = 'c:/Users/Axel/Documents/DEM/results/swelling_electrode/SN_6/swelling_electrode_mechanical_loading'
+    # simulation_directory = 'c:/Users/Axel/Documents/DEM/results/swelling_electrode/SN_6/swelling_electrode_mechanical_loading_ss_0.95'
+    simulation_directory = 'c:/Users/Axel/Documents/DEM/results/swelling_electrode/SN_6/swelling_electrode_mechanical_loading_ss_0.9'
 
     stiffness_at_points_flag = 1
     contact_flag = 0

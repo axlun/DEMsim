@@ -354,10 +354,23 @@ if __name__ == '__main__':
     # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/viscoelastic_testing/SN_1_p_5t/electrode_short_resting_el_pl_binder_el_pl_particle_dt_2e2_ms_1e3/'
     # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/final_runs_2/SN_2011/1/electrode_resting_el_pl_binder_el_pl_particle/'
     # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/final_runs_2/SN_2011/1/electrode_relaxation_el_pl_binder_el_pl_particle_compression/'
-    simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/final_runs_2/SN_2011/1/electrode_relaxation_el_pl_binder_el_pl_particle_tension/'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/final_runs_2/SN_2011/1/electrode_relaxation_el_pl_binder_el_pl_particle_tension/'
 
     # ==RESOURCE MANAGEMENT=============================================================================================
     # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/resource_management_test/CPU_1/electrode_natural_packing_el_pl_binder_el_pl_particle/'
+
+    # ==PERIODIC_PACKING================================================================================================
+    # simulation_directory = 'c:/Users/Axel/Documents/DEM/results/swelling_electrode/SN_5/swelling_periodic_packing/'
+    # simulation_directory = 'c:/Users/Axel/Documents/DEM/results/swelling_electrode/SN_5/swelling_electrode_calendering/'
+    # simulation_directory = 'c:/Users/Axel/Documents/DEM/results/swelling_electrode/SN_5/electrode_swelling/'
+    # simulation_directory = 'c:/Users/Axel/Documents/DEM/results/swelling_electrode/SN_5/swelling_electrode_mechanical_loading_ss_0.9_tension/'
+    # simulation_directory = 'c:/Users/Axel/Documents/DEM/results/swelling_electrode/SN_5/swelling_electrode_mechanical_loading_ss_0.9_compression/'
+
+    # simulation_directory = 'c:/Users/Axel/Documents/DEM/results/swelling_electrode/SN_6/swelling_periodic_packing/'
+    # simulation_directory = 'c:/Users/Axel/Documents/DEM/results/swelling_electrode/SN_6/swelling_electrode_calendering/'
+    simulation_directory = 'c:/Users/Axel/Documents/DEM/results/swelling_electrode/SN_6/electrode_swelling/'
+    # simulation_directory = 'c:/Users/Axel/Documents/DEM/results/swelling_electrode/SN_6/swelling_electrode_mechanical_loading_ss_0.9_tension/'
+    # simulation_directory = 'c:/Users/Axel/Documents/DEM/results/swelling_electrode/SN_6/swelling_electrode_mechanical_loading_ss_0.9_compression/'
 
     calendering_pressure_plotting_func(simulation_directory)
     plt.show()

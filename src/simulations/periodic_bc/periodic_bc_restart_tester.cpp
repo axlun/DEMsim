@@ -8,6 +8,7 @@
 #include "../../utilities/file_reading_functions.h"
 #include "../../utilities/filling_functions.h"
 #include "../simulations.h"
+#include "../../contact_models/Positive_electrode/swelling_elastic_plastic_binder_elastic_plastic_particle.h"
 #include "../../contact_models/Positive_electrode/elastic_plastic_binder_elastic_plastic_particle.h"
 
 void DEM::periodic_bc_restart_tester(const std::string& settings_file_name)
@@ -32,7 +33,6 @@ void DEM::periodic_bc_restart_tester(const std::string& settings_file_name)
     auto output_number = parameters.get_parameter<double>("output_number");
 
     auto N = parameters.get_parameter<std::size_t>("N");
-    std::cout << "N = " << N << std::endl;
     auto particle_file = parameters.get_parameter<std::string>("radius_file");
 
     // Reads a vector with different relative densities where unloading will be made

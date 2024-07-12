@@ -13,7 +13,14 @@ if __name__ == '__main__':
     # simulation_directory = "C:/Users/Axel/Documents/DEM/results/periodic_bc_tests/restart/"
     # simulation_directory = "C:/Users/Axel/Documents/DEM/results/periodic_bc_tests/no_restart/"
     # simulation_directory = 'c:/Users/Axel/Documents/DEM/results/electrode_natural_periodic_packing_el_pl_binder_el_pl_particle/SN_0/'
-    simulation_directory = 'c:/Users/Axel/Documents/DEM/results/periodic_bc_tests/no_restart/'
+    # simulation_directory = 'c:/Users/Axel/Documents/DEM/results/periodic_bc_tests/no_restart/'
+    # ==SINTERING=======================================================================================================
+    # simulation_directory = "C:/Users/Axel/Documents/DEM/results/sintering/SN_1/"
+
+    # ==PERIODIC_PACKING================================================================================================
+    # simulation_directory = 'c:/Users/Axel/Documents/DEM/results/swelling_electrode/SN_5/swelling_periodic_packing/'
+    # simulation_directory = 'c:/Users/Axel/Documents/DEM/results/swelling_electrode/SN_5/swelling_electrode_calendering/'
+    simulation_directory = 'c:/Users/Axel/Documents/DEM/results/swelling_electrode/SN_6/electrode_swelling/'
 
     contact_files = os.listdir(simulation_directory + '/contacts')
 
@@ -32,8 +39,9 @@ if __name__ == '__main__':
     overlap_data_vec = np.zeros((0, 0))
     particle_data_vec = []
     step = 1
-    n_overlaps = 20
+    n_overlaps = 25
     overlap_matrix = np.zeros(shape=(int(len(time)/step)-1, 2 * n_overlaps))
+    force_matrix = np.zeros(shape=(int(len(time)/step)-1, 2 * n_overlaps))
     counter = 0
     for i in range(1, len(time), step):
         key = str(time[i])
@@ -45,9 +53,13 @@ if __name__ == '__main__':
         overlap_vector = np.zeros(2*n_overlaps)
         overlap_vector[:n_overlaps] = sorted_overlap_data[:n_overlaps]
         overlap_vector[n_overlaps:] = sorted_overlap_data[-n_overlaps:]
-        # print(overlap_vector)
-        # print(sorted_overlap_data)
         overlap_matrix[i-1,:] = overlap_vector
+
+        sorted_force_data = np.sort(data[:,6])
+        force_vector = np.zeros(2*n_overlaps)
+        force_vector[:n_overlaps] = sorted_force_data[:n_overlaps]
+        force_vector[n_overlaps:] = sorted_force_data[-n_overlaps:]
+        force_matrix[i-1,:] = force_vector
         # if i == 0:
         #     print(len(time),data[:,0].size)
         #     overlap_data_vec = np.zeros(shape=(data[:,0].size,int(len(time)/step)))
@@ -62,9 +74,13 @@ if __name__ == '__main__':
     time_vec = np.array(time_vec, dtype=float)
 
 
-    figure_ke,ax_ke = plt.subplots()
-    lns_ke = ax_ke.plot(time_vec, overlap_matrix)
-    ax_ke.set_ylabel('Overlap [m]')
-    ax_ke.set_xlabel('time [s]')
+    figure_overlap,ax_overlap = plt.subplots()
+    lns_overlap = ax_overlap.plot(time_vec, overlap_matrix)
+    ax_overlap.set_ylabel('Overlap [m]')
+    ax_overlap.set_xlabel('time [s]')
 
+    figure_force,ax_force = plt.subplots()
+    lns_force = ax_force.plot(time_vec, force_matrix)
+    ax_force.set_ylabel('Force [N]')
+    ax_force.set_xlabel('time [s]')
     plt.show()

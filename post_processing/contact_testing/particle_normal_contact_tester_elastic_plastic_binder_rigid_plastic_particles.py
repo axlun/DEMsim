@@ -17,7 +17,8 @@ def get_parameter(parameter_dir, parameter):
 
 if __name__ == '__main__':
 
-    simulation_directory =  "C:/Users/Axel/Documents/DEM/results/contact_testing/force_overlap/el_pl_particle/SN_1/gT"
+    # simulation_directory =  "C:/Users/Axel/Documents/DEM/results/contact_testing/force_overlap/el_pl_particle/SN_1/gT"
+    simulation_directory = "C:/Users/Axel/Documents/DEM/results/particle_tests/swelling/SN_1/"
     particle_files = os.listdir(simulation_directory+"particles/")
     time = []
     particle_time_and_file_name_dict = {}
@@ -56,7 +57,7 @@ if __name__ == '__main__':
     contact_data_mat = np.stack(contact_data,axis=0)
       #print(force_fabric_tensor[1:,1]/(p1_data_mat[:,1]-p2_data_mat[:1]))
     print(p1_data_mat[0,:])
-    R_0 = 1/(1/p1_data_mat[0,7] + 1/p2_data_mat[0,7])
+    R_0 = 1/(1/p1_data_mat[:,7] + 1/p2_data_mat[:,7])
     print(R_0)
 
     # =====================================PARTICLE 1 y POSITION========================================================
@@ -97,22 +98,20 @@ if __name__ == '__main__':
 
     # ==KINETIC ENERGY==================================================================================================
     figure_KE, ax_KE = plt.subplots()
-    lns_KE = ax_KE.plot(kinetic_energy[:, -1], kinetic_energy[:, 0], 'r', linewidth=3,
-                                              label=r'Kinetic Energy')
+    lns_KE = ax_KE.plot(kinetic_energy[:, -1], kinetic_energy[:, 0], 'r', linewidth=3, label=r'Kinetic Energy')
     ax_KE.set_xlabel("Time [S]")
     ax_KE.set_ylabel("Kinetic Energy [J]")
     ax_KE.legend()
 
-#==CONTACT FORCE========================================================================================================
-
+    # ==CONTACT FORCE========================================================================================================
     fig_particle_forces, ax_particle_forces = plt.subplots()
-    lns_particle_1_force = ax_particle_forces.plot(time,p1_data_mat[:,11],'r*-',linewidth=3,label=r'P_1')
-    lns_particle_2_force = ax_particle_forces.plot(time, p2_data_mat[:, 11], 'b', linewidth=3, label=r'P_2')
+    lns_particle_1_force = ax_particle_forces.plot(time,p1_data_mat[:,10],'r*-',linewidth=3,label=r'P_1')
+    lns_particle_2_force = ax_particle_forces.plot(time, p2_data_mat[:, 10], 'b', linewidth=3, label=r'P_2')
     # lns_force_fabric_tensor_xx = \
     #     ax_particle_forces.plot(time,(force_fabric_tensor[:,1])/(p2_data_mat[:,1]-p1_data_mat[:,1]),'g--',
     #     linewidth=3,label=r'Force fabric XX')
     ax_particle_forces.set_xlabel("Simulation time [s]")
-    ax_particle_forces.set_ylabel("Force in particle [N]")
+    ax_particle_forces.set_ylabel("Force in x-dir in particle [N]")
     ax_particle_forces.legend()
 
     # ==CONTACT NORMAL ALL DIRECTIONS===================================================================================
@@ -128,18 +127,16 @@ if __name__ == '__main__':
 
     # ==CONTACT OVERLAP=================================================================================================
     fig_contact_overlap, ax_contact_overlap = plt.subplots()
-    lns_contact_overlap = ax_contact_overlap.plot(time, contact_data_mat[:, 5] , 'r-',
-                                                  linewidth=3, label=r'h_')
+    lns_contact_overlap = ax_contact_overlap.plot(time, contact_data_mat[:, 5] , 'r-', linewidth=3, label=r'h_')
     ax_contact_overlap.set_title("Particle overlap")
     ax_contact_overlap.set_xlabel("Simulation time [s]")
     ax_contact_overlap.set_ylabel("Overlap [m]")
     ax_contact_overlap.legend()
     fig_contact_overlap.tight_layout()
+
 # =====================================PARTICLE 1 X,Y,Z POSITION========================================================
     figure_partcle_positions_time, ax_particle_positions_time = plt.subplots()
-    lns_particle_1_pos_x_t = \
-        ax_particle_positions_time.plot(time, p1_data_mat[:,1]+p1_data_mat[:,7]+contact_data_mat[0,-1]/2,
-                                        'r',linewidth=3,label=r'P_1_x')
+    lns_particle_1_pos_x_t = ax_particle_positions_time.plot(time, p1_data_mat[:,1], 'r',linewidth=3,label=r'P_1_x')
     lns_particle_1_pos_y_t = ax_particle_positions_time.plot(time, p1_data_mat[:,2],'g',linewidth=3,label=r'P_1_y')
     lns_particle_1_pos_z_t = ax_particle_positions_time.plot(time, p1_data_mat[:,3],'b',linewidth=3,label=r'P_1_z')
     ax_particle_positions_time.set_title("Position of particle")
@@ -148,6 +145,17 @@ if __name__ == '__main__':
     ax_particle_positions_time.legend()
     figure_partcle_positions_time.tight_layout()
 
+    # ==PARTICLE POSITIONS AND RADII IN X=======================================================================================
+    figure_particle_positions_and_radii, ax_particle_positions_and_radii = plt.subplots()
+    lns_particle_1_pos = ax_particle_positions_and_radii.plot(time, p1_data_mat[:,1], 'r*', label=r'P_1_x')
+    lns_particle_1_radii = ax_particle_positions_and_radii.plot(time, p1_data_mat[:,1]+p1_data_mat[:,7], 'r')
+    lns_particle_2_pos = ax_particle_positions_and_radii.plot(time, p2_data_mat[:,1], 'b*', label=r'P_2_x')
+    lns_particle_2_radii = ax_particle_positions_and_radii.plot(time, p2_data_mat[:,1]-p2_data_mat[:,7], 'b')
+    ax_particle_positions_and_radii.set_title('Position and radii of particles')
+    ax_particle_positions_and_radii.set_xlabel('Time [s]')
+    ax_particle_positions_and_radii.set_ylabel('X Position [m]')
+    ax_particle_positions_and_radii.legend()
+    figure_particle_positions_and_radii.tight_layout()
 
 # ==PARTICLE FORCE ALL DIRECTIONS=======================================================================================
     fig_all_particle_forces, ax_all_particle_forces = plt.subplots()

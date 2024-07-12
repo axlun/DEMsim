@@ -157,7 +157,7 @@ void DEM::Engine<ForceModel, ParticleType>::setup()
     setup(pr_max->get_radius()*1e-2);
 
 }
-
+// TODO: can bbox_stretch be increased during a simulation or are contact detections missed?
 template<typename ForceModel, typename ParticleType>
 void DEM::Engine<ForceModel, ParticleType>::setup(double bounding_box_stretch) {
     std::cout << "Number of objects is " << object_id_counter_ << "\n";
@@ -177,9 +177,10 @@ void DEM::Engine<ForceModel, ParticleType>::run(Condition& condition)
     std::chrono::duration<double> logging_interval = 0.01s;
     std::chrono::duration<double> time_to_log = 0.01s;
     // Run all outputs in the beginning of the simulation
-    for (auto& o : outputs_) {
-        o->run_output();
-    }
+   /* for (auto& o : outputs_) {
+    *     o->run_output();
+    * }
+    */
     while (condition()) {
         time_ += increment_;
         do_step();
@@ -193,9 +194,11 @@ void DEM::Engine<ForceModel, ParticleType>::run(Condition& condition)
         }
     }
     // Running all outputs in the end of the simulation
-    for (auto& o : outputs_) {
-        o->run_output();
-    }
+   /*
+    * for (auto& o : outputs_) {
+    *     o->run_output();
+    * }
+    */
     std::cout << "Simulation finalized at " << get_time().count() << std::endl;
 }
 
@@ -768,6 +771,7 @@ void DEM::Engine<ForceModel, ParticleType>::move_particles()
             p->set_angular_acceleration(new_ang_a);
             p->rotate(new_rot);
         }
+        p->swell(p->get_swell_rate() * dt);
     }
 
     if (periodic_bc_handler_ != nullptr) {

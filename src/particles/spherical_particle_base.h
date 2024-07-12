@@ -11,20 +11,21 @@ namespace DEM {
     class ParameterMap;
     template<typename ForceModel>
     class SphericalParticleBase : public ParticleBase<ForceModel> {
+    protected:
         using ParticleBase<ForceModel>::id_;
 
         using ParticleBase<ForceModel>::position_;
         using ParticleBase<ForceModel>::displacement_this_inc_;
         using ParticleBase<ForceModel>::rot_this_inc_;
         using ParticleBase<ForceModel>::rot_;
-        using ParticleBase<ForceModel>::mass_;
         using ParticleBase<ForceModel>::velocity_;
         using ParticleBase<ForceModel>::ang_vel_;
 
         using ParticleBase<ForceModel>::number_of_contacts_;
         using ParticleBase<ForceModel>::f_;
         using ParticleBase<ForceModel>::torque_;
-    protected:
+    //protected:
+        using ParticleBase<ForceModel>::mass_;
         using ParticleBase<ForceModel>::material_;
     public:
 
@@ -38,8 +39,8 @@ namespace DEM {
 
         [[nodiscard]] std::size_t get_collision_id() const { return collision_id_; }
         void set_collision_id(std::size_t collision_id) { collision_id_ = collision_id;}
-        [[nodiscard]] double get_radius() const { return radius_; }
-        [[nodiscard]] double get_inertia() const { return inertia_; }
+        virtual [[nodiscard]] double get_radius() const { return radius_; }
+        virtual [[nodiscard]] double get_inertia() const { return inertia_; }
 
         void move(const Vec3& new_disp_this_inc);
         void set_position(const Vec3& new_position) {position_ = new_position; }
@@ -66,10 +67,11 @@ namespace DEM {
         template<typename VectorType>
         void remove_contact(std::size_t index, VectorType& contacts);
 
-    private:
-        std::size_t collision_id_;
         double radius_;   // Not const due to particle swelling
         double inertia_;
+
+    private:
+        std::size_t collision_id_;
         /*
           Vector of all contacts, first is a pointer to the contact
           second is a multiplier (1, -1) to get_parameter the correct direction.

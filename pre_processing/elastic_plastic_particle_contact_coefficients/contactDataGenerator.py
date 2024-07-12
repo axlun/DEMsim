@@ -89,20 +89,42 @@ fitFileName= 'contact_fit_coefficients.dat'
 #and m=2 (Material C in the paper)
 
 # Input length in mm and stress in MPa
+"""""
+R1 = 110
+E1 = 670e3
+nu1 = 0.3
+sY1 = 344
+kappa1 = 1
+m1 = 1
+
+R2 = 200
+E2 = 670e3
+nu2 = 0.3
+sY2 = 344
+kappa2 = 1
+m2 = 1
+"""
 R1 = 1000
 E1 = 140e3
 nu1 = 0.3
-sY1 = 3.3e3
-kappa1 = 1
-m1 = 1
+sY1 = 2.9e3
 
 R2 = 1000
 E2 = 140e3
 nu2 = 0.3
-sY2 = 3.3e3
-kappa2 = 1
-m2 = 1
+sY2 = 2.9e3
 
+"""
+R1 = 1000
+E1 = 110e3
+nu1 = 0.3
+sY1 = 2.4e3
+
+R2 = 1000
+E2 = 110e3
+nu2 = 0.3
+sY2 = 2.4e3
+"""
 
 # R1 = 1000
 # E1 = 140e3
@@ -148,7 +170,7 @@ hMax = 0.25*R0
 #the increase in force for each iteration
 #Assuming that the force at hMax will be 10 * R0^2 * sY
 #this will results in 100 steps
-dF = 1*R0**2*sY1/100
+dF = 1*R0**2*sY1/200
 
 #Generating the contact data
 h,F,a,R = generateContactData(s1,s2,hMax,dF, largeDef=True)

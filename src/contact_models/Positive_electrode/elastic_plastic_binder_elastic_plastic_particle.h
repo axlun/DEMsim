@@ -2,8 +2,8 @@
 // Created by Axel on 2022-10-16.
 //
 
-#ifndef CATHODE_COMPACTION_CPP_VISCOELASTIC_BINDER_EL_PL_PARTICLES_H
-#define CATHODE_COMPACTION_CPP_VISCOELASTIC_BINDER_EL_PL_PARTICLES_H
+#ifndef ELASTIC_PLASTIC_BINDER_ELASTIC_PLASTIC_PARTICLE_H
+#define ELASTIC_PLASTIC_BINDER_ELASTIC_PLASTIC_PARTICLE_H
 #include <chrono>
 #include <vector>
 
@@ -45,7 +45,6 @@ namespace DEM{
         double alpha_1_ = 0.0;
         double F_2_ = 0.0;
         double alpha_2_ = 0.0;
-
         double a_1_ = 0.0;
         double beta_1_ = 0.0;
         double a_2_ = 0.0;
@@ -74,7 +73,6 @@ namespace DEM{
         bool binder_contact_ = false;
         bool fractured_ = true;
 
-
         static unsigned M;
         double dt_;
 
@@ -102,7 +100,6 @@ namespace DEM{
         Vec3 uT_{ Vec3(0., 0., 0.) };
         Vec3 rot_ {Vec3(0., 0., 0.)};
 
-
         double update_normal_force(double h);
         void update_tangential_force(const Vec3& dt, const Vec3& normal);
         static bool create_binder_contact(const ElectrodeMaterial* mat);
@@ -114,4 +111,4 @@ namespace DEM{
 
 
 
-#endif //CATHODE_COMPACTION_CPP_VISCOELASTIC_BINDER_EL_PL_PARTICLES_H
+#endif //ELASTIC_PLASTIC_BINDER_ELASTIC_PLASTIC_PARTICLE_H

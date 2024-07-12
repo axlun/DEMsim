@@ -17,7 +17,9 @@ def get_parameter(parameter_dir, parameter):
 if __name__ == '__main__':
     plt.style.use('axel_style')
 
-    simulation_directory =  "C:/Users/Axel/Documents/DEM/results/contact_testing/elastic_plastic_binder_elastic_plastic_particle/wall_contact_drop/SN_2/"
+    #simulation_directory =  "C:/Users/Axel/Documents/DEM/results/contact_testing/" \
+    #                        "elastic_plastic_binder_elastic_plastic_particle/wall_contact_drop/SN_2/"
+    simulation_directory = "C:/Users/Axel/Documents/DEM/results/particle_tests/swelling/SN_2/"
     particle_files = os.listdir(simulation_directory+"particles/")
     time = []
     particle_time_and_file_name_dict = {}
