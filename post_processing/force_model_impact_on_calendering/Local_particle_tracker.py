@@ -48,26 +48,8 @@ def particle_tracker_local(sim_dir,p1):
 
 if __name__ == '__main__':
 
-#    simulation_directory = 'c:/Users/Axel/Documents/DEM/results/electrode_natural_packing/Build_8/'
-#     simulation_directory = "c:/Users/Axel/Documents/DEM/results/electrode_natural_packing_hertz/SN_hertz_200p_btr_8_brr_08_dt_1e0_MS_1e0_elast_binder_new_tang/"
-
-#    simulation_directory = 'c:/Users/Axel/Documents/DEM/results/natural_packing_hertz/meter_particles_N_200_mass_sclaing_1e0_gravity_1e1_time_step_1e_test1/'
-#     simulation_directory = 'c:/Users/Axel/Documents/DEM/Bertil_results/article_2/final_runs/particle_contact_model/SN_2_2/electrode_natural_packing_el_pl_binder_el_pl_particle/'
-#     particle = 4697
-#    simulation_directory = 'c:/Users/Axel/Documents/DEM/Bertil_results/article_2/final_runs/particle_contact_model/SN_2/electrode_natural_packing_el_pl_binder_el_pl_particle/'
-#    particle = 4950
-
-    # simulation_directory = 'c:/Users/Axel/Documents/DEM/Bertil_results/article_2/final_runs/particle_contact_model/SN_1/electrode_natural_packing_el_pl_binder_el_pl_particle/'
-    # particle = 4784
-    # simulation_directory = 'c:/Users/Axel/Documents/DEM/Bertil_results/article_2/final_runs/particle_contact_model/SN_1/electrode_calendering_el_pl_binder_el_pl_particle/'
-    # simulation_directory = 'c:/Users/Axel/Documents/DEM/Bertil_results/article_2/final_runs/particle_contact_model/SN_1/electrode_natural_packing_el_pl_binder_el_pl_particle/'
-    # particle = 3676
-
-    # simulation_directory = 'c:/Users/Axel/Documents/DEM/Bertil_results/article_2/final_runs/particle_contact_model/SN_1_2/electrode_calendering_el_pl_binder_el_pl_particle/'
-    # particle = 4273
-
-    simulation_directory = 'c:/Users/Axel/Documents/DEM/Bertil_results/article_2/final_runs/particle_contact_model/SN_1_2_2/electrode_mechanical_loading_el_pl_binder_el_pl_particle_compression/'
-    particle = 1581
+    simulation_directory = 'c:/Users/Axel/Documents/DEM/results/swelling_electrode/SN_5/swelling_electrode_calendering/'
+    particle = 427
 
     time_vec, particle_data_vec = particle_tracker_local(simulation_directory,particle)
     # print(time_vec)
@@ -75,13 +57,19 @@ if __name__ == '__main__':
     # print(len(time_vec))
     # print(len(particle_data_vec))
 
+    fig_particle_force_dir, ax_particle_force_dir = plt.subplots()
+    lns_total_force_x = ax_particle_force_dir.plot(time_vec, particle_data_vec[:,10], label=r'x')
+    lns_total_force_y = ax_particle_force_dir.plot(time_vec, particle_data_vec[:,11], label=r'y')
+    lns_total_force_z = ax_particle_force_dir.plot(time_vec, particle_data_vec[:,12], label=r'z')
+    ax_particle_force_dir.set_ylabel("Force [N]")
+    ax_particle_force_dir.set_xlabel("time [s]")
+    ax_particle_force_dir.legend(loc='best')
 
     fig_particle_force, ax_particle_force = plt.subplots()
     lns_total_force = ax_particle_force.plot(time_vec,(particle_data_vec[:,10]**2+particle_data_vec[:,11]**2+particle_data_vec[:,12]**2)**.5, 'g', label=r'Total')
     ax_particle_force.set_ylabel("Force [N]")
     ax_particle_force.set_xlabel("time [s]")
     ax_particle_force.legend(loc='best')
-
 
     fig_ke, ax_ke = plt.subplots()
     lns_h_ = ax_ke.plot(time_vec,particle_data_vec[:,8], 'r', label=r'KE')
@@ -112,4 +100,5 @@ if __name__ == '__main__':
     ax_1D_pos.set_xlabel('Time [s]')
     ax_1D_pos.set_ylabel('Position [m]')
 
+    print('show plots')
     plt.show()

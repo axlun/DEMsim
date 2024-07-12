@@ -9,7 +9,7 @@ import os
 import re
 import matplotlib
 
-matplotlib.style.use('classic')
+matplotlib.style.use('axel_style')
 
 def contact_counter_local(sim_dir):
 
@@ -28,8 +28,10 @@ def contact_counter_local(sim_dir):
     time_vec = []
     binder_contact_vec = []
     particle_contact_vec = []
+    binder_particle_contact_vec = []
     for i in range(0,len(time)):
         binder_contact = 0
+        binder_particle_contact = 0
         particle_contact = 0
         key = str(time[i])
         if time[i].is_integer():
@@ -46,17 +48,20 @@ def contact_counter_local(sim_dir):
                 binder_contact += 1
              if float(line_data[6]) != 0 and float(line_data[8]) != 0:
                 particle_contact += 1
+             if float(line_data[6]) != 0 and float(line_data[7]) != 0 and float(line_data[8]) != 0 and float(line_data[6]) == float(line_data[7]) + float(line_data[8]):
+                 binder_particle_contact += 1
 
 
         binder_contact_vec.append(binder_contact)
         particle_contact_vec.append(particle_contact)
+        binder_particle_contact_vec.append(particle_contact)
         time_vec.append(float(key))
 
 
     time_vec = np.array(time_vec, dtype=float)
     particle_contact_vec = np.array(particle_contact_vec, dtype=float)
     binder_contact_vec = np.array(binder_contact_vec, dtype=float)
-    return time_vec,particle_contact_vec,binder_contact_vec
+    return time_vec,particle_contact_vec,binder_contact_vec, binder_particle_contact_vec
 
 def kinetic_energy_local(sim_dir):
 
@@ -79,12 +84,13 @@ def kinetic_energy_local(sim_dir):
 
 if __name__ == '__main__':
 
-#    simulation_directory = 'c:/Users/Axel/Documents/DEM/results/electrode_natural_packing/Build_8/'
-    simulation_directory = "c:/Users/Axel/Documents/DEM/results/electrode_natural_packing_hertz/SN_hertz_200p_btr_8_brr_08_dt_1e0_MS_1e0_elast_binder_new_tang/"
+    # simulation_directory = 'c:/Users/Axel/Documents/DEM/results/swelling_electrode/SN_5/swelling_periodic_packing/'
+    simulation_directory = 'c:/Users/Axel/Documents/DEM/results/swelling_electrode/SN_5/swelling_electrode_calendering/'
+    # simulation_directory = 'c:/Users/Axel/Documents/DEM/results/swelling_electrode/SN_5/swelling_electrode_mechanical_loading_compression/'
+    # simulation_directory = 'c:/Users/Axel/Documents/DEM/results/swelling_electrode/SN_5/swelling_electrode_mechanical_loading_ss_0.9'
+    # simulation_directory = 'c:/Users/Axel/Documents/DEM/results/swelling_electrode/SN_5/swelling_electrode_mechanical_loading_ss_0.95'
 
-#    simulation_directory = 'c:/Users/Axel/Documents/DEM/results/natural_packing_hertz/meter_particles_N_200_mass_sclaing_1e0_gravity_1e1_time_step_1e_test1/'
-
-    time_vec, particle_contact_vec, binder_contact_vec = contact_counter_local(simulation_directory)
+    time_vec, particle_contact_vec, binder_contact_vec, binder_particle_contact_vec = contact_counter_local(simulation_directory)
     time_vec_ek, ek_vec = kinetic_energy_local(simulation_directory)
 
     fig_contact_distribution, ax_contact_distribution = plt.subplots()

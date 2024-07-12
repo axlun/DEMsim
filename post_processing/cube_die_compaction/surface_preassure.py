@@ -96,7 +96,8 @@ def data_grabber(data_directory):
 
 
 def main():
-    simulation_directory = 'c:/Users/Axel/Documents/DEM/results/cube_die_compaction/3'
+    # simulation_directory = 'c:/Users/Axel/Documents/DEM/results/cube_die_compaction/3'
+    simulation_directory = "C:/Users/Axel/Documents/DEM/results/particle_tests/swelling/swelling_cube_die_compaction/"
     particles_volume(simulation_directory)
     pressure = pressures_box(simulation_directory)
     # time = Time(simulation_directory)
@@ -104,7 +105,7 @@ def main():
     plt.plot(rel_density, pressure / 200e6,label='DEM')
     reference_data_dir = 'c:/Users/Axel/Documents/DEM/results/cube_die_compaction/Data_from_Skrinjar/Isostatic_compaction_monolithic_5000_particles'
     print(data_grabber(reference_data_dir))
-    plt.plot(data_grabber(reference_data_dir)[0], data_grabber(reference_data_dir)[1],label='Skrijar')
+    plt.plot(data_grabber(reference_data_dir)[0], data_grabber(reference_data_dir)[1],label='Skrinjar')
     plt.legend()
     plt.ylabel("Pressure/Yield strength")
     plt.xlabel("Relative density D")

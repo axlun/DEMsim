@@ -8,7 +8,8 @@ import pathlib
 import numpy as np
 from mayavi import mlab
 
-from visualization_functions_3d.plotting_functions import SpheresPlotter, BoundingBox, SurfacesPlotter, ForceArrowPlotter, ForceArrowPlotter2, VelocityArrowPlotter
+from visualization_functions_3d.plotting_functions import SpheresPlotter, BoundingBox, SurfacesPlotter, \
+    ForceArrowPlotter, ForceArrowPlotter2, VelocityArrowPlotter
 from visualization_functions_3d.periodic_bc import PeriodicBC
 from visualization_functions_3d import colors
 
@@ -116,7 +117,9 @@ class Animation:
                 string += "0"*(self.max_decimal_points-int(string[::-1].find('.')))
             file_name_str.append(string)
 
-        surface_position_data =np.genfromtxt(self.directory / 'surface_positions.dou', delimiter=',')
+        surface_position_data = np.array([])
+        if self.plot_velocity_arrow:
+            surface_position_data = np.genfromtxt(self.directory / 'surface_positions.dou', delimiter=',')
         for i, t in enumerate(self.frame_times):
             print('Frame number: '+ str(i))
             print('Frame time: ' + str(t))
