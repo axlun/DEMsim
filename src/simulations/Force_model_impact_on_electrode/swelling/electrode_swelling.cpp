@@ -70,6 +70,12 @@ void DEM::electrode_swelling(const std::string &settings_file_name)
     std::vector <std::chrono::duration<double>> swell_times;
     for ( const auto &ss: swell_states)
     {
+        if (swell_rate == 0.0)
+        {
+            swell_times.push_back(swelling_time);
+            std::cout << "No swell rate!" << std::endl;
+            break;
+        }
         std::chrono::duration<double> st {(ss - swell_state) / swell_rate};
         swell_times.push_back(st);
         swell_state = ss;

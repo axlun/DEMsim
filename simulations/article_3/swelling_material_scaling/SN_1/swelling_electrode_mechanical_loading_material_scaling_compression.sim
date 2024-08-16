@@ -1,0 +1,6 @@
+output_dir=/scratch/users/axlun/DEMsim/results/article_3/swelling_material_scaling/SN_1/swelling_electrode_mechanical_loading_material_scaling_compression/
+restart_file_name=/scratch/users/axlun/DEMsim/results/article_3/swelling_material_scaling/SN_1/electrode_material_scaling/electrode_swell_state_1.res
+loading_direction=-1
+time_step=5e1
+mass_scaling=1e2
+strain_rate=2e-3
