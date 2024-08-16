@@ -57,14 +57,17 @@ void DEM::electrode_swelling(const std::string &settings_file_name)
     swelling_output->print_mirror_particles = true;
 //======================================================================================================================
 
-//======================Set swelling rate and time======================================================================
+//======================Set swelling/scaling rate and time======================================================================
 
     double swell_state {1};
     auto swell_states = parameters.get_vector<double>("swell_states");
     double swell_rate = (swell_states.back() - swell_state) / swelling_time.count();
     std::cout << "swell_rate = " << swell_rate << std::endl;
-    std::vector <std::chrono::duration<double>> swell_times;
 
+    auto material_scaling = parameters.get_parameter<double>("material_scaling");
+    double material_scaling_rate = (material_scaling - 1) / swelling_time.count();
+
+    std::vector <std::chrono::duration<double>> swell_times;
     for ( const auto &ss: swell_states)
     {
         std::chrono::duration<double> st {(ss - swell_state) / swell_rate};
@@ -87,6 +90,7 @@ void DEM::electrode_swelling(const std::string &settings_file_name)
         for (auto &p: simulator.get_particles())
         {
             p->set_swell_rate(swell_rate);
+            p->set_material_scale_rate(material_scaling_rate);
         }
         EngineType::RunForTime run_for_swelling_time(simulator, swell_times[i]);
         simulator.run(run_for_swelling_time);
@@ -94,6 +98,7 @@ void DEM::electrode_swelling(const std::string &settings_file_name)
         for (auto &p: simulator.get_particles())
         {
             p->set_swell_rate(0.);
+            p->set_material_scale_rate(0.);
         }
         run_for_resting_time.reset(resting_time);
         simulator.run(run_for_resting_time);
