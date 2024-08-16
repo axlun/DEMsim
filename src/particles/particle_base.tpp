@@ -32,6 +32,8 @@ DEM::ParticleBase<ForceModel>::ParticleBase(const DEM::ParameterMap& parameters,
         ang_vel_(parameters.get_vec3("ang_vel")),
         swelling_this_inc_(parameters.get_parameter<double>("swelling_this_inc")),
         swell_rate_(parameters.get_parameter<double>("swell_rate")),
+        material_scaling_this_inc_(parameters.get_parameter<double>("material_scaling_this_inc")),
+        material_scale_rate_(parameters.get_parameter<double>("material_scale_rate")),
         displacement_this_inc_(parameters.get_vec3("disp_this_inc")),
         rot_this_inc_(parameters.get_vec3("rot_this_inc"))
 {
@@ -51,6 +53,8 @@ std::string DEM::ParticleBase<ForceModel>::restart_data() const {
        << named_print(ang_vel_, "ang_vel") << ", "
        << named_print(swelling_this_inc_, "swelling_this_inc") << ", "
        << named_print(swell_rate_, "swell_rate") << ", "
+       << named_print(material_scaling_this_inc_, "material_scaling_this_inc") << ", "
+       << named_print(material_scale_rate_, "material_scale_rate") << ", "
        << named_print(displacement_this_inc_, "disp_this_inc") << ", "
        << named_print(rot_this_inc_, "rot_this_inc");
     return ss.str();

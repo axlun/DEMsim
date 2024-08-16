@@ -21,10 +21,8 @@ template <typename ForceModel>
 DEM::SwellingSphericalParticle<ForceModel>::SwellingSphericalParticle(
         const DEM::ParameterMap& parameters, DEM::MaterialBase *material)
         :SphericalParticleBase<ForceModel>(parameters, material),
-        swell_state_(parameters.get_parameter<double>("swell_state"))
-        /*,
-        *swell_rate_(parameters.get_parameter<double>("swell_rate"))
-        */
+        swell_state_(parameters.get_parameter<double>("swell_state")),
+        material_scaling_(parameters.get_parameter<double>("material_scaling"))
 {
     //Empty constructor
 }
@@ -32,10 +30,16 @@ template <typename ForceModel>
 void DEM::SwellingSphericalParticle<ForceModel>::swell(const double new_swelling_this_inc)
 {
     swelling_this_inc_ = new_swelling_this_inc;
-    swell_state_ += new_swelling_this_inc;
+    swell_state_ += swelling_this_inc_;
     inertia_ = 0.4 * mass_ * swell_state_ * radius_ * swell_state_ * radius_;
 }
 
+template <typename ForceModel>
+void DEM::SwellingSphericalParticle<ForceModel>::scale_material(const double new_material_scaling_this_inc)
+{
+    material_scaling_this_inc_ = new_material_scaling_this_inc;
+    material_scaling_ += material_scaling_this_inc_;
+}
 
 template <typename ForceModel>
 std::string DEM::SwellingSphericalParticle<ForceModel>::get_output_string() const
@@ -54,17 +58,7 @@ std::string DEM::SwellingSphericalParticle<ForceModel>::restart_data() const
     using DEM::named_print;
     std::ostringstream ss;
     ss << SphericalParticleBase<ForceModel>::restart_data() << ", "
-       << named_print(swell_state_, "swell_state");
-       //other variables needed?
+       << named_print(swell_state_, "swell_state") << ", "
+       << named_print(material_scaling_, "material_scaling");
     return ss.str();
 }
-/*
-* template<typename ForceModel>
-* void DEM::SwellingSphericalParticle<ForceModel>::move(const DEM::Vec3& new_disp_this_inc)
-* {
-*     swell_state_ += swell_rate_;//dt; //How will this be fixed?
-*     SphericalPartileBase<ForceModel>::move(new_disp_this_inc);
-* }
-*/
-
-

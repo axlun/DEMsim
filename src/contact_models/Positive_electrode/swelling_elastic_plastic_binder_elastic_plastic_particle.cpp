@@ -365,11 +365,13 @@ double  DEM::swelling_elastic_plastic_binder_elastic_plastic_particle::update_no
 //        }
 //        std::cout << "before R0" << std::endl;
 //        std::cout << "particle1_: " << particle1_<< std::endl;
-        double R0 {0};
+        double R0 {0.};
         if (particle2_ != nullptr) R0 = 1/(1/particle1_->get_radius() + 1/particle2_->get_radius());
         else R0 = particle1_->get_radius();
         // Elastic-plastic deformation of particles, new maximum overlap and contact radius
-//        std::cout << "R0 = " << R0 << std::endl;
+        // std::cout << "R0 = " << R0 << std::endl;
+        double mat_scaling {particle1_->get_material_scaling()};
+
         if (h_>=hmax_ || h_plast_ <= 0)
         {
 //            hmax_ = h_;
@@ -377,24 +379,28 @@ double  DEM::swelling_elastic_plastic_binder_elastic_plastic_particle::update_no
 //             std::cout << "h_norm: " << h_norm <<std::endl;
             if (h_norm <= 0.25)
             {
-                F_particle = pow(R0,2) * particle_yield_stress_*(F_1_ * pow(h_norm, alpha_1_) + F_2_ * pow(h_norm, alpha_2_));
+                F_particle = pow(R0,2) * mat_scaling * particle_yield_stress_*
+                        (F_1_ * pow(h_norm, alpha_1_) + F_2_ * pow(h_norm, alpha_2_));
                 a_0_ = a_1_ * pow((h_norm), beta_1_) + a_2_ * pow((h_norm), beta_2_);
             }
             else if (h_norm > 0.25)
             {
-                F_particle = pow(R0,2) * particle_yield_stress_  * ((F_1_ * pow((0.25), alpha_1_) + F_2_ * pow((0.25), alpha_2_)) +
+                F_particle = pow(R0,2) * mat_scaling * particle_yield_stress_  *
+                        ((F_1_ * pow((0.25), alpha_1_) + F_2_ * pow((0.25), alpha_2_)) +
                         (h_norm-0.25) * (F_1_ * alpha_1_ * pow((0.25), (alpha_1_ - 1)) +
                         F_2_ * alpha_2_ * pow((0.25), (alpha_2_ - 1))));
                 a_0_ = (a_1_ * pow(0.25, beta_1_) + a_2_ * pow((0.25), beta_2_)) +
-                        (h_norm-0.25) * (a_1_ * beta_1_ * pow((0.25), (beta_1_ - 1)) + a_2_ * beta_2_ * pow((0.25), (beta_2_ - 1)));
+                        (h_norm-0.25) * (a_1_ * beta_1_ * pow((0.25), (beta_1_ - 1)) +
+                        a_2_ * beta_2_ * pow((0.25), (beta_2_ - 1)));
             }
-        h_plast_  = h_ - pow(pow(F_particle * (3./(4.*Ep_eff_)),2)/R0,(1./3.));
+        h_plast_  = h_ - pow(pow(F_particle * (3./(4. * mat_scaling * Ep_eff_)),2)/R0,(1./3.));
         }
         // if overlap larger than elastic recover region initiation
         else if (h_ > h_plast_)
         {
             // std::cout << "h_-h_plast_: "<<  h_-h_plast_ << std::endl;
-            F_particle = 4./3. * Ep_eff_ * pow(R0* pow((h_-h_plast_),3) ,1./2.);
+            F_particle = 4./3. * mat_scaling * Ep_eff_ * pow(R0* pow((h_-h_plast_),3) ,1./2.);
+
             if(F_particle<0)
             {
                 F_particle = 0;

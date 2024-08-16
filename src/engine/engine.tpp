@@ -772,6 +772,7 @@ void DEM::Engine<ForceModel, ParticleType>::move_particles()
             p->rotate(new_rot);
         }
         p->swell(p->get_swell_rate() * dt);
+        p->scale_material(p->get_material_scale_rate() * dt);
     }
 
     if (periodic_bc_handler_ != nullptr) {

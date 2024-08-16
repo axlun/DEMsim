@@ -75,6 +75,9 @@ add_executable(DEMsim
 				src/simulations/Contact_tests/particle_contact_tester_viscoelastic_binder_El_Pl_particles.cpp
 				src/simulations/Contact_tests/wall_contact_tester_viscoelastic_binder_El_Pl_particles.cpp
 				src/simulations/Contact_tests/contact_tester_viscoelastic_binder_El_Pl_particles.cpp
+				src/simulations/particle_tests/material_scaling_particle.cpp
+				src/simulations/particle_tests/material_scaling_cube_die_compaction.cpp
+				src/simulations/particle_tests/material_scaling_periodic_compaction.cpp
 				src/simulations/particle_tests/swelling_particle.cpp
 				src/simulations/particle_tests/swelling_particle_wall.cpp
 				src/simulations/particle_tests/swelling_cube_die_compaction.cpp

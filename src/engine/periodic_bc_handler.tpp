@@ -236,6 +236,8 @@ void PeriodicBCHandler<ForceModel, ParticleType>::move_mirror_particles(Particle
                 else if (i == 6) {
                     bc_velocity = calc_bc_velocity(0, d) + calc_bc_velocity(1, d) + calc_bc_velocity(2, d);
                 }
+                mp->set_material_scale_rate(simulation_particle->get_material_scale_rate());
+                mp->scale_material(simulation_particle->get_material_scaling_this_increment());
                 mp->set_swell_rate(simulation_particle->get_swell_rate());
                 mp->swell(simulation_particle->get_swelling_this_increment());
                 mp->move(bc_velocity);

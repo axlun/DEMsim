@@ -51,11 +51,12 @@ namespace DEM
         using SphericalParticleBase<ForceModel>::get_position;
 
         [[nodiscard]] double get_radius() const override { return swell_state_*radius_; }
+        [[nodiscard]] double get_material_scaling() const { return material_scaling_; }
 
         using SphericalParticleBase<ForceModel>::set_swell_rate;
-//        void set_swell_rate(const double& swell_rate) {swell_rate_ = swell_rate;}
         void swell(const double new_swelling_this_inc) override;
 
+        void scale_material(const double new_material_scaling_this_inc) override;
 
         using SphericalParticleBase<ForceModel>::get_swell_rate;
 
@@ -72,12 +73,15 @@ namespace DEM
         using SphericalParticleBase<ForceModel>::inertia_;
         double swell_state_{1.};
         using ParticleBase<ForceModel>::swell_rate_;
+        using ParticleBase<ForceModel>::swelling_this_inc_;
+        double material_scaling_{1.};
+        using ParticleBase<ForceModel>::material_scale_rate_;
+        using ParticleBase<ForceModel>::material_scaling_this_inc_;
     protected:
         using SphericalParticleBase<ForceModel>::id_;
         using SphericalParticleBase<ForceModel>::position_;
         using SphericalParticleBase<ForceModel>::rot_;
         using SphericalParticleBase<ForceModel>::f_;
-        using ParticleBase<ForceModel>::swelling_this_inc_;
     };
 
 }

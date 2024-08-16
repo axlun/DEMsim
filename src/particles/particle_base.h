@@ -30,6 +30,7 @@ namespace DEM {
         [[nodiscard]] double get_mass() const { return mass_; }
 
         virtual void swell(const double dt){};
+        virtual void scale_material(const double dt){};
 
         [[nodiscard]] const Vec3& get_position() const { return position_; }
         [[nodiscard]] const Vec3& get_velocity() const { return velocity_; }
@@ -49,6 +50,10 @@ namespace DEM {
         [[nodiscard]] double get_swelling_this_increment() const {return swelling_this_inc_;}
         [[nodiscard]] double get_swell_rate() const {return swell_rate_;}
         void set_swell_rate(const double& swell_rate) {swell_rate_ = swell_rate;}
+
+        [[nodiscard]] double get_material_scaling_this_increment() const {return material_scaling_this_inc_;}
+        [[nodiscard]] double get_material_scale_rate() const {return material_scale_rate_;}
+        void set_material_scale_rate(const double& material_scale_rate) {material_scale_rate_ = material_scale_rate;}
 
         [[nodiscard]] virtual std::string restart_data() const;
         void reset_contact_forces() {f_.set_zero(); torque_.set_zero(); }
@@ -70,6 +75,9 @@ namespace DEM {
 
         double swelling_this_inc_{0};
         double swell_rate_{0};
+
+        double material_scaling_this_inc_{0};
+        double material_scale_rate_{0};
 
         // Needed for sticking friction model
         Vec3 displacement_this_inc_{ Vec3(0., 0., 0.)};
