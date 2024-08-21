@@ -25,6 +25,7 @@ std::map<std::string, DEM::SimulationFunctionPtr> DEM::valid_simulations() {
             {"swelling_periodic_packing",                                                     DEM::swelling_periodic_packing},
             {"swelling_electrode_calendering",                                                DEM::swelling_electrode_calendering},
             {"swelling_electrode_mechanical_loading",                                         DEM::swelling_electrode_mechanical_loading},
+            {"electrode_cycling",                                                             DEM::electrode_cycling},
             {"periodic_bc_restart_tester",                                                    DEM::periodic_bc_restart_tester},
             {"contact_tester",                                                                DEM::contact_tester},
             {"contact_tester_elastic_perfect_plastic_material",                               DEM::contact_tester_elastic_perfect_plastic_material},

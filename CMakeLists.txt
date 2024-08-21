@@ -105,6 +105,7 @@ add_executable(DEMsim
 				src/simulations/Force_model_impact_on_electrode/swelling/swelling_electrode_calendering.cpp
 				src/simulations/Force_model_impact_on_electrode/swelling/swelling_periodic_packing.cpp
 				src/simulations/Force_model_impact_on_electrode/swelling/electrode_swelling.cpp
+				src/simulations/Force_model_impact_on_electrode/swelling/electrode_cycling.cpp
 				src/simulations/Force_model_impact_on_electrode/swelling/swelling_electrode_mechanical_loading.cpp
 				src/simulations/cyclic_triaxial.cpp
 				src/particles/spherical_particle_base.tpp

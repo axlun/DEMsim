@@ -64,6 +64,7 @@ namespace DEM {
         void rest();
 
         bool adhesive() const { return adhesive_; }
+        void set_adhesive(const bool adh) {adhesive_ = adh; }
 
         std::vector<ParticleType*> get_contacting_particles() const;
         double get_normal_force() const;

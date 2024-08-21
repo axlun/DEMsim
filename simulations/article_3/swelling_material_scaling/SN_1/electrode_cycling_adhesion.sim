@@ -1,0 +1,12 @@
+output_dir=/scratch/users/axlun/DEMsim/results/article_3/swelling_material_scaling/SN_1/electrode_cycling_adhesion/
+restart_file_name=/scratch/users/axlun/DEMsim/results/article_3/swelling_material_scaling/SN_1/swelling_electrode_calendering/calendered_electrode_restart_file.res
+time_step=1e2
+mass_scaling=1e4
+cycling_time=1e1
+output_number=5e2
+compression_pressure=10
+surface_velocity=0.05
+surface_adhesion=1
+states_of_charge=100,0,100,0,100,0
+swell_state=0.965
+material_scaling=0.8

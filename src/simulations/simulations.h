@@ -27,6 +27,7 @@ namespace DEM {
     void swelling_periodic_packing(const std::string& settings_file_name);
     void swelling_electrode_calendering(const std::string& settings_file_name);
     void swelling_electrode_mechanical_loading(const std::string& settings_file_name);
+    void electrode_cycling(const std::string& settings_file_name);
     void periodic_bc_restart_tester(const std::string& settings_file_name);
     void contact_tester(const std::string& settings_file_name);
     void contact_tester_elastic_perfect_plastic_material(const std::string& settings_file_name);
