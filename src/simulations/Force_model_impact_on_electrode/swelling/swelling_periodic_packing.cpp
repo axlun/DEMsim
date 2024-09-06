@@ -82,7 +82,7 @@ void DEM::swelling_periodic_packing(const std::string& settings_file_name) {
     auto box_side = pow(particle_volume*mat->rhop/mat->active_particle_height/rho_al/mass_ratio_particles, 1./2.);
     std::cout << "box_side " << box_side << "\n";
     auto box_height = particle_volume/particle_density_at_filling/pow(box_side,2);
-    std::cout << "box_height " << box_height << "\n";
+    std::cout << "box_height " << box_height << std::endl;
 
     auto p1 = Vec3(-box_side / 2, -box_side / 2, 0);
     auto p2 = Vec3(box_side / 2, -box_side / 2, 0);
