@@ -1,5 +1,5 @@
 N=5000
-filling_density=0.18
+filling_density=0.12
 output_dir=/scratch/users/axlun/DEMsim/results/article_3/charge_cycling/SN_2/swelling_periodic_packing/
 radius_file=/scratch/users/axlun/DEMsim/simulations/article_2/particle_size_distribution/particle_radius_from_experiments_r_min_4_55_r_max_116.dat
 master_curve_file=/scratch/users/axlun/DEMsim/pre_processing/elastic_plastic_particle_contact_coefficients/fitting_coefficient_files/contact_fit_coefficients_E_140_SY_2_9.dat
