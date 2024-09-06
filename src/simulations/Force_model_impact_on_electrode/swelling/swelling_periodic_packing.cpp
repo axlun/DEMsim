@@ -173,7 +173,7 @@ void DEM::swelling_periodic_packing(const std::string& settings_file_name) {
     double acc_frac = 5.0; //for how much of the required falltime should the particles accelerate
     std::chrono::duration<double> acceleration_fall_time {fall_time.count()/acc_frac};
     std::cout << "****************Acceleration of particles**************** \n";
-    std::cout << "Acceleration time: "<< acceleration_fall_time.count() <<" \n";
+    std::cout << "Acceleration time: "<< acceleration_fall_time.count() << std::endl;
     EngineType::RunForTime Run_for_Particle_acceleration(simulator, acceleration_fall_time);
     simulator.run(Run_for_Particle_acceleration);
 
