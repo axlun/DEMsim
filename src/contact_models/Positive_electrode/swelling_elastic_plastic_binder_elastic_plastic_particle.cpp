@@ -366,7 +366,7 @@ double  DEM::swelling_elastic_plastic_binder_elastic_plastic_particle::update_no
 //        std::cout << "before R0" << std::endl;
 //        std::cout << "particle1_: " << particle1_<< std::endl;
         double R0 {0.};
-        if (particle2_ != nullptr) R0 = 1/(1/particle1_->get_radius() + 1/particle2_->get_radius());
+        if (particle2_ != nullptr) R0 = 1./(1./particle1_->get_radius() + 1./particle2_->get_radius());
         else R0 = particle1_->get_radius();
         // Elastic-plastic deformation of particles, new maximum overlap and contact radius
         // std::cout << "R0 = " << R0 << std::endl;
@@ -393,7 +393,7 @@ double  DEM::swelling_elastic_plastic_binder_elastic_plastic_particle::update_no
                         (h_norm-0.25) * (a_1_ * beta_1_ * pow((0.25), (beta_1_ - 1)) +
                         a_2_ * beta_2_ * pow((0.25), (beta_2_ - 1)));
             }
-        h_plast_  = h_ - pow(pow(F_particle * (3./(4. * mat_scaling * Ep_eff_)),2)/R0,(1./3.));
+            h_plast_  = h_ - pow(pow(F_particle * (3./(4. * mat_scaling * Ep_eff_)),2)/R0,(1./3.));
         }
         // if overlap larger than elastic recover region initiation
         else if (h_ > h_plast_)
