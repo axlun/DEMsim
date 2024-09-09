@@ -57,6 +57,15 @@ void DEM::electrode_swelling(const std::string &settings_file_name)
     swelling_output->print_mirror_particles = true;
 //======================================================================================================================
 
+//=MOVE TOP SURFACE FROM LAYER======================================================================================
+    auto calendering_surface = simulator.get_surface<EngineType::PointSurfacePointer>("top_plate");
+    //Remove calendering surface from RVE
+    auto bbox = simulator.get_bounding_box(); //get the XYZ max/min that contain all particles
+    double h_1 = bbox[5]; //height of uppermost particle (Z-max)
+    double surface_removal_distance = h_1 + 1 - calendering_surface->get_points()[0].z();
+    calendering_surface->move(Vec3(0, 0,  surface_removal_distance), Vec3(0, 0, 0));
+//==================================================================================================================
+
 //======================Set swelling/scaling rate and time======================================================================
 
     double swell_state {1};
