@@ -20,7 +20,7 @@ if __name__ == '__main__':
         particle_time_and_file_name_dict[time_stamp[0]] = particle_file
     time.sort()
     time_vec = []
-    avg_height_vec = np.zeros(shape=(int(len(time)) - 1))
+    avg_height_vec = np.zeros(shape=(int(len(time))))
     n_in_avg = 10
     for i in range(0, len(time)):
         key = str(time[i])
