@@ -28,7 +28,8 @@ if __name__ == '__main__':
             key = str(int(time[i]))
         ## Read file here
         file_to_open = argument_string + '/' + particle_time_and_file_name_dict[key]
-        data = pd.read_csv(file_to_open, names=list(range(13)))
+        # data = pd.read_csv(file_to_open, names=list(range(13)))
+        data = pd.read_csv(file_to_open,header=None).to_numpy()
         avg_height_vec[i] = np.sum(np.sort(data[:,3] + data[:,7])[-n_in_avg:])/n_in_avg
         time_vec.append(float(key))
     print(time_vec)
