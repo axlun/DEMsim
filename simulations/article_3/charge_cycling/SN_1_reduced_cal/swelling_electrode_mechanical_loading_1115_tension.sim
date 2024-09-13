@@ -1,0 +1,6 @@
+output_dir=/scratch/users/axlun/DEMsim/results/article_3/charge_cycling/SN_1_reduced_cal/swelling_electrode_mechanical_loading_1115_tension/
+restart_file_name=/scratch/users/axlun/DEMsim/results/article_3/charge_cycling/SN_1_reduced_cal/swelling_electrode_calendering_1115/calendered_electrode_restart_file.res
+loading_direction=1
+time_step=5e1
+mass_scaling=1e2
+strain_rate=2e-3
