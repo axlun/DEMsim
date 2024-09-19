@@ -8,6 +8,7 @@ np.set_printoptions(threshold=np.inf)
 
 if __name__ == '__main__':
     argument_string = sys.argv[1]
+    n_in_avg = int(sys.argv[2])
     particle_files = os.listdir(argument_string)
     time = []
     particle_time_and_file_name_dict = {}
@@ -21,7 +22,7 @@ if __name__ == '__main__':
     time.sort()
     time_vec = []
     avg_height_vec = np.zeros(shape=(int(len(time))))
-    n_in_avg = 10
+    # n_in_avg = 10
     for i in range(0, len(time)):
         key = str(time[i])
         if time[i].is_integer():
