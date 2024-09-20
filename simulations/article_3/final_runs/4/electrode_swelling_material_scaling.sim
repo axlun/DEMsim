@@ -1,0 +1,8 @@
+output_dir=/scratch/users/axlun/DEMsim/results/article_3/final_runs/4/electrode_swelling_material_scaling/
+restart_file_name=/scratch/users/axlun/DEMsim/results/article_3/final_runs/4/swelling_electrode_calendering/calendered_electrode_restart_file.res
+time_step=1e2
+mass_scaling=1e4
+swelling_time=2e1
+output_number=5e2
+swell_states=1.03228,1.06266
+material_scaling=0.8
