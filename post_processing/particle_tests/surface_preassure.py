@@ -120,7 +120,9 @@ def data_grabber(data_directory):
 
 def main():
     # simulation_directory = 'c:/Users/Axel/Documents/DEM/results/cube_die_compaction/3'
-    simulation_directory = "c:/Users/Axel/Documents/DEM/results/particle_tests/swelling/swelling_cube_die_compaction/"
+    # simulation_directory = "c:/Users/Axel/Documents/DEM/results/particle_tests/swelling/swelling_cube_die_compaction/"
+    # simulation_directory = "c:/Users/Axel/Documents/DEM/results/particle_tests/material_scaling/material_scaling_cube_die_compaction/no_restart/"
+    simulation_directory = "c:/Users/Axel/Documents/DEM/results/particle_tests/material_scaling/material_scaling_cube_die_compaction/restart/"
     particle_vol = particles_volume(simulation_directory)
     pressure = pressures_box(simulation_directory)
     time = Time(simulation_directory)
@@ -134,7 +136,7 @@ def main():
     # ax_pressure.legend()
 
     figure_pressure_time , ax_pressure_time = plt.subplots()
-    ax_pressure_time.plot(time ,pressure, 'r-*',linewidth=3)
+    ax_pressure_time.plot(time ,pressure, 'r-',linewidth=3)
     ax_pressure_time.set_ylabel("Pressure")
     ax_pressure_time.set_xlabel("Time")
 
@@ -144,7 +146,7 @@ def main():
     ax_volume.set_xlabel("Time")
     # ax_volume.legend()
 
-
+    """
     simulation_directory_unload = "c:/Users/Axel/Documents/DEM/results/particle_tests/swelling/" \
                                   "swelling_cube_die_compaction/unload_D=0.8/"
     particle_vol_unload = particles_volume(simulation_directory_unload)
@@ -157,7 +159,7 @@ def main():
     ax_pressure_time.plot(time_unload ,pressure_unload, 'b-*',linewidth=3)
 
     ax_volume.plot(time_unload ,particle_vol_unload, 'r-*',linewidth=3)
-
+    """
 
     plt.show()
     # plt.plot(rel_density, pressure, label='DEM')

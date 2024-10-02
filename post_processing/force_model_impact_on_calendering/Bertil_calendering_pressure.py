@@ -337,11 +337,6 @@ if __name__ == '__main__':
     # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/final_runs_2/SN_2011/1/electrode_natural_packing_el_pl_binder_el_pl_particle/'
 
     # ==CALENDERING=====================================================================================================
-    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/final_runs/particle_contact_model/SN_2_5_3/electrode_calendering_el_pl_binder_el_pl_particle/'
-    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/final_runs/particle_contact_model/SN_2_6/electrode_calendering_el_pl_binder_el_pl_particle/'
-    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/final_runs/particle_contact_model/SN_2_6_2/electrode_calendering_el_pl_binder_el_pl_particle/'
-    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/particle_size_distribution/SN_1/electrode_calendering_hertz/'
-
     # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/final_runs_2/SN_101/1/electrode_calendering_hertz/'
     # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/final_runs_2/SN_101/2/electrode_calendering_hertz/'
     # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/final_runs_2/SN_201/3/electrode_calendering_el_pl_binder_el_pl_particle/'
@@ -351,9 +346,6 @@ if __name__ == '__main__':
     # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/final_runs_2/SN_201/1/electrode_mechanical_loading_el_pl_binder_el_pl_particle_tension/'
 
     # ==RESTING=========================================================================================================
-    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/viscoelastic_testing/SN_1_p_5t/electrode_short_resting_el_pl_binder_el_pl_particle_dt_2e2_ms_1e3/'
-    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/final_runs_2/SN_2011/1/electrode_resting_el_pl_binder_el_pl_particle/'
-    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/final_runs_2/SN_2011/1/electrode_relaxation_el_pl_binder_el_pl_particle_compression/'
     # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/final_runs_2/SN_2011/1/electrode_relaxation_el_pl_binder_el_pl_particle_tension/'
 
     # ==RESOURCE MANAGEMENT=============================================================================================
@@ -368,9 +360,115 @@ if __name__ == '__main__':
 
     # simulation_directory = 'c:/Users/Axel/Documents/DEM/results/swelling_electrode/SN_6/swelling_periodic_packing/'
     # simulation_directory = 'c:/Users/Axel/Documents/DEM/results/swelling_electrode/SN_6/swelling_electrode_calendering/'
-    simulation_directory = 'c:/Users/Axel/Documents/DEM/results/swelling_electrode/SN_6/electrode_swelling/'
+    # simulation_directory = 'c:/Users/Axel/Documents/DEM/results/swelling_electrode/SN_6/electrode_swelling/'
     # simulation_directory = 'c:/Users/Axel/Documents/DEM/results/swelling_electrode/SN_6/swelling_electrode_mechanical_loading_ss_0.9_tension/'
     # simulation_directory = 'c:/Users/Axel/Documents/DEM/results/swelling_electrode/SN_6/swelling_electrode_mechanical_loading_ss_0.9_compression/'
 
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/swelling/SN_1/swelling_periodic_packing/'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/swelling/SN_1/swelling_electrode_calendering/'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/swelling/SN_1/electrode_swelling/'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/swelling/SN_1/swelling_electrode_mechanical_loading_tension/'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/swelling/SN_1/swelling_electrode_mechanical_loading_compression/'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/swelling/SN_1/swelling_electrode_mechanical_loading_ss_0.983_tension/'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/swelling/SN_1/swelling_electrode_mechanical_loading_ss_0.983_compression/'
+
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/swelling/SN_2/swelling_periodic_packing/'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/swelling/SN_2/swelling_electrode_calendering/'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/swelling/SN_2/electrode_swelling/'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/swelling/SN_2/swelling_electrode_mechanical_loading_tension/'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/swelling/SN_2/swelling_electrode_mechanical_loading_compression/'
+
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/swelling/SN_3/swelling_periodic_packing/'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/swelling/SN_3/swelling_electrode_calendering/'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/swelling/SN_3/electrode_swelling/'
+
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/swelling/SN_4/swelling_periodic_packing/'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/swelling/SN_4/swelling_electrode_calendering/'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/swelling/SN_4/electrode_swelling/'
+
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/final_runs_2/SN_201_periodic_packing/1/electrode_natural_periodic_packing_el_pl_binder_el_pl_particle/'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/final_runs_2/SN_201_periodic_packing/1/electrode_calendering_el_pl_binder_el_pl_particle/'
+
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/final_runs_2/SN_301/1/electrode_natural_packing_el_pl_binder_el_pl_particle/'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/final_runs_2/SN_301/1/electrode_calendering_el_pl_binder_el_pl_particle/'
+
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/final_runs_2/SN_301/1/electrode_natural_packing_el_pl_binder_el_pl_particle/'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/final_runs_2/SN_301/1/electrode_calendering_el_pl_binder_el_pl_particle/'
+
+    # simulation_directory = 'c:/Users/Axel/Documents/DEM/results/particle_tests/swelling/swelling_periodic_compaction/no_restart/'
+    # simulation_directory = 'c:/Users/Axel/Documents/DEM/results/particle_tests/material_scaling/material_scaling_periodic_compaction/no_restart/'
+    # simulation_directory = 'c:/Users/Axel/Documents/DEM/results/particle_tests/material_scaling/material_scaling_periodic_compaction/restart/'
+
+
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/swelling_material_scaling/SN_1/swelling_periodic_packing/'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/swelling_material_scaling/SN_1/swelling_electrode_calendering/'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/swelling_material_scaling/SN_1/electrode_material_scaling/'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/swelling_material_scaling/SN_1/electrode_swelling_material_scaling/'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/swelling_material_scaling/SN_1/electrode_swelling/'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/swelling_material_scaling/SN_1/electrode_cycling/'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/swelling_material_scaling/SN_1/electrode_cycling_1/'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/swelling_material_scaling/SN_1/electrode_cycling_adhesion/'
+
+
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/swelling_material_scaling/SN_2/swelling_periodic_packing/'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/swelling_material_scaling/SN_2/swelling_electrode_calendering/'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/swelling_material_scaling/SN_2/electrode_material_scaling/'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/swelling_material_scaling/SN_2/electrode_swelling_material_scaling/'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/swelling_material_scaling/SN_2/electrode_swelling/'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/swelling_material_scaling/SN_2/electrode_cycling/'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/swelling_material_scaling/SN_2/electrode_cycling_1/'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/swelling_material_scaling/SN_2/electrode_cycling_adhesion/'
+
+
+    # simulation_directory = "c:/Users/Axel/Documents/DEM/results/article_3/swelling_material_scaling/SN_1/electrode_cycling/"
+    # simulation_directory = "c:/Users/Axel/Documents/DEM/results/article_3/swelling_material_scaling/SN_1/electrode_cycling_1/"
+
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/charge_cycling/SN_1/swelling_periodic_packing/'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/charge_cycling/SN_1/swelling_electrode_calendering/'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/charge_cycling/SN_1/electrode_material_scaling/'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/charge_cycling/SN_1/electrode_swelling_material_scaling/'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/charge_cycling/SN_1/electrode_swelling/'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/charge_cycling/SN_1/electrode_cycling/'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/charge_cycling/SN_1/electrode_cycling_1/'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/charge_cycling/SN_1/electrode_cycling_adhesion/'
+
+
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/charge_cycling/SN_1_reduced_cal/swelling_electrode_calendering_1115/'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/charge_cycling/SN_1_reduced_cal/swelling_electrode_calendering_1135/'
+
+
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/charge_cycling/SN_2/swelling_periodic_packing/'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/charge_cycling/SN_2/swelling_electrode_calendering/'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/charge_cycling/SN_2/electrode_material_scaling/'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/charge_cycling/SN_2/electrode_material_scaling_05/'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/charge_cycling/SN_2/electrode_swelling_material_scaling/'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/charge_cycling/SN_2/electrode_swelling/'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/charge_cycling/SN_2/electrode_cycling/'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/charge_cycling/SN_2/electrode_cycling_1/'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/charge_cycling/SN_2/electrode_cycling_adhesion/'
+
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/charge_cycling/SN_3/swelling_electrode_calendering/'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/charge_cycling/SN_3/electrode_swelling_material_scaling/'
+
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/result_discrepancies/SN_0/swelling_periodic_packing/'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/result_discrepancies/SN_1/swelling_periodic_packing/'
+
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/result_discrepancies/SN_0/swelling_periodic_packing/'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/result_discrepancies/SN_0/swelling_electrode_calendering/'
+
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/result_discrepancies/SN_1/swelling_periodic_packing/'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/result_discrepancies/SN_1/swelling_electrode_calendering/'
+
+
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/final_runs/1/swelling_periodic_packing/'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/final_runs/4/swelling_electrode_calendering/'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/final_runs/1/electrode_material_scaling/'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/final_runs/1/electrode_material_scaling_05/'
+    simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/final_runs/4/electrode_swelling_material_scaling/'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/final_runs/1/electrode_swelling/'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/final_runs/1/electrode_cycling/'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/final_runs/1/electrode_cycling_1/'
+
     calendering_pressure_plotting_func(simulation_directory)
+    print('show plots')
     plt.show()

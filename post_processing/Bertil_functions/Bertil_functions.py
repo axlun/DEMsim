@@ -216,6 +216,20 @@ def bertil_single_particle_tracker(sim_dir, p1):
     particle_vec= particle_vec.reshape((len(particle_vec)//columns,columns))
     return time_vec, particle_vec
 
+
+def bertil_layer_height(sim_dir, no_particle_in_avg=10):
+    bertil_post_process_call = 'cd /scratch/users/axlun/DEMsim/post_processing/Bertil_functions/ ' \
+                               '\npython3 layer_height_processing.py ' \
+                                + sim_dir + '/particles ' + str(no_particle_in_avg)
+    print('Calling Bertil layer height post processing script')
+    bertil_return = input_output_return(bertil_post_process_call)
+    time_vec = bertil_return[0][1:-2].split(', ')
+    time_vec = np.array(time_vec, dtype=float)
+
+    particle_vec = bertil_return[1][1:-2].split(',')
+    particle_vec = np.array(particle_vec,dtype=float)
+    return time_vec, particle_vec
+
 # Input: String with directory of simulation
 # Output: np.array of force_data, surface_force_index, surface_position_index,surface_position_data, periodic_BC_data, force_fabric_tensor_data as floats
 def bertil_data_gatherer(simulation_directory):

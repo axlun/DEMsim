@@ -1,5 +1,5 @@
 from force_model_impact_on_calendering.Bertil_calendering_pressure import local_data_gatherer, bertil_data_gatherer, contact_counter_bertil
-from Local_contact_distribution import contact_counter_local
+from force_model_impact_on_calendering.Local_contact_distribution import contact_counter_local
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -15,9 +15,11 @@ def stress_and_linear_strain_finder(periodic_BC_data, force_fabric_tensor_data, 
     x_side_length = periodic_BC_data[:, 2] - periodic_BC_data[:, 1]
     x_side_length_0 = x_side_length[0]
     y_side_length = periodic_BC_data[:, 4] - periodic_BC_data[:, 3]
+    print('x and y side length is = ' + str(x_side_length[0]) + ', ' + str(y_side_length[0]))
 
     #t0 = 1.11  # Chould be chaged later, defined in another way?======================================================
     t0 = float(surface_position_data[0,32])-1
+    print('layer height = ' + str(t0))
     vol = x_side_length * y_side_length * t0
     sxx = -force_fabric_tensor_data[:, 1] / vol
     syy = -force_fabric_tensor_data[:, 5] / vol
@@ -337,30 +339,47 @@ def mechanical_properties_plotting_func(simulation_directory, stiffness_at_point
         plt.savefig(fname)
 
 if __name__ == '__main__':
-    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/final_runs/ref_sim/SN_2/electrode_mechanical_loading_hertz'
-    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/final_runs/particle_contact_model/SN_1_2/electrode_mechanical_loading_el_pl_binder_el_pl_particle'
-    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/final_runs/particle_contact_model/SN_1_2_2/electrode_mechanical_loading_el_pl_binder_el_pl_particle'
-    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/final_runs/particle_contact_model/SN_1_2_3/electrode_mechanical_loading_el_pl_binder_el_pl_particle'
-    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/final_runs/particle_contact_model/SN_1_2_4/electrode_mechanical_loading_el_pl_binder_el_pl_particle'
-    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/final_runs/particle_contact_model/SN_2_5/electrode_mechanical_loading_el_pl_binder_el_pl_particle'
-    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/final_runs/particle_contact_model/SN_2_5_2/electrode_mechanical_loading_el_pl_binder_el_pl_particle'
-    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/final_runs/particle_contact_model/SN_2_5_3/electrode_mechanical_loading_el_pl_binder_el_pl_particle'
-    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/final_runs/particle_contact_model/SN_2_6/electrode_mechanical_loading_el_pl_binder_el_pl_particle'
-    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/final_runs/particle_contact_model/SN_2_6_2/electrode_mechanical_loading_el_pl_binder_el_pl_particle'
-    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/particle_size_distribution/SN_1/electrode_mechanical_loading_hertz'
-
     # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/final_runs_2/SN_101/1/electrode_mechanical_loading_hertz'
-    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/final_runs_2/SN_201_periodic_packing/1/electrode_mechanical_loading_el_pl_binder_el_pl_particle'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/final_runs_2/SN_201_periodic_packing/3/electrode_mechanical_loading_el_pl_binder_el_pl_particle'
     # simulation_directory = 'c:/Users/Axel/Documents/DEM/results/swelling_electrode/SN_5/swelling_electrode_mechanical_loading'
     # simulation_directory = 'c:/Users/Axel/Documents/DEM/results/swelling_electrode/SN_5/swelling_electrode_mechanical_loading_ss_0.9'
     # simulation_directory = 'c:/Users/Axel/Documents/DEM/results/swelling_electrode/SN_5/swelling_electrode_mechanical_loading_ss_0.95'
 
-    # simulation_directory = 'c:/Users/Axel/Documents/DEM/results/swelling_electrode/SN_6/swelling_electrode_mechanical_loading'
-    # simulation_directory = 'c:/Users/Axel/Documents/DEM/results/swelling_electrode/SN_6/swelling_electrode_mechanical_loading_ss_0.95'
-    simulation_directory = 'c:/Users/Axel/Documents/DEM/results/swelling_electrode/SN_6/swelling_electrode_mechanical_loading_ss_0.9'
+    simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/charge_cycling/SN_1/swelling_electrode_mechanical_loading'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/charge_cycling/SN_1/swelling_electrode_mechanical_loading_material_scaling'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/charge_cycling/SN_1/swelling_electrode_mechanical_loading_material_scaling_05'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/charge_cycling/SN_1/swelling_electrode_mechanical_loading_ss_1.06266_material_scaling'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/charge_cycling/SN_1/swelling_electrode_mechanical_loading_ss_1.03228_material_scaling'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/charge_cycling/SN_1/swelling_electrode_mechanical_loading_ss_1.06266'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/charge_cycling/SN_1/swelling_electrode_mechanical_loading_cycle_1'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/charge_cycling/SN_1/swelling_electrode_mechanical_loading_cycle_3'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/charge_cycling/SN_1/swelling_electrode_mechanical_loading_cycle_10'
+
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/charge_cycling/SN_1_reduced_cal/swelling_electrode_mechanical_loading_1135'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/charge_cycling/SN_1_reduced_cal/swelling_electrode_mechanical_loading_1115'
+
+
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/charge_cycling/SN_2/swelling_electrode_mechanical_loading'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/charge_cycling/SN_2/swelling_electrode_mechanical_loading_material_scaling'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/charge_cycling/SN_2/swelling_electrode_mechanical_loading_ss_1.06266_material_scaling'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/charge_cycling/SN_2/swelling_electrode_mechanical_loading_ss_1.03228_material_scaling'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/charge_cycling/SN_2/swelling_electrode_mechanical_loading_ss_1.06266'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/charge_cycling/SN_2/swelling_electrode_mechanical_loading_cycle_1'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/charge_cycling/SN_2/swelling_electrode_mechanical_loading_cycle_3'
+    simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/charge_cycling/SN_2/swelling_electrode_mechanical_loading_cycle_10'
+
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/charge_cycling/SN_3/swelling_electrode_mechanical_loading'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/charge_cycling/SN_3/swelling_electrode_mechanical_loading_material_scaling'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/charge_cycling/SN_3/swelling_electrode_mechanical_loading_ss_1.06266_material_scaling'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/charge_cycling/SN_3/swelling_electrode_mechanical_loading_ss_1.03228_material_scaling'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/charge_cycling/SN_3/swelling_electrode_mechanical_loading_ss_1.06266'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/charge_cycling/SN_3/swelling_electrode_mechanical_loading_cycle_1'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/charge_cycling/SN_3/swelling_electrode_mechanical_loading_cycle_3'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/charge_cycling/SN_3/swelling_electrode_mechanical_loading_cycle_10'
 
     stiffness_at_points_flag = 1
     contact_flag = 0
     mechanical_properties_plotting_func(simulation_directory, stiffness_at_points_flag, contact_flag)
     # ==SHOW PLOT=======================================================================================================
+    print("Plotting results")
     plt.show()

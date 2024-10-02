@@ -20,7 +20,9 @@ if __name__ == '__main__':
     # ==PERIODIC_PACKING================================================================================================
     # simulation_directory = 'c:/Users/Axel/Documents/DEM/results/swelling_electrode/SN_5/swelling_periodic_packing/'
     # simulation_directory = 'c:/Users/Axel/Documents/DEM/results/swelling_electrode/SN_5/swelling_electrode_calendering/'
-    simulation_directory = 'c:/Users/Axel/Documents/DEM/results/swelling_electrode/SN_6/electrode_swelling/'
+
+    # simulation_directory = 'c:/Users/Axel/Documents/DEM/results/swelling_electrode/SN_6/electrode_swelling/'
+    simulation_directory = "c:/Users/Axel/Documents/DEM/results/particle_tests/material_scaling/material_scaling_cube_die_compaction/no_restart/"
 
     contact_files = os.listdir(simulation_directory + '/contacts')
 

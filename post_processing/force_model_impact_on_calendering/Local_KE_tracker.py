@@ -10,13 +10,15 @@ plt.style.use('axel_style')
 if __name__ == '__main__':
     # simulation_directory = 'c:/Users/Axel/Documents/DEM/Bertil_results/article_2/final_runs/particle_contact_model/SN_1_2/electrode_calendering_el_pl_binder_el_pl_particle/'
 
-    simulation_directory = 'c:/Users/Axel/Documents/DEM/results/swelling_electrode/SN_5/swelling_electrode_calendering/'
+    # simulation_directory = 'c:/Users/Axel/Documents/DEM/results/swelling_electrode/SN_5/swelling_electrode_calendering/'
     # simulation_directory = 'c:/Users/Axel/Documents/DEM/results/swelling_electrode/SN_5/electrode_swelling/'
     # simulation_directory = 'c:/Users/Axel/Documents/DEM/results/swelling_electrode/SN_6/electrode_swelling/'
     # simulation_directory = 'c:/Users/Axel/Documents/DEM/results/swelling_electrode/SN_6/swelling_electrode_mechanical_loading_tension/'
     # simulation_directory = 'c:/Users/Axel/Documents/DEM/results/swelling_electrode/SN_6/swelling_electrode_mechanical_loading_compression/'
     #simulation_directory = 'c:/Users/Axel/Documents/DEM/results/swelling_electrode/SN_6/swelling_electrode_mechanical_loading_ss_0.9_tension/'
     # simulation_directory = 'c:/Users/Axel/Documents/DEM/results/swelling_electrode/SN_6/swelling_electrode_mechanical_loading_ss_0.95_compression/'
+
+    simulation_directory = "c:/Users/Axel/Documents/DEM/results/article_3/swelling_material_scaling/SN_1/electrode_cycling_1/"
 
     data = pd.read_csv(simulation_directory + "kinetic_energy.dou", header=None).to_numpy()
     total_time = data[:,-1]

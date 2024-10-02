@@ -18,7 +18,8 @@ def get_parameter(parameter_dir, parameter):
 if __name__ == '__main__':
 
     # simulation_directory =  "C:/Users/Axel/Documents/DEM/results/contact_testing/force_overlap/el_pl_particle/SN_1/gT"
-    simulation_directory = "C:/Users/Axel/Documents/DEM/results/particle_tests/swelling/SN_1/"
+    # simulation_directory = "C:/Users/Axel/Documents/DEM/results/particle_tests/swelling/SN_1/"
+    simulation_directory = "C:/Users/Axel/Documents/DEM/results/particle_tests/material_scaling/SN_1/"
     particle_files = os.listdir(simulation_directory+"particles/")
     time = []
     particle_time_and_file_name_dict = {}
@@ -56,9 +57,9 @@ if __name__ == '__main__':
     p1_data_mat = np.stack(p1_data,axis=0)
     contact_data_mat = np.stack(contact_data,axis=0)
       #print(force_fabric_tensor[1:,1]/(p1_data_mat[:,1]-p2_data_mat[:1]))
-    print(p1_data_mat[0,:])
+    # print(p1_data_mat[0,:])
     R_0 = 1/(1/p1_data_mat[:,7] + 1/p2_data_mat[:,7])
-    print(R_0)
+    # print(R_0)
 
     # =====================================PARTICLE 1 y POSITION========================================================
     figure_partcle_y_positions_time, ax_particle_y_positions_time = plt.subplots()

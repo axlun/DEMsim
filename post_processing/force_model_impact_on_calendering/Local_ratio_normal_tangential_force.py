@@ -19,6 +19,7 @@ if __name__ == '__main__':
     simulation_directory = "c:/Users/Axel/Documents/DEM/Bertil_results/electrode_natural_packing_hertz/SN_hertz_5000p_btr_8_brr_08_dt_1e0_MS_1e0_el_b_new_tang_no_PerBC/"
     # simulation_directory = "c:/Users/Axel/Documents/DEM/Bertil_results/electrode_natural_packing_hertz/SN_hertz_5000p_btr_8_brr_08_dt_1e0_MS_1e0_el_b_new_tang/"
 
+    simulation_directory = 'c:/Users/Axel/Documents/DEM/results/particle_tests/material_scaling/material_scaling_periodic_compaction/no_restart/'
 
     #==CALENDERING======================================================================================================
     # simulation_directory =  "C:/Users/Axel/Documents/DEM/Bertil_results/electrode_calendering_hertz/SN_hertz_5000p_btr_8_brr_08_comp_time_40_hal_105_dt_1e2_MS_1e4_from_larger_particles/"
@@ -45,7 +46,7 @@ if __name__ == '__main__':
     tangential_force = []
     number_of_points = int(len(time_steps)/1)
     print(number_of_points)
-    for i in range(0, number_of_points):#len(time)):
+    for i in range(1, number_of_points):#len(time)):
         start_time = time.time()
         key = str(time_steps[i])
         if time_steps[i].is_integer():
@@ -69,8 +70,8 @@ if __name__ == '__main__':
     # ========NORMAL AND TANGENTIAL FORCES==============================================================================
     print("Plotting results")
     figure_normal_tangential_force_time, ax_normal_tangential_force_time = plt.subplots()
-    lns_normal_force_time = ax_normal_tangential_force_time.plot(time_steps[:number_of_points], normal_force,'r',linewidth=3,label=r'F_n')
-    lns_tangential_force_time = ax_normal_tangential_force_time.plot(time_steps[:number_of_points], tangential_force,'g',linewidth=3,label=r'F_t')
+    lns_normal_force_time = ax_normal_tangential_force_time.plot(time_steps[1:number_of_points], normal_force,'r',linewidth=3,label=r'F_n')
+    lns_tangential_force_time = ax_normal_tangential_force_time.plot(time_steps[1:number_of_points], tangential_force,'g',linewidth=3,label=r'F_t')
     ax_normal_tangential_force_time.set_xlabel('Time [s]')
     ax_normal_tangential_force_time.set_ylabel('Total force[N]')
     ax_normal_tangential_force_time.legend()

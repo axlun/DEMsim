@@ -18,8 +18,8 @@ if __name__ == '__main__':
 
 
     #==CALENDERING==========================================================================================================
-    simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/final_runs_2/SN_301/2/' \
-                       'electrode_calendering_el_pl_binder_el_pl_particle'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/final_runs_2/SN_301/2/' \
+    #                    'electrode_calendering_el_pl_binder_el_pl_particle'
 
     #==MECHANICAL LOADING===================================================================================================
     # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/final_runs/ref_sim/SN_1_3/electrode_mechanical_loading_hertz_tension/'
@@ -31,7 +31,25 @@ if __name__ == '__main__':
     # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/final_runs_2/SN_2111/1/' \
     #                    'electrode_relaxation_el_pl_binder_el_pl_particle_tension'
 
-    time_vec, particle_contact_vec, binder_contact_vec, binder_particle_contact_vec = contact_counter_bertil(simulation_directory)
+
+
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/charge_cycling/SN_2/swelling_electrode_calendering/'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/charge_cycling/SN_2/electrode_swelling/'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/charge_cycling/SN_2/electrode_cycling_1/'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/charge_cycling/SN_2/electrode_material_scaling/'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/charge_cycling/SN_2/electrode_swelling_material_scaling/'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/charge_cycling/SN_2/swelling_electrode_mechanical_loading_compression/'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/charge_cycling/SN_2/swelling_electrode_mechanical_loading_tension/'
+
+
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/charge_cycling/SN_1_reduced_cal/swelling_electrode_calendering_1115/'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/charge_cycling/SN_1_reduced_cal/swelling_electrode_calendering_1135/'
+
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/charge_cycling/SN_3/swelling_electrode_calendering/'
+    simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/charge_cycling/SN_3/electrode_swelling_material_scaling/'
+
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/charge_cycling/SN_1/swelling_electrode_calendering/'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/result_discrepancies/SN_1/swelling_electrode_calendering/'
 
     fig_dir = 'C:/temp/figures/Bertil_contact_distribution/'
     try:
@@ -46,6 +64,7 @@ if __name__ == '__main__':
 
     plt.style.use('axel_style')
 
+    time_vec, particle_contact_vec, binder_contact_vec, binder_particle_contact_vec = contact_counter_bertil(simulation_directory)
 
 
 

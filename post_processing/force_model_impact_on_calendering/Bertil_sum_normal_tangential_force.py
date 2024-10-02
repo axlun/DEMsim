@@ -23,15 +23,21 @@ if __name__ == '__main__':
     # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/final_runs/particle_contact_model/SN_1_2_4/electrode_mechanical_loading_el_pl_binder_el_pl_particle_compression/'
 
     # ==RELAXATION======================================================================================================
-    simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/final_runs_2/SN_2111/1/' \
-                           'electrode_relaxation_el_pl_binder_el_pl_particle_compression'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/final_runs_2/SN_2111/1/' \
+    #                        'electrode_relaxation_el_pl_binder_el_pl_particle_compression'
 
     # ==RELAXATION======================================================================================================
     # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/viscoelastic_testing/SN_1/electrode_relaxation_el_pl_binder_el_pl_particle_compression'
-    time_steps, normal_force, compressive_normal_force_vec, tensile_normal_force_vec, binder_force_vec, \
-        compressive_binder_force_vec, tensile_binder_force_vec, particle_force_vec, tangential_force = \
-        sum_normal_tangential_force_bertil(simulation_directory)
 
+
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/swelling/SN_2/swelling_electrode_calendering/'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/swelling/SN_2/electrode_swelling/'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/swelling/SN_2/swelling_electrode_mechanical_loading_tension/'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/swelling/SN_2/swelling_electrode_mechanical_loading_compression/'
+
+    simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/swelling_material_scaling/SN_1/electrode_cycling_1/'
+
+    # ==FIGURE DIR======================================================================================================
     fig_dir = 'C:/temp/figures/Bertil_sum_normal_tangential_force/'
     try:
         shutil.rmtree(fig_dir)
@@ -42,6 +48,10 @@ if __name__ == '__main__':
     except:
         print('Directory could not be removed')
         quit()
+
+    time_steps, normal_force, compressive_normal_force_vec, tensile_normal_force_vec, binder_force_vec, \
+    compressive_binder_force_vec, tensile_binder_force_vec, particle_force_vec, tangential_force = \
+        sum_normal_tangential_force_bertil(simulation_directory)
 
     # ==PLOTTING PARAMETERS=============================================================================================
     plt.style.use('axel_style')

@@ -27,7 +27,12 @@ if __name__ == '__main__':
     # simulation_directory = 'c:/Users/Axel/Documents/DEM/results/swelling_electrode/SN_3/electrode_swelling/'
 
 
-    simulation_directory = 'c:/Users/Axel/Documents/DEM/results/swelling_electrode/SN_6/electrode_swelling/'
+    # simulation_directory = 'c:/Users/Axel/Documents/DEM/results/swelling_electrode/SN_6/electrode_swelling/'
+
+
+    # ==CALENDERING================================================================================================
+    # simulation_directory = 'c:/Users/Axel/Documents/DEM/results/article_2/final_runs_2/SN_301/1/electrode_calendering_el_pl_binder_el_pl_particle/'
+    simulation_directory = 'c:/Users/Axel/Documents/DEM/results/article_3/swelling/SN_2/swelling_electrode_calendering/'
 
     particle_files = os.listdir(simulation_directory + '/particles')
 

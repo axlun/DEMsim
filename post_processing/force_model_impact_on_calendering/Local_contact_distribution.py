@@ -1,5 +1,5 @@
 from Bertil_functions.Bertil_functions import *
-from Bertil_calendering_pressure import local_data_gatherer, bertil_data_gatherer
+from force_model_impact_on_calendering.Bertil_calendering_pressure import local_data_gatherer, bertil_data_gatherer
 
 import numpy as np
 

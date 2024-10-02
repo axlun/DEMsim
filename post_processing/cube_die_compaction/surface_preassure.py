@@ -98,6 +98,8 @@ def data_grabber(data_directory):
 def main():
     # simulation_directory = 'c:/Users/Axel/Documents/DEM/results/cube_die_compaction/3'
     simulation_directory = "C:/Users/Axel/Documents/DEM/results/particle_tests/swelling/swelling_cube_die_compaction/"
+    simulation_directory = "C:/Users/Axel/Documents/DEM/results/particle_tests/material_scaling/material_scaling_cube_die_compaction/"
+
     particles_volume(simulation_directory)
     pressure = pressures_box(simulation_directory)
     # time = Time(simulation_directory)
