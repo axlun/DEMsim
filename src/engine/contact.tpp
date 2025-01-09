@@ -185,8 +185,9 @@ std::string DEM::Contact<ForceModel, ParticleType>::get_output_string() const
         ss << surface_->get_id();
     }
     ss << ", " << get_normal().x() << ", " << get_normal().y() << ", " << get_normal().z();
-    ss << ", " << get_overlap() << ", " << force_model_.get_output_string();
-    return ss.str();
+    ss << ", " << get_overlap() << ", " << force_model_.get_output_string() << "\n";
+    if (force_model_.active()) return ss.str();
+    else return std::string();
 }
 
 template<typename ForceModel, typename ParticleType>

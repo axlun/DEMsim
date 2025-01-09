@@ -236,7 +236,7 @@ void DEM::Output<ForceModel, ParticleType>::write_contacts() const {
     std::ofstream output_file;
     output_file.open(contacts_directory / filename_stream.str());
     for (const auto& c: contacts_.get_objects_sorted()) {
-        output_file << c->get_output_string() << "\n";
+        output_file << c->get_output_string();
     }
     output_file.close();
 }
