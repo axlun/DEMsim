@@ -177,7 +177,7 @@ if __name__ == '__main__':
     ax_pressure_split.fill_between(swelling.SOC,
                                    (swelling.in_plane_stress_mean - swelling.in_plane_stress_std) * 1E-6,
                                    (swelling.in_plane_stress_mean + swelling.in_plane_stress_std) * 1E-6,
-                                   color='C1', label='Swelling')
+                                   color='C3', label='Swelling')
 
     ax_pressure_split.plot(charging.SOC, charging.in_plane_stress_mean * 1E-6, 'k-')
     ax_pressure_split.fill_between(charging.SOC,
