@@ -24,7 +24,7 @@ void DEM::fracturing_electrode_calendering(const std::string &settings_file_name
     auto output_directory = parameters.get_parameter<std::string>("output_dir");
     auto calendering_height = parameters.get_parameter<double>("calendering_height");
     auto simulator = EngineType(restart_file_name);
-    auto mat = dynamic_cast<const ElectrodeMaterial *>(simulator.get_material(0));
+    auto mat = dynamic_cast<ElectrodeMaterial *>(simulator.get_material(0));
     mat->fracture = parameters.get_parameter<bool>("particle_fracture");
 
 //====================TIME STEP AND MASS SCALING========================================================================
