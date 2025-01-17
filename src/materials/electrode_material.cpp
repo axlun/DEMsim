@@ -27,6 +27,8 @@ DEM::ElectrodeMaterial::ElectrodeMaterial(const ParameterMap& parameters) :
     rhop(parameters.get_parameter<double>("rhop")),
     bt(parameters.get_parameter<double>("bt")),
     particle_yield_stress_(parameters.get_parameter<double>("particle_yield_stress_")),
+    particle_fracture_strength_(parameters.get_parameter<double>("particle_fracture_strength_")),
+    fracture_degradation_factor_(parameters.get_parameter<double>("fracture_degradation_factor")),
     yield_displacement_coeff(parameters.get_parameter<double>("yield_coeff")),
     tau_i(),
     alpha_i(),
@@ -40,6 +42,7 @@ DEM::ElectrodeMaterial::ElectrodeMaterial(const ParameterMap& parameters) :
     mu_wall(parameters.get_parameter<double>("mu_wall")),
     new_binder_contacts(parameters.get_parameter<bool>("new_binder_contacts")),
 //    bond_breaking(parameters.get_parameter<double>("bond_breaking")),
+    fracture(parameters.get_parameter<bool>("fracture")),
     adhesive(parameters.get_parameter<bool>("adhesive"))
 {
     auto M = parameters.get_parameter<std::size_t>("M");
@@ -74,6 +77,8 @@ std::string DEM::ElectrodeMaterial::restart_data() const {
        << named_print(yield_displacement_coeff, "yield_coeff") << ", "
        << named_print(binder_radius_fraction, "binder_radius_fraction") << ", "
        << named_print(particle_yield_stress_, "particle_yield_stress_") << ", "
+       << named_print(particle_fracture_strength_, "particle_fracture_strength_") << ", "
+       << named_print(fracture_degradation_factor_, "fracture_degradation_factor") << ", "
        << named_print(bt, "bt") << ", "
        << named_print(kT, "kT") << ", "
        << named_print(mu, "mu") << ", "
@@ -81,6 +86,7 @@ std::string DEM::ElectrodeMaterial::restart_data() const {
        << named_print(M(), "M")<< ", "
 //       << named_print(bond_breaking, "bond_breaking")<< ", "
        << named_print(new_binder_contacts, "new_binder_contacts")<< ", "
+       << named_print(fracture, "fracture")<< ", "
        << named_print(adhesive, "adhesive") << ", ";
 
     for (std::size_t i = 0; i != M(); ++i) {

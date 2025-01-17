@@ -240,6 +240,7 @@ void PeriodicBCHandler<ForceModel, ParticleType>::move_mirror_particles(Particle
                 mp->scale_material(simulation_particle->get_material_scaling_this_increment());
                 mp->set_swell_rate(simulation_particle->get_swell_rate());
                 mp->swell(simulation_particle->get_swelling_this_increment());
+                if ( simulation_particle->get_fracture() ) mp->set_fracture();
                 mp->move(bc_velocity);
                 mp->move(simulation_particle->get_displacement_this_increment());
                 mp->set_velocity(simulation_particle->get_velocity());
@@ -338,7 +339,6 @@ void DEM::PeriodicBCHandler<ForceModel, ParticleType>::respect_boundaries(Partic
 
     if (overlapping_directions > 0) {
         std::size_t mirror_idx;
-        Vec3 distance_to_move = Vec3(0., 0., 0.);
         if (overlapping_directions == 1) {
             mirror_idx = std::find(directions.begin(), directions.end(), true) - directions.begin();
         }
@@ -353,13 +353,6 @@ void DEM::PeriodicBCHandler<ForceModel, ParticleType>::respect_boundaries(Partic
         }
         else {
             mirror_idx = 6;
-        }
-        //when is distance_to_move used? TODO: remove in next iteration!
-        for (std::size_t direction = 0; direction != active_directions_.size(); ++direction) {
-            if (directions[direction]) {
-                distance_to_move[direction] = -(boundaries_[direction].max
-                                                - boundaries_[direction].min)*d1[direction]/(std::abs(d1[direction]));
-            }
         }
         auto mirror_particle = get_mirror_particle(simulation_particle, mirror_idx);
         mirror_particle->sum_contact_forces();

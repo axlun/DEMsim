@@ -28,6 +28,8 @@ namespace DEM {
         double nu{ 0. };   // nu for the binder material
         double binder_yield_stress_{ 1.0e99 };  //Yield strength for the binder material
         double particle_yield_stress_{ 1.0e99}; //Yield strength for the particle
+        double particle_fracture_strength_{ 1.0e99};
+        double fracture_degradation_factor_{1.0};
         double Ep{ 0. };   // Young's modulus for the particles
         double nup{ 0. };  // Poisson's ratio for the binder material
         double rhop{ 0. }; //density of particles
@@ -59,6 +61,7 @@ namespace DEM {
         double active_particle_height=0.;
 //        bool bond_breaking = true;
         bool adhesive = true;
+        bool fracture = true;
         bool new_binder_contacts = true;
     };
 }

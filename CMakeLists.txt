@@ -79,6 +79,10 @@ add_executable(DEMsim
 				src/simulations/particle_tests/material_scaling_cube_die_compaction.cpp
 				src/simulations/particle_tests/material_scaling_periodic_compaction.cpp
 				src/simulations/particle_tests/swelling_particle.cpp
+				src/simulations/particle_tests/fracture_particle.cpp
+				src/simulations/particle_tests/fracture_particle_plate_compression.cpp
+				src/simulations/particle_tests/fracture_particle_cube_die_compaction.cpp
+				src/simulations/particle_tests/fracture_particle_periodic_compaction.cpp
 				src/simulations/particle_tests/swelling_particle_wall.cpp
 				src/simulations/particle_tests/swelling_cube_die_compaction.cpp
 				src/simulations/particle_tests/swelling_periodic_compaction.cpp
@@ -102,6 +106,9 @@ add_executable(DEMsim
 				src/simulations/Force_model_impact_on_electrode/el_pl_binder_el_pl_particle/restart_file_tester.cpp
 				src/simulations/Force_model_impact_on_electrode/electrode_mechanical_loading_rigid_plastic.cpp
 				src/simulations/Force_model_impact_on_electrode/electrode_resting_hertz.cpp
+				src/simulations/Force_model_impact_on_electrode/fracture/fracturing_periodic_packing.cpp
+				src/simulations/Force_model_impact_on_electrode/fracture/fracturing_electrode_calendering.cpp
+				src/simulations/Force_model_impact_on_electrode/fracture/fracturing_electrode_mechanical_loading.cpp
 				src/simulations/Force_model_impact_on_electrode/swelling/swelling_electrode_calendering.cpp
 				src/simulations/Force_model_impact_on_electrode/swelling/swelling_periodic_packing.cpp
 				src/simulations/Force_model_impact_on_electrode/swelling/electrode_swelling.cpp
@@ -112,6 +119,8 @@ add_executable(DEMsim
 				src/particles/spherical_particle_base.h
 				src/particles/swelling_spherical_particle.h
 				src/particles/swelling_spherical_particle.tpp
+				src/particles/fracturable_swelling_spherical_particle.h
+				src/particles/fracturable_swelling_spherical_particle.tpp
 				src/simulations/proctor_test.cpp
 				src/simulations/stone_compaction.cpp
 				src/contact_models/viscoelastic.cpp
@@ -126,6 +135,8 @@ add_executable(DEMsim
 				src/contact_models/Positive_electrode/elastic_plastic_binder_elastic_plastic_particle.h
 				src/contact_models/Positive_electrode/swelling_elastic_plastic_binder_elastic_plastic_particle.cpp
 				src/contact_models/Positive_electrode/swelling_elastic_plastic_binder_elastic_plastic_particle.h
+				src/contact_models/Positive_electrode/fracturing_swelling_elastic_plastic_binder_elastic_plastic_particle.cpp
+				src/contact_models/Positive_electrode/fracturing_swelling_elastic_plastic_binder_elastic_plastic_particle.h
 				src/materials/electrode_material.h
 				src/materials/electrode_material.cpp
 				src/utilities/printing_functions.h

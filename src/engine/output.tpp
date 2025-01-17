@@ -56,6 +56,7 @@ template<typename ForceModel, typename ParticleType>
 DEM::Output<ForceModel, ParticleType>::Output(const DEM::ParameterMap& parameters,
                                               const Engine<ForceModel, ParticleType>& engine):
         print_particles(parameters.get_parameter<bool>("print_particles")),
+        print_fractured_particles(parameters.get_parameter<bool>("print_fractured_particles")),
         print_kinetic_energy(parameters.get_parameter<bool>("print_kinetic_energy")),
         print_surface_positions(parameters.get_parameter<bool>("print_surface_positions")),
         print_surface_forces(parameters.get_parameter<bool>("print_surface_forces")),
@@ -115,6 +116,7 @@ std::string DEM::Output<ForceModel, ParticleType>::restart_data() const {
        << named_print(time_until_output_.count(), "time_until_output") << ", "
        << named_print(interval_.count(), "interval") << ", "
        << named_print(print_particles, "print_particles") << ", "
+       << named_print(print_fractured_particles, "print_fractured_particles") << ", "
        << named_print(print_kinetic_energy, "print_kinetic_energy") << ", "
        << named_print(print_surface_positions, "print_surface_positions") << ", "
        << named_print(print_surface_forces, "print_surface_forces") << ", "
@@ -157,6 +159,20 @@ void DEM::Output<ForceModel, ParticleType>::write_particles() const
     for (const auto& p: particles_) {
         output_file << p->get_output_string() << "\n";
     }
+    output_file.close();
+}
+
+template<typename ForceModel, typename ParticleType>
+void DEM::Output<ForceModel, ParticleType>::write_fractured_particles() const
+{
+    fs::path filename = directory_ / fs::path("fractured_particles.dou");
+    std::ofstream output_file;
+    output_file.open(filename, std::fstream::app);
+    for ( const auto& particle : particles_)
+    {
+        if (particle->get_fracture()) output_file << particle->get_id() <<", ";
+    }
+    output_file << current_time_.count() << "\n";
     output_file.close();
 }
 

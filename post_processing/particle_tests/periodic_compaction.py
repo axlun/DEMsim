@@ -1,5 +1,5 @@
 #
-#  Created by Axel on 2024-02-28
+#  Created by Axel on 2025-01-15
 #
 import glob
 import os
@@ -15,6 +15,15 @@ import re
 import pandas as pd
 
 matplotlib.style.use('axel_style')
+
+
+def box_volume(data_directory):
+    periodic_data = np.genfromtxt(data_directory + '/periodic_bc.dou', delimiter=', ')
+    surface_area = (periodic_data[:, 2] - periodic_data[:, 1]) * (periodic_data[:, 4] - periodic_data[:,3])
+    surface_data = np.genfromtxt(data_directory + '/surface_positions.dou', delimiter=', ')
+    box_height = surface_data[:, 5] - surface_data[:, 20]
+    box_volume = box_height * surface_area
+    return box_volume
 
 
 def dimensions_box(data_directory):
@@ -35,18 +44,14 @@ def dimensions_box(data_directory):
 
 
 def Time(data_directory):
-    with open(data_directory + '/surface_positions.dou', 'r') as position_data_file:
-        first_line = position_data_file.readlines()[0]
-        first_line = first_line.split(', ')
-    id_idx = [i for i in range(len(first_line)) if first_line[i].startswith('ID')]
-    surface_types = [first_line[idx + 1][5:] for idx in id_idx]
-    if surface_types.count('ID=') == 0 and surface_types.count('PointSurface') == 6:
-        id_idx.sort(key=lambda x: first_line[x + 1])
-        wall_data = np.genfromtxt(data_directory + '/surface_positions.dou', delimiter=', ')
-        time = np.zeros((wall_data.shape[0], 1))
-        time = wall_data[:, id_idx[0] + 90]
-        return time
+    ke_data = np.genfromtxt(data_directory + '/kinetic_energy.dou', delimiter=', ')
+    time = ke_data[:,-1]
+    return time
 
+def kinetic_energy(data_directory):
+    ke_data = np.genfromtxt(data_directory + '/kinetic_energy.dou', delimiter=', ')
+    ke = ke_data[:, 0]
+    return ke
 
 def pressures_box(data_directory):
     force_data = np.genfromtxt(data_directory + '/surface_forces.dou', delimiter=', ')
@@ -63,6 +68,13 @@ def pressures_box(data_directory):
 
     return box_surface1_pressure
 
+def top_surface_pressure(data_directory):
+    force_data = np.genfromtxt(data_directory + '/surface_forces.dou', delimiter=', ')
+    top_surface_force = force_data[:,1]
+    periodic_data = np.genfromtxt(data_directory + '/periodic_bc.dou', delimiter=', ')
+    surface_area = (periodic_data[:, 2] - periodic_data[:, 1]) * (periodic_data[:, 4] - periodic_data[:,3])
+    top_surface_pressure = top_surface_force / surface_area
+    return top_surface_pressure
 
 def surface_forces(data_directory):
     force_data = np.genfromtxt(data_directory + '/surface_forces.dou', delimiter=', ')
@@ -100,6 +112,7 @@ def particles_volume(data_directory):
         for i in particle_radius:
             temp_volume += pi * i ** 3 * 4 / 3
         volume.append(temp_volume)
+    volume = np.asarray(volume)
     return volume
 
 
@@ -116,37 +129,32 @@ def fractured_particles(data_directory):
 
 def relative_density(data_directory):
     particles_vol = particles_volume(data_directory)
-    box_volume = (dimensions_box(data_directory) * 2) ** 3
-    rel_density = particles_vol / box_volume
+    box_v = box_volume(data_directory)
+    rel_density = particles_vol / box_v
     return rel_density
 
 def data_grabber(data_directory):
     data_points = np.genfromtxt(data_directory, delimiter=',	')
-    # print(data_points[:, 0])
-    #data_points = [data_points[:, 1], data_points[:, 2]]
     ydata = data_points[:, 1]
     xdata = data_points[:,0]
     return xdata, ydata
 
 
-def main():
-    # simulation_directory = 'c:/Users/Axel/Documents/DEM/results/cube_die_compaction/3'
-    # simulation_directory = "c:/Users/Axel/Documents/DEM/results/particle_tests/swelling/swelling_cube_die_compaction/"
-    # simulation_directory = "c:/Users/Axel/Documents/DEM/results/particle_tests/material_scaling/material_scaling_cube_die_compaction/no_restart/"
-    # simulation_directory = "c:/Users/Axel/Documents/DEM/results/particle_tests/material_scaling/material_scaling_cube_die_compaction/restart/"
-    # simulation_directory = "c:/Users/Axel/Documents/DEM/results/particle_tests/fracture_particle_cube_die_compaction/no_restart/"
-    # simulation_directory = "c:/Users/Axel/Documents/DEM/results/particle_tests/fracture_particle_cube_die_compaction/SN_0/"
-    # simulation_directory = "c:/Users/Axel/Documents/DEM/results/particle_tests/fracture_particle_cube_die_compaction/SN_1/"
-    # simulation_directory = "c:/Users/Axel/Documents/DEM/results/particle_tests/fracture_particle_cube_die_compaction/SN_2/"
-    # simulation_directory = "c:/Users/Axel/Documents/DEM/results/particle_tests/fracture_particle_cube_die_compaction/SN_3/"
-    simulation_directory = "c:/Users/Axel/Documents/DEM/results/particle_tests/fracture_particle_cube_die_compaction/SN_4/"
 
+def main():
+    # simulation_directory = "c:/Users/Axel/Documents/DEM/results/particle_tests/fracture_particle_periodic_compaction/SN_0/"
+    simulation_directory = "c:/Users/Axel/Documents/DEM/results/particle_tests/fracture_particle_periodic_compaction/SN_1/"
+    # simulation_directory = "c:/Users/Axel/Documents/DEM/results/particle_tests/fracture_particle_periodic_compaction/SN_2/"
+
+    box_vol = box_volume(simulation_directory)
+    ke = kinetic_energy(simulation_directory)
     particle_vol = particles_volume(simulation_directory)
-    pressure = pressures_box(simulation_directory)
+    pressure = top_surface_pressure(simulation_directory)
     time = Time(simulation_directory)
     rel_density = relative_density(simulation_directory)
     frac_particles = fractured_particles(simulation_directory)
     frac_particles_len = [np.shape(x)[0]-1 for x in frac_particles]
+
 
     figure_frac_particles, ax_frac_particles = plt.subplots()
     ax_frac_particles.plot(time, frac_particles_len)
@@ -163,6 +171,10 @@ def main():
     ax_density_time.set_xlabel("Time [s]")
     ax_density_time.set_ylabel("Density [-]")
 
+    figure_volume_time, ax_volume_time = plt.subplots()
+    ax_volume_time.plot(time, box_vol)
+    ax_volume_time.set_xlabel("Time [s]")
+    ax_volume_time.set_ylabel("Volume [m^3]")
 
     figure_pressure , ax_pressure = plt.subplots()
     ax_pressure.plot(rel_density,pressure, 'r-*',linewidth=3)
@@ -181,57 +193,14 @@ def main():
     ax_volume.set_xlabel("Time")
     # ax_volume.legend()
 
-    """
-    simulation_directory_unload = "c:/Users/Axel/Documents/DEM/results/particle_tests/swelling/" \
-                                  "swelling_cube_die_compaction/unload_D=0.8/"
-    particle_vol_unload = particles_volume(simulation_directory_unload)
-    pressure_unload  = pressures_box(simulation_directory_unload)
-    time_unload  = Time(simulation_directory_unload)
-    rel_density_unload  = relative_density(simulation_directory_unload)
 
-    ax_pressure.plot(rel_density_unload,pressure_unload, 'b-*',linewidth=3)
+    figure_ke, ax_ke = plt.subplots()
+    ax_ke.plot(time, ke)
+    ax_ke.set_ylabel("Kinetic energy")
+    ax_ke.set_xlabel("Time [s]")
 
-    ax_pressure_time.plot(time_unload ,pressure_unload, 'b-*',linewidth=3)
-
-    ax_volume.plot(time_unload ,particle_vol_unload, 'r-*',linewidth=3)
-    """
 
     plt.show()
-    # plt.plot(rel_density, pressure, label='DEM')
-    # reference_data_dir = 'c:/Users/Axel/Documents/DEM/results/cube_die_compaction/Data_from_Skrinjar/Isostatic_compaction_monolithic_5000_particles'
-    # print(data_grabber(reference_data_dir))
-    # plt.plot(data_grabber(reference_data_dir)[0], data_grabber(reference_data_dir)[1],label='Skrinjar')
-    # plt.legend()
-    # plt.ylabel("Pressure")
-    # plt.xlabel("Relative density D")
-    # plt.xlim(.6, .8)
-    # plt.show()
-
-
-
-    # plt.plot(time, pressure)
-    # plt.ylabel("Pressure [Pa]")
-    # plt.xlabel("time")
-    # plt.show()
-
-    # plt.plot(time, particle_vol)
-    # plt.ylabel("Volume")
-    # plt.xlabel("Time")
-    # plt.show()
-    # rint(surface_forces(simulation_directory))
-    # volume_box = (0.448928*2)**2 * dimensions_box(simulation_directory)[:]
-    # porosity = (1-(particle_volume()*(1+0.07/(0.33+0.07)))/volume_box)
-    # pressures = pressures_box(simulation_directory)[:]
-    # time = Time(simulation_directory)[:]
-    # plt.plot(pressures, porosity*100)
-    # plt.xlabel("Pressure [Pa]")
-    # plt.ylabel("Porosity")
-    # plt.show()
-    # plt.plot(time, pressures)
-    # plt.ylabel("Pressure [Pa]")
-    # plt.xlabel("time")
-    # plt.show()
-
 
 if __name__ == '__main__':
     main()

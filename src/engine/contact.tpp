@@ -186,8 +186,13 @@ std::string DEM::Contact<ForceModel, ParticleType>::get_output_string() const
     }
     ss << ", " << get_normal().x() << ", " << get_normal().y() << ", " << get_normal().z();
     ss << ", " << get_overlap() << ", " << force_model_.get_output_string() << "\n";
+
+    // Only prints active contacts (F!=0)
     if (force_model_.active()) return ss.str();
     else return std::string();
+
+    // Prints all initiated contacts, also inactive (F==0)
+    //    return ss.str();
 }
 
 template<typename ForceModel, typename ParticleType>

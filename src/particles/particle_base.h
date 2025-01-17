@@ -55,6 +55,9 @@ namespace DEM {
         [[nodiscard]] double get_material_scale_rate() const {return material_scale_rate_;}
         void set_material_scale_rate(const double& material_scale_rate) {material_scale_rate_ = material_scale_rate;}
 
+        [[nodiscard]] bool get_fracture() const {return fracture_;}
+        void set_fracture() {fracture_ = true;}
+
         [[nodiscard]] virtual std::string restart_data() const;
         void reset_contact_forces() {f_.set_zero(); torque_.set_zero(); }
     protected:
@@ -78,6 +81,8 @@ namespace DEM {
 
         double material_scaling_this_inc_{0};
         double material_scale_rate_{0};
+
+        bool fracture_ {false};
 
         // Needed for sticking friction model
         Vec3 displacement_this_inc_{ Vec3(0., 0., 0.)};

@@ -38,6 +38,7 @@ namespace DEM {
         void run_output(const std::chrono::duration<double>& increment);
 
         bool print_particles = false;
+        bool print_fractured_particles = false;
         bool print_kinetic_energy = false;
         bool print_surface_positions = false;
         bool print_surface_forces = false;
@@ -65,6 +66,7 @@ namespace DEM {
         std::vector<const ParticleType*> particles_to_print_;
 
         FuncVec output_functions_ {{Output::print_particles,           &Output::write_particles},
+                                   {Output::print_fractured_particles, &Output::write_fractured_particles},
                                    {Output::print_kinetic_energy,      &Output::write_kinetic_energy},
                                    {Output::print_surface_positions,   &Output::write_surface_positions},
                                    {Output::print_surface_forces,      &Output::write_surface_forces},
@@ -80,6 +82,7 @@ namespace DEM {
         std::chrono::duration<double> interval_;
 
         void write_particles() const;
+        void write_fractured_particles() const;
         void write_kinetic_energy() const;
         void write_surface_positions() const;
         void write_surface_forces() const;
