@@ -81,6 +81,7 @@ namespace DEM{
         bool particle_contact_ = false;
         bool adhesive_ = false;
         bool binder_contact_ = false;
+        bool binder_fracture_ = false;
 
         static unsigned M;
         double dt_ = 0;
