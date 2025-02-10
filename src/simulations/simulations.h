@@ -16,6 +16,7 @@ namespace DEM {
     void cathode_compaction(const std::string& settings_file_name);
     void cube_die_compaction(const std::string& settings_file_name);
     void material_scaling_particle_tester(const std::string& settings_file_name);
+    void fracturing_binder_tester(const std::string& settings_file_name);
     void fracturing_particle_tester(const std::string& settings_file_name);
     void fracturing_particle_plate_compression(const std::string& settings_file_name);
     void fracturing_particle_cube_die_compaction(const std::string& settings_file_name);

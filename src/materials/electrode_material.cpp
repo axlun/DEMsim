@@ -22,7 +22,7 @@ DEM::ElectrodeMaterial::ElectrodeMaterial(const ParameterMap& parameters) :
     E(parameters.get_parameter<double>("E")),
     nu(parameters.get_parameter<double>("nu")),
     binder_yield_stress_(parameters.get_parameter<double>("binder_yield_stress_")),//Binder yield strength
-    binder_fracture_strain(parameters.get_parameter<double>("binder_fracture_strain_")),
+    binder_fracture_strain_(parameters.get_parameter<double>("binder_fracture_strain_")),
     Ep(parameters.get_parameter<double>("Ep")),
     nup(parameters.get_parameter<double>("nup")),
     rhop(parameters.get_parameter<double>("rhop")),

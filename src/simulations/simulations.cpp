@@ -14,6 +14,7 @@ std::map<std::string, DEM::SimulationFunctionPtr> DEM::valid_simulations() {
             {"cube_die_compaction",                                                      DEM::cube_die_compaction},
             {"cathode_compaction",                                                        DEM::cathode_compaction},
             {"material_scaling_particle_tester",                            DEM::material_scaling_particle_tester},
+            {"fracturing_binder_tester",                                        DEM::fracturing_binder_tester},
             {"fracturing_particle_tester",                                        DEM::fracturing_particle_tester},
             {"fracturing_particle_plate_compression",                  DEM::fracturing_particle_plate_compression},
             {"fracturing_particle_cube_die_compaction",              DEM::fracturing_particle_cube_die_compaction},
@@ -29,11 +30,9 @@ std::map<std::string, DEM::SimulationFunctionPtr> DEM::valid_simulations() {
             {"swelling_periodic_packing",                                          DEM::swelling_periodic_packing},
             {"swelling_electrode_calendering",                                DEM::swelling_electrode_calendering},
             {"swelling_electrode_mechanical_loading",                  DEM::swelling_electrode_mechanical_loading},
-
             {"fracturing_periodic_packing",                                          DEM::fracturing_periodic_packing},
             {"fracturing_electrode_calendering",                                DEM::fracturing_electrode_calendering},
             {"fracturing_electrode_mechanical_loading",                  DEM::fracturing_electrode_mechanical_loading},
-
             {"electrode_cycling",                                                          DEM::electrode_cycling},
             {"periodic_bc_restart_tester",                                        DEM::periodic_bc_restart_tester},
             {"contact_tester",                                                                DEM::contact_tester},

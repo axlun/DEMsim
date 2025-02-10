@@ -286,26 +286,30 @@ double  DEM::fracturing_swelling_elastic_plastic_binder_elastic_plastic_particle
 // ==BINDER CONTACT MODEL===============================================================================================
     if(binder_contact_)
     {
-        double h_def= hmax_/(1.0 - binder_yield_stress_/material->Ep);
-        if (h_def < -bt_) h_def = -bt;
-        if (((h_ > h_def) && !particle_contact_) || (bonded_ && !particle_contact_)) //If there is overlap of the plastically deformed binder
-//        if (((h_ > -bt_) && !particle_contact_) || (bonded_ && !particle_contact_)) //If there is overlap of the binder
-        {                                                                           //or the binder contact is bonded_
+        double h_def= hmax_ -  binder_yield_stress_*A/(psi0_*(1-alpha_i[0]));
+                                                                      // Stiffness for determining the plastic overlap
+                                                                      // is considering the relaxed binder stiffness
+                                                                      // (i.e. considering the damping factor)
+                                                                      // Plastic deformation of binder, where the binder
+                                                                      // contact stiffness is constant in relation to
+                                                                      // the initial binder thickness
+        if (h_def < -bt_) h_def = -bt_;
+
+        if (((h_ > h_def) && !particle_contact_) || (bonded_ && !particle_contact_))
+//        if (((h_ > -bt_) && !particle_contact_) || (bonded_ && !particle_contact_)) // Does not regard the plastic
+                                                                                      // deformation of the binder with
+                                                                                      // unbonded binder contacts
+        {
             double viscoelastic_summation = 0.;
             for (unsigned i = 0; i != M; i++)
             {
-                ddi_[i] = Ai[i] * ((bt_ + h_) - di_[i]) + Bi[i] * dh;
+                ddi_[i] = Ai[i] * ((-h_def + h_) - di_[i]) + Bi[i] * dh; //The deformed binder geometry must be regarded
+//                ddi_[i] = Ai[i] * ((bt_ + h_) - di_[i]) + Bi[i] * dh;
                 viscoelastic_summation += alpha_i[i] * ddi_[i];
                 di_[i] += ddi_[i];
             }
             F_binder += psi0_ * (dh - viscoelastic_summation);
-//            if (F_binder <= 0 && !bonded_)
-//            {
-//                F_binder = 0;
-//            }
-            // Check yield criterion and remove the stress added if the material has yielded
-            // Effective stress is set to uniaxial stress
-            //double sigma_Mises_effective_binder = F_binder/(A*(1-v1));
+
             double sigma_binder = F_binder/A;
             if (sigma_binder > binder_yield_stress_)
             {
@@ -317,21 +321,11 @@ double  DEM::fracturing_swelling_elastic_plastic_binder_elastic_plastic_particle
             }
 
             //=EVALUATION OF FRACTURE IN TENSION WHICH REGARDS PLASTIC COMPRESSION AND LENGTH DECREASE OF BINDER========
-         /*
-          * double h_def= hmax_/(1.0 - binder_yield_stress_/material->Ep);
-          * if (h_def < -bt_) h_defo = -bt;
+            double binder_strain = (h_def - h_)/-h_def; // Evaluation of fracture in tension which regards
+                                                        // the plastic deformation of the binder
+//            double binder_strain = -(bt_ + h_)/bt_; // Evaluation of fracture in tension which does not regard
+                                                    // the plastic deformation of the binder
 
-          * double binder_strain = (h_def - h_)/-h_def;
-          * if ( binder_strain >= material->binder_fracture_strain_ )
-          * {
-          *     binder_fracture_ = true;
-          *     bonded_ = false;
-          * }
-          */
-            //==========================================================================================================
-
-            //=EVALUATION OF BINDER FRACTURE IN TENSION CONSIDERING REFERENCE CONFIGURATION=============================
-            double binder_strain = -(bt_ + h_)/bt_;
             if ( binder_strain >= material->binder_fracture_strain_ )
             {
                 binder_fracture_ = true;
@@ -360,7 +354,6 @@ double  DEM::fracturing_swelling_elastic_plastic_binder_elastic_plastic_particle
             }
         }
         if ((F_binder > 0)  && adhesive() && !bonded_ && !binder_fracture_)
-//        if ((F_binder > 0)  && adhesive() && !bonded_)
         {
             bonded_ = true;
         }
