@@ -36,7 +36,7 @@ namespace DEM{
         [[nodiscard]] double get_normal_force() const {return F_;};
         [[nodiscard]] const Vec3& get_tangential_force() const { return FT_; }
         [[nodiscard]] Vec3 get_rolling_resistance_torque() const;
-        [[nodiscard]] double active() const {return F_ !=0; };
+        [[nodiscard]] double active() const {return F_ !=0 or binder_fracture_; };
         [[nodiscard]] std::string restart_data() const;
         [[nodiscard]] std::string get_output_string() const;
 

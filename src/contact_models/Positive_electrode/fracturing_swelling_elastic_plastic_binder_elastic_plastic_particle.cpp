@@ -296,15 +296,11 @@ double  DEM::fracturing_swelling_elastic_plastic_binder_elastic_plastic_particle
         if (h_def < -bt_) h_def = -bt_;
 
         if (((h_ > h_def) && !particle_contact_) || (bonded_ && !particle_contact_))
-//        if (((h_ > -bt_) && !particle_contact_) || (bonded_ && !particle_contact_)) // Does not regard the plastic
-                                                                                      // deformation of the binder with
-                                                                                      // unbonded binder contacts
         {
             double viscoelastic_summation = 0.;
             for (unsigned i = 0; i != M; i++)
             {
-                ddi_[i] = Ai[i] * ((-h_def + h_) - di_[i]) + Bi[i] * dh; //The deformed binder geometry must be regarded
-//                ddi_[i] = Ai[i] * ((bt_ + h_) - di_[i]) + Bi[i] * dh;
+                ddi_[i] = Ai[i] * ((-h_def + h_) - di_[i]) + Bi[i] * dh;
                 viscoelastic_summation += alpha_i[i] * ddi_[i];
                 di_[i] += ddi_[i];
             }
@@ -325,14 +321,12 @@ double  DEM::fracturing_swelling_elastic_plastic_binder_elastic_plastic_particle
                                                         // the plastic deformation of the binder
 //            double binder_strain = -(bt_ + h_)/bt_; // Evaluation of fracture in tension which does not regard
                                                     // the plastic deformation of the binder
-
-            if ( binder_strain >= material->binder_fracture_strain_ )
+            if ( binder_strain >= material->binder_fracture_strain_ and !binder_fracture_)
             {
                 binder_fracture_ = true;
                 bonded_ = false;
             }
             //==========================================================================================================
-
         }
         else if(particle_contact_) //Unloading of binder when particle contact is initiated
         {
@@ -456,7 +450,6 @@ void  DEM::fracturing_swelling_elastic_plastic_binder_elastic_plastic_particle::
             ddti_Scalar[i] = Ai[i] * (uT_new_mag -dti_Scalar[i]) + Bi[i]*(duT_mag);
             viscoelastic_sum += alpha_i[i] * ddti_Scalar[i];
             dti_Scalar[i] += ddti_Scalar[i];
-
         }
         FT_binder_Scalar_ += psi0T_B_ * (duT_mag - viscoelastic_sum);
         if (uT_.length()==0 && FT_binder_.length()==0){
@@ -469,7 +462,6 @@ void  DEM::fracturing_swelling_elastic_plastic_binder_elastic_plastic_particle::
         else
         {
             FT_binder_ = FT_binder_Scalar_*uT_.normal();
-
         }
     }
 
@@ -607,7 +599,7 @@ std::string DEM::fracturing_swelling_elastic_plastic_binder_elastic_plastic_part
         << FT_.x() << ", "  << FT_.y() << ", " << FT_.z() << ", "
         << FT_binder_.x() << ", "  << FT_binder_.y() << ", " << FT_binder_.z() << ", "
         << FT_part_.x() << ", "  << FT_part_.y() << ", " << FT_part_.z() << ", "
-        << binder_contact_ << ", " << bt_;
+        << binder_contact_ << ", " << bt_ << ", " << binder_fracture_;
     return ss.str();
 }
 
