@@ -80,6 +80,7 @@ add_executable(DEMsim
 				src/simulations/particle_tests/material_scaling_periodic_compaction.cpp
 				src/simulations/particle_tests/swelling_particle.cpp
 				src/simulations/particle_tests/fracture_particle.cpp
+				src/simulations/particle_tests/fracture_binder.cpp
 				src/simulations/particle_tests/fracture_particle_plate_compression.cpp
 				src/simulations/particle_tests/fracture_particle_cube_die_compaction.cpp
 				src/simulations/particle_tests/fracture_particle_periodic_compaction.cpp

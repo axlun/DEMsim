@@ -22,6 +22,7 @@ DEM::ElectrodeMaterial::ElectrodeMaterial(const ParameterMap& parameters) :
     E(parameters.get_parameter<double>("E")),
     nu(parameters.get_parameter<double>("nu")),
     binder_yield_stress_(parameters.get_parameter<double>("binder_yield_stress_")),//Binder yield strength
+    binder_fracture_strain_(parameters.get_parameter<double>("binder_fracture_strain_")),
     Ep(parameters.get_parameter<double>("Ep")),
     nup(parameters.get_parameter<double>("nup")),
     rhop(parameters.get_parameter<double>("rhop")),
@@ -68,6 +69,7 @@ std::string DEM::ElectrodeMaterial::restart_data() const {
        << named_print(E, "E") << ", "
        << named_print(nu, "nu") << ", "
        << named_print(binder_yield_stress_, "binder_yield_stress_") << ", "
+       << named_print(binder_fracture_strain_, "binder_fracture_strain_") << ", "
        << named_print(nup, "nup") << ", "
        << named_print(Ep, "Ep") << ", "
        << named_print(rhop, "rhop") << ", "

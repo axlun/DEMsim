@@ -27,6 +27,7 @@ namespace DEM {
         double E{ 0. };    // E0 for the binder material
         double nu{ 0. };   // nu for the binder material
         double binder_yield_stress_{ 1.0e99 };  //Yield strength for the binder material
+        double binder_fracture_strain_ { 1.0e99}; //Fracture strain for binder
         double particle_yield_stress_{ 1.0e99}; //Yield strength for the particle
         double particle_fracture_strength_{ 1.0e99};
         double fracture_degradation_factor_{1.0};
