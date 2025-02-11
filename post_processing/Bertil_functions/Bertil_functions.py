@@ -64,6 +64,24 @@ def input_output_return(command0):
     client.close()
     return bertil_output
 
+# Input: String with directory of simulation
+# Output: Time, binder contacts and active binder contacts and fractured binder contacts as np.array
+def fractured_binder_counter(sim_dir):
+    bertil_post_process_call = 'cd /scratch/users/axlun/DEMsim/post_processing/Bertil_functions/' \
+                               ' \npython3 binder_fracture_processing.py ' + sim_dir + '/contacts'
+    print('Calling post processing script on Bertil')
+    bertil_return = input_output_return(bertil_post_process_call)
+    bertil_return = bertil_return[0].split('] [')
+    time_vec = bertil_return[0][1:].split(', ')
+    binder_contact_vec = bertil_return[1].split(', ')
+    active_binder_contact_vec = bertil_return[2].split(', ')
+    fractured_binder_contact_vec = bertil_return[3][:-2].split(', ')
+    time_vec = np.array(time_vec, dtype=float)
+    binder_contact_vec = np.array(binder_contact_vec, dtype=float)
+    active_binder_contact_vec = np.array(active_binder_contact_vec, dtype=float)
+    fractured_binder_contact_vec = np.array(fractured_binder_contact_vec, dtype=float)
+    return time_vec, binder_contact_vec, active_binder_contact_vec, fractured_binder_contact_vec
+
 
 # Input: String with directory of simulation
 # Output: Time, particle contacts and binder contacts as np.array
