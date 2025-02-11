@@ -317,6 +317,24 @@ def bertil_data_gatherer(simulation_directory):
 
     return force_data, surface_force_index, surface_position_index, surface_position_data, periodic_BC_data, force_fabric_tensor_data, kinetic_energy_data
 
+def fractured_particle_gatherer(simulation_directory):
+
+    print("Getting fractured particles from Bertil.")
+    fractured_particle_list = one_file_reader(simulation_directory + '/fractured_particles.dou')
+    # fractured_particle_list = one_file_reader(simulation_directory + '/kinetic_energy.dou')
+
+    data = []
+    time = np.array([])
+    for line in fractured_particle_list:
+        row = line.strip().split(',')
+        row = np.array([float(x) for x in row])  # Create a NumPy array for each row
+        data.append(row)
+        time= np.append(time, row[-1])
+    fracture_array = np.array(data, dtype=object)
+
+    number_of_fractures = np.array([np.shape(x)[0]-1 for x in fracture_array])
+    return time, number_of_fractures, fracture_array
+
 
 if __name__ == '__main__':
     command0 = "cd /scratch/users/axlun/DEMsim/"
