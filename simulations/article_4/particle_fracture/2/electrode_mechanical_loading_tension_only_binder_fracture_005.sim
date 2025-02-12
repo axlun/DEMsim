@@ -1,0 +1,6 @@
+output_dir=/scratch/users/axlun/DEMsim/results/article_4/particle_fracture/2/electrode_mechanical_loading_only_binder_fracture_005_tension/
+restart_file_name=/scratch/users/axlun/DEMsim/results/article_4/particle_fracture/2/electrode_calendering_only_binder_fracture_005/calendered_electrode_restart_file.res
+loading_direction=1
+time_step=5e1
+mass_scaling=1e2
+strain_rate=2e-3
