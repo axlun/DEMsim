@@ -297,7 +297,7 @@ double  DEM::fracturing_swelling_elastic_plastic_binder_elastic_plastic_particle
 
         if (((h_ > h_def) && !particle_contact_) || (bonded_ && !particle_contact_))
         {
-            double viscoelastic_summation = 0.;
+            double viscoelastic_summation = .;
             for (unsigned i = 0; i != M; i++)
             {
                 ddi_[i] = Ai[i] * ((-h_def + h_) - di_[i]) + Bi[i] * dh;
@@ -351,7 +351,7 @@ double  DEM::fracturing_swelling_elastic_plastic_binder_elastic_plastic_particle
         {
             bonded_ = true;
         }
-        else if (F_binder <= 0 && adhesive() && !bonded_ && !material->new_binder_contacts)
+        else if (F_binder <= 0 && adhesive() && !bonded_ && !material->new_binder_contacts && !binder_fracture_)
         {
             binder_contact_ = false;
         }
