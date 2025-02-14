@@ -297,7 +297,7 @@ double  DEM::fracturing_swelling_elastic_plastic_binder_elastic_plastic_particle
 
         if (((h_ > h_def) && !particle_contact_) || (bonded_ && !particle_contact_))
         {
-            double viscoelastic_summation = .;
+            double viscoelastic_summation = 0.;
             for (unsigned i = 0; i != M; i++)
             {
                 ddi_[i] = Ai[i] * ((-h_def + h_) - di_[i]) + Bi[i] * dh;
