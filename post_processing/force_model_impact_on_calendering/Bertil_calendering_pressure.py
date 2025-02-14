@@ -294,12 +294,11 @@ def calendering_pressure_plotting_func(simulation_directory):
     lns_tau_zx = ax_force_fabric_stress_time.plot(calendering_time, -tau_zx * 1e-6, label=r'$\tau_{zx}$')
     lns_tau_zy = ax_force_fabric_stress_time.plot(calendering_time, -tau_zy * 1e-6, label=r'$\tau_{zy}$')
 
-    # ax_force_fabric_stress_time.set_ylim(ymin=-.005, ymax=.025)
-
     ax_force_fabric_stress_time.legend(loc="best")
     ax_force_fabric_stress_time.set_xlabel('Time [s]')
     ax_force_fabric_stress_time.set_ylabel('Stress [MPa]')
-    # ax_force_fabric_stress_time.set_ylim(ymin=-.005, ymax=160)
+    ax_force_fabric_stress_time.set_xlim(xmin=15, xmax=35)
+    ax_force_fabric_stress_time.set_ylim(ymin=-8, ymax=220)
     fig_force_fabric_stress_time.tight_layout()
 
     fname = fig_dir + 'all_stress_time'
@@ -351,7 +350,16 @@ def calendering_pressure_plotting_func(simulation_directory):
 
 if __name__ == '__main__':
     # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_4/particle_fracture/2/periodic_packing/'
-    simulation_directory = '/scratch/users/axlun/DEMsim/results/article_4/particle_fracture/2/electrode_calendering/'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_4/particle_fracture/2/electrode_calendering_binder_fracture_005/'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_4/particle_fracture/2/electrode_calendering/'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_4/particle_fracture/2/electrode_calendering_fracture/'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_4/particle_fracture/2/electrode_calendering_binder_fracture_005/'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_4/particle_fracture/2/electrode_calendering_binder_fracture_01/'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_4/particle_fracture/2/electrode_calendering_binder_fracture_02/'
+
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_4/particle_fracture/2/electrode_calendering_only_binder_fracture_005/'
+    simulation_directory = '/scratch/users/axlun/DEMsim/results/article_4/particle_fracture/2/electrode_calendering_only_binder_fracture_01/'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_4/particle_fracture/2/electrode_calendering_only_binder_fracture_02/'
 
     calendering_pressure_plotting_func(simulation_directory)
     print('show plots')

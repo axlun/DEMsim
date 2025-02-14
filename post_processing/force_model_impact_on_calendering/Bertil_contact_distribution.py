@@ -46,10 +46,14 @@ if __name__ == '__main__':
     # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/charge_cycling/SN_1_reduced_cal/swelling_electrode_calendering_1135/'
 
     # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/charge_cycling/SN_3/swelling_electrode_calendering/'
-    simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/charge_cycling/SN_3/electrode_swelling_material_scaling/'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/charge_cycling/SN_3/electrode_swelling_material_scaling/'
 
     # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/charge_cycling/SN_1/swelling_electrode_calendering/'
     # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/result_discrepancies/SN_1/swelling_electrode_calendering/'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_4/particle_fracture/2/electrode_mechanical_loading_tension_cpy'
+
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_4/particle_fracture/2/electrode_calendering_only_binder_fracture_01/'
+    simulation_directory = '/scratch/users/axlun/DEMsim/results/article_4/particle_fracture/2/electrode_mechanical_loading_only_binder_fracture_01_tension'
 
     fig_dir = 'C:/temp/figures/Bertil_contact_distribution/'
     try:

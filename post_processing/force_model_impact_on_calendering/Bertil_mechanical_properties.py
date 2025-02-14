@@ -1,4 +1,4 @@
-from force_model_impact_on_calendering.Bertil_calendering_pressure import local_data_gatherer, bertil_data_gatherer, contact_counter_bertil
+from force_model_impact_on_calendering.Bertil_calendering_pressure import local_data_gatherer, bertil_data_gatherer, contact_counter_bertil, fractured_binder_counter
 from force_model_impact_on_calendering.Local_contact_distribution import contact_counter_local
 
 import numpy as np
@@ -338,6 +338,65 @@ def mechanical_properties_plotting_func(simulation_directory, stiffness_at_point
         fname = fig_dir + 'contacts_to_strain'
         plt.savefig(fname)
 
+    if binder_fracture_flag:
+
+        time_vec_t, binder_contact_vec_t, active_binder_contact_vec_t, fractured_binder_contact_vec_t = fractured_binder_counter(
+            simulation_directory + '_tension')
+        time_vec_c, binder_contact_vec_c, active_binder_contact_vec_c, fractured_binder_contact_vec_c = fractured_binder_counter(
+            simulation_directory + '_compression')
+
+
+        rm_list_compression = []
+        for i in range(len(time_compression)-1):
+            if time_compression[i] == time_compression[i+1]:
+                rm_list_compression.append(i)
+        time_compression_short = np.delete(time_compression,rm_list_compression)
+        linear_strain_compression_short = np.delete(linear_strain_compression,rm_list_compression)
+
+        rm_list_tension = []
+        for i in range(len(time_tension)-1):
+            if time_tension[i] == time_tension[i+1]:
+                rm_list_tension.append(i)
+        time_tension_short = np.delete(time_tension,rm_list_tension)
+        linear_strain_tension_short = np.delete(linear_strain_tension,rm_list_tension)
+
+        fig_binder_fracture,ax_binder_fracture= plt.subplots()
+
+        lns_binder_compression = ax_binder_fracture.plot(linear_strain_compression_short[:300] * 100,
+                                                                  binder_contact_vec_c[:300],'C0')
+        lns_binder_tension = ax_binder_fracture.plot(linear_strain_tension_short[:300] * 100,
+                                                              binder_contact_vec_t[:300],'C0',label=r'Binder contacts')
+
+        lns_active_binder_compression = ax_binder_fracture.plot(linear_strain_compression_short[:300] * 100,
+                                                                  active_binder_contact_vec_c[:300],'C1')
+        lns_active_binder_fracture_tension = ax_binder_fracture.plot(linear_strain_tension_short[:300] * 100,
+                                                              active_binder_contact_vec_t[:300],'C1',label=r'Active binder contacts')
+
+        lns_binder_fracture_compression = ax_binder_fracture.plot(linear_strain_compression_short[:300] * 100,
+                                                                fractured_binder_contact_vec_c[:300],'C2')
+        lns_binder_fracture_tension = ax_binder_fracture.plot(linear_strain_tension_short[:300] * 100,
+                                                            fractured_binder_contact_vec_t[:300],'C2',label=r'Fractured binder contacts')
+        ax_binder_fracture.set_ylim(ymin=0)
+        ax_binder_fracture.set_xlim(xmin=-2.2, xmax=2.2)
+        ax_binder_fracture.set_ylabel('Fractured binder contacts [-]')
+        ax_binder_fracture.set_xlabel('Strain [%]')
+        ax_binder_fracture.legend(loc='best')
+        fname = fig_dir + 'fractured_binder_contacts_to_strain'
+        plt.savefig(fname)
+
+
+        fig_normalised_binder_fracture,ax_normalised_binder_fracture= plt.subplots()
+        lns_binder_fracture_compression = ax_normalised_binder_fracture.plot(linear_strain_compression_short[:300] * 100,
+                                                                  fractured_binder_contact_vec_c[:300]/binder_contact_vec_c[:300],'C0')
+        lns_binder_fracture_tension = ax_normalised_binder_fracture.plot(linear_strain_tension_short[:300] * 100,
+                                                      fractured_binder_contact_vec_t[:300]/binder_contact_vec_t[:300],'C0')
+        ax_normalised_binder_fracture.set_ylim(ymin=0)
+        ax_normalised_binder_fracture.set_xlim(xmin=-2.2, xmax=2.2)
+        ax_normalised_binder_fracture.set_ylabel('Fractured binder contacts over total [-]')
+        ax_normalised_binder_fracture.set_xlabel('Strain [%]')
+        fname = fig_dir + 'normalised_fractured_binder_contacts_to_strain'
+        plt.savefig(fname)
+
 if __name__ == '__main__':
     # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/final_runs_2/SN_101/1/electrode_mechanical_loading_hertz'
     # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_2/final_runs_2/SN_201_periodic_packing/3/electrode_mechanical_loading_el_pl_binder_el_pl_particle'
@@ -345,7 +404,7 @@ if __name__ == '__main__':
     # simulation_directory = 'c:/Users/Axel/Documents/DEM/results/swelling_electrode/SN_5/swelling_electrode_mechanical_loading_ss_0.9'
     # simulation_directory = 'c:/Users/Axel/Documents/DEM/results/swelling_electrode/SN_5/swelling_electrode_mechanical_loading_ss_0.95'
 
-    simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/charge_cycling/SN_1/swelling_electrode_mechanical_loading'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/charge_cycling/SN_1/swelling_electrode_mechanical_loading'
     # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/charge_cycling/SN_1/swelling_electrode_mechanical_loading_material_scaling'
     # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/charge_cycling/SN_1/swelling_electrode_mechanical_loading_material_scaling_05'
     # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/charge_cycling/SN_1/swelling_electrode_mechanical_loading_ss_1.06266_material_scaling'
@@ -366,7 +425,7 @@ if __name__ == '__main__':
     # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/charge_cycling/SN_2/swelling_electrode_mechanical_loading_ss_1.06266'
     # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/charge_cycling/SN_2/swelling_electrode_mechanical_loading_cycle_1'
     # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/charge_cycling/SN_2/swelling_electrode_mechanical_loading_cycle_3'
-    simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/charge_cycling/SN_2/swelling_electrode_mechanical_loading_cycle_10'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/charge_cycling/SN_2/swelling_electrode_mechanical_loading_cycle_10'
 
     # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/charge_cycling/SN_3/swelling_electrode_mechanical_loading'
     # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/charge_cycling/SN_3/swelling_electrode_mechanical_loading_material_scaling'
@@ -377,6 +436,25 @@ if __name__ == '__main__':
     # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/charge_cycling/SN_3/swelling_electrode_mechanical_loading_cycle_3'
     # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_3/charge_cycling/SN_3/swelling_electrode_mechanical_loading_cycle_10'
 
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_4/particle_fracture/1/electrode_mechanical_loading'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_4/particle_fracture/1/electrode_mechanical_loading_fracture'
+
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_4/particle_fracture/2/electrode_mechanical_loading'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_4/particle_fracture/2/electrode_mechanical_loading_fracture'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_4/particle_fracture/2/electrode_mechanical_loading_fracture_SF_1E6'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_4/particle_fracture/2/electrode_mechanical_loading_fracture_fdeg_08'
+
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_4/particle_fracture/2/electrode_mechanical_loading_binder_fracture_005'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_4/particle_fracture/2/electrode_mechanical_loading_binder_fracture_01'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_4/particle_fracture/2/electrode_mechanical_loading_binder_fracture_02'
+
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_4/particle_fracture/2/electrode_mechanical_loading'
+    simulation_directory = '/scratch/users/axlun/DEMsim/results/article_4/particle_fracture/2/electrode_mechanical_loading_only_binder_fracture_005'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_4/particle_fracture/2/electrode_mechanical_loading_only_binder_fracture_01'
+    # simulation_directory = '/scratch/users/axlun/DEMsim/results/article_4/particle_fracture/2/electrode_mechanical_loading_only_binder_fracture_02'
+
+
+    binder_fracture_flag = 0
     stiffness_at_points_flag = 1
     contact_flag = 0
     mechanical_properties_plotting_func(simulation_directory, stiffness_at_points_flag, contact_flag)

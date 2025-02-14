@@ -26,7 +26,7 @@ def main():
     # ==SWELLING PARTICLE TESTING=======================================================================================
     # simulation_directory = "C:/Users/Axel/Documents/DEM/results/particle_tests/swelling/swelling_cube_die_compaction/no_restart/"
     # simulation_directory = "c:/Users/Axel/Documents/DEM/results/particle_tests/material_scaling/material_scaling_cube_die_compaction/no_restart/"
-    simulation_directory = 'c:/Users/Axel/Documents/DEM/results/particle_tests/material_scaling/material_scaling_periodic_compaction/no_restart/'
+    # simulation_directory = 'c:/Users/Axel/Documents/DEM/results/particle_tests/material_scaling/material_scaling_periodic_compaction/no_restart/'
 
     # ==PERIODIC BC RESTART TEST=======================================================================================
     # simulation_directory = "C:/Users/Axel/Documents/DEM/results/periodic_bc_tests/no_restart/"
@@ -43,6 +43,8 @@ def main():
 
     # ==PERIODIC_PACKING================================================================================================
     # simulation_directory = 'c:/Users/Axel/Documents/DEM/results/swelling_electrode/SN_5/electrode_swelling/'
+
+    simulation_directory = 'C:/Users/Axel/Documents/DEM/Bertil_results/article_4/particle_fracture/2/electrode_mechanical_loading_only_binder_fracture_02_tension'
 
     fig = mlab.figure(size=(1920, 1200), bgcolor=(1., 1., 1.), fgcolor=(0, 0., 0.))
     visual.set_viewer(fig)
@@ -86,7 +88,7 @@ def main():
     animation.plot_periodic_bc = False
     animation.mirror_particles = True
     animation.view_surfaces = True
-    animation.nth_timeframe = 1
+    animation.nth_timeframe = 3
     animation.start_time = 0
     # animation.end_time = 0.5
 
