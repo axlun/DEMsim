@@ -41,7 +41,8 @@ if __name__ == '__main__':
                 binder_contact += 1
             if data[j, 6] != 0 and (data[j, 6]) == (data[j, 8]):
                 particle_contact += 1
-            if data[j, 6] != 0 and data[j, 7] != 0 and data[j, 8] != 0 and data[j, 6] == data[j, 7] + data[j, 8]:
+            # if data[j, 6] != 0 and data[j, 7] != 0 and data[j, 8] != 0 and data[j, 6] == data[j, 7] + data[j, 8]:
+            if data[j, 6] != 0 and data[j, 7] != 0 and data[j, 8] != 0 and abs((data[j, 6] - (data[j, 7] + data[j, 8]))/data[j, 6]) < 1e-3:
                 binder_particle_contact += 1
 
             # if (data[j, 6]) != 0 and (data[j, 8]) == 0.0:
