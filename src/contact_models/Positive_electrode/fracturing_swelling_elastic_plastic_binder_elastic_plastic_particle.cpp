@@ -295,7 +295,7 @@ double  DEM::fracturing_swelling_elastic_plastic_binder_elastic_plastic_particle
                                                                       // the initial binder thickness
         if (h_def < -bt_) h_def = -bt_;
 
-        if (((h_ > h_def) && !particle_contact_) || (bonded_ && !particle_contact_))
+        if (((h_ > h_def) && !particle_contact_) || (bonded_ && !particle_contact_ && !binder_fracture_))
         {
             double viscoelastic_summation = 0.;
             for (unsigned i = 0; i != M; i++)
@@ -324,7 +324,6 @@ double  DEM::fracturing_swelling_elastic_plastic_binder_elastic_plastic_particle
             if ( binder_strain >= material->binder_fracture_strain_ and !binder_fracture_)
             {
                 binder_fracture_ = true;
-                bonded_ = false;
             }
             //==========================================================================================================
         }
@@ -337,6 +336,15 @@ double  DEM::fracturing_swelling_elastic_plastic_binder_elastic_plastic_particle
             if (F_binder <= 0)
             {
                 F_binder = 0;
+            }
+        }
+        else if (binder_fracture_ && bonded_)
+        {
+            F_binder *= 1-Ai[0];                 // The force in the binder is multiplied by exp(-\delta t / \tau)
+            if ( F_binder > - psi0_ * bt_*1E-3 ) // when the binder force is lower than at elastic loading of 0.1% strain,
+                                                 // the binder is considered fully fractured and bonded_ is removed
+            {
+                bonded_ = false;
             }
         }
         else //Removes any residual binder force if there is no binder contact
@@ -424,7 +432,8 @@ double  DEM::fracturing_swelling_elastic_plastic_binder_elastic_plastic_particle
         F_particle = 0;
     }
 
-    if (adhesive() && bonded_ && !binder_fracture_)
+    if (adhesive() && bonded_)
+//    if (adhesive() && bonded_ && !binder_fracture_)
     {
         return std::max(F_particle,0.)+F_binder;
     }
