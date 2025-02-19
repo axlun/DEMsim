@@ -110,6 +110,7 @@ add_executable(DEMsim
 				src/simulations/Force_model_impact_on_electrode/fracture/fracturing_periodic_packing.cpp
 				src/simulations/Force_model_impact_on_electrode/fracture/fracturing_electrode_calendering.cpp
 				src/simulations/Force_model_impact_on_electrode/fracture/fracturing_electrode_mechanical_loading.cpp
+				src/simulations/Force_model_impact_on_electrode/fracture/fracturing_electrode_cycling.cpp
 				src/simulations/Force_model_impact_on_electrode/swelling/swelling_electrode_calendering.cpp
 				src/simulations/Force_model_impact_on_electrode/swelling/swelling_periodic_packing.cpp
 				src/simulations/Force_model_impact_on_electrode/swelling/electrode_swelling.cpp

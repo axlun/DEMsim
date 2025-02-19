@@ -23,6 +23,7 @@ namespace DEM {
     void fracturing_particle_periodic_compaction(const std::string& settings_file_name);
     void fracturing_periodic_packing(const std::string& settings_file_name);
     void fracturing_electrode_calendering(const std::string& settings_file_name);
+    void fracturing_electrode_cycling(const std::string& settings_file_name);
     void fracturing_electrode_mechanical_loading(const std::string& settings_file_name);
     void swelling_particle_tester(const std::string& settings_file_name);
     void swelling_particle_wall_tester(const std::string& settings_file_name);
