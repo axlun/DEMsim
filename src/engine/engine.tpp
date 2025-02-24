@@ -791,7 +791,8 @@ void DEM::Engine<ForceModel, ParticleType>::move_surfaces()
         for(unsigned axis = 0; axis != 3; ++axis) {
             auto force_amp = surface_forces[axis];
             if (force_amp != nullptr) {
-                double f = force_amp->value() + surface->get_total_force()[axis];
+                double f = force_amp->value() + surface->get_total_force()[axis] -
+                        velocity[axis] *  surface->get_damping_coefficient();
                 double a = f/(surface->get_mass()*mass_scale_factor_) + gravity_[axis];
                 velocity[axis] +=  a*dt;
                 distance[axis] = velocity[axis]*dt;

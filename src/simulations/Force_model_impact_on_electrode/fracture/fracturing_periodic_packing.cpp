@@ -61,6 +61,7 @@ void DEM::fracturing_periodic_packing(const std::string& settings_file_name) {
 
     mat->binder_radius_fraction = parameters.get_parameter<double>("binder_radius_fraction");
     mat->binder_thickness_fraction = parameters.get_parameter<double>("binder_thickness_fraction");
+    mat->binder_fracture_strain_ = parameters.get_parameter<double>("binder_fracture_strain");
     mat->binder_yield_stress_ = parameters.get_parameter<double>("binder_yield_stress_");
     mat->fraction_binder_contacts = parameters.get_parameter<double>("fraction_binder_contacts");
     auto particle_density_at_filling = parameters.get_parameter<double>("filling_density");

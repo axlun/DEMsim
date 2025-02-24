@@ -49,6 +49,8 @@ namespace DEM {
         virtual void move(const Vec3& distance, const Vec3& velocity) = 0;
         virtual void rotate(const Vec3& position, const Vec3& rotation_vector) = 0;
 
+        double get_damping_coefficient() const { return damping_coeff_; }
+        void set_damping_coefficient(double damping_coeff) {damping_coeff_ = damping_coeff; }
 
         double get_mass() const { return mass_; }
         void set_mass(double mass) {mass_ = mass; }
@@ -96,6 +98,7 @@ namespace DEM {
         std::size_t collision_id_;
         std::string name_;
         double mass_ { 0 };
+        double damping_coeff_ { 0 };
         bool adhesive_ {false};
         std::array<ForceAmpPtr, 3> force_control_amplitudes_ = {nullptr, nullptr, nullptr};
 

@@ -30,6 +30,7 @@ DEM::Surface<ForceModel, ParticleType>::Surface(const DEM::ParameterMap& paramet
     collision_id_(parameters.get_parameter<std::size_t>("collision_id")),
     name_(parameters.get_parameter<std::string>("name")),
     mass_(parameters.get_parameter<double>("mass")),
+    damping_coeff_(parameters.get_parameter<double>("damping_coeff")),
     adhesive_(false),
     force_control_amplitudes_ {nullptr, nullptr, nullptr}
 {
@@ -142,6 +143,7 @@ std::string DEM::Surface<ForceModel, ParticleType>::restart_data() const {
        << named_print(type(), "type") << ", "
        << named_print(name_, "name") << ", "
        << named_print(mass_, "mass") << ", "
+       << named_print(damping_coeff_, "damping_coeff") << ", "
        << named_print(velocity_, "v") << ", "
        << named_print(acceleration_, "a") << ", "
        << named_print(displacement_this_inc_, "disp_this_inc") << ", "

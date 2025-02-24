@@ -27,12 +27,13 @@ void DEM::fracturing_electrode_cycling(const std::string &settings_file_name)
     simulator.remove_output(Calendering_output);
 
     auto mat = dynamic_cast<ElectrodeMaterial *>(simulator.get_material(0));
+    mat->new_binder_contacts = false;
 
     std::chrono::duration<double> cycling_time{parameters.get_parameter<double>("cycling_time")};
 
     auto restart_array = parameters.get_vector<unsigned>("restart_array");
 
-//==================SET TIME STEP AND MASS SCALING=======================================================================
+//==================SET TIME STEP AND MASS SCALING======================================================================
     double time_step = parameters.get_parameter<double>("time_step") * 1e-6;
     std::chrono::duration<double> time_step_us{time_step};
     std::cout << "Time step is:" << time_step_us.count() * 1E6 << " µs\n";
@@ -42,7 +43,7 @@ void DEM::fracturing_electrode_cycling(const std::string &settings_file_name)
     simulator.set_mass_scale_factor(mass_scaling_factor);
 //======================================================================================================================
 
-//====================MAKE OUTPUT PRESCRIBED==============================================================================
+//====================MAKE OUTPUT PRESCRIBED============================================================================
     double output_number = parameters.get_parameter<double>("output_number");
     std::chrono::duration<double> output_interval{cycling_time.count() / output_number};
     std::cout << "Output interval is: " << output_interval.count() << "s\n";
@@ -92,42 +93,109 @@ void DEM::fracturing_electrode_cycling(const std::string &settings_file_name)
         material_scaling_state = to_be_material_scaling;
     }
 
+    //==REST LAYER BEFORE SIMULATION====================================================================================
     std::chrono::duration<double> resting_time{cycling_time.count() / 10.};
     std::cout << "Running for resting time: " << resting_time.count() << std::endl;
     EngineType::RunForTime run_for_resting_time(simulator, resting_time);
-//    simulator.run(run_for_resting_time);
-
-    //==PLACE TOP SURFACE ON ACTIVE LAYER===============================================================================
-    //move top_surface "closer" to active layer
-    /*
-    auto top_surface = simulator.get_surface<EngineType::PointSurfacePointer>("top_plate");
-
-    auto surface_area = pow(2*top_surface->get_points()[0][0], 2);
-    std::cout << "surface_area = " << surface_area << std::endl;
-
-    auto compression_force = compression_pressure * 1E6 * surface_area;
-    std::cout << "compression_force = " << compression_force << std::endl;
-
-    auto bottom_surface = simulator.get_surface<EngineType::DeformablePointSurfacePointer>("bottom_plate");
-
-    top_surface->set_velocity(Vec3(0,0,-surface_velocity));
-    top_surface->set_adhesive(surface_adhesion);
-    std::cout << "**************** Moving top surface with velocity "<< surface_velocity << ", to pressure " <<
-        compression_pressure <<" ****************\n";
-
-    EngineType::SurfaceNormalForceGreater compaction_force(top_surface, compression_force);
-    simulator.run(compaction_force);
-
-    top_surface->set_velocity(Vec3(0, 0, 0));
-    */
+    simulator.run(run_for_resting_time);
     //==================================================================================================================
-    //=MOVE TOP SURFACE FROM LAYER======================================================================================
-    auto calendering_surface = simulator.get_surface<EngineType::PointSurfacePointer>("top_plate");
-    //Remove calendering surface from RVE
-    auto bbox = simulator.get_bounding_box(); //get the XYZ max/min that contain all particles
-    double h_1 = bbox[5]; //height of uppermost particle (Z-max)
-    double surface_removal_distance = h_1 + 1 - calendering_surface->get_points()[0].z();
-    calendering_surface->move(Vec3(0, 0,  surface_removal_distance), Vec3(0, 0, 0));
+
+    //==ADD IN-PLANE STRAIN BOUNDARY CONDITION==========================================================================
+    try
+    {
+        double in_plane_strain = parameters.get_parameter<double>("in_plane_strain");
+        std::chrono::duration<double> in_plane_strain_loading_time{cycling_time.count() / 10.};
+        double in_plane_strain_rate = in_plane_strain / in_plane_strain_loading_time.count();
+        std::cout << "Applying an in-plane strain of:" << in_plane_strain << ", at a strain rate of:"
+            << in_plane_strain_rate << ", for a time of:" << in_plane_strain_loading_time.count() <<"\n";
+        simulator.set_periodic_boundary_condition_strain_rate('x',in_plane_strain_rate);
+        auto deformable_surface = simulator.get_surface<EngineType::DeformablePointSurfacePointer>("bottom_plate");
+        deformable_surface->set_in_plane_strain_rates(in_plane_strain_rate,0);
+
+        EngineType::RunForTime run_for_periodic_BC_stretch(simulator, in_plane_strain_loading_time);
+        simulator.run(run_for_periodic_BC_stretch);
+    }
+    catch (std::invalid_argument const &ex)
+    {
+        std::cout << ex.what()<<'\n';
+        std::cout << "No in-plane strain found in input file.\n";
+    }
+    //==================================================================================================================
+
+    //==ADD OUT OF PLANE STRESS BOUNDARY CONDITION======================================================================
+    try
+    {
+        double out_of_plane_pressure = parameters.get_parameter<double>("out_of_plane_pressure");
+        auto periodic_BCs = simulator.get_periodic_boundaries();
+        auto RVE_out_of_plane_area = (periodic_BCs[0].max-periodic_BCs[0].min)*(periodic_BCs[1].max-periodic_BCs[1].min);
+        double compaction_force = out_of_plane_pressure*RVE_out_of_plane_area;
+
+        std::cout << "A out of plane pressure of: " << out_of_plane_pressure << ", and a out of plane area of: " <<
+            RVE_out_of_plane_area << ", results in a compaction force of:" << compaction_force <<"\n";
+
+//        double force_range = compaction_force/1e0;
+//        double distance_range = 1e-1;
+//        double time_range = 1e-3;//1e-2;
+//        double velocity_range = distance_range / time_range;
+//        double acceleration_range = velocity_range / time_range;
+
+//        double surface_mass = parameters.get_parameter<double>("surface_mass");
+//        double surface_mass = force_range / acceleration_range;
+        double surface_mass {1e3};
+//        double surface_damping_coefficient = parameters.get_parameter<double>("surface_damping_coefficient");
+//        double surface_damping_coefficient = force_range / velocity_range;
+        double surface_damping_coefficient {2.5E8}; // based on feeling
+
+        std::cout << "The surface is given a mass of " << surface_mass <<
+            ", and a damping coefficient of " << surface_damping_coefficient << "\n";
+
+        // Move top surface to top of electrode layer
+        auto top_surface = simulator.get_surface<EngineType::PointSurfacePointer>("top_plate");
+        auto bbox = simulator.get_bounding_box();
+        double particle_height = bbox[5];
+
+        double max_binder_thickness {0};
+        for (auto& p: simulator.get_particles())
+        {
+            if (mat->binder_thickness_fraction*p->get_radius() > max_binder_thickness)
+            {
+                max_binder_thickness = mat->binder_thickness_fraction*p->get_radius();
+            }
+        }
+        auto distance_to_move = top_surface->get_points()[0].z() - (particle_height + 1.01*max_binder_thickness) ;
+        auto surface_velocity = particle_height / ( 5e0 * cycling_time.count() );
+        top_surface->move(-Vec3(0,0, distance_to_move), -Vec3(0,0,surface_velocity));
+        // Move top surface to that the desired compressive force is reached
+        std::cout << "Compressing layer to a compaction force of: " << compaction_force
+            << "with a velocity of : " << surface_velocity<< "\n";
+        EngineType::SurfaceNormalForceGreater control_force(top_surface, compaction_force);
+        simulator.run(control_force);
+        top_surface->set_velocity(Vec3(0,0,0));
+
+        // Add the prescribed force regulator
+        top_surface->set_mass(surface_mass);
+        top_surface->set_damping_coefficient(surface_damping_coefficient);
+        auto amp_func = [compaction_force]() { return -compaction_force; };
+        auto amp = std::make_shared<DEM::Amplitude>(amp_func);
+        std::cout << "amp->value() = " << amp->value() << "\n";
+        top_surface->set_force_amplitude(amp,'z');
+//        simulator.set_force_control_on_surface(top_surface,'z'); //This function resets the surface force amplitude...
+    }
+    catch (std::invalid_argument const &ex)
+    {
+        std::cout << ex.what() << '\n';
+        std::cout << "No out of plane stress found in input file.\nMove top surface from layer.\n";
+
+        //=MOVE TOP SURFACE FROM LAYER==================================================================================
+        auto calendering_surface = simulator.get_surface<EngineType::PointSurfacePointer>("top_plate");
+        //Remove calendering surface from RVE
+        auto bbox = simulator.get_bounding_box(); //get the XYZ max/min that contain all particles
+        double h_1 = bbox[5]; //height of uppermost particle (Z-max)
+        double surface_removal_distance = h_1 + 1 - calendering_surface->get_points()[0].z();
+        calendering_surface->move(Vec3(0, 0,  surface_removal_distance), Vec3(0, 0, 0));
+        //==============================================================================================================
+    }
+
     //==================================================================================================================
 
     // Give array of after which cycles a restart should be written.
