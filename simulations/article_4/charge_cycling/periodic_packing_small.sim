@@ -1,4 +1,4 @@
-N=250
+N=500
 filling_density=0.12
 output_dir=/scratch/users/axlun/DEMsim/results/article_4/charge_cycling/periodic_packing_small/
 radius_file=/scratch/users/axlun/DEMsim/simulations/article_2/particle_size_distribution/particle_radius_from_experiments_r_min_4_55_r_max_116.dat
