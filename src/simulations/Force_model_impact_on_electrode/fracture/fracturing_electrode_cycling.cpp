@@ -114,6 +114,8 @@ void DEM::fracturing_electrode_cycling(const std::string &settings_file_name)
 
         EngineType::RunForTime run_for_periodic_BC_stretch(simulator, in_plane_strain_loading_time);
         simulator.run(run_for_periodic_BC_stretch);
+        simulator.set_periodic_boundary_condition_strain_rate('x',0.);
+        deformable_surface->set_in_plane_strain_rates(0.,0.);
     }
     catch (std::invalid_argument const &ex)
     {
@@ -141,7 +143,7 @@ void DEM::fracturing_electrode_cycling(const std::string &settings_file_name)
 
 //        double surface_mass = parameters.get_parameter<double>("surface_mass");
 //        double surface_mass = force_range / acceleration_range;
-        double surface_mass {1e3};
+        double surface_mass {1e2};
 //        double surface_damping_coefficient = parameters.get_parameter<double>("surface_damping_coefficient");
 //        double surface_damping_coefficient = force_range / velocity_range;
         double surface_damping_coefficient {2.5E8}; // based on feeling
