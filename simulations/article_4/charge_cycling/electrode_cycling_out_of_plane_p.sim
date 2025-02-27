@@ -8,3 +8,4 @@ output_number=1e2
 swell_states=1.062658569,1.016396357
 material_scalings=1,1
 out_of_plane_pressure=1e7
+fixed_surface=0

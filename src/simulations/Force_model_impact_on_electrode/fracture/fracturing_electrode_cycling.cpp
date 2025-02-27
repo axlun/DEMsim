@@ -93,6 +93,16 @@ void DEM::fracturing_electrode_cycling(const std::string &settings_file_name)
         material_scaling_state = to_be_material_scaling;
     }
 
+    //=MOVE TOP SURFACE FROM LAYER==================================================================================
+    auto top_surface = simulator.get_surface<EngineType::PointSurfacePointer>("top_plate");
+    //Remove calendering surface from RVE
+    auto bbox = simulator.get_bounding_box(); //get the XYZ max/min that contain all particles
+    double h_1 = bbox[5]; //height of uppermost particle (Z-max)
+    double surface_removal_distance = h_1 + 1 - top_surface->get_points()[0].z();
+    top_surface->move(Vec3(0, 0,  surface_removal_distance), Vec3(0, 0, 0));
+    std::cout << "moving top surface with distance: " << surface_removal_distance << ", to height: " << h_1+1 << "\n";
+    //==============================================================================================================
+
     //==REST LAYER BEFORE SIMULATION====================================================================================
     std::chrono::duration<double> resting_time{cycling_time.count() / 10.};
     std::cout << "Running for resting time: " << resting_time.count() << std::endl;
@@ -152,7 +162,7 @@ void DEM::fracturing_electrode_cycling(const std::string &settings_file_name)
             ", and a damping coefficient of " << surface_damping_coefficient << "\n";
 
         // Move top surface to top of electrode layer
-        auto top_surface = simulator.get_surface<EngineType::PointSurfacePointer>("top_plate");
+//        auto top_surface = simulator.get_surface<EngineType::PointSurfacePointer>("top_plate");
         auto bbox = simulator.get_bounding_box();
         double particle_height = bbox[5];
 
@@ -174,28 +184,25 @@ void DEM::fracturing_electrode_cycling(const std::string &settings_file_name)
         simulator.run(control_force);
         top_surface->set_velocity(Vec3(0,0,0));
 
-        // Add the prescribed force regulator
-        top_surface->set_mass(surface_mass);
-        top_surface->set_damping_coefficient(surface_damping_coefficient);
-        auto amp_func = [compaction_force]() { return -compaction_force; };
-        auto amp = std::make_shared<DEM::Amplitude>(amp_func);
-        std::cout << "amp->value() = " << amp->value() << "\n";
-        top_surface->set_force_amplitude(amp,'z');
-//        simulator.set_force_control_on_surface(top_surface,'z'); //This function resets the surface force amplitude...
+        if (!parameters.get_parameter<bool>("fixed_surface"))
+        {
+
+            std::cout << "Varying top layer with constant pressure.\n";
+            // Add the prescribed force regulator
+            top_surface->set_mass(surface_mass);
+            top_surface->set_damping_coefficient(surface_damping_coefficient);
+            auto amp_func = [compaction_force]() { return -compaction_force; };
+            auto amp = std::make_shared<DEM::Amplitude>(amp_func);
+            std::cout << "amp->value() = " << amp->value() << "\n";
+            top_surface->set_force_amplitude(amp,'z');
+//          simulator.set_force_control_on_surface(top_surface,'z'); //This function resets the surface force amplitude...
+        }
+        else std::cout << "Fixed top layer.\n";
     }
     catch (std::invalid_argument const &ex)
     {
         std::cout << ex.what() << '\n';
-        std::cout << "No out of plane stress found in input file.\nMove top surface from layer.\n";
-
-        //=MOVE TOP SURFACE FROM LAYER==================================================================================
-        auto calendering_surface = simulator.get_surface<EngineType::PointSurfacePointer>("top_plate");
-        //Remove calendering surface from RVE
-        auto bbox = simulator.get_bounding_box(); //get the XYZ max/min that contain all particles
-        double h_1 = bbox[5]; //height of uppermost particle (Z-max)
-        double surface_removal_distance = h_1 + 1 - calendering_surface->get_points()[0].z();
-        calendering_surface->move(Vec3(0, 0,  surface_removal_distance), Vec3(0, 0, 0));
-        //==============================================================================================================
+        std::cout << "No out of plane stress applied.\n";
     }
 
     //==================================================================================================================

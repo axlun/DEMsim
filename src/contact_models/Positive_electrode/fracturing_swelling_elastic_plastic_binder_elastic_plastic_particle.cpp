@@ -321,7 +321,7 @@ double  DEM::fracturing_swelling_elastic_plastic_binder_elastic_plastic_particle
                                                         // the plastic deformation of the binder
 //            double binder_strain = -(bt_ + h_)/bt_; // Evaluation of fracture in tension which does not regard
                                                     // the plastic deformation of the binder
-            if ( binder_strain >= material->binder_fracture_strain_ and !binder_fracture_)
+            if ( binder_strain >= material->binder_fracture_strain_ and !binder_fracture_ and bonded_)
             {
                 binder_fracture_ = true;
             }

@@ -4,6 +4,6 @@ restart_array=1
 time_step=1e2
 mass_scaling=1e4
 cycling_time=1e1
-output_number=2e1
+output_number=1e2
 swell_states=1.062658569,1.016396357
 material_scalings=1,1

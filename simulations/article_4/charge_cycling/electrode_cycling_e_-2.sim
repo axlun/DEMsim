@@ -8,3 +8,4 @@ output_number=1e2
 swell_states=1.062658569,1.016396357
 material_scalings=1,1
 in_plane_strain=-0.02
+fixed_surface=0
