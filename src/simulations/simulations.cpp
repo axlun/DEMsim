@@ -34,6 +34,7 @@ std::map<std::string, DEM::SimulationFunctionPtr> DEM::valid_simulations() {
             {"fracturing_electrode_calendering",                            DEM::fracturing_electrode_calendering},
             {"fracturing_electrode_cycling",                                    DEM::fracturing_electrode_cycling},
             {"fracturing_electrode_mechanical_loading",              DEM::fracturing_electrode_mechanical_loading},
+            {"fracturing_electrode_uniaxial_loading",                  DEM::fracturing_electrode_uniaxial_loading},
             {"electrode_cycling",                                                          DEM::electrode_cycling},
             {"periodic_bc_restart_tester",                                        DEM::periodic_bc_restart_tester},
             {"contact_tester",                                                                DEM::contact_tester},
