@@ -1,0 +1,7 @@
+output_dir=/scratch/users/axlun/DEMsim/results/article_4/tensile_test/2/electrode_uniaxial_loading_binder_fracture/
+restart_file_name=/scratch/users/axlun/DEMsim/results/article_4/binder_fracture/electrode_calendering_only_binder_fracture_01/calendered_electrode_restart_file.res
+time_step=1e2
+mass_scaling=1e3
+output_number=5e2
+strain_rate=5e-3
+strain_level=0.2
