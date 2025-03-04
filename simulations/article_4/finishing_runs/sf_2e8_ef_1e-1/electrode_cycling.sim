@@ -1,0 +1,9 @@
+output_dir=/scratch/users/axlun/DEMsim/results/article_4/finishing_runs/sf_2e8_ef_1e-1/electrode_cycling/
+restart_file_name=/scratch/users/axlun/DEMsim/results/article_4/finishing_runs/sf_2e8_ef_1e-1/electrode_calendering/calendered_electrode_restart_file.res
+restart_array=1
+time_step=1e2
+mass_scaling=1e4
+cycling_time=1e1
+output_number=1e2
+swell_states=1.062658569,1.016396357
+material_scalings=1,1
