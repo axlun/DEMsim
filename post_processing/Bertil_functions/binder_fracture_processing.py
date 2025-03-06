@@ -37,7 +37,7 @@ if __name__ == '__main__':
                 if data[j, 19] == 1 :
                     binder_contact += 1
         except:
-           data = data
+            data = 0
         binder_contact_vec.append(binder_contact)
         active_binder_contact_vec.append(active_binder_contact)
         fractured_binder_contact_vec.append(fractured_binder_contact)
