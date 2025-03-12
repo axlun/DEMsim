@@ -42,6 +42,12 @@ void DEM::fracturing_electrode_uniaxial_loading(const std::string &settings_file
     std::cout << "strain_rate =" << strain_rate << "\n";
     auto strain_level = parameters.get_parameter<double>("strain_level");
     std::cout << "strain_level = " << strain_level << "\n";
+
+    if (strain_level < 0.)
+    {
+        std::cout << "Compression strain applied\n";
+        strain_rate = -strain_rate;
+    }
     std::chrono::duration<double>loading_time{strain_level/strain_rate};
     std::cout << "loading_time = " << loading_time.count() << "\n";
 
