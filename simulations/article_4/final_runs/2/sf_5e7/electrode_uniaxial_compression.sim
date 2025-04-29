@@ -1,0 +1,7 @@
+output_dir=/scratch/users/axlun/DEMsim/results/article_4/final_runs/2/sf_5e7/electrode_uniaxial_compression/
+restart_file_name=/scratch/users/axlun/DEMsim/results/article_4/final_runs/2/sf_5e7/electrode_calendering/calendered_electrode_restart_file.res
+time_step=5e1
+mass_scaling=1e2
+output_number=5e2
+strain_rate=5e-3
+strain_level=-0.15
