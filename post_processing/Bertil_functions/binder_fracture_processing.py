@@ -36,6 +36,10 @@ if __name__ == '__main__':
                     fractured_binder_contact += 1
                 if data[j, 19] == 1 :
                     binder_contact += 1
+                # ==USE IF COMBINED CONTACT SHOULD CONTRIBUTE TO TOTAL NUMBER OF CONTACTS===================
+                if data[j, 6] != 0 and data[j, 7] != 0 and data[j, 8] != 0 and \
+                        abs((data[j, 6] - (data[j, 7] + data[j, 8])) / data[j, 6]) < 1e-3:
+                    active_binder_contact += 1
         except:
             data = 0
         binder_contact_vec.append(binder_contact)
