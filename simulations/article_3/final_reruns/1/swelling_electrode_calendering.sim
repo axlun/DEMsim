@@ -1,0 +1,7 @@
+output_dir=/scratch/users/axlun/DEMsim/results/article_3/final_reruns/1/swelling_electrode_calendering/
+restart_file_name=/scratch/users/axlun/DEMsim/results/article_3/final_reruns/1/swelling_periodic_packing/pre_calendered_electrode_restart_file.res
+time_step=1e2
+mass_scaling=1e4
+calendering_height=105e-2
+compaction_time=2e1
+output_number=2e2

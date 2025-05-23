@@ -27,6 +27,7 @@ void DEM::electrode_cycling(const std::string &settings_file_name)
     simulator.remove_output(Calendering_output);
 
     auto mat = dynamic_cast<ElectrodeMaterial *>(simulator.get_material(0));
+    mat->new_binder_contacts = false;
 
     std::chrono::duration<double> cycling_time{parameters.get_parameter<double>("cycling_time")};
 
