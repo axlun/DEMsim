@@ -1,6 +1,7 @@
 from Bertil_functions.Bertil_functions import *
 from force_model_impact_on_calendering.Bertil_mechanical_properties import stress_and_linear_strain_finder
 import matplotlib.pyplot as plt
+from matplotlib.ticker import FormatStrFormatter
 import shutil
 import os
 import numpy as np
@@ -89,26 +90,8 @@ class Simulation:
 
 
 if __name__ == '__main__':
-    plot_contacts = 0
-    cycling = Simulation('/scratch/users/axlun/DEMsim/results/article_3/final_runs/',
-                         4, '/electrode_cycling_1/',
-                         [[0, 0]], plot_contacts)
-
-    charging = Simulation('/scratch/users/axlun/DEMsim/results/article_3/final_runs/',
-                          4, '/electrode_swelling_material_scaling/',
-                          [[0, 2], [12.30, 14.30], [23.99, 25.99]], plot_contacts)
-
-    swelling = Simulation('/scratch/users/axlun/DEMsim/results/article_3/final_runs/',
-                          4, '/electrode_swelling/',
-                          [[0, 2], [12.30, 14.30], [23.99, 25.99]], 0)
-
-    mat_scaling = Simulation('/scratch/users/axlun/DEMsim/results/article_3/final_runs/',
-                             4, '/electrode_material_scaling/',
-                             [[0, 0]], 0)
-
-
     # ==PLOT PARAMETERS=================================================================================================
-    fig_dir = 'c:/temp/figures/in_plane_stress/'
+    fig_dir = 'c:/temp/figures/article_3/in_plane_stress/'
     try:
         shutil.rmtree(fig_dir)
         os.mkdir(fig_dir)
@@ -118,8 +101,27 @@ if __name__ == '__main__':
     except:
         print('Directory could not be removed')
         quit()
-    plt.style.use('axel_style')
+    plt.style.use('axel_style_3')
     # ==================================================================================================================
+
+    plot_contacts = 1
+    no_sims = 4
+    cycling = Simulation('/scratch/users/axlun/DEMsim/results/article_3/final_runs/',
+                         no_sims, '/electrode_cycling_1/',
+                         [[0, 0]], plot_contacts)
+
+    charging = Simulation('/scratch/users/axlun/DEMsim/results/article_3/final_runs/',
+                          no_sims, '/electrode_swelling_material_scaling/',
+                          [[0, 2], [12.30, 14.30], [23.99, 25.99]], plot_contacts)
+
+    swelling = Simulation('/scratch/users/axlun/DEMsim/results/article_3/final_runs/',
+                          no_sims, '/electrode_swelling/',
+                          [[0, 2], [12.30, 14.30], [23.99, 25.99]], 0)
+
+    mat_scaling = Simulation('/scratch/users/axlun/DEMsim/results/article_3/final_runs/',
+                             no_sims, '/electrode_material_scaling/',
+                             [[0, 0]], 0)
+
 
     # =PRESSURE VS SOC==================================================================================================
     fig_pressure_SOC, ax_pressure_SOC = plt.subplots()
@@ -136,6 +138,7 @@ if __name__ == '__main__':
     fig_pressure_SOC.tight_layout()
     fname = fig_dir + 'pressure_soc_charging'
     plt.savefig(fname)
+    plt.savefig(fname+'.svg')
 
     # =HEIGHT VS SOC====================================================================================================
     fig_height_SOC, ax_height_SOC = plt.subplots()
@@ -153,6 +156,7 @@ if __name__ == '__main__':
     fig_pressure_SOC.tight_layout()
     fname = fig_dir + 'height_soc_charging'
     plt.savefig(fname)
+    plt.savefig(fname+'.svg')
 
     # =HEIGHT VS TIME===================================================================================================
     fig_height_time, ax_height_time = plt.subplots()
@@ -164,6 +168,7 @@ if __name__ == '__main__':
     fig_height_time.tight_layout()
     fname = fig_dir + 'height_time'
     plt.savefig(fname)
+    plt.savefig(fname+'.svg')
 
     # =PRESSURES VS CHARGING/SWELLING/MAT DEG===========================================================================
     fig_pressure_split, ax_pressure_split = plt.subplots()
@@ -195,6 +200,7 @@ if __name__ == '__main__':
     fig_pressure_split.tight_layout()
     fname = fig_dir + 'pressure_soc_split'
     plt.savefig(fname)
+    plt.savefig(fname+'.svg')
 
     # =PRESSURE VS TIME=================================================================================================
     fig_pressure_time, ax_pressure_time = plt.subplots()
@@ -208,14 +214,20 @@ if __name__ == '__main__':
     fig_pressure_time.tight_layout()
     fname = fig_dir + 'pressure_time_split'
     plt.savefig(fname)
+    plt.savefig(fname+'.svg')
 
     # =CONTACTS VS SOC FOR CHARGING=====================================================================================
+    particle_normalisation = 5000
     fig_contacts_SOC, ax_contacts_SOC = plt.subplots()
     ax_contacts_SOC.set_xlabel('SOC [%]')
-    ax_contacts_SOC.set_ylabel('Number of contacts [-]')
+    ax_contacts_SOC.set_ylabel('Coordination number [-]')
     ax_contacts_SOC.set_xlim(xmin=0, xmax=100)
-    ax_contacts_SOC.set_ylim(ymin=0, ymax=10500)
     ax_contacts_SOC.set_xticks(np.linspace(0, 100, 11))
+    ymax= 11000
+    ax_contacts_SOC.set_ylim(ymin=0, ymax=ymax)
+    ax_contacts_SOC.set_yticks(np.linspace(0, ymax,12))
+    # ax_contacts_SOC.set_yticklabels(np.linspace(0, 2.2,12))
+    ax_contacts_SOC.set_yticklabels([0,.2,.4,.6,.8,1,1.2,1.4,1.6,1.8,2,2.2])
 
     ax_contacts_SOC.plot(charging.SOC, charging.binder_contacts_mean, 'k-')
     ax_contacts_SOC.fill_between(charging.SOC,
@@ -233,6 +245,7 @@ if __name__ == '__main__':
     fig_contacts_SOC.tight_layout()
     fname = fig_dir + 'contacts_soc_charging'
     plt.savefig(fname)
+    plt.savefig(fname+'.svg')
 
     # =CONTACTS VS TIME=================================================================================================
     fig_contacts_time, ax_contacts_time = plt.subplots()
@@ -251,6 +264,7 @@ if __name__ == '__main__':
     fig_contacts_time.tight_layout()
     fname = fig_dir + 'contacts_time'
     plt.savefig(fname)
+    plt.savefig(fname+'.svg')
 
     # =PRESSURE VS CHARGE CYCLING=======================================================================================
     fig_pressure_cycling, ax_pressure_cycling = plt.subplots()
@@ -267,9 +281,24 @@ if __name__ == '__main__':
     tick_label_array = [0, 100, 0, 100, 0, 100, 0, 100, 0, 100, 0, 100, 0, 100, 0, 100, 0, 100, 0, 100, 0]
     ax_pressure_cycling.set_xticks(tick_array)
     ax_pressure_cycling.set_xticklabels(tick_label_array)
+    # ax_pressure_cycling.minorticks_off()
+
+    n_cycles = 10
+    end_time = cycling.time[-1]
+    ax_2nd_x = ax_pressure_cycling.twiny()
+    ax_2nd_x.plot([0, end_time], [0, 0],linewidth=0)
+    ax_2nd_x.set_xticks(np.linspace(0, end_time, n_cycles + 1), minor=False)
+    ax_2nd_x.set_xticklabels(np.arange(0, n_cycles + 1, 1))
+    ax_2nd_x.set_xlim(xmin=0, xmax=end_time)
+    ax_2nd_x.set_xlabel('Charge cycle [-]')
+    ax_pressure_cycling.tick_params(axis='x', which='minor', bottom=False, top=False)
+    ax_2nd_x.tick_params(axis='x', which='minor', bottom=False, top=False)
+    # ax_2nd_x.minorticks_off()
+
     fig_pressure_cycling.tight_layout()
     fname = fig_dir + 'pressure_soc_cycling'
     plt.savefig(fname)
+    plt.savefig(fname+'.svg')
 
     # =HEIGHT VS CHARGE CYCLING=======================================================================================
     fig_height_cycling, ax_height_cycling = plt.subplots()
@@ -285,10 +314,23 @@ if __name__ == '__main__':
     tick_array = np.linspace(0, 100, 21)
     tick_label_array = [0, 100, 0, 100, 0, 100, 0, 100, 0, 100, 0, 100, 0, 100, 0, 100, 0, 100, 0, 100, 0]
     ax_height_cycling.set_xticks(tick_array)
+    # ax_height_cycling.minorticks_off()
     ax_height_cycling.set_xticklabels(tick_label_array)
+
+    ax_2nd_x = ax_height_cycling.twiny()
+    ax_2nd_x.plot([0, end_time], [0, 0],linewidth=0)
+    ax_2nd_x.set_xticks(np.linspace(0, end_time, n_cycles + 1), minor=False)
+    ax_2nd_x.set_xticklabels(np.arange(0, n_cycles + 1, 1))
+    ax_2nd_x.set_xlim(xmin=0, xmax=end_time)
+    ax_2nd_x.set_xlabel('Charge cycle [-]')
+    # ax_2nd_x.minorticks_off()
+    ax_height_cycling.tick_params(axis='x', which='minor', bottom=False, top=False)
+    ax_2nd_x.tick_params(axis='x', which='minor', bottom=False, top=False)
+
     fig_height_cycling.tight_layout()
     fname = fig_dir + 'height_soc_cycling'
     plt.savefig(fname)
+    plt.savefig(fname+'.svg')
 
     # =PRESSURE VS TIME CYCLING=========================================================================================
     fig_pressure_time, ax_pressure_time = plt.subplots()
@@ -298,6 +340,7 @@ if __name__ == '__main__':
     fig_pressure_time.tight_layout()
     fname = fig_dir + 'pressure_time_cycling'
     plt.savefig(fname)
+    plt.savefig(fname+'.svg')
 
     # =HEIGHT VS TIME CYCLING=========================================================================================
     fig_height_time, ax_height_time = plt.subplots()
@@ -307,13 +350,18 @@ if __name__ == '__main__':
     fig_height_time.tight_layout()
     fname = fig_dir + 'height_time_cycling'
     plt.savefig(fname)
+    plt.savefig(fname+'.svg')
 
     # =CONTACTS VS CHARGE CYCLING=======================================================================================
     fig_contacts_cycling, ax_contacts_cycling = plt.subplots()
     ax_contacts_cycling.set_xlim(xmin=0, xmax=100)
-    ax_contacts_cycling.set_ylim(ymin=0, ymax=10500)
     ax_contacts_cycling.set_xlabel('SOC [%]')
-    ax_contacts_cycling.set_ylabel('Number of contacts [-]')
+    ax_contacts_cycling.set_ylabel('Coordination number [-]')
+    ymax= 11000
+    ax_contacts_cycling.set_ylim(ymin=0, ymax=ymax)
+    ax_contacts_cycling.set_yticks(np.linspace(0, ymax,12))
+    # ax_contacts_cycling.set_yticklabels(np.linspace(0, ymax/particle_normalisation,12))
+    ax_contacts_cycling.set_yticklabels([0,.2,.4,.6,.8,1,1.2,1.4,1.6,1.8,2,2.2])
 
     ax_contacts_cycling.plot(cycling.SOC, cycling.binder_contacts_mean, 'k-')
     ax_contacts_cycling.fill_between(cycling.SOC,
@@ -330,11 +378,24 @@ if __name__ == '__main__':
     tick_array = np.linspace(0, 100, 21)
     tick_label_array = [0, 100, 0, 100, 0, 100, 0, 100, 0, 100, 0, 100, 0, 100, 0, 100, 0, 100, 0, 100, 0]
     ax_contacts_cycling.set_xticks(tick_array)
+    # ax_contacts_cycling.minorticks_off()
     ax_contacts_cycling.set_xticklabels(tick_label_array)
     ax_contacts_cycling.legend(loc='best')
+
+    ax_2nd_x = ax_contacts_cycling.twiny()
+    ax_2nd_x.plot([0, end_time], [0, 0],linewidth=0)
+    ax_2nd_x.set_xticks(np.linspace(0, end_time, n_cycles + 1), minor=False)
+    ax_2nd_x.set_xticklabels(np.arange(0, n_cycles + 1, 1))
+    ax_2nd_x.set_xlim(xmin=0, xmax=end_time)
+    ax_2nd_x.set_xlabel('Charge cycle [-]')
+    # ax_2nd_x.minorticks_off()
+    ax_contacts_cycling.tick_params(axis='x', which='minor', bottom=False, top=False)
+    ax_2nd_x.tick_params(axis='x', which='minor', bottom=False, top=False)
+
     fig_contacts_cycling.tight_layout()
     fname = fig_dir + 'contacts_soc_cycling'
     plt.savefig(fname)
+    plt.savefig(fname+'.svg')
 
     # =CONTACTS VS TIME=================================================================================================
     fig_contacts_time, ax_contacts_time = plt.subplots()
@@ -347,6 +408,7 @@ if __name__ == '__main__':
     fig_contacts_time.tight_layout()
     fname = fig_dir + 'contacts_time_cycling'
     plt.savefig(fname)
+    plt.savefig(fname+'.svg')
 
 
     print('Show plots')

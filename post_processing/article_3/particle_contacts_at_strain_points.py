@@ -6,7 +6,7 @@ import os
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib
-matplotlib.style.use('axel_style')
+matplotlib.style.use('axel_style_3')
 
 
 def time_duplicate_remover(periodic_bc_data, force_fabric_tensor_data, surface_position_data):
@@ -87,7 +87,20 @@ class Simulation:
 
 if __name__ == '__main__':
 
-    no_sims = 4 #TODO:: run with 4 sims
+    # ==FIGURE SAVE DIR=================================================================================================
+    fig_dir = 'C:/temp/figures/article_3/particle_contacts_at_mechanical_loading/'
+    try:
+        shutil.rmtree(fig_dir)
+        os.mkdir(fig_dir)
+    except FileNotFoundError:
+        print('Directory does not exist')
+        os.mkdir(fig_dir)
+    except:
+        print('Directory could not be removed')
+        quit()
+    # ==================================================================================================================
+
+    no_sims = 4
 
     SOC_50 = Simulation('/scratch/users/axlun/DEMsim/results/article_3/final_runs/',
                         'ss_1.03228_material_scaling_', no_sims, '50')
@@ -113,19 +126,8 @@ if __name__ == '__main__':
     cycle_10 = Simulation('/scratch/users/axlun/DEMsim/results/article_3/final_runs/',
                           'cycle_10_', no_sims, '10')
 
-    # ==FIGURE SAVE DIR=================================================================================================
-    fig_dir = 'C:/temp/figures/particle_contacts_at_mechanical_loading/'
-    try:
-        shutil.rmtree(fig_dir)
-        os.mkdir(fig_dir)
-    except FileNotFoundError:
-        print('Directory does not exist')
-        os.mkdir(fig_dir)
-    except:
-        print('Directory could not be removed')
-        quit()
-    # ==================================================================================================================
 
+    particle_normalisation = 5000
     # =FIGURE SOC=======================================================================================================
     fig_soc, ax_soc = plt.subplots()
 
@@ -147,14 +149,23 @@ if __name__ == '__main__':
                         (SOC_0.contacts_mean + SOC_0.contacts_std),
                         label=SOC_0.label, color='C1', alpha=1)
 
-    ax_soc.set_ylim(ymin=0)
+    # ax_soc.set_ylim(ymin=0)
     ax_soc.set_xlim(xmin=-2.2, xmax=2.2)
-    ax_soc.set_ylabel('Particle contacts [-]')
+    # ax_soc.set_ylabel('Particle contacts [-]')
     ax_soc.set_xlabel('Strain [%]')
+
+    ax_soc.set_ylabel('Coordination number [-]')
+    ymax= 7000
+    ax_soc.set_ylim(ymin=0, ymax=ymax)
+    ax_soc.set_yticks(np.linspace(0, ymax,15))
+    # ax_soc.set_yticklabels(np.linspace(0, ymax/particle_normalisation,15))
+    ax_soc.set_yticklabels([0,.1,.2,.3,.4,.5,.6,.7,.8,.9,1,1.1,1.2,1.3,1.4])
+
     ax_soc.legend(loc='best', title='SOC [%]')
     fig_soc.tight_layout()
     fname = fig_dir + 'SOC'
     plt.savefig(fname)
+    plt.savefig(fname+'.svg')
 
     """
     # =FIGURE SPLIT=====================================================================================================
@@ -215,11 +226,20 @@ if __name__ == '__main__':
     ax_cycling.set_xlim(xmin=-2.2, xmax=2.2)
     ax_cycling.set_ylabel('Particle contacts [-]')
     ax_cycling.set_xlabel('Strain [%]')
+
+    ax_cycling.set_ylabel('Coordination number [-]')
+    ymax= 7000
+    ax_cycling.set_ylim(ymin=0, ymax=ymax)
+    ax_cycling.set_yticks(np.linspace(0, ymax,15))
+    # ax_cycling.set_yticklabels(np.linspace(0, ymax/particle_normalisation,15))
+    ax_cycling.set_yticklabels([0,.1,.2,.3,.4,.5,.6,.7,.8,.9,1,1.1,1.2,1.3,1.4])
+
     ax_cycling.legend(loc='best', title='Charge cycles')
 
     fig_cycling.tight_layout()
     fname = fig_dir + 'cycling'
     plt.savefig(fname)
+    plt.savefig(fname+'.svg')
 
     print('Show plots')
     plt.show()

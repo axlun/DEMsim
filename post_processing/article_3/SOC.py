@@ -28,13 +28,8 @@ class Simulation:
                 self.binder_particle_contact_vec = contact_counter_bertil(sim_dir)
 
 if __name__ == '__main__':
-
-    contacts = 0
-    swelling_material_scaling = Simulation('/scratch/users/axlun/DEMsim/results/article_3/charge_cycling/SN_1/'
-                                           'electrode_swelling_material_scaling/', contacts)
-
     # ==PLOT PARAMETERS=================================================================================================
-    fig_dir = 'c:/temp/figures/SOC/'
+    fig_dir = 'c:/temp/figures/article_3/SOC/'
     try:
         shutil.rmtree(fig_dir)
         os.mkdir(fig_dir)
@@ -44,8 +39,13 @@ if __name__ == '__main__':
     except:
         print('Directory could not be removed')
         quit()
-    plt.style.use('axel_style')
+    plt.style.use('axel_style_2')
     # ==================================================================================================================
+
+    contacts = 1
+    swelling_material_scaling = Simulation('/scratch/users/axlun/DEMsim/results/article_3/charge_cycling/SN_1/'
+                                           'electrode_swelling_material_scaling/', contacts)
+
 
 
 
@@ -67,5 +67,6 @@ if __name__ == '__main__':
 
     fname = fig_dir + 'SOC'
     plt.savefig(fname)
+    plt.savefig(fname+'.png')
 
     plt.show()

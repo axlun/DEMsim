@@ -2,7 +2,7 @@ import matplotlib
 import matplotlib.pyplot as plt
 import numpy as np
 
-plt.style.use('axel_style')
+plt.style.use('axel_style_3')
 
 if __name__ == '__main__':
     print('start script')
@@ -38,15 +38,23 @@ if __name__ == '__main__':
     # ax_material_scaling.plot(x_array, material_scaling)
     # lns_mat_scale = ax_material_scaling.plot(x_array, volume_ratio, color='C1', label='Material scaling')
     lns_mat_scale = ax_material_scaling.plot(x_array, material_scaling, color='C1', label='Material scaling')
-    ax_2nd_x = ax_table.twiny()
-    ax_2nd_x.plot([0, 20], [0, 0])
-    ax_2nd_x.set_xticks(np.linspace(0, 20, 11))
-    ax_2nd_x.set_xticklabels(np.arange(0, 11, 1))
-    ax_2nd_x.set_xlim(xmin=0, xmax=20)
-    ax_2nd_x.set_xlabel('Charge cycle [-]')
+    # ax_2nd_x = ax_table.twiny()
+    # ax_2nd_x.plot([0, 20], [0, 0])
+    # ax_2nd_x.set_xticks(np.linspace(0, 20, 11))
+    # ax_2nd_x.set_xticklabels(np.arange(0, 11, 1))
+    # ax_2nd_x.set_xlim(xmin=0, xmax=20)
+    # ax_2nd_x.set_xlabel('Charge cycle [-]')
+
+    ax_table.plot([0, 20], [0, 0])
+    ax_table.set_xticks(np.linspace(0, 20, 11))
+    ax_table.set_xticklabels(np.arange(0, 11, 1))
+    ax_table.set_xlim(xmin=0, xmax=20)
+    ax_table.set_xlabel('Charge cycle [-]')
+    ax_table.tick_params(axis='x', which='minor', bottom=False, top=False)
+
     lns =  lns_vol_ratio + lns_mat_scale
     labs = [l.get_label() for l in lns]
-    ax_table.legend(lns, labs, loc='upper right')
+    ax_table.legend(lns, labs, loc='center right')
 
     fig_table.tight_layout()
 
